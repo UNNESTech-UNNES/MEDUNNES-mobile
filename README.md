@@ -10,3 +10,4 @@ TeleMedicineUnnes is a software to provide the process of distance medical learn
    ```bash
    git clone https://github.com/UNNESTech/MEDUNNES-mobile.git
    ```
+2. Open the project
