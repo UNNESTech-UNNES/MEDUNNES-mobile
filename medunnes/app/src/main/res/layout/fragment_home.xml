@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:outlineProvider="none"
+    android:padding="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    tools:context=".ui.message.MessageFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:outlineProvider="paddedBounds"
+            app:strokeColor="@color/black"
+            app:cardCornerRadius="50dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/person" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_authenticate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_pic"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_pic"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:text="@string/masuk_daftar"/>
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_pic"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_pic"
+            android:src="@drawable/location"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/iv_location"
+            app:layout_constraintTop_toTopOf="@id/iv_location"
+            app:layout_constraintBottom_toBottomOf="@id/iv_location"
+            android:layout_marginEnd="8dp"
+            android:text="@string/user_location"/>
+
+        <TextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_pic"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:text="@string/greeting"/>
+
+        <TextView
+            android:id="@+id/greetings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/greeting"
+            app:layout_constraintTop_toBottomOf="@id/greeting"
+            android:text="@string/greetings"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_layanan_utama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/greetings"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="4dp"
+            app:cardCornerRadius="20dp"
+            android:background="@color/grey"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/tv_konsultasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/cv_konsultasi"
+                    android:layout_marginBottom="16dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="@string/layanan_utama" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_konsultasi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_konsultasi"
+                    app:layout_constraintEnd_toStartOf="@id/cv_buat_janji"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="20dp"
+                        android:text="@string/konsultasi_sekarang"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="30dp"
+                        android:src="@drawable/stethoscope" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_buat_janji"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintStart_toEndOf="@id/cv_konsultasi"
+                    app:layout_constraintTop_toTopOf="@id/cv_konsultasi"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="20dp"
+                        android:text="@string/konsultasi_sekarang"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="30dp"
+                        android:src="@drawable/clinical_document" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_artikel_kesehatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/cv_layanan_utama"
+            app:layout_constraintTop_toBottomOf="@id/cv_layanan_utama"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="27dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/artikel_kesehatan"/>
+
+        <TextView
+            android:id="@+id/tv_artikel_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/cv_layanan_utama"
+            app:layout_constraintBottom_toBottomOf="@id/tv_artikel_kesehatan"
+            android:layout_marginEnd="16dp"
+            android:text="@string/lihat_semua"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_artikel_kesehatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_artikel_kesehatan"
+            app:layout_constraintEnd_toEndOf="@+id/tv_artikel_all"
+            app:layout_constraintTop_toBottomOf="@id/tv_artikel_kesehatan"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_faskes_terdekat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/cv_layanan_utama"
+            app:layout_constraintTop_toBottomOf="@id/rv_artikel_kesehatan"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="27dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/faskes_terdekat"/>
+
+        <TextView
+            android:id="@+id/tv_faskes_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/cv_layanan_utama"
+            app:layout_constraintBottom_toBottomOf="@id/tv_faskes_terdekat"
+            android:layout_marginEnd="16dp"
+            android:text="@string/lihat_semua"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_faskes_terdekat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_artikel_kesehatan"
+            app:layout_constraintEnd_toEndOf="@+id/tv_artikel_all"
+            app:layout_constraintTop_toBottomOf="@id/tv_faskes_terdekat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
