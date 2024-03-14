@@ -18,6 +18,16 @@
     <string name="artikel_kesehatan">Artikel Kesehatan</string>
     <string name="lihat_semua">Lihat Semua</string>
     <string name="faskes_terdekat">Faskes Terdekat</string>
+    <string name="masuk_sebagai_pasien">Masuk Sebagai Pasien</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="masukkan_password">Masukkan password</string>
+    <string name="masukkan_email">Masukkan Email</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="login">Login</string>
+    <string name="belum_punya_akun">Belum punya akun?</string>
+    <string name="daftar">Daftar</string>
 
 
     <!-- Dummy Data List -->
