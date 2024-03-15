@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.medunnes.telemedicine.MainActivity
+import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 

@@ -1,4 +1,4 @@
-package com.medunnes.telemedicine
+package com.medunnes.telemedicine.ui.main
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

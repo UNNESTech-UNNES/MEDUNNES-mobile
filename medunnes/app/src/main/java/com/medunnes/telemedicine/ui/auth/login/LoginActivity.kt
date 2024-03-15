@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.medunnes.telemedicine.MainActivity
+import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 
