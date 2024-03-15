@@ -1,25 +1,25 @@
-package com.medunnes.telemedicine.ui.loginas
+package com.medunnes.telemedicine.ui.registeras
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.databinding.ActivityLoginAsBinding
-import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import com.medunnes.telemedicine.databinding.ActivityRegisterAsBinding
+import com.medunnes.telemedicine.ui.auth.register.RegisterActivity
 
-class LoginAsActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityLoginAsBinding
+class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var binding: ActivityRegisterAsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginAsBinding.inflate(layoutInflater)
+        binding = ActivityRegisterAsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding) {
-            ibLoginAsDokter.setOnClickListener(this@LoginAsActivity)
-            ibLoginAsDokter.setOnClickListener(this@LoginAsActivity)
+            ibLoginAsDokter.setOnClickListener(this@RegisterAsActivity)
+            ibLoginAsDokter.setOnClickListener(this@RegisterAsActivity)
+            btnBack.setOnClickListener(this@RegisterAsActivity)
         }
     }
 
@@ -33,10 +33,11 @@ class LoginAsActivity : AppCompatActivity(), View.OnClickListener {
         with(binding) {
             when(view) {
                 ibLoginAsDokter -> {
-                    val intent = Intent(this@LoginAsActivity, LoginActivity::class.java)
+                    val intent = Intent(this@RegisterAsActivity, RegisterActivity::class.java)
                     startActivity(intent)
                 }
                 ibLoginAsPasien -> makeToast(undoneText())
+                btnBack -> finish()
             }
         }
     }

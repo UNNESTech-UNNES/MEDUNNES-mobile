@@ -12,7 +12,7 @@
     <string name="greetings">Salam sehat dan sejahtera</string>
     <string name="layanan_utama">Layanan Utama</string>
     <string name="konsultasi_sekarang">Konsultasi\nSekarang</string>
-    <string name="masuk_sebagai">Masuk Sebagai</string>
+    <string name="daftar_sebagai">Daftar Sebagai</string>
     <string name="dokter">Dokter</string>
     <string name="pasien">Pasien</string>
     <string name="artikel_kesehatan">Artikel Kesehatan</string>
@@ -28,7 +28,20 @@
     <string name="login">Login</string>
     <string name="belum_punya_akun">Belum punya akun?</string>
     <string name="daftar">Daftar</string>
+    <string name="daftar_sebagai_dokter">Daftar Sebagai Dokter</string>
+    <string name="nama_lenkap">Nama Lenkap</string>
+    <string name="title_depan">Titel Depan</string>
+    <string name="masukkan_titel_depan">contoh: dr.</string>
+    <string name="titel_belakang">Titel Belakang</string>
+    <string name="masukkan_titel_belakang">contoh: SpOG</string>
+    <string name="masukkan_nama_lengkap">Masukkan nama lengkap</string>
+    <string name="no_str">No. STR</string>
+    <string name="masukkan_nomor_str">Masukkan nomor STR</string>
 
+    <string-array name="jenis_kelamin">
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
 
     <!-- Dummy Data List -->
     <string-array name="film_judul">
@@ -82,4 +95,19 @@
         <item>https://upload.wikimedia.org/wikipedia/id/9/91/Inception_poster.jpg</item>
         <item>https://upload.wikimedia.org/wikipedia/en/c/cd/The_Martian_film_poster.jpg</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="tanggal_lahir">Tanggal lahir</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="alamat">Alamat</string>
+    <string name="masukkan_alamat_lengkap">Masukkan alamat lengkap</string>
+    <string name="tempat_praktik">Tempat Praktik</string>
+    <string name="masukkan_tempat_praktik">Masukkan tempat praktik</string>
+    <string name="no_telepon">No. Telepon</string>
+    <string name="masukkan_no_telepon">Masukkan no. telepon</string>
+    <string name="sudah_punya_akun">Sudah punya akun?</string>
+    <string name="masuk">Masuk</string>
+    <string name="register">Register</string>
 </resources>

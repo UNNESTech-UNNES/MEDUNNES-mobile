@@ -1,45 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.login.LoginActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/material_on_primary_disabled"
-            android:src="@drawable/back_button" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <TextView
-        android:id="@+id/tv_register_as_dokter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:text="@string/masuk_sebagai_pasien"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingHorizontal="16dp"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".ui.auth.register.Registrasi3Fragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_register_as_dokter"
-        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="200dp"
         android:layout_marginHorizontal="30dp"
         android:paddingHorizontal="16dp">
 
@@ -57,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textStyle="bold"
-                android:text="@string/email"/>
+                android:text="@string/no_telepon"/>
 
             <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
                 android:id="@+id/til_no_telepon"
@@ -72,8 +46,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/masukkan_email"
-                    android:inputType="textEmailAddress"/>
+                    android:hint="@string/masukkan_no_telepon"
+                    android:inputType="number"/>
             </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
             <TextView
@@ -99,58 +73,52 @@
                     android:hint="@string/masukkan_password"/>
             </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
-            <CheckBox
-                android:id="@+id/checkbox_remember_me"
-                android:layout_width="30dp"
+            <TextView
+                android:id="@+id/tv_password_confirmation_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_password"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_password"/>
+                android:textStyle="bold"
+                android:text="@string/password"/>
 
-            <TextView
-                android:id="@+id/remember_me"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/checkbox_remember_me"
-                app:layout_constraintTop_toTopOf="@id/checkbox_remember_me"
-                app:layout_constraintBottom_toBottomOf="@id/checkbox_remember_me"
-                android:textColor="@color/grey"
-                android:textSize="12sp"
-                android:text="@string/remember_me"/>
-
-            <TextView
-                android:id="@+id/tv_forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/checkbox_remember_me"
-                app:layout_constraintBottom_toBottomOf="@id/checkbox_remember_me"
-                android:textColor="@color/grey"
-                android:textSize="10sp"
-                android:text="@string/forgot_password"/>
-
-            <Button
-                android:id="@+id/btn_login"
+            <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                android:id="@+id/til_password_confirmation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/checkbox_remember_me"
+                app:layout_constraintTop_toBottomOf="@id/tv_password_confirmation_title"
+                app:endIconMode="password_toggle">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="@string/masukkan_password"/>
+            </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_password_confirmation"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/grey"
-                android:text="@string/login"/>
+                android:text="@string/register"/>
 
             <TextView
                 android:id="@+id/sudah_akun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_login"
-                app:layout_constraintEnd_toStartOf="@id/tv_daftar"
+                app:layout_constraintTop_toBottomOf="@id/btn_register"
+                app:layout_constraintEnd_toStartOf="@id/tv_masuk"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/belum_punya_akun"/>
+                android:text="@string/sudah_punya_akun"/>
 
             <TextView
-                android:id="@+id/tv_daftar"
+                android:id="@+id/tv_masuk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/sudah_akun"
@@ -159,7 +127,7 @@
                 android:layout_marginStart="4dp"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                android:text="@string/daftar"/>
+                android:text="@string/masuk"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

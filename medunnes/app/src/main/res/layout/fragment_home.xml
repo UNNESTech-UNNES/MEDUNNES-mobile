@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_profile_pic"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
-            android:clickable="true"
+
             android:text="@string/masuk_daftar"/>
 
         <ImageView

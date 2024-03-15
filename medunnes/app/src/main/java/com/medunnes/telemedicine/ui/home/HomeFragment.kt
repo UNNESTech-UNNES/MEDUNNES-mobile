@@ -15,7 +15,7 @@ import com.medunnes.telemedicine.data.model.Faskes
 import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
-import com.medunnes.telemedicine.ui.loginas.LoginAsActivity
+import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
@@ -39,11 +39,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.tvAuthenticate.setOnClickListener {
-            val intent = Intent(context, LoginAsActivity::class.java)
-            startActivity(intent)
-        }
-
         listArtikel.addAll(getArticleList())
         showArticleRecycleList()
 
@@ -55,6 +50,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             cvBuatJanji.setOnClickListener(this@HomeFragment)
             tvArtikelAll.setOnClickListener(this@HomeFragment)
             tvFaskesAll.setOnClickListener(this@HomeFragment)
+            tvAuthenticate.setOnClickListener(this@HomeFragment)
         }
 
         return root
@@ -126,6 +122,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
              cvBuatJanji -> makeToast(undoneText())
              tvArtikelAll -> makeToast(undoneText())
              tvFaskesAll -> makeToast(undoneText())
+             tvAuthenticate -> {
+                 val intent = Intent(context, LoginActivity::class.java)
+                 startActivity(intent)
+             }
          }
         }
     }
