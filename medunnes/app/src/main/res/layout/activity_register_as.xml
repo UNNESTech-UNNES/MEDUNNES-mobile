@@ -43,7 +43,7 @@
       app:layout_constraintEnd_toStartOf="@id/ib_login_as_pasien"
       android:scaleType="centerCrop"
       android:backgroundTint="@color/material_on_primary_disabled"
-      android:src="@drawable/person"/>
+      android:src="@drawable/dokter"/>
 
   <TextView
       android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       android:scaleType="centerCrop"
       android:backgroundTint="@color/material_on_primary_disabled"
-      android:src="@drawable/person"/>
+      android:src="@drawable/pasien"/>
 
   <TextView
       android:layout_width="wrap_content"

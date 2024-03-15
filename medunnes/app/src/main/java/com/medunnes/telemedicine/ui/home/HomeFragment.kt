@@ -16,13 +16,11 @@ import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val listArtikel = ArrayList<Artikel>()
@@ -94,8 +92,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             override fun onItemClicked(faskes: Faskes) {
                 makeToast(undoneText())
             }
-
         })
+
+        setGreeting()
 
     }
 
@@ -107,6 +106,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
             listFaskes.add(faskes)
         }
         return listFaskes
+    }
+
+    private fun setGreeting() {
+        val currentTime: String = when (Calendar.getInstance().time.hours) {
+            in 4..11 -> {
+                "Pagi"
+            }
+            in 12 .. 14 -> {
+                "Siang"
+            }
+            in 15..17 -> {
+                "Sore"
+            }
+            else -> {
+                "Malam"
+            }
+        }
+        binding.greeting.text = resources.getString(R.string.greeting, currentTime)
+
     }
 
     private fun makeToast(message: String) {
