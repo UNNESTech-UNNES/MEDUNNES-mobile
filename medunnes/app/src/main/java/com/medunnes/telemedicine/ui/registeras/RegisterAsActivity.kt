@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.medunnes.telemedicine.databinding.ActivityRegisterAsBinding
 import com.medunnes.telemedicine.ui.auth.register.RegisterActivity
+import com.medunnes.telemedicine.ui.auth.register.RegisterAkunActivity
 
 class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterAsBinding
@@ -18,7 +19,7 @@ class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
 
         with(binding) {
             ibLoginAsDokter.setOnClickListener(this@RegisterAsActivity)
-            ibLoginAsDokter.setOnClickListener(this@RegisterAsActivity)
+            ibLoginAsPasien.setOnClickListener(this@RegisterAsActivity)
             btnBack.setOnClickListener(this@RegisterAsActivity)
         }
     }
@@ -36,7 +37,10 @@ class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this@RegisterAsActivity, RegisterActivity::class.java)
                     startActivity(intent)
                 }
-                ibLoginAsPasien -> makeToast(undoneText())
+                ibLoginAsPasien -> {
+                    val intent = Intent(this@RegisterAsActivity, RegisterAkunActivity::class.java)
+                    startActivity(intent)
+                }
                 btnBack -> finish()
             }
         }

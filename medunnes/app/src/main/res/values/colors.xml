@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#DF42424B</color>
     <color name="grey_less">#DFACA7A7</color>
+    <color name="third_choice_color">#AA8773</color>
     <color name="chocolate">#CC8C2B</color>
     <color name="app_color">#C8965A</color>
     <color name="secondary_color">#FAE6AF</color>
