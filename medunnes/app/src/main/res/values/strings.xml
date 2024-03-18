@@ -22,14 +22,14 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="masukkan_password">Masukkan password</string>
-    <string name="masukkan_email">Masukkan Email</string>
+    <string name="masukkan_email">Masukkan email</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="login">Login</string>
     <string name="belum_punya_akun">Belum punya akun?</string>
     <string name="daftar">Daftar</string>
     <string name="daftar_sebagai_dokter">Daftar Sebagai Dokter</string>
-    <string name="nama_lenkap">Nama Lenkap</string>
+    <string name="nama_lenkap">Nama Lengkap</string>
     <string name="title_depan">Titel Depan</string>
     <string name="masukkan_titel_depan">contoh: dr.</string>
     <string name="titel_belakang">Titel Belakang</string>
@@ -95,6 +95,8 @@
         <item>https://upload.wikimedia.org/wikipedia/id/9/91/Inception_poster.jpg</item>
         <item>https://upload.wikimedia.org/wikipedia/en/c/cd/The_Martian_film_poster.jpg</item>
     </string-array>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lanjut">Lanjut</string>
@@ -111,4 +113,8 @@
     <string name="masuk">Masuk</string>
     <string name="register">Register</string>
     <string name="daftar_akun">Daftar Akun</string>
+    <string name="approve_janji_pasien">Approve Janji Pasien</string>
+    <string name="search_hint">Cari nama pasien</string>
+    <string name="sesi_pasien">Sesi pasien</string>
+    <string name="status">Status</string>
 </resources>

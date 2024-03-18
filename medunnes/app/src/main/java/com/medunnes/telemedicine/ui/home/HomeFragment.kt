@@ -37,10 +37,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        listArtikel.addAll(getArticleList())
+        getArticleList()
         showArticleRecycleList()
 
-        listFaskes.addAll(getFaskesList())
+        getFaskesList()
         showFaskesRecycleList()
 
         with(binding) {
