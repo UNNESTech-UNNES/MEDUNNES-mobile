@@ -16,6 +16,8 @@ import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
+import com.medunnes.telemedicine.ui.dokter.janji.JanjiActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -70,6 +72,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
         })
+
+        menuDifference(true)
 
     }
 
@@ -133,11 +137,31 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun undoneText(): String = "Fitur belum tersedia"
 
+    private fun menuDifference(dokter: Boolean) {
+        with(binding) {
+            if (dokter) {
+                tvKonsultasi.text = getText(R.string.konsultasi_dokter)
+                tvJanji.text = getText(R.string.janji_dokter)
+            } else {
+                tvKonsultasi.text = getText(R.string.konsultasi_sekarang)
+                tvJanji.text = getText(R.string.janji_pasien)
+            }
+        }
+    }
+
     override fun onClick(view: View?) {
         with(binding) {
          when(view) {
-             cvKonsultasi -> makeToast(undoneText())
-             cvBuatJanji -> makeToast(undoneText())
+             cvKonsultasi -> {
+                 val intent = Intent(context, LayananDokterActivity::class.java)
+                 intent.putExtra(LayananDokterActivity.FRAGMENT, "0")
+                 startActivity(intent)
+             }
+             cvBuatJanji -> {
+                 val intent = Intent(context, LayananDokterActivity::class.java)
+                 intent.putExtra(LayananDokterActivity.FRAGMENT, "1")
+                 startActivity(intent)
+             }
              tvArtikelAll -> makeToast(undoneText())
              tvFaskesAll -> makeToast(undoneText())
              tvAuthenticate -> {

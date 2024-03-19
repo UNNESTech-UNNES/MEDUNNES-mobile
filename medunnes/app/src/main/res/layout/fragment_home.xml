@@ -96,7 +96,7 @@
                 android:backgroundTint="@color/material_on_primary_disabled"
                 android:padding="16dp">
                 <TextView
-                    android:id="@+id/tv_konsultasi"
+                    android:id="@+id/tv_layanan_utama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_konsultasi"
+                    app:layout_constraintTop_toBottomOf="@id/tv_layanan_utama"
                     app:layout_constraintEnd_toStartOf="@id/cv_buat_janji"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="16dp"
@@ -120,17 +120,19 @@
                     android:backgroundTint="@color/secondary_color"
                     app:cardCornerRadius="10dp">
                     <TextView
+                        android:id="@+id/tv_konsultasi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="20dp"
-                        android:text="@string/konsultasi_sekarang"/>
+                        android:text="@string/konsultasi_dokter"/>
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="110dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="116dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="40dp"
                         android:src="@drawable/stethoscope" />
                 </androidx.cardview.widget.CardView>
 
@@ -146,6 +148,7 @@
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/secondary_color">
                     <TextView
+                        android:id="@+id/tv_janji"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
@@ -153,10 +156,11 @@
                         android:text="@string/konsultasi_sekarang"/>
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="110dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="116dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="40dp"
                         android:src="@drawable/clinical_document" />
                 </androidx.cardview.widget.CardView>
 

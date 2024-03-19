@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/cv_messanger_picture"
-        app:layout_constraintTop_toTopOf="@id/cv_messanger_picture"
+        app:layout_constraintBottom_toTopOf="@id/tv_patient_session"
         android:layout_marginStart="16dp"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -39,17 +39,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/tv_patient_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_patient_name"
+        app:layout_constraintTop_toTopOf="@id/cv_messanger_picture"
+        app:layout_constraintBottom_toBottomOf="@id/cv_messanger_picture"
         android:text="@string/sesi_pasien"/>
 
-    <TextView
-        android:id="@+id/tv_messanger_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/tv_patient_name"
-        app:layout_constraintBottom_toBottomOf="@id/cv_messanger_picture"
-        android:textSize="10sp"
-        android:textColor="@color/blue"
-        android:text="@string/status"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_status_label"
+        android:layout_width="50dp"
+        android:layout_height="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_patient_session"
+        android:padding="16dp"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/green">
+        <TextView
+            android:id="@+id/tv_patient_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:text="@string/status"/>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

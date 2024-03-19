@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Messanger
 import com.medunnes.telemedicine.databinding.MessageListBinding
 
-class MessangersAdapter(private val messangerList: ArrayList<Messanger>) : RecyclerView.Adapter<MessangersAdapter.ListViewHolder>() {
+class JanjiDokterAdapter(private val messangerList: ArrayList<Messanger>) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: MessageListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(messanger: Messanger) {
             with(binding) {
-                tvMessangerName.text = messanger.namaMessanger
-                tvMessangerSession.text = "Sesi: " + messanger.sesiMessanger
+                tvPatientName.text = messanger.namaMessanger
+                tvPatientSession.text = "Sesi: " + messanger.sesiMessanger
                 tvMessangerStatus.text  = messanger.startusMessanger
                 Glide.with(itemView.context)
                     .load(messanger.fotoMessanger)
