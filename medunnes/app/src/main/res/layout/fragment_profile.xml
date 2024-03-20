@@ -4,19 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.profile.ProfileFragment"
+    android:padding="32dp">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/grey_less_less"
+        app:cardCornerRadius="20dp">
+
+        <TableLayout
+            android:id="@+id/tbl_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:stretchColumns="1"
+            android:padding="20dp">
+
+            <TableRow>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_user_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cardCornerRadius="50dp">
+
+                    <ImageView
+                        android:id="@+id/iv_user_picture"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/person"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:stretchColumns="0,1,2,3,4,5"
+                    android:layout_marginStart="8dp">
+
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/tv_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:text="@string/nama_lenkap"/>
+
+                        <TextView
+                            android:id="@+id/tv_profile_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/edit_profil"
+                            android:textSize="12sp" />
+                    </TableRow>
+
+                    <TableRow android:layout_width="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_user_role"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tv_user_name"
+                            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+                    </TableRow>
+                </TableLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:background="@color/grey_less">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/email"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:textSize="10sp"
+                    android:text="@string/nama_lenkap" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:background="@color/grey_less">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/medical"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:textSize="10sp"
+                    android:text="@string/nama_lenkap" />
+            </TableRow>
+        </TableLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
