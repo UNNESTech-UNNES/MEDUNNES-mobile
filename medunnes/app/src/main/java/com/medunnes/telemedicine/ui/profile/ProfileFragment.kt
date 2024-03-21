@@ -30,7 +30,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.tvProfileEdit.setOnClickListener(this)
+
+        with(binding) {
+            tvProfileEdit.setOnClickListener(this@ProfileFragment)
+            cvFaq.setOnClickListener(this@ProfileFragment)
+            cvHint.setOnClickListener(this@ProfileFragment)
+            cvLanguange.setOnClickListener(this@ProfileFragment)
+            cvDeleteAccount.setOnClickListener(this@ProfileFragment)
+        }
 
         return root
     }
@@ -51,6 +58,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     val intent = Intent(context, ProfileEditActivity::class.java)
                     startActivity(intent)
                 }
+                cvFaq -> makeToast("Fitur belum tersedia")
+                cvHint -> makeToast("Fitur belum tersedia")
+                cvLanguange -> makeToast("Fitur belum tersedia")
+                cvDeleteAccount -> makeToast("Fitur belum tersedia")
             }
         }
     }

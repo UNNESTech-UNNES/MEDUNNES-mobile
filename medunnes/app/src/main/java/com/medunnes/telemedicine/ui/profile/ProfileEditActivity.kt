@@ -18,6 +18,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         with(binding) {
             btnBack.setOnClickListener(this@ProfileEditActivity)
             btnEditSend.setOnClickListener(this@ProfileEditActivity)
+            ivEditPicture.setOnClickListener(this@ProfileEditActivity)
         }
     }
 
@@ -30,6 +31,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             when(view) {
                 btnBack -> finish()
                 btnEditSend -> makeToast("Fitur belum tersedia")
+                ivEditPicture -> makeToast("Fitur belum tersedia")
             }
         }
     }

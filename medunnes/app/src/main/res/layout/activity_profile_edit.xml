@@ -83,6 +83,7 @@
                 android:id="@+id/tie_edit_nama_lengkap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:textSize="14sp"
                 android:text="@string/nama_lenkap"/>
 
@@ -116,6 +117,9 @@
                 android:id="@+id/tie_edit_tgl_lahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="date"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp"
                 android:text="@string/tanggal_lahir"/>
 
@@ -149,6 +153,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="14sp"
                 android:text="@string/no_telepon"/>
 
@@ -251,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:inputType="textEmailAddress"
-                android:text="@string/alamat"/>
+                android:text="@string/email"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
