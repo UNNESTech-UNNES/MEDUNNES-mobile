@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.profile.ProfileEditActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/material_on_primary_disabled"
+            android:src="@drawable/back_button"/>
+
+        <TextView
+            android:id="@+id/tv_profile_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="@string/edit_profil"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+            android:id="@+id/cv_edit_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="50dp">
+
+            <ImageButton
+                android:id="@+id/iv_edit_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/material_on_primary_disabled"
+                android:scaleType="centerCrop"
+                android:src="@drawable/person"/>
+
+        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+        <TextView
+            android:id="@+id/tv_edit_nama_lengkap_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_edit_picture"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/nama_lenkap"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_nama_lengkap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_lengkap_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_nama_lengkap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@string/nama_lenkap"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_edit_nama_tgl_lahir_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_nama_lengkap"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/tanggal_lahir"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_tgl_lahir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/til_edit_no_telepon"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_tgl_lahir_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            android:layout_marginEnd="16dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_tgl_lahir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@string/tanggal_lahir"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_edit_nama_no_hp_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/til_edit_no_telepon"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_nama_lengkap"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/no_telepon"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_no_telepon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/til_edit_tgl_lahir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_tgl_lahir_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_no_telepon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="14sp"
+                android:text="@string/no_telepon"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/tv_edit_rumah_sakit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_tgl_lahir"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/rumah_sakit"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_rumah_sakit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_rumah_sakit_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_rumah_sakit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:inputType="textLongMessage"
+                android:text="@string/rumah_sakit"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_edit_alamat_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_rumah_sakit"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/alamat"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_alamat_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:text="@string/alamat"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_edit_email_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_alamat"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="@string/email"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_edit_email_title"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/grey_less_less">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:inputType="textEmailAddress"
+                android:text="@string/alamat"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_edit_send"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_edit_email"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/grey_blue"
+            android:text="@string/simpan_perubahan"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

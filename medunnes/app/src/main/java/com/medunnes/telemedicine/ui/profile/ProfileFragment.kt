@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
-                tvProfileEdit -> makeToast("Fitur belum tersedia")
+                tvProfileEdit -> {
+                    val intent = Intent(context, ProfileEditActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

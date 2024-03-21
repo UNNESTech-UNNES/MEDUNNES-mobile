@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/grey_less_less"
+        app:cardElevation="10dp"
         app:cardCornerRadius="20dp">
 
         <TableLayout
@@ -50,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:stretchColumns="0,1,2,3,4,5"
+                    android:stretchColumns="0,1,2,3,4,5,6"
                     android:layout_marginStart="8dp">
 
                     <TableRow>
@@ -60,7 +61,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:textStyle="bold"
-                            android:textSize="14sp"
+                            android:textSize="16sp"
                             android:text="@string/nama_lenkap"/>
 
                         <TextView
@@ -79,7 +80,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/status"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_user_name"
                             app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
@@ -128,16 +129,18 @@
         android:id="@+id/cv_faq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
         app:layout_constraintStart_toStartOf="@id/cv_user_profile"
         app:layout_constraintTop_toBottomOf="@id/cv_user_profile"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
         android:backgroundTint="@color/grey_less">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="12dp">
             <ImageView
                 android:id="@+id/iv_faq"
                 android:layout_width="20dp"
@@ -157,11 +160,154 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="32dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:text="@string/faq"/>
 
             <ImageView
                 android:id="@+id/iv_faq_action"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/next_button"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView><androidx.cardview.widget.CardView
+        android:id="@+id/cv_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
+        app:layout_constraintStart_toStartOf="@id/cv_user_profile"
+        app:layout_constraintTop_toBottomOf="@id/cv_faq"
+        app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/grey_less">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <ImageView
+                android:id="@+id/iv_hint"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_hint"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/outline_info"/>
+
+            <TextView
+                android:id="@+id/tv_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/iv_hint"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:textSize="16sp"
+                android:text="@string/tentang_aplikasi"/>
+
+            <ImageView
+                android:id="@+id/iv_hint_action"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/next_button"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView><androidx.cardview.widget.CardView
+        android:id="@+id/cv_languange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
+        app:layout_constraintStart_toStartOf="@id/cv_user_profile"
+        app:layout_constraintTop_toBottomOf="@id/cv_hint"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/grey_less">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <ImageView
+                android:id="@+id/iv_language"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_languange"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/language"/>
+
+            <TextView
+                android:id="@+id/tv_languange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/iv_language"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:textSize="16sp"
+                android:text="@string/bahasa"/>
+
+            <ImageView
+                android:id="@+id/iv_language_action"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/next_button"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_delete_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
+        app:layout_constraintStart_toStartOf="@id/cv_user_profile"
+        app:layout_constraintTop_toBottomOf="@id/cv_languange"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/grey_less">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <ImageView
+                android:id="@+id/iv_delete_account"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_delete_account"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/delete_outline"/>
+
+            <TextView
+                android:id="@+id/tv_delete_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/iv_delete_account"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="32dp"
+                android:textSize="16sp"
+                android:text="@string/hapus_akun"/>
+
+            <ImageView
+                android:id="@+id/iv_delete_account_action"
                 android:layout_width="30dp"
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
