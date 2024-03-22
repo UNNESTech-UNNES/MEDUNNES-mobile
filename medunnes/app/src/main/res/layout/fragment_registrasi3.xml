@@ -44,6 +44,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:startIconTint="@color/grey">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_no_telepon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/masukkan_no_telepon"
@@ -67,6 +68,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_password_title"
                 app:endIconMode="password_toggle">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"

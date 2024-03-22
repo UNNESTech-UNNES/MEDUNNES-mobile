@@ -41,11 +41,27 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
         return root
     }
 
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        with(binding) {
+            bundle.putString(Registrasi2Fragment.EMAIL, "${tieEmail.text}")
+            bundle.putString(Registrasi2Fragment.FULLNAME, "${tieNamaLengkap.text}")
+            bundle.putString(Registrasi2Fragment.TITLE_ONE, "${tieTitelDepan.text}")
+            bundle.putString(Registrasi2Fragment.TITLE_TWO, "${tieTitelBelakang.text}")
+            bundle.putString(Registrasi2Fragment.NO_STR, "${tieNoStr.text}")
+        }
+
+        return bundle
+    }
+
     override fun onClick(view: View?) {
         when(view) {
             binding.btnLanjut1 -> {
                 val registrasi2Fragment = Registrasi2Fragment()
                 val fragmentManager = parentFragmentManager
+
+                registrasi2Fragment.arguments = bundle()
+
                 fragmentManager.beginTransaction().apply {
                     replace(R.id.frame_container, registrasi2Fragment, Registrasi2Fragment::class.java.simpleName)
                     addToBackStack(null)

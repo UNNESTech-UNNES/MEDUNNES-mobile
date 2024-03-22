@@ -1,28 +1,41 @@
 package com.medunnes.telemedicine.ui.auth.register
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
+import kotlinx.coroutines.launch
 
 class Registrasi2Fragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentRegistrasi2Binding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentRegistrasi2Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
         setSpinner()
         binding.btnLanjut1.setOnClickListener(this)
+
+        val data = arguments?.getString(EMAIL)
+        Log.d("DATA", data.toString())
 
         return root
     }
@@ -38,11 +51,36 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun bundle() : Bundle {
+        val bundle = Bundle()
+        with(bundle) {
+            putString(Registrasi3Fragment.EMAIL, getDataBundle(EMAIL))
+            putString(Registrasi3Fragment.FULLNAME, getDataBundle(FULLNAME))
+            putString(Registrasi3Fragment.TITLE_ONE, getDataBundle(TITLE_ONE))
+            putString(Registrasi3Fragment.TITLE_TWO, getDataBundle(TITLE_TWO))
+            putString(Registrasi3Fragment.NO_STR, getDataBundle(NO_STR))
+
+            with(binding) {
+                putString(Registrasi3Fragment.DATE, "${tieTglLahir.text}")
+                putString(Registrasi3Fragment.ADDRESS, "${tieAlamat.text}")
+                putString(Registrasi3Fragment.PLACE, "${tieAlamat.text}")
+            }
+
+        }
+
+        return bundle
+    }
+
+    private fun getDataBundle(data: String) = arguments?.getString(data)
+
     override fun onClick(view: View?) {
         when(view) {
             binding.btnLanjut1 -> {
                 val registrasi3Fragment = Registrasi3Fragment()
                 val fragmentManager = parentFragmentManager
+
+                registrasi3Fragment.arguments = bundle()
+
                 fragmentManager.beginTransaction().apply {
                     replace(R.id.frame_container, registrasi3Fragment, Registrasi3Fragment::class.java.simpleName)
                     addToBackStack(null)
@@ -50,5 +88,13 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    companion object {
+        const val EMAIL = "email"
+        const val FULLNAME = "fullname"
+        const val TITLE_ONE = "title_one"
+        const val TITLE_TWO = "title_two"
+        const val NO_STR = "no_str"
     }
 }
