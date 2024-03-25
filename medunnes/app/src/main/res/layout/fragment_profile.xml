@@ -295,7 +295,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tv_delete_account"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/delete_outline"/>
+                android:src="@drawable/logout"/>
 
             <TextView
                 android:id="@+id/tv_delete_account"
