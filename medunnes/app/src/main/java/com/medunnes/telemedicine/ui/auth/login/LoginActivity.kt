@@ -3,16 +3,12 @@ package com.medunnes.telemedicine.ui.auth.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
-import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {

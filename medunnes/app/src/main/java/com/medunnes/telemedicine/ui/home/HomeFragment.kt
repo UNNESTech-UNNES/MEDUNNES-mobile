@@ -17,7 +17,6 @@ import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
-import com.medunnes.telemedicine.ui.dokter.janji.JanjiActivity
 import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {

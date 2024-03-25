@@ -20,7 +20,7 @@ class UserRepository private constructor(
         executorService.execute { mUserDao.insertUser(user) }
     }
 
-    fun login(email: String, password: String): LiveData<List<User?>> = mUserDao.loginUser(email, password)
+    fun login(email: String, password: String): LiveData<List<User>> = mUserDao.loginUser(email, password)
 
     companion object {
         @Volatile
