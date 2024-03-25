@@ -63,6 +63,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 user.observe(viewLifecycleOwner) { data ->
                     data.forEach { binding.tvAuthenticate.text = it.fullname }
                 }
+                binding.tvAuthenticate.isClickable = false
             }
         }
 

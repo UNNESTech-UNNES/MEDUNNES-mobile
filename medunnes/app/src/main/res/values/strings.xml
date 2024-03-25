@@ -9,6 +9,7 @@
     <string name="masuk_daftar">Masuk/Daftar</string>
     <string name="user_location">User\'s location</string>
     <string name="greeting">Selamat %1$s,</string>
+    <string name="nama_and_titel">%1$s, %2$s, %3$s</string>
     <string name="greetings">Salam sehat dan sejahtera</string>
     <string name="layanan_utama">Layanan Utama</string>
     <string name="konsultasi_sekarang">Konsultasi\nSekarang</string>

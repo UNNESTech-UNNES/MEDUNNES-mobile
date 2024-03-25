@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
-import com.medunnes.telemedicine.ui.home.HomeViewModel
 import com.medunnes.telemedicine.ui.main.MainActivity
 import kotlinx.coroutines.launch
 
@@ -47,12 +45,27 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             cvDeleteAccount.setOnClickListener(this@ProfileFragment)
         }
 
+        lifecycleScope.launch { setProfile() }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    suspend fun setProfile() {
+        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
+            data.forEach {
+                with(binding) {
+                    tvUserName.text = getString(R.string.nama_and_titel, it.fullname, it.titelDepan, it.titelBelakang)
+                    tvUserRole.text = it.jenisKelamin
+                    tvUserEmail.text = it.email
+                    tvUserPraktik.text = it.tempatPraktik
+                }
+            }
+        }
     }
 
     private fun makeToast(text: String) {

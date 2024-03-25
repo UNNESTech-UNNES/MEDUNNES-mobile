@@ -57,11 +57,11 @@
                     <TableRow>
                         <TextView
                             android:id="@+id/tv_user_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
                             android:textStyle="bold"
                             android:textSize="16sp"
+                            android:maxLines="2"
                             android:text="@string/nama_lenkap"/>
 
                         <TextView
@@ -100,6 +100,7 @@
                     android:src="@drawable/email"/>
 
                 <TextView
+                    android:id="@+id/tv_user_email"
                     android:layout_gravity="center_vertical"
                     android:textSize="10sp"
                     android:text="@string/nama_lenkap" />
@@ -117,6 +118,7 @@
                     android:src="@drawable/medical"/>
 
                 <TextView
+                    android:id="@+id/tv_user_praktik"
                     android:layout_gravity="center_vertical"
                     android:textSize="10sp"
                     android:text="@string/nama_lenkap" />
