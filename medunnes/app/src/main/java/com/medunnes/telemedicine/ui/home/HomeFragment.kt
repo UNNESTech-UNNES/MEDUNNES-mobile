@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Faskes
 import com.medunnes.telemedicine.databinding.FragmentHomeBinding
@@ -17,6 +19,7 @@ import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -27,13 +30,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val listArtikel = ArrayList<Artikel>()
     private val listFaskes = ArrayList<Faskes>()
 
+    private val viewModel by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -50,6 +55,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvArtikelAll.setOnClickListener(this@HomeFragment)
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
+        }
+
+        lifecycleScope.launch {
+            val user = viewModel.getUser(viewModel.getUserLoginId())
+            if (viewModel.getUserStatus()) {
+                user.observe(viewLifecycleOwner) { data ->
+                    data.forEach { binding.tvAuthenticate.text = it.fullname }
+                }
+            }
         }
 
         return root

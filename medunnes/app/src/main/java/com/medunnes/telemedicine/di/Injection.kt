@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.di
 
 import android.app.Application
 import android.content.Context
+import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.room.dao.UserDao
 import com.medunnes.telemedicine.data.room.database.UserDatabase
@@ -14,6 +15,7 @@ object Injection {
         val userDao = database.userDao()
         val application = Application()
         val executorService = Executors.newSingleThreadScheduledExecutor()
-        return UserRepository.getInstance(userDao, application, executorService)
+        val authDataStore = AuthDataStore(context)
+        return UserRepository.getInstance(userDao, application, executorService, authDataStore)
     }
 }

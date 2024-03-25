@@ -8,8 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
+import com.medunnes.telemedicine.ui.home.HomeViewModel
+import com.medunnes.telemedicine.ui.main.MainActivity
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment(), View.OnClickListener {
 
@@ -19,13 +25,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -61,7 +69,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 cvFaq -> makeToast("Fitur belum tersedia")
                 cvHint -> makeToast("Fitur belum tersedia")
                 cvLanguange -> makeToast("Fitur belum tersedia")
-                cvDeleteAccount -> makeToast("Fitur belum tersedia")
+                cvDeleteAccount -> {
+                    lifecycleScope.launch { viewModel.setLogoutStatus() }
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }

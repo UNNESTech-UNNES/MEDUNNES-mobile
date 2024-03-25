@@ -168,7 +168,7 @@
     <string name="faq">FAQ</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="bahasa">Bahasa</string>
-    <string name="hapus_akun">Hapus Akun</string>
+    <string name="hapus_akun">Keluar</string>
     <string name="rumah_sakit">Rumah Sakit</string>
     <string name="simpan_perubahan">Simpan Perubahan</string>
 </resources>

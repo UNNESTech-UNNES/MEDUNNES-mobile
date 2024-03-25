@@ -8,12 +8,17 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.di.Injection
 import com.medunnes.telemedicine.ui.auth.login.LoginViewModel
 import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
+import com.medunnes.telemedicine.ui.home.HomeFragment
+import com.medunnes.telemedicine.ui.home.HomeViewModel
+import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T = when(modelClass) {
 
         RegisterViewModel::class.java -> RegisterViewModel(repository)
         LoginViewModel::class.java -> LoginViewModel(repository)
+        HomeViewModel::class.java -> HomeViewModel(repository)
+        ProfileViewModel::class.java -> ProfileViewModel(repository)
 
         else -> throw IllegalArgumentException("Uknown view model class: " + modelClass.name)
     } as T
