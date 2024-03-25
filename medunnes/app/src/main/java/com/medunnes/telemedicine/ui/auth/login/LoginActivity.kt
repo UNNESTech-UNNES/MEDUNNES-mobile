@@ -3,13 +3,25 @@ package com.medunnes.telemedicine.ui.auth.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.viewModels
+import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
+import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
+
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -30,8 +42,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                 }
                 btnLogin -> {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    val userEmail = "${binding.tieUserEmail.text}"
+                    val userPassword = "${binding.tieUserPassword.text}"
+                    viewModel.login(userEmail, userPassword).observe(this@LoginActivity) { data ->
+                        if (!data.isNullOrEmpty()) {
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@LoginActivity,
+                                "Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
                 btnBack -> finish()
             }
