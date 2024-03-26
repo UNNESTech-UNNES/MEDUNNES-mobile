@@ -8,6 +8,7 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun getUserProfile(uid: Int): LiveData<List<User>> = userRepository.getUser(uid)
+    fun updateUserProfile(user: User) = userRepository.updateProfile(user)
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
     suspend fun setLogoutStatus() = userRepository.setLogoutStatus()
 }

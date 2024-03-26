@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityProfileEditBinding
 import kotlinx.coroutines.launch
 
@@ -50,11 +52,37 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    suspend fun  updateUserProfile() {
+      with(binding) {
+          viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
+              data.forEach {
+                  viewModel.updateUserProfile(User(
+                      it.id,
+                      "${tieEditEmail.text}",
+                      it.password,
+                      "${tieEditNamaLengkap.text}",
+                      it.titelDepan,
+                      it.titelBelakang,
+                      it.noStr,
+                      "${tieEditTglLahir.text}",
+                      it.jenisKelamin,
+                      "${tieEditAlamat.text}",
+                      "${tieEditRumahSakit.text}",
+                      "${tieEditNoTelepon.text}"
+                  ))
+              }
+          }
+      }
+    }
+
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
                 btnBack -> finish()
-                btnEditSend -> makeToast("Fitur belum tersedia")
+                btnEditSend -> {
+                    lifecycleScope.launch { updateUserProfile() }
+                    makeToast("Data berhasil diperbarui")
+                }
                 ivEditPicture -> makeToast("Fitur belum tersedia")
             }
         }

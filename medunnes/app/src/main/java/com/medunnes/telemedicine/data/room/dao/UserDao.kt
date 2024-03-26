@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.medunnes.telemedicine.data.model.User
 
 @Dao
@@ -14,6 +15,9 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
+
+    @Update
+    fun updateUser(user: User)
 
     @Query("SELECT * FROM user WHERE email = :email AND password = :password")
     fun loginUser(email: String, password: String): LiveData<List<User>>
