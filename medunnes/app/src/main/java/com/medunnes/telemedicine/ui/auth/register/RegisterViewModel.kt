@@ -13,17 +13,9 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
     private val _data = MutableLiveData<String>()
     val data: LiveData<String> = _data
 
-    fun setData(newData: String) {
-        _data.value = newData
-    }
-
+    fun setData(newData: String) { _data.value = newData }
     fun getUser(userId: Int): LiveData<List<User>> = userRepository.getUser(userId)
-
-    fun register(user: User) {
-        userRepository.register(user)
-    }
-
-    fun posData(data: String) {
-        _data.postValue(data)
-    }
+    fun register(user: User) { userRepository.register(user) }
+    fun posData(data: String) { _data.postValue(data) }
+    fun isEmailExist(email: String): LiveData<List<User>> = userRepository.isEmailExist(email)
 }

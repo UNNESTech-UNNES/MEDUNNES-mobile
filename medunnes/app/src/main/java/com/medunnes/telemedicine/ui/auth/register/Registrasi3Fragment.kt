@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.User
@@ -41,6 +42,8 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
         return root
     }
 
+    private fun makeToast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
     private fun getData(data: String): String ="${arguments?.getString(data)}"
 
     override fun onClick(view: View?) {
@@ -52,22 +55,38 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
             binding.btnRegister -> {
                 val intent = Intent(context, MainActivity::class.java)
 
-                viewModel.register(User(
-                    0,
-                    getData(EMAIL),
-                    "${binding.tiePassword.text}",
-                    getData(FULLNAME),
-                    getData(TITLE_ONE),
-                    getData(TITLE_TWO),
-                    getData(NO_STR),
-                    getData(DATE),
-                    "Laki-laki",
-                    getData(ADDRESS),
-                    getData(PLACE),
-                    "${binding.tieNoTelepon.text}"
-                ))
+                viewModel.isEmailExist(getData(EMAIL)).observe(viewLifecycleOwner) { data ->
+                    if ( getData(EMAIL).isNotEmpty() &&
+                        getData(FULLNAME).isNotEmpty() &&
+                        !binding.tiePassword.text.isNullOrEmpty()) {
+                        if ("${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}") {
+                            if (data.isNullOrEmpty()) {
+                                viewModel.register(User(
+                                    0,
+                                    getData(EMAIL),
+                                    "${binding.tiePassword.text}",
+                                    getData(FULLNAME),
+                                    getData(TITLE_ONE),
+                                    getData(TITLE_TWO),
+                                    getData(NO_STR),
+                                    getData(DATE),
+                                    "Laki-laki",
+                                    getData(ADDRESS),
+                                    getData(PLACE),
+                                    "${binding.tieNoTelepon.text}"
+                                ))
 
-                startActivity(intent)
+                                startActivity(intent)
+                            } else {
+                                makeToast("Email sudah terdaftar")
+                            }
+                        } else {
+                            makeToast("Password tidak sesuai")
+                        }
+                    } else {
+                        makeToast("Nama lengkap, email, dan password wajib diisi")
+                    }
+                }
             }
         }
     }

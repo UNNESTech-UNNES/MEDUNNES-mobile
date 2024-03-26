@@ -17,12 +17,9 @@ class UserRepository private constructor(
 ){
 
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)
-
-    fun register(user: User) {
-        executorService.execute { mUserDao.insertUser(user) }
-    }
-
+    fun register(user: User) { executorService.execute { mUserDao.insertUser(user) } }
     fun login(email: String, password: String): LiveData<List<User>> = mUserDao.loginUser(email, password)
+    fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
     suspend fun getLoginStatus(): Boolean = authDataStore.isLogin()
