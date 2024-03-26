@@ -43,8 +43,10 @@ class AuthDataStore constructor(private val context: Context) {
 
     suspend fun logoutUser() {
         val dataStoreKey = booleanPreferencesKey("auth_datastore")
+        val userId = intPreferencesKey("auth_user_id")
         context.datastore.edit {
             it[dataStoreKey] = false
+            it[userId] = 0
         }
     }
 

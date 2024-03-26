@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +46,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             cvDeleteAccount.setOnClickListener(this@ProfileFragment)
         }
 
-        lifecycleScope.launch { setProfile() }
+        lifecycleScope.launch {
+            setProfile()
+            setViewBasedOnStatus()
+        }
 
         return root
     }
@@ -56,6 +60,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     suspend fun setProfile() {
+        Log.d("UIDPRO", viewModel.getUserLoginId().toString())
         viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
                 with(binding) {
@@ -64,6 +69,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserEmail.text = it.email
                     tvUserPraktik.text = it.tempatPraktik
                 }
+            }
+        }
+    }
+
+    suspend fun setViewBasedOnStatus() {
+        if (!viewModel.getLoginStatus()) {
+            with(binding) {
+                cvDeleteAccount.visibility = View.GONE
+                cvUserProfile.visibility = View.GONE
             }
         }
     }
