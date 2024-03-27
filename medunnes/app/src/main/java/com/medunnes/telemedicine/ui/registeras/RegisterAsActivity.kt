@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.medunnes.telemedicine.databinding.ActivityRegisterAsBinding
 import com.medunnes.telemedicine.ui.auth.register.RegisterActivity
 import com.medunnes.telemedicine.ui.auth.register.RegisterAkunActivity
+import com.medunnes.telemedicine.ui.auth.register.Registrasi1Fragment
 
 class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterAsBinding
@@ -35,10 +36,13 @@ class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
             when(view) {
                 ibLoginAsDokter -> {
                     val intent = Intent(this@RegisterAsActivity, RegisterActivity::class.java)
+                    intent.putExtra(RegisterActivity.ROLE, 1)
+
                     startActivity(intent)
                 }
                 ibLoginAsPasien -> {
                     val intent = Intent(this@RegisterAsActivity, RegisterAkunActivity::class.java)
+                    intent.putExtra(RegisterAkunActivity.ROLE, 2)
                     startActivity(intent)
                 }
                 btnBack -> finish()

@@ -32,6 +32,8 @@ class UserRepository private constructor(
     suspend fun setLogoutStatus() = authDataStore.logoutUser()
     suspend fun setUserId(uid: Int) = authDataStore.setUserId(uid)
     suspend fun getUserId() = authDataStore.getUserId()
+    suspend fun setUserRole(role: Int) = authDataStore.setUserRole(role)
+    suspend fun getUserRole(): Int = authDataStore.getUserRole()
 
     companion object {
         @Volatile

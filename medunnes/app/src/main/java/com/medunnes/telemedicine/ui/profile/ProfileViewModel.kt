@@ -16,4 +16,5 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
     suspend fun setLogoutStatus() = userRepository.setLogoutStatus()
     suspend fun getLoginStatus(): Boolean = userRepository.getLoginStatus()
+    suspend fun getUserRole(): Int = userRepository.getUserRole()
 }

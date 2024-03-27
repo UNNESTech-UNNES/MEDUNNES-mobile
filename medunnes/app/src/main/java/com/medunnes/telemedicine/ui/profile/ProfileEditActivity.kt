@@ -30,14 +30,21 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             ivEditPicture.setOnClickListener(this@ProfileEditActivity)
         }
 
-        lifecycleScope.launch { getUserProfileData() }
+        lifecycleScope.launch {
+            if (viewModel.getUserRole() == 1) {
+                getDokterProfileData()
+            } else {
+                getUserProfileData()
+            }
+
+        }
     }
 
     private fun makeToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
-    private suspend fun getUserProfileData() {
+    private suspend fun getDokterProfileData() {
         viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
             data.forEach {
                 with(binding) {
@@ -52,7 +59,23 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private suspend fun updateUserProfile() {
+    private suspend fun getUserProfileData() {
+        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
+            data.forEach {
+                with(binding) {
+                    tieEditNamaLengkap.setText(it.fullname)
+                    tieEditTglLahir.setText(it.tanggalLahir)
+                    tieEditNoTelepon.setText(it.noTelepon)
+                    tieEditAlamat.setText(it.alamat)
+                    tieEditEmail.setText(it.email)
+                    tvEditRumahSakitTitle.visibility = View.GONE
+                    tilEditRumahSakit.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private suspend fun updateDokterProfile() {
         val userId = viewModel.getUserLoginId()
         with(binding) {
             viewModel.getUserAndDokter(userId).observe(this@ProfileEditActivity) { data ->
@@ -85,12 +108,42 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private suspend fun updateUserProfile() {
+        val userId = viewModel.getUserLoginId()
+        with(binding) {
+            viewModel.getUserProfile(userId).observe(this@ProfileEditActivity) { data ->
+                data.forEach {
+                    val user = User(
+                        it.id,
+                        "${tieEditEmail.text}",
+                        it.password,
+                        "${tieEditNamaLengkap.text}",
+                        "${tieEditTglLahir.text}",
+                        it.jenisKelamin,
+                        "${tieEditAlamat.text}",
+                        "${tieEditNoTelepon.text}"
+                    )
+                    with(viewModel) {
+                        updateUserProfile(user)
+                    }
+                }
+            }
+        }
+    }
+
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
                 btnBack -> finish()
                 btnEditSend -> {
-                    lifecycleScope.launch { updateUserProfile() }
+                    lifecycleScope.launch {
+                        if (viewModel.getUserRole() == 1) {
+                            updateDokterProfile()
+                        } else {
+                            updateUserProfile()
+                        }
+
+                    }
                     makeToast("Data berhasil diperbarui")
                 }
                 ivEditPicture -> makeToast("Fitur belum tersedia")

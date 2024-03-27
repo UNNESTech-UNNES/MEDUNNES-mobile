@@ -62,7 +62,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             val user = viewModel.getUser(viewModel.getUserLoginId())
             if (viewModel.getUserStatus()) {
                 user.observe(viewLifecycleOwner) { data ->
-                    data.forEach { binding.tvAuthenticate.text = it.fullname }
+                    data.forEach {
+                        binding.tvAuthenticate.text = it.fullname
+                        Log.d("USER ROLE", it.role.toString())
+                    }
                 }
                 Log.d("STAT", "${viewModel.getUserStatus()}")
                 binding.tvAuthenticate.isClickable = false

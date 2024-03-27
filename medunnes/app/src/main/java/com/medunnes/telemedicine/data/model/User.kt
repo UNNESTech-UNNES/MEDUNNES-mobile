@@ -29,5 +29,8 @@ data class User(
     var alamat: String? = null,
 
     @ColumnInfo(name = "no_telepon")
-    var noTelepon: String? = null
+    var noTelepon: String? = null,
+
+    @ColumnInfo(name = "role")
+    var role: Int? = null
 )

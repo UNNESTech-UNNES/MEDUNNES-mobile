@@ -36,7 +36,7 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
         viewModel.getUser(1).observe(viewLifecycleOwner) { data ->
             Log.d("USER", data.toString())
         }
-
+        Log.d("ROLE", "${arguments?.getInt(ROLE)}")
 
         return root
     }
@@ -49,6 +49,7 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
             bundle.putString(Registrasi2Fragment.TITLE_ONE, "${tieTitelDepan.text}")
             bundle.putString(Registrasi2Fragment.TITLE_TWO, "${tieTitelBelakang.text}")
             bundle.putString(Registrasi2Fragment.NO_STR, "${tieNoStr.text}")
+            bundle.putInt(Registrasi2Fragment.ROLE, arguments?.getInt(ROLE, 0) ?: 0)
         }
 
         return bundle
@@ -69,5 +70,9 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    companion object {
+        const val ROLE = "role"
     }
 }

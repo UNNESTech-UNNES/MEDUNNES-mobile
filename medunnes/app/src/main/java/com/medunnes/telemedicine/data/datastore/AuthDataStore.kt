@@ -41,12 +41,27 @@ class AuthDataStore constructor(private val context: Context) {
         return idUser[userId] ?: 0
     }
 
+    suspend fun setUserRole(role: Int) {
+        val userRole = intPreferencesKey("user_role")
+        context.datastore.edit {
+            it[userRole] = role
+        }
+    }
+
+    suspend fun getUserRole(): Int {
+        val userRole = intPreferencesKey("user_role")
+        val role = context.datastore.data.first()
+        return role[userRole] ?: 0
+    }
+
     suspend fun logoutUser() {
         val dataStoreKey = booleanPreferencesKey("auth_datastore")
         val userId = intPreferencesKey("auth_user_id")
+        val userRole = intPreferencesKey("user_role")
         context.datastore.edit {
             it[dataStoreKey] = false
             it[userId] = 0
+            it[userRole] = 0
         }
     }
 

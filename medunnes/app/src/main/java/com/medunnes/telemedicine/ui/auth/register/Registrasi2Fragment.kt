@@ -36,6 +36,7 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
 
         val data = arguments?.getString(EMAIL)
         Log.d("DATA", data.toString())
+        Log.d("ROLE2","${arguments?.getInt(ROLE)}")
 
         return root
     }
@@ -59,6 +60,7 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
             putString(Registrasi3Fragment.TITLE_ONE, getDataBundle(TITLE_ONE))
             putString(Registrasi3Fragment.TITLE_TWO, getDataBundle(TITLE_TWO))
             putString(Registrasi3Fragment.NO_STR, getDataBundle(NO_STR))
+            putInt(Registrasi3Fragment.ROLE, arguments?.getInt(ROLE)!!)
 
             with(binding) {
                 putString(Registrasi3Fragment.DATE, "${tieTglLahir.text}")
@@ -96,5 +98,6 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
         const val TITLE_ONE = "title_one"
         const val TITLE_TWO = "title_two"
         const val NO_STR = "no_str"
+        const val ROLE = "role"
     }
 }

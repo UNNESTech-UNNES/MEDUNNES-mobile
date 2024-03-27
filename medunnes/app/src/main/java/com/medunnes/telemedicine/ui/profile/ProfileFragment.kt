@@ -47,7 +47,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
 
         lifecycleScope.launch {
-            setProfile()
+            if (viewModel.getUserRole() == 1) {
+                setDokterProfile()
+            } else {
+                setProfile()
+            }
             setViewBasedOnStatus()
         }
 
@@ -59,7 +63,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
-    suspend fun setProfile() {
+    suspend fun setDokterProfile() {
         Log.d("UIDPRO", viewModel.getUserLoginId().toString())
         viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
@@ -67,13 +71,26 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
                     tvUserRole.text = it.user.jenisKelamin
                     tvUserEmail.text = it.user.email
-                    tvUserPraktik.text = it.dokter.tempatPraktik
+                    //tvUserPraktik.text = it.dokter.tempatPraktik
                 }
             }
         }
     }
 
-    suspend fun setViewBasedOnStatus() {
+    private suspend fun setProfile() {
+        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
+            data.forEach {
+                with(binding) {
+                    tvUserName.text = it.fullname
+                    tvUserRole.text = it.jenisKelamin
+                    tvUserEmail.text = it.email
+                    tblTempatPraktik.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private suspend fun setViewBasedOnStatus() {
         if (!viewModel.getLoginStatus()) {
             with(binding) {
                 cvDeleteAccount.visibility = View.GONE

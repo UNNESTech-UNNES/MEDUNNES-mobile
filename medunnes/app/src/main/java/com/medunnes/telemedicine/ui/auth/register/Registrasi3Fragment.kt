@@ -40,6 +40,7 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
 
         val data = arguments?.getString(Registrasi2Fragment.EMAIL)
         Log.d("DATA", data.toString())
+        Log.d("ROLE3", "${arguments?.getInt(ROLE)}")
 
         return root
     }
@@ -73,6 +74,7 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                                         "Laki-laki",
                                         getData(ADDRESS),
                                         "${binding.tieNoTelepon.text}",
+                                        arguments?.getInt(ROLE)
                                     )
                                     //register(user)
                                     registerDokter(
@@ -112,5 +114,6 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
         const val GENDER = "gender"
         const val ADDRESS = "address"
         const val PLACE = "place"
+        const val ROLE = "role"
     }
 }

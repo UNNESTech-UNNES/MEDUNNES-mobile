@@ -51,7 +51,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         if (!data.isNullOrEmpty()) {
                             lifecycleScope.launch {
                                 viewModel.setLoginStatus()
-                                data.forEach { viewModel.setUserLoginId(it.id) }
+                                data.forEach {
+                                    viewModel.setUserLoginId(it.id)
+                                    viewModel.setUserLoginRole(it.role!!)
+                                }
                             }
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)

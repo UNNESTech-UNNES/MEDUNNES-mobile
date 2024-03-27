@@ -15,8 +15,11 @@ class RegisterActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val registrasi1Fragment = Registrasi1Fragment()
         val fragment = fragmentManager.findFragmentByTag(Registrasi1Fragment::class.java.simpleName)
+        val bundle = Bundle()
 
         if (fragment !is Registrasi1Fragment) {
+            bundle.putInt(Registrasi1Fragment.ROLE, intent.getIntExtra(ROLE, 0))
+            registrasi1Fragment.arguments = bundle
             fragmentManager
                 .beginTransaction()
                 .add(R.id.frame_container, registrasi1Fragment, Registrasi1Fragment::class.java.simpleName)
@@ -26,5 +29,9 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+    }
+
+    companion object {
+        const val ROLE = "role"
     }
 }
