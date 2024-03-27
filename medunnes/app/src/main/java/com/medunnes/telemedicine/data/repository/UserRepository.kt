@@ -3,7 +3,9 @@ package com.medunnes.telemedicine.data.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
+import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
+import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.room.dao.UserDao
 import com.medunnes.telemedicine.data.room.database.UserDatabase
 import java.util.concurrent.ExecutorService
@@ -17,10 +19,13 @@ class UserRepository private constructor(
 ){
 
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)
-    fun register(user: User) { executorService.execute { mUserDao.insertUser(user) } }
+    fun register(user: User): Long = mUserDao.insertUser(user)
     fun login(email: String, password: String): LiveData<List<User>> = mUserDao.loginUser(email, password)
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
-    fun updateProfile(user: User) { executorService.execute { mUserDao.updateUser(user) } }
+    fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
+    fun registerDokter(dokter: Dokter) = executorService.execute { mUserDao.insertDokter(dokter) }
+    fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
+    fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
     suspend fun getLoginStatus(): Boolean = authDataStore.isLogin()

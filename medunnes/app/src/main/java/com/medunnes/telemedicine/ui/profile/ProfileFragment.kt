@@ -61,13 +61,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     suspend fun setProfile() {
         Log.d("UIDPRO", viewModel.getUserLoginId().toString())
-        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
+        viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
                 with(binding) {
-                    tvUserName.text = getString(R.string.nama_and_titel, it.fullname, it.titelDepan, it.titelBelakang)
-                    tvUserRole.text = it.jenisKelamin
-                    tvUserEmail.text = it.email
-                    tvUserPraktik.text = it.tempatPraktik
+                    tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
+                    tvUserRole.text = it.user.jenisKelamin
+                    tvUserEmail.text = it.user.email
+                    tvUserPraktik.text = it.dokter.tempatPraktik
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.medunnes.telemedicine.ui.profile
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityProfileEditBinding
 import kotlinx.coroutines.launch
@@ -37,42 +37,52 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
-    suspend fun getUserProfileData() {
-        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
+    private suspend fun getUserProfileData() {
+        viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
             data.forEach {
                 with(binding) {
-                    tieEditNamaLengkap.setText(it.fullname)
-                    tieEditTglLahir.setText(it.tanggalLahir)
-                    tieEditNoTelepon.setText(it.noTelepon)
-                    tieEditRumahSakit.setText(it.tempatPraktik)
-                    tieEditAlamat.setText(it.alamat)
-                    tieEditEmail.setText(it.email)
+                    tieEditNamaLengkap.setText(it.user.fullname)
+                    tieEditTglLahir.setText(it.user.tanggalLahir)
+                    tieEditNoTelepon.setText(it.user.noTelepon)
+                    tieEditRumahSakit.setText(it.dokter.tempatPraktik)
+                    tieEditAlamat.setText(it.user.alamat)
+                    tieEditEmail.setText(it.user.email)
                 }
             }
         }
     }
 
-    suspend fun  updateUserProfile() {
-      with(binding) {
-          viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
-              data.forEach {
-                  viewModel.updateUserProfile(User(
-                      it.id,
-                      "${tieEditEmail.text}",
-                      it.password,
-                      "${tieEditNamaLengkap.text}",
-                      it.titelDepan,
-                      it.titelBelakang,
-                      it.noStr,
-                      "${tieEditTglLahir.text}",
-                      it.jenisKelamin,
-                      "${tieEditAlamat.text}",
-                      "${tieEditRumahSakit.text}",
-                      "${tieEditNoTelepon.text}"
-                  ))
-              }
-          }
-      }
+    private suspend fun updateUserProfile() {
+        val userId = viewModel.getUserLoginId()
+        with(binding) {
+            viewModel.getUserAndDokter(userId).observe(this@ProfileEditActivity) { data ->
+                data.forEach {
+                    val user = User(
+                        it.user.id,
+                        "${tieEditEmail.text}",
+                        it.user.password,
+                        "${tieEditNamaLengkap.text}",
+                        "${tieEditTglLahir.text}",
+                        it.user.jenisKelamin,
+                        "${tieEditAlamat.text}",
+                        "${tieEditNoTelepon.text}"
+                    )
+                    with(viewModel) {
+                        updateUserProfile(user)
+                        updateDokter(
+                            Dokter(
+                                it.dokter.userId,
+                                it.dokter.titelDepan,
+                                it.dokter.titelBelakang,
+                                it.dokter.noStr,
+                                "${tieEditRumahSakit.text}",
+                                userId
+                            )
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun onClick(view: View) {

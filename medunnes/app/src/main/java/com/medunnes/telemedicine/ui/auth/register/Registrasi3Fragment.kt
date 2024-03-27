@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
+import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
@@ -61,20 +63,29 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                         !binding.tiePassword.text.isNullOrEmpty()) {
                         if ("${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}") {
                             if (data.isNullOrEmpty()) {
-                                viewModel.register(User(
-                                    0,
-                                    getData(EMAIL),
-                                    "${binding.tiePassword.text}",
-                                    getData(FULLNAME),
-                                    getData(TITLE_ONE),
-                                    getData(TITLE_TWO),
-                                    getData(NO_STR),
-                                    getData(DATE),
-                                    "Laki-laki",
-                                    getData(ADDRESS),
-                                    getData(PLACE),
-                                    "${binding.tieNoTelepon.text}"
-                                ))
+                                with(viewModel) {
+                                    val user = User(
+                                        0,
+                                        getData(EMAIL),
+                                        "${binding.tiePassword.text}",
+                                        getData(FULLNAME),
+                                        getData(DATE),
+                                        "Laki-laki",
+                                        getData(ADDRESS),
+                                        "${binding.tieNoTelepon.text}",
+                                    )
+                                    //register(user)
+                                    registerDokter(
+                                        Dokter(
+                                            0,
+                                            getData(TITLE_ONE),
+                                            getData(TITLE_TWO),
+                                            getData(NO_STR),
+                                            getData(PLACE),
+                                            register(user).toInt()
+                                        )
+                                    )
+                                }
 
                                 startActivity(intent)
                             } else {
