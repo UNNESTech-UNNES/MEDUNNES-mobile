@@ -36,6 +36,8 @@ class LayananPasienActivity : AppCompatActivity() {
                     .commit()
             }
         }
+
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     companion object {

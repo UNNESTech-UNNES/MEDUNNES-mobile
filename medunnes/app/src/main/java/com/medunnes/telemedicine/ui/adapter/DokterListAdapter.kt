@@ -3,6 +3,7 @@ package com.medunnes.telemedicine.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.medunnes.telemedicine.data.model.Faskes
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.PasienJanjiListBinding
 
@@ -26,5 +27,19 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(dokterList[position])
+
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(dokterList[position])
+        }
+    }
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    interface OnItemClickCallback {
+        fun onItemClicked(dokter: UserAndDokter)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
     }
 }

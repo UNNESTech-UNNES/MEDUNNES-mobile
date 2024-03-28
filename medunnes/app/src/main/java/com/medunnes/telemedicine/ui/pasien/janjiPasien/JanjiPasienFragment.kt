@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.ViewModelFactory
@@ -38,6 +39,13 @@ class JanjiPasienFragment : Fragment() {
         binding.rvDoctorList.layoutManager = LinearLayoutManager(context)
         val dokterAdapter = DokterListAdapter(listAdapter)
         binding.rvDoctorList.adapter = dokterAdapter
+
+        dokterAdapter.setOnItemClickCallback(object : DokterListAdapter.OnItemClickCallback {
+            override fun onItemClicked(dokter: UserAndDokter) {
+                makeToast("Fitur belum tersedia")
+            }
+
+        })
     }
 
     private fun getDoctorList(filter: String) {
@@ -63,5 +71,9 @@ class JanjiPasienFragment : Fragment() {
                     false
                 }
         }
+    }
+
+    private fun makeToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
