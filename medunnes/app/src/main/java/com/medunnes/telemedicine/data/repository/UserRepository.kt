@@ -24,6 +24,7 @@ class UserRepository private constructor(
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
     fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
     fun registerDokter(dokter: Dokter) = executorService.execute { mUserDao.insertDokter(dokter) }
+    fun getAllDokter(): LiveData<List<UserAndDokter>> = mUserDao.getAllDokter()
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
 

@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 viewModel.setLoginStatus()
                                 data.forEach {
                                     viewModel.setUserLoginId(it.id)
-                                    viewModel.setUserLoginRole(it.role!!)
+                                    viewModel.setUserLoginRole(it.role)
                                 }
                             }
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)

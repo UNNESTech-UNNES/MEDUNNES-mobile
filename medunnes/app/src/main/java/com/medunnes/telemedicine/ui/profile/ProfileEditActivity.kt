@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -55,6 +56,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                     tieEditAlamat.setText(it.user.alamat)
                     tieEditEmail.setText(it.user.email)
                 }
+                Log.d("DOKDATA", data.toString())
             }
         }
     }
@@ -88,7 +90,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditTglLahir.text}",
                         it.user.jenisKelamin,
                         "${tieEditAlamat.text}",
-                        "${tieEditNoTelepon.text}"
+                        "${tieEditNoTelepon.text}",
+                        it.user.role
                     )
                     with(viewModel) {
                         updateUserProfile(user)
@@ -121,7 +124,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditTglLahir.text}",
                         it.jenisKelamin,
                         "${tieEditAlamat.text}",
-                        "${tieEditNoTelepon.text}"
+                        "${tieEditNoTelepon.text}",
+                        it.role
                     )
                     with(viewModel) {
                         updateUserProfile(user)

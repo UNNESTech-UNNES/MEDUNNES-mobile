@@ -16,4 +16,5 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun getUser(uid: Int): LiveData<List<User>> = userRepository.getUser(uid)
     suspend fun getUserStatus(): Boolean = userRepository.getLoginStatus()
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
+    suspend fun getUserRole(): Int = userRepository.getUserRole()
 }

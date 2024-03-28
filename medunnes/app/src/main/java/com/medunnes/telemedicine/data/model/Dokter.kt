@@ -21,6 +21,6 @@ data class Dokter(
     @ColumnInfo(name = "tempat_praktik")
     var tempatPraktik: String? = null,
 
-    @ColumnInfo(name = "user_id", )
+    @ColumnInfo(name = "user_id")
     var userId: Int
 )

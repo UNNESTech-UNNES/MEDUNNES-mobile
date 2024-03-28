@@ -17,8 +17,9 @@
     <string name="konsultasi_dokter">Konsultasi\ndengan Pasien</string>
     <string name="janji_dokter">Janji dengan\nPasien</string>
     <string name="daftar_sebagai">Daftar Sebagai</string>
-    <string name="dokter">Dokter</string>
+    <string name="layanan">Layanan</string>
     <string name="pasien">Pasien</string>
+    <string name="dokter">Dokter</string>
     <string name="artikel_kesehatan">Artikel Kesehatan</string>
     <string name="lihat_semua">Lihat Semua</string>
     <string name="faskes_terdekat">Faskes Terdekat</string>
@@ -172,4 +173,7 @@
     <string name="hapus_akun">Keluar</string>
     <string name="rumah_sakit">Rumah Sakit</string>
     <string name="simpan_perubahan">Simpan Perubahan</string>
+    <string name="role_dokter">Role dokter</string>
+    <string name="pengalaman_dokter">Pengalaman Dokter</string>
+    <string name="search_doctor_hint">Cari nama dokter</string>
 </resources>

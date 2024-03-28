@@ -20,6 +20,7 @@ import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
+import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -50,14 +51,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         getFaskesList()
         showFaskesRecycleList()
 
-        with(binding) {
-            cvKonsultasi.setOnClickListener(this@HomeFragment)
-            cvBuatJanji.setOnClickListener(this@HomeFragment)
-            tvArtikelAll.setOnClickListener(this@HomeFragment)
-            tvFaskesAll.setOnClickListener(this@HomeFragment)
-            tvAuthenticate.setOnClickListener(this@HomeFragment)
-        }
-
         lifecycleScope.launch {
             val user = viewModel.getUser(viewModel.getUserLoginId())
             if (viewModel.getUserStatus()) {
@@ -70,6 +63,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Log.d("STAT", "${viewModel.getUserStatus()}")
                 binding.tvAuthenticate.isClickable = false
             }
+
+            val role = viewModel.getUserRole()
+            if (role == 1) {
+                menuDifference(true)
+            } else {
+                menuDifference(false)
+            }
+        }
+
+        with(binding) {
+            cvKonsultasi.setOnClickListener(this@HomeFragment)
+            cvBuatJanji.setOnClickListener(this@HomeFragment)
+            tvArtikelAll.setOnClickListener(this@HomeFragment)
+            tvFaskesAll.setOnClickListener(this@HomeFragment)
+            tvAuthenticate.setOnClickListener(this@HomeFragment)
         }
 
         return root
@@ -91,8 +99,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
         })
-
-        menuDifference(true)
 
     }
 
@@ -170,24 +176,45 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         with(binding) {
-         when(view) {
-             cvKonsultasi -> {
-                 val intent = Intent(context, LayananDokterActivity::class.java)
-                 intent.putExtra(LayananDokterActivity.FRAGMENT, "0")
-                 startActivity(intent)
+             when(view) {
+                 cvKonsultasi -> {
+                     lifecycleScope.launch {
+                         val role = viewModel.getUserRole()
+                         if (role == 1) {
+                             val intent = Intent(context, LayananDokterActivity::class.java)
+                             intent.putExtra(LayananDokterActivity.FRAGMENT, "0")
+                             startActivity(intent)
+                         } else {
+                             val intent = Intent(context, LayananPasienActivity::class.java)
+                             intent.putExtra(LayananPasienActivity.FRAGMENT, "0")
+                             startActivity(intent)
+                         }
+                     }
+                 }
+
+                 cvBuatJanji -> {
+                     lifecycleScope.launch {
+                         val role = viewModel.getUserRole()
+                         if (role == 1) {
+                             val intent = Intent(context, LayananDokterActivity::class.java)
+                             intent.putExtra(LayananDokterActivity.FRAGMENT, "1")
+                             startActivity(intent)
+                         } else {
+                             val intent = Intent(context, LayananPasienActivity::class.java)
+                             intent.putExtra(LayananPasienActivity.FRAGMENT, "1")
+                             startActivity(intent)
+                         }
+                     }
+                 }
+
+                 tvArtikelAll -> makeToast(undoneText())
+                 tvFaskesAll -> makeToast(undoneText())
+                 tvAuthenticate -> {
+                     val intent = Intent(context, LoginActivity::class.java)
+                     startActivity(intent)
+                 }
+                 else -> Log.d("CLICK", "error")
              }
-             cvBuatJanji -> {
-                 val intent = Intent(context, LayananDokterActivity::class.java)
-                 intent.putExtra(LayananDokterActivity.FRAGMENT, "1")
-                 startActivity(intent)
-             }
-             tvArtikelAll -> makeToast(undoneText())
-             tvFaskesAll -> makeToast(undoneText())
-             tvAuthenticate -> {
-                 val intent = Intent(context, LoginActivity::class.java)
-                 startActivity(intent)
-             }
-         }
         }
     }
 }

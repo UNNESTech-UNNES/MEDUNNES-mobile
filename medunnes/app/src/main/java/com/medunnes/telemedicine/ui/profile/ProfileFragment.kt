@@ -71,7 +71,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
                     tvUserRole.text = it.user.jenisKelamin
                     tvUserEmail.text = it.user.email
-                    //tvUserPraktik.text = it.dokter.tempatPraktik
+                    tvUserPraktik.text = it.dokter.tempatPraktik
                 }
             }
         }

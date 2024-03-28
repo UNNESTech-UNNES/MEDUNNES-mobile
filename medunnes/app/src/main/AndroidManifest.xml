@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MedUnnes"
         tools:targetApi="31">
         <activity
+            android:name=".ui.pasien.LayananPasienActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.ProfileEditActivity"
             android:exported="false" />
         <activity

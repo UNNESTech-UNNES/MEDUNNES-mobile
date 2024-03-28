@@ -56,8 +56,6 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
             }
             binding.btnRegister -> {
-                val intent = Intent(context, MainActivity::class.java)
-
                 viewModel.isEmailExist(getData(EMAIL)).observe(viewLifecycleOwner) { data ->
                     if ( getData(EMAIL).isNotEmpty() &&
                         getData(FULLNAME).isNotEmpty() &&
@@ -74,7 +72,7 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                                         "Laki-laki",
                                         getData(ADDRESS),
                                         "${binding.tieNoTelepon.text}",
-                                        arguments?.getInt(ROLE)
+                                        arguments?.getInt(ROLE) ?: 2
                                     )
                                     //register(user)
                                     registerDokter(
@@ -89,6 +87,7 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                                     )
                                 }
 
+                                val intent = Intent(context, LoginActivity::class.java)
                                 startActivity(intent)
                             } else {
                                 makeToast("Email sudah terdaftar")
