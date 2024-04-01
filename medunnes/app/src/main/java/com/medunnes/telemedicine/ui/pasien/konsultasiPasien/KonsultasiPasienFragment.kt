@@ -1,19 +1,83 @@
 package com.medunnes.telemedicine.ui.pasien.konsultasiPasien
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
+import com.medunnes.telemedicine.databinding.FragmentKonsultasiPasienBinding
+import com.medunnes.telemedicine.ui.adapter.DokterKonsultasiAdapter
+import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
+import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 
 class KonsultasiPasienFragment : Fragment() {
+    private var _binding: FragmentKonsultasiPasienBinding? = null
+    private val binding get() = _binding!!
+    private val listDokter = ArrayList<UserAndDokter>()
+    private val viewModel by viewModels<LayananPasienViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_konsultasi_pasien, container, false)
+    ): View {
+        _binding = FragmentKonsultasiPasienBinding.inflate(inflater, container, false)
+
+
+        getDoctorList("")
+        searchMessanger()
+
+
+        return binding.root
+    }
+
+    private fun showRecyclerList(listAdapter: ArrayList<UserAndDokter>) {
+        binding.rvDoctorList.layoutManager = LinearLayoutManager(context)
+        val dokterAdapter = DokterKonsultasiAdapter(listAdapter)
+        binding.rvDoctorList.adapter = dokterAdapter
+
+        dokterAdapter.setOnItemClickCallback(object : DokterKonsultasiAdapter.OnItemClickCallback {
+            override fun onItemClicked(dokter: UserAndDokter) {
+                makeToast("Fitur belum tersedia")
+            }
+        })
+    }
+
+    private fun getDoctorList(filter: String) {
+        viewModel.getAllDokter().observe(viewLifecycleOwner) { data ->
+            listDokter.clear()
+            listDokter.addAll(data)
+            val filteredData = listDokter.filter {
+                it.user.fullname.lowercase().contains(filter) } as ArrayList<UserAndDokter>
+            showRecyclerList(filteredData)
+        }
+    }
+
+    private fun searchMessanger() {
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener { _, _, _ ->
+                    searchBar.setText(searchView.text)
+                    searchView.hide()
+                    getDoctorList("${searchView.text}")
+                    Log.d("GET", "${getDoctorList("${searchView.text}")}")
+                    false
+                }
+        }
+    }
+
+    private fun makeToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
