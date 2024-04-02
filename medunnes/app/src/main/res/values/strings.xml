@@ -177,4 +177,6 @@
     <string name="pengalaman_dokter">Pengalaman Dokter</string>
     <string name="search_doctor_hint">Cari nama dokter</string>
     <string name="buat_janji">Buat Janji</string>
+    <string name="pendidikan">Pendidikan</string>
+    <string name="pendidikan_dokter">Pendidikan dokter</string>
 </resources>

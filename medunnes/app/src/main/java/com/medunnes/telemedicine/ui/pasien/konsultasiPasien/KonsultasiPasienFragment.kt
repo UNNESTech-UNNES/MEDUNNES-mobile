@@ -47,7 +47,15 @@ class KonsultasiPasienFragment : Fragment() {
 
         dokterAdapter.setOnItemClickCallback(object : DokterKonsultasiAdapter.OnItemClickCallback {
             override fun onItemClicked(dokter: UserAndDokter) {
-                makeToast("Fitur belum tersedia")
+                val konsultasiDetailFragment = KonsultasiDetailFragment()
+                val fragment = parentFragmentManager
+                val bundle = Bundle()
+                bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, dokter.user.id)
+                konsultasiDetailFragment.arguments = bundle
+                fragment.beginTransaction()
+                    .replace(R.id.pasien_frame_container, konsultasiDetailFragment, KonsultasiDetailFragment::class.java.simpleName)
+                    .addToBackStack(null)
+                    .commit()
             }
         })
     }

@@ -3,6 +3,8 @@
     <style name="Base.Theme.MedUnnes" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/app_color</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:colorFocusedHighlight">@color/grey_less</item>
     </style>
 
     <style name="Theme.MedUnnes" parent="Base.Theme.MedUnnes" />
