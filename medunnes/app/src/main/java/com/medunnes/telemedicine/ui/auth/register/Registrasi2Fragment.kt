@@ -6,16 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
-import kotlinx.coroutines.launch
 
-class Registrasi2Fragment : Fragment(), View.OnClickListener {
+class Registrasi2Fragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private var _binding: FragmentRegistrasi2Binding? = null
     private val binding get() = _binding!!
@@ -23,6 +22,7 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
+    private lateinit var dataSpinner: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +50,7 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerKelamin.adapter = arrayAdapter
         }
+        binding.spinnerKelamin.onItemSelectedListener = this
     }
 
     private fun bundle() : Bundle {
@@ -61,6 +62,7 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
             putString(Registrasi3Fragment.TITLE_TWO, getDataBundle(TITLE_TWO))
             putString(Registrasi3Fragment.NO_STR, getDataBundle(NO_STR))
             putInt(Registrasi3Fragment.ROLE, arguments?.getInt(ROLE)!!)
+            putString(Registrasi3Fragment.GENDER, dataSpinner)
 
             with(binding) {
                 putString(Registrasi3Fragment.DATE, "${tieTglLahir.text}")
@@ -100,4 +102,16 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener {
         const val NO_STR = "no_str"
         const val ROLE = "role"
     }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        dataSpinner = "${parent?.getItemAtPosition(pos)}"
+        getDataSpinner(dataSpinner)
+        Toast.makeText(context, dataSpinner, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        // DO NOTHING
+    }
+
+    private fun getDataSpinner(gender: String): String = gender
 }

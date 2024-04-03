@@ -2,7 +2,6 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,6 @@ import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
-import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 
@@ -37,10 +34,6 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
             tvMasuk.setOnClickListener(this@Registrasi3Fragment)
             btnRegister.setOnClickListener(this@Registrasi3Fragment)
         }
-
-        val data = arguments?.getString(Registrasi2Fragment.EMAIL)
-        Log.d("DATA", data.toString())
-        Log.d("ROLE3", "${arguments?.getInt(ROLE)}")
 
         return root
     }
@@ -69,12 +62,11 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                                         "${binding.tiePassword.text}",
                                         getData(FULLNAME),
                                         getData(DATE),
-                                        "Laki-laki",
+                                        getData(GENDER),
                                         getData(ADDRESS),
                                         "${binding.tieNoTelepon.text}",
                                         arguments?.getInt(ROLE) ?: 2
                                     )
-                                    //register(user)
                                     registerDokter(
                                         Dokter(
                                             0,
