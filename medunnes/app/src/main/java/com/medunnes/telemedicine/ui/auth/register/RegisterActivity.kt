@@ -34,4 +34,5 @@ class RegisterActivity : AppCompatActivity() {
     companion object {
         const val ROLE = "role"
     }
+
 }

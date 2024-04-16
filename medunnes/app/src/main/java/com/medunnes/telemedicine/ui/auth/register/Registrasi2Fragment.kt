@@ -1,7 +1,7 @@
 package com.medunnes.telemedicine.ui.auth.register
 
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +13,14 @@ import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-class Registrasi2Fragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class Registrasi2Fragment :
+    Fragment(),
+    View.OnClickListener,
+    AdapterView.OnItemSelectedListener {
 
     private var _binding: FragmentRegistrasi2Binding? = null
     private val binding get() = _binding!!
@@ -34,9 +40,9 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener, AdapterView.OnItem
         setSpinner()
         binding.btnLanjut1.setOnClickListener(this)
 
-        val data = arguments?.getString(EMAIL)
-        Log.d("DATA", data.toString())
-        Log.d("ROLE2","${arguments?.getInt(ROLE)}")
+        binding.tilNoTelepon.setEndIconOnClickListener {
+            showDatePicker()
+        }
 
         return root
     }
@@ -94,15 +100,6 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener, AdapterView.OnItem
         }
     }
 
-    companion object {
-        const val EMAIL = "email"
-        const val FULLNAME = "fullname"
-        const val TITLE_ONE = "title_one"
-        const val TITLE_TWO = "title_two"
-        const val NO_STR = "no_str"
-        const val ROLE = "role"
-    }
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         dataSpinner = "${parent?.getItemAtPosition(pos)}"
         getDataSpinner(dataSpinner)
@@ -114,4 +111,30 @@ class Registrasi2Fragment : Fragment(), View.OnClickListener, AdapterView.OnItem
     }
 
     private fun getDataSpinner(gender: String): String = gender
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val cYear = calendar.get(Calendar.YEAR)
+        val cMonth = calendar.get(Calendar.MONTH)
+        val cDay = calendar.get(Calendar.DATE)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(), { _, year, month, day ->
+                calendar.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.tieTglLahir.setText(dateFormat.format(calendar.time))
+
+            }, cYear, cMonth, cDay)
+
+        datePickerDialog.show()
+    }
+
+    companion object {
+        const val EMAIL = "email"
+        const val FULLNAME = "fullname"
+        const val TITLE_ONE = "title_one"
+        const val TITLE_TWO = "title_two"
+        const val NO_STR = "no_str"
+        const val ROLE = "role"
+    }
 }

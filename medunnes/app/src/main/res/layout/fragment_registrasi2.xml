@@ -46,7 +46,8 @@
                     app:endIconMode="custom"
                     app:endIconTint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
+                    app:startIconTint="@color/grey"
+                    app:endIconDrawable="@drawable/calendar">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tie_tgl_lahir"
                         android:layout_width="match_parent"
@@ -127,6 +128,7 @@
                         android:hint="@string/masukkan_tempat_praktik"
                         android:inputType="text"/>
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi1Binding
-import kotlinx.coroutines.launch
 
 class Registrasi1Fragment : Fragment(), View.OnClickListener {
 
