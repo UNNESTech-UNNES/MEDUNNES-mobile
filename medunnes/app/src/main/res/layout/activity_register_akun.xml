@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/material_on_primary_disabled"
-            android:src="@drawable/back_button" />
+            android:src="@drawable/back_button"
+            android:contentDescription="@string/button_back" />
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
@@ -106,11 +107,59 @@
             </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
             <TextView
-                android:id="@+id/tv_alamat"
+                android:id="@+id/tv_tgl_lahir_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/til_nama_lengkap"
                 app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                android:text="@string/tanggal_lahir"/>
+
+            <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                android:id="@+id/til_tgl_lahir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tgl_lahir_title"
+                app:endIconMode="custom"
+                app:endIconTint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:startIconTint="@color/grey"
+                app:endIconDrawable="@drawable/calendar">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_tgl_lahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dd_mm_yyyy"
+                    android:inputType="datetime"/>
+            </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_kelamin_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_tgl_lahir"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                android:text="@string/jenis_kelamin"/>
+            <Spinner
+                android:id="@+id/spinner_kelamin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_kelamin_title"
+                app:layout_constraintBottom_toTopOf="@id/tv_alamat"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:id="@+id/tv_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/spinner_kelamin"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
                 android:textStyle="bold"
                 android:text="@string/alamat"/>
 

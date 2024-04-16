@@ -29,7 +29,7 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:id="@+id/tv_no_telepon_title"
+                    android:id="@+id/tv_tgl_lahir_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_telepon_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tgl_lahir_title"
                     app:endIconMode="custom"
                     app:endIconTint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"

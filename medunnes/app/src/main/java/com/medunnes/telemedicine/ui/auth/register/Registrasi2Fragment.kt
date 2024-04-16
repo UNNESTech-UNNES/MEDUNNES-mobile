@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
@@ -103,7 +102,6 @@ class Registrasi2Fragment :
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         dataSpinner = "${parent?.getItemAtPosition(pos)}"
         getDataSpinner(dataSpinner)
-        Toast.makeText(context, dataSpinner, Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
