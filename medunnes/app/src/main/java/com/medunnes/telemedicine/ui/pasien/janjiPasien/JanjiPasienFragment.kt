@@ -14,6 +14,7 @@ import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
+import com.medunnes.telemedicine.utils.SpesialisBottomSheetDialog
 
 class JanjiPasienFragment : Fragment() {
     private var _binding: FragmentBuatJanjiBinding? = null
@@ -31,6 +32,10 @@ class JanjiPasienFragment : Fragment() {
 
         getDoctorList("")
         searchMessanger()
+
+        binding.tvSpesialisasiAll.setOnClickListener {
+            showBottomSheet()
+        }
 
         return binding.root
     }
@@ -71,6 +76,11 @@ class JanjiPasienFragment : Fragment() {
                     false
                 }
         }
+    }
+
+    private fun showBottomSheet() {
+        val bsd = SpesialisBottomSheetDialog()
+        childFragmentManager.let { bsd.show(it, SpesialisBottomSheetDialog.TAG) }
     }
 
     private fun makeToast(message: String) {
