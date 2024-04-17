@@ -179,4 +179,14 @@
     <string name="buat_janji">Buat Janji</string>
     <string name="pendidikan">Pendidikan</string>
     <string name="pendidikan_dokter">Pendidikan dokter</string>
+    <string name="button_back">button back</string>
+    <string name="pilih_spesialisasi_dokter">Pilih spesialisasi dokter</string>
+    <string name="spesialisasi_desk">Pilih spesialisasi dokter sesuai dengan kebutuhanmu</string>
+    <string name="dokter_umum">Dokter Umum</string>
+    <string name="kandungan">Kandungan</string>
+    <string name="psikiater">Psikiater</string>
+    <string name="kulit_dan_kelamin">Kulit dan Kelamin</string>
+    <string name="lihat_selengkapnya">lihat selengkapnya</string>
+    <string name="cari_dokter_umum">Cari Dokter Umum</string>
+    <string name="rekomendasi_dokter_desk">Berikut ada rekomendasi dokter umum yang mungkin sesuai dengan kebutuhanmu</string>
 </resources>
