@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/secondary_color"
         android:importantForAccessibility="no"
         android:minHeight="48dp"
-        android:src="@drawable/arrow_up"
+        android:src="@drawable/arrow_down"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,14 +27,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_kandungan"
         android:layout_marginTop="8dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_anak"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -46,15 +47,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_dokter_umum"
         app:layout_constraintEnd_toStartOf="@id/cv_psikiater"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_kandungan"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -66,15 +67,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_kandungan"
         app:layout_constraintEnd_toStartOf="@id/cv_kulit_dan_kelamin"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_psikiater"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -86,15 +87,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_psikiater"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_kulit_dan_kelamin"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -155,14 +156,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_saraf"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_dokter_umum"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -174,15 +176,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_anak"
         app:layout_constraintEnd_toStartOf="@id/cv_jantung"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_saraf"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -194,16 +196,16 @@
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_saraf"
         app:layout_constraintEnd_toStartOf="@id/cv_bedah"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_jantung"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
-            android:importantForAccessibility="no" />
+            android:background="@color/white"
+            android:importantForAccessibility="no"
+            android:src="@drawable/stethoscope" />
 
     </androidx.cardview.widget.CardView>
 
@@ -214,15 +216,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_jantung"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_bedah"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -283,14 +285,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_mata"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_penyakit_dalam"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -302,15 +305,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_penyakit_dalam"
         app:layout_constraintEnd_toStartOf="@id/cv_tht"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_mata"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -322,15 +325,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_mata"
         app:layout_constraintEnd_toStartOf="@id/cv_gigi"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_tht"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
@@ -342,15 +345,15 @@
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_tht"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        app:cardCornerRadius="50dp">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp">
 
         <ImageButton
             android:id="@+id/btn_gigi"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/stethoscope"
-            android:backgroundTintMode="screen"
+            android:background="@color/white"
             android:importantForAccessibility="no" />
 
     </androidx.cardview.widget.CardView>
