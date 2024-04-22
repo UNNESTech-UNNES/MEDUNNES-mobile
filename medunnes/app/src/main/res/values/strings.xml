@@ -14,7 +14,7 @@
     <string name="layanan_utama">Layanan Utama</string>
     <string name="konsultasi_sekarang">Konsultasi\nSekarang</string>
     <string name="janji_pasien">Buat Janji\ndengan Dokter</string>
-    <string name="konsultasi_dokter">Konsultasi\ndengan Pasien</string>
+    <string name="konsultasi_dokter">Konsultasi dengan Pasien</string>
     <string name="janji_dokter">Janji dengan\nPasien</string>
     <string name="daftar_sebagai">Daftar Sebagai</string>
     <string name="layanan">Layanan</string>
@@ -189,4 +189,12 @@
     <string name="lihat_selengkapnya">lihat selengkapnya</string>
     <string name="cari_dokter_umum">Cari Dokter Umum</string>
     <string name="rekomendasi_dokter_desk">Berikut ada rekomendasi dokter umum yang mungkin sesuai dengan kebutuhanmu</string>
+    <string name="anak">Anak</string>
+    <string name="syaraf">Syaraf</string>
+    <string name="jantung">Jantung</string>
+    <string name="bedah">Bedah</string>
+    <string name="penyakit_dalam">Penyakit Dalam</string>
+    <string name="mata">Mata</string>
+    <string name="tht">THT</string>
+    <string name="gigi">Gigi</string>
 </resources>

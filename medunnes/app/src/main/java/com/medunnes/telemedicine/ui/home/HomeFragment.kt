@@ -73,8 +73,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         with(binding) {
-            cvKonsultasi.setOnClickListener(this@HomeFragment)
-            cvBuatJanji.setOnClickListener(this@HomeFragment)
+            btnKonsultasi.setOnClickListener(this@HomeFragment)
+            btnBuatJanji.setOnClickListener(this@HomeFragment)
             tvArtikelAll.setOnClickListener(this@HomeFragment)
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
@@ -177,7 +177,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         with(binding) {
              when(view) {
-                 cvKonsultasi -> {
+                 btnKonsultasi -> {
                      lifecycleScope.launch {
                          val role = viewModel.getUserRole()
                          if (role == 1) {
@@ -192,7 +192,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                      }
                  }
 
-                 cvBuatJanji -> {
+                 btnBuatJanji -> {
                      lifecycleScope.launch {
                          val role = viewModel.getUserRole()
                          if (role == 1) {

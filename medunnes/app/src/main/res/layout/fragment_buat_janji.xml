@@ -79,8 +79,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_dokter_umum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/cv_kandungan"
@@ -90,20 +90,20 @@
 
                         <ImageButton
                             android:id="@+id/btn_dokter_umum"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:background="@color/white"
                             android:importantForAccessibility="no"
                             android:scaleType="centerInside"
-                            android:src="@drawable/stethoscope" />
+                            android:src="@drawable/stethoscop" />
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_kandungan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
                         app:layout_constraintStart_toEndOf="@id/cv_dokter_umum"
                         app:layout_constraintEnd_toStartOf="@id/cv_psikiater"
@@ -111,18 +111,19 @@
 
                         <ImageButton
                             android:id="@+id/btn_kandungan"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:backgroundTintMode="screen"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/stethoscope" />
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baby" />
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_psikiater"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
                         app:layout_constraintStart_toEndOf="@id/cv_kandungan"
                         app:layout_constraintEnd_toStartOf="@id/cv_kulit_dan_kelamin"
@@ -130,18 +131,20 @@
 
                         <ImageButton
                             android:id="@+id/btn_psikiater"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/stethoscope"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/brain"
                             android:backgroundTintMode="screen"
+                            android:scaleType="centerInside"
                             android:importantForAccessibility="no" />
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_kulit_dan_kelamin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
                         app:layout_constraintStart_toEndOf="@id/cv_psikiater"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -149,10 +152,12 @@
 
                         <ImageButton
                             android:id="@+id/btn_kulit_dan_kelamin"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/stethoscope"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/skin"
                             android:backgroundTintMode="screen"
+                            android:scaleType="centerInside"
                             android:importantForAccessibility="no" />
 
                     </androidx.cardview.widget.CardView>

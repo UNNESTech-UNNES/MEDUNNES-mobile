@@ -21,8 +21,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_dokter_umum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toBottomOf="@id/btn_expand"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_kandungan"
@@ -31,10 +31,12 @@
         app:cardCornerRadius="30dp">
 
         <ImageButton
-            android:id="@+id/btn_anak"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:id="@+id/btn_dokter_umum"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/stethoscop"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -42,8 +44,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_kandungan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_dokter_umum"
         app:layout_constraintEnd_toStartOf="@id/cv_psikiater"
@@ -52,9 +54,11 @@
 
         <ImageButton
             android:id="@+id/btn_kandungan"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/uterus"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -62,8 +66,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_psikiater"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_kandungan"
         app:layout_constraintEnd_toStartOf="@id/cv_kulit_dan_kelamin"
@@ -72,9 +76,11 @@
 
         <ImageButton
             android:id="@+id/btn_psikiater"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/brain"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -82,8 +88,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_kulit_dan_kelamin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_dokter_umum"
         app:layout_constraintStart_toEndOf="@id/cv_psikiater"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,9 +98,11 @@
 
         <ImageButton
             android:id="@+id/btn_kulit_dan_kelamin"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/skin"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -150,8 +158,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_anak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toBottomOf="@id/tv_dokter_umum_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_saraf"
@@ -160,10 +168,12 @@
         app:cardCornerRadius="30dp">
 
         <ImageButton
-            android:id="@+id/btn_dokter_umum"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:id="@+id/btn_anak"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/baby"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -171,8 +181,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_saraf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_anak"
         app:layout_constraintEnd_toStartOf="@id/cv_jantung"
@@ -181,9 +191,11 @@
 
         <ImageButton
             android:id="@+id/btn_saraf"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/neuron"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -191,8 +203,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_jantung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_saraf"
         app:layout_constraintEnd_toStartOf="@id/cv_bedah"
@@ -201,18 +213,20 @@
 
         <ImageButton
             android:id="@+id/btn_jantung"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
             android:background="@color/white"
+            android:scaleType="centerInside"
             android:importantForAccessibility="no"
-            android:src="@drawable/stethoscope" />
+            android:src="@drawable/hearth" />
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_bedah"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_anak"
         app:layout_constraintStart_toEndOf="@id/cv_jantung"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,9 +235,11 @@
 
         <ImageButton
             android:id="@+id/btn_bedah"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/surgery"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -238,7 +254,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_anak"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/dokter_umum"
+        android:text="@string/anak"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -250,7 +266,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_saraf"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/kandungan"
+        android:text="@string/syaraf"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -262,7 +278,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_jantung"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/psikiater"
+        android:text="@string/jantung"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -274,13 +290,13 @@
         app:layout_constraintEnd_toEndOf="@id/cv_bedah"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/kulit_dan_kelamin"
+        android:text="@string/bedah"
         tools:ignore="SmallSp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_penyakit_dalam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toBottomOf="@id/tv_anak"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/cv_mata"
@@ -290,9 +306,11 @@
 
         <ImageButton
             android:id="@+id/btn_penyakit_dalam"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/organ"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -300,8 +318,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_mata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_penyakit_dalam"
         app:layout_constraintEnd_toStartOf="@id/cv_tht"
@@ -310,9 +328,11 @@
 
         <ImageButton
             android:id="@+id/btn_mata"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/eye"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -320,8 +340,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_tht"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_mata"
         app:layout_constraintEnd_toStartOf="@id/cv_gigi"
@@ -330,9 +350,11 @@
 
         <ImageButton
             android:id="@+id/btn_tht"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ent"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -340,8 +362,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_gigi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="@id/cv_penyakit_dalam"
         app:layout_constraintStart_toEndOf="@id/cv_tht"
         app:layout_constraintEnd_toEndOf="parent"
@@ -350,9 +372,11 @@
 
         <ImageButton
             android:id="@+id/btn_gigi"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/stethoscope"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/tooth"
+            android:scaleType="centerInside"
             android:background="@color/white"
             android:importantForAccessibility="no" />
 
@@ -367,7 +391,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_penyakit_dalam"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/dokter_umum"
+        android:text="@string/penyakit_dalam"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -379,7 +403,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_mata"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/kandungan"
+        android:text="@string/mata"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -391,7 +415,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_tht"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/psikiater"
+        android:text="@string/tht"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -403,7 +427,7 @@
         app:layout_constraintEnd_toEndOf="@id/cv_gigi"
         android:layout_marginTop="4dp"
         android:textSize="10sp"
-        android:text="@string/kulit_dan_kelamin"
+        android:text="@string/gigi"
         tools:ignore="SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
