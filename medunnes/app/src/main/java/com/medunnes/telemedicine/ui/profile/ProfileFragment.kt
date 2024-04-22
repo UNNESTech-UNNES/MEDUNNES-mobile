@@ -69,7 +69,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
-                    tvUserRole.text = it.user.jenisKelamin
+                    tvUserRole.text = it.dokter.spesialis
                     tvUserEmail.text = it.user.email
                     tvUserPraktik.text = it.dokter.tempatPraktik
                 }

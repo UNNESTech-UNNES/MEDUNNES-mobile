@@ -7,15 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 
-class Registrasi3Fragment : Fragment(), View.OnClickListener {
+class Registrasi3Fragment : Fragment(),
+    View.OnClickListener,
+        AdapterView.OnItemSelectedListener
+{
 
     private var _binding: FragmentRegistrasi3Binding? = null
     private val binding get() = _binding!!
@@ -23,6 +29,7 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
+    private lateinit var dataSpinner: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +38,11 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
         _binding = FragmentRegistrasi3Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setSpinner()
         with(binding) {
             tvMasuk.setOnClickListener(this@Registrasi3Fragment)
             btnRegister.setOnClickListener(this@Registrasi3Fragment)
         }
-
-        Log.d("DATE", getData(DATE))
 
         return root
     }
@@ -77,6 +83,8 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
                                             getData(TITLE_TWO),
                                             getData(NO_STR),
                                             getData(PLACE),
+                                            "${binding.tiePendidikan.text}",
+                                            dataSpinner,
                                             register(user).toInt()
                                         )
                                     )
@@ -98,6 +106,18 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun setSpinner() {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.spesialissasi,
+            android.R.layout.simple_spinner_item
+        ).also { arrayAdapter ->
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerSpesialisasi.adapter = arrayAdapter
+        }
+        binding.spinnerSpesialisasi.onItemSelectedListener = this
+    }
+
     companion object {
         const val EMAIL = "email"
         const val FULLNAME = "fullname"
@@ -109,5 +129,16 @@ class Registrasi3Fragment : Fragment(), View.OnClickListener {
         const val ADDRESS = "address"
         const val PLACE = "place"
         const val ROLE = "role"
+    }
+
+    private fun getDataSpinner(gender: String): String = gender
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        dataSpinner = "${parent?.getItemAtPosition(pos)}"
+        //getDataSpinner(dataSpinner)
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        // DO NOTHING
     }
 }

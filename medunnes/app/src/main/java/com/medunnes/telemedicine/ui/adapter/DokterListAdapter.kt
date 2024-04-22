@@ -12,7 +12,7 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
         fun bind(dokter: UserAndDokter) {
             with(binding) {
                 tvPatientName.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
-                tvDoctorRole.text = dokter.dokter.tempatPraktik
+                tvDoctorRole.text = dokter.dokter.spesialis
                 tvDoctorExperience.text = dokter.user.tanggalLahir
             }
         }

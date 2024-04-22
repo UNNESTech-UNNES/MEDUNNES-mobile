@@ -48,6 +48,21 @@
         <item>Perempuan</item>
     </string-array>
 
+    <string-array name="spesialissasi">
+        <item>Dokter umum</item>
+        <item>Kandungan</item>
+        <item>Psikiater</item>
+        <item>Kulit dan kelamin</item>
+        <item>Anak</item>
+        <item>Saraf</item>
+        <item>Jantung</item>
+        <item>Bedah</item>
+        <item>Penyakit dalam</item>
+        <item>Mata</item>
+        <item>THT</item>
+        <item>Gigi</item>
+    </string-array>
+
     <!-- Dummy Data List -->
     <string-array name="film_judul">
         <item>Hacksaw Ridge</item>
@@ -197,4 +212,6 @@
     <string name="mata">Mata</string>
     <string name="tht">THT</string>
     <string name="gigi">Gigi</string>
+    <string name="spesialis">Spesialis</string>
+    <string name="masukkan_spesialis">Masukkan spesialis</string>
 </resources>

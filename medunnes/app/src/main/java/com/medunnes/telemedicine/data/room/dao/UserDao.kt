@@ -36,6 +36,10 @@ interface UserDao {
     @Query("SELECT * FROM user JOIN dokter ON user.user_id = dokter.user_id")
     fun getAllDokter(): LiveData<List<UserAndDokter>>
 
+    @Transaction
+    @Query("SELECT * FROM user JOIN dokter ON user.user_id = dokter.user_id WHERE spesialis = :speciality")
+    fun getDokterBySpeciality(speciality: String): LiveData<List<UserAndDokter>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDokter(dokter: Dokter)
 

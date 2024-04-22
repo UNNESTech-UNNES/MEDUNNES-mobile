@@ -102,6 +102,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                                 it.dokter.titelBelakang,
                                 it.dokter.noStr,
                                 "${tieEditRumahSakit.text}",
+                                it.dokter.pendidikan,
+                                it.dokter.spesialis,
                                 userId
                             )
                         )

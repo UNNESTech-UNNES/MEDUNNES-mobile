@@ -25,10 +25,57 @@
             android:layout_marginBottom="20dp">
 
             <TextView
-                android:id="@+id/tv_no_telepon_title"
+                android:id="@+id/tv_no_spesialis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                android:text="@string/spesialis"/>
+
+            <Spinner
+                android:id="@+id/spinner_spesialisasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_no_spesialis"
+                app:layout_constraintBottom_toTopOf="@id/tv_pendidikan"
+                android:layout_marginTop="8dp"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:id="@+id/tv_pendidikan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/spinner_spesialisasi"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                android:text="@string/spesialis"/>
+
+            <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                android:id="@+id/til_pendidikan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_pendidikan"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:startIconTint="@color/grey">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_pendidikan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/masukkan_spesialis"
+                    android:inputType="text"/>
+            </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_no_telepon_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_pendidikan"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textStyle="bold"
                 android:text="@string/no_telepon"/>

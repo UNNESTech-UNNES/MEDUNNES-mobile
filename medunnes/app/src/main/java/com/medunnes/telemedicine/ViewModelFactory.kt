@@ -11,6 +11,7 @@ import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
 import com.medunnes.telemedicine.ui.home.HomeFragment
 import com.medunnes.telemedicine.ui.home.HomeViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
+import com.medunnes.telemedicine.ui.pasien.janjiPasien.JanjiPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -21,6 +22,7 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
         HomeViewModel::class.java -> HomeViewModel(repository)
         ProfileViewModel::class.java -> ProfileViewModel(repository)
         LayananPasienViewModel::class.java -> LayananPasienViewModel(repository)
+        JanjiPasienViewModel::class.java -> JanjiPasienViewModel(repository)
 
         else -> throw IllegalArgumentException("Uknown view model class: " + modelClass.name)
     } as T

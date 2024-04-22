@@ -1,7 +1,6 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +13,8 @@ import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import com.medunnes.telemedicine.utils.SpesialisBottomSheetDialog
 
-class JanjiPasienFragment : Fragment() {
+class JanjiPasienFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentBuatJanjiBinding? = null
     private val binding get() = _binding!!
     private val listDokter = ArrayList<UserAndDokter>()
@@ -36,6 +34,11 @@ class JanjiPasienFragment : Fragment() {
         binding.tvSpesialisasiAll.setOnClickListener {
             showBottomSheet()
         }
+
+        with(binding) {
+            btnKandungan.setOnClickListener(this@JanjiPasienFragment)
+        }
+
 
         return binding.root
     }
@@ -58,8 +61,17 @@ class JanjiPasienFragment : Fragment() {
             listDokter.clear()
             listDokter.addAll(data)
             val filteredData = listDokter.filter {
-                it.user.fullname.lowercase().contains(filter) } as ArrayList<UserAndDokter>
+                it.user.fullname.lowercase().contains(filter)
+            } as ArrayList<UserAndDokter>
             showRecyclerList(filteredData)
+        }
+    }
+
+    private fun getDoctorBySpeciality(speciality: String) {
+        viewModel.getDokterBySpeciality(speciality).observe(viewLifecycleOwner) { data ->
+            listDokter.clear()
+            listDokter.addAll(data)
+            showRecyclerList(listDokter)
         }
     }
 
@@ -72,7 +84,6 @@ class JanjiPasienFragment : Fragment() {
                     searchBar.setText(searchView.text)
                     searchView.hide()
                     getDoctorList("${searchView.text}")
-                    Log.d("GET", "${getDoctorList("${searchView.text}")}")
                     false
                 }
         }
@@ -81,9 +92,24 @@ class JanjiPasienFragment : Fragment() {
     private fun showBottomSheet() {
         val bsd = SpesialisBottomSheetDialog()
         childFragmentManager.let { bsd.show(it, SpesialisBottomSheetDialog.TAG) }
+
+        bsd.setOnItemClickCallback(object : SpesialisBottomSheetDialog.OnItemClickCallback {
+            override fun onItemClicked(speciality: String) {
+                getDoctorBySpeciality(speciality)
+            }
+
+        })
     }
 
     private fun makeToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(view: View?) {
+        with(binding) {
+            when(view) {
+                btnKandungan -> getDoctorBySpeciality("Kandungan")
+            }
+        }
     }
 }
