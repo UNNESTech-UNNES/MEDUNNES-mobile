@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
@@ -36,7 +37,10 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
         }
 
         with(binding) {
+            btnDokterUmum.setOnClickListener(this@JanjiPasienFragment)
             btnKandungan.setOnClickListener(this@JanjiPasienFragment)
+            btnPsikiater.setOnClickListener(this@JanjiPasienFragment)
+            btnKulitDanKelamin.setOnClickListener(this@JanjiPasienFragment)
         }
 
 
@@ -95,10 +99,24 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
 
         bsd.setOnItemClickCallback(object : SpesialisBottomSheetDialog.OnItemClickCallback {
             override fun onItemClicked(speciality: String) {
-                getDoctorBySpeciality(speciality)
+                doctorBySpecialityFragment("Saraf")
+                bsd.dismiss()
             }
 
         })
+    }
+
+    private fun doctorBySpecialityFragment(speciality: String) {
+        val doctorBySpecilityFragment = DoctorBySpecialityFragment()
+        val fragmentManager = parentFragmentManager
+        val bundle = Bundle()
+        bundle.putString(DoctorBySpecialityFragment.SPECIALITY, speciality)
+        doctorBySpecilityFragment.arguments = bundle
+
+        fragmentManager.beginTransaction()
+            .replace(R.id.pasien_frame_container, doctorBySpecilityFragment, DoctorBySpecialityFragment::class.java.simpleName)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun makeToast(message: String) {
@@ -108,7 +126,10 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         with(binding) {
             when(view) {
-                btnKandungan -> getDoctorBySpeciality("Kandungan")
+                btnDokterUmum -> doctorBySpecialityFragment("Dokter Umum")
+                btnKandungan -> doctorBySpecialityFragment("Kandungan")
+                btnPsikiater -> doctorBySpecialityFragment("Psikiater")
+                btnKulitDanKelamin -> doctorBySpecialityFragment("Kulit dan Kelamin")
             }
         }
     }

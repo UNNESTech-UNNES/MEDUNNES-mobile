@@ -196,6 +196,7 @@
     <string name="pendidikan_dokter">Pendidikan dokter</string>
     <string name="button_back">button back</string>
     <string name="pilih_spesialisasi_dokter">Pilih spesialisasi dokter</string>
+    <string name="spesialis_dokter">Spesialis %1s</string>
     <string name="spesialisasi_desk">Pilih spesialisasi dokter sesuai dengan kebutuhanmu</string>
     <string name="dokter_umum">Dokter Umum</string>
     <string name="kandungan">Kandungan</string>

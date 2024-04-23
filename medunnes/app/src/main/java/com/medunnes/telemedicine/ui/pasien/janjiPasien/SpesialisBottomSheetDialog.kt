@@ -34,6 +34,7 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
 
         with(binding) {
             btnSaraf.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnExpand.setOnClickListener(this@SpesialisBottomSheetDialog)
         }
         return binding.root
     }
@@ -50,6 +51,7 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
         }
         return super.onCreateDialog(savedInstanceState)
     }
+
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -74,7 +76,7 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
                 btnPsikiater -> onItemClickCallback.onItemClicked("Psikiater")
                 btnKulitDanKelamin -> onItemClickCallback.onItemClicked("Kulit dan Kelamin")
                 btnSaraf -> onItemClickCallback.onItemClicked("Saraf")
-
+                btnExpand -> dismiss()
                 else -> Log.d("CLICK", "no respond")
             }
         }

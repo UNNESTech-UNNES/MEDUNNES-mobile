@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressed()
         }
     }
 
