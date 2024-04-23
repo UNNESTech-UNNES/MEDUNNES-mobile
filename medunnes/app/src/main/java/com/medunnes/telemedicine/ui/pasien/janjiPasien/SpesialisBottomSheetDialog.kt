@@ -32,10 +32,8 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
         binding = BottomSheetKonsultasiBinding.inflate(inflater, container, false)
         binding.root.setBackgroundColor(resources.getColor(R.color.secondary_color))
 
-        with(binding) {
-            btnSaraf.setOnClickListener(this@SpesialisBottomSheetDialog)
-            btnExpand.setOnClickListener(this@SpesialisBottomSheetDialog)
-        }
+        itemClicked()
+
         return binding.root
     }
 
@@ -63,6 +61,24 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
         this.onItemClickCallback = onItemClickCallback
     }
 
+    private fun itemClicked() {
+        with(binding) {
+            btnDokterUmum.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnKandungan.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnPsikiater.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnKulitDanKelamin.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnAnak.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnSaraf.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnJantung.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnBedah.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnPenyakitDalam.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnMata.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnTht.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnGigi.setOnClickListener(this@SpesialisBottomSheetDialog)
+            btnExpand.setOnClickListener(this@SpesialisBottomSheetDialog)
+        }
+    }
+
 
     companion object {
         const val TAG = "SpesialisBottomSheetDialog"
@@ -75,7 +91,14 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
                 btnKandungan -> onItemClickCallback.onItemClicked("Kandungan")
                 btnPsikiater -> onItemClickCallback.onItemClicked("Psikiater")
                 btnKulitDanKelamin -> onItemClickCallback.onItemClicked("Kulit dan Kelamin")
+                btnAnak -> onItemClickCallback.onItemClicked("Anak")
                 btnSaraf -> onItemClickCallback.onItemClicked("Saraf")
+                btnJantung -> onItemClickCallback.onItemClicked("Jantung")
+                btnBedah -> onItemClickCallback.onItemClicked("Bedah")
+                btnPenyakitDalam -> onItemClickCallback.onItemClicked("Penyakit Dalam")
+                btnMata -> onItemClickCallback.onItemClicked("Mata")
+                btnTht -> onItemClickCallback.onItemClicked("THT")
+                btnGigi -> onItemClickCallback.onItemClicked("Gigi")
                 btnExpand -> dismiss()
                 else -> Log.d("CLICK", "no respond")
             }

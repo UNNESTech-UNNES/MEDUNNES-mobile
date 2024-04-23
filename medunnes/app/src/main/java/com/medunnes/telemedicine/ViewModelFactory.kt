@@ -3,15 +3,12 @@ package com.medunnes.telemedicine
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.di.Injection
 import com.medunnes.telemedicine.ui.auth.login.LoginViewModel
 import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
-import com.medunnes.telemedicine.ui.home.HomeFragment
 import com.medunnes.telemedicine.ui.home.HomeViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import com.medunnes.telemedicine.ui.pasien.janjiPasien.JanjiPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -22,7 +19,6 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
         HomeViewModel::class.java -> HomeViewModel(repository)
         ProfileViewModel::class.java -> ProfileViewModel(repository)
         LayananPasienViewModel::class.java -> LayananPasienViewModel(repository)
-        JanjiPasienViewModel::class.java -> JanjiPasienViewModel(repository)
 
         else -> throw IllegalArgumentException("Uknown view model class: " + modelClass.name)
     } as T

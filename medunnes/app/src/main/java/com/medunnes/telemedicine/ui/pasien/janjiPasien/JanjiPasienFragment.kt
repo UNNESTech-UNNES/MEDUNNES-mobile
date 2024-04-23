@@ -54,7 +54,16 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
 
         dokterAdapter.setOnItemClickCallback(object : DokterListAdapter.OnItemClickCallback {
             override fun onItemClicked(dokter: UserAndDokter) {
-                makeToast("Fitur belum tersedia")
+                val buatJanjiDokterFragment = BuatJanjiDokterFragment()
+                val fragmentManager = parentFragmentManager
+                val bundle = Bundle()
+                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.user.id)
+                buatJanjiDokterFragment.arguments = bundle
+
+                fragmentManager.beginTransaction()
+                    .replace(R.id.pasien_frame_container, buatJanjiDokterFragment, BuatJanjiDokterFragment::class.java.simpleName)
+                    .addToBackStack(null)
+                    .commit()
             }
 
         })
@@ -68,14 +77,6 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
                 it.user.fullname.lowercase().contains(filter)
             } as ArrayList<UserAndDokter>
             showRecyclerList(filteredData)
-        }
-    }
-
-    private fun getDoctorBySpeciality(speciality: String) {
-        viewModel.getDokterBySpeciality(speciality).observe(viewLifecycleOwner) { data ->
-            listDokter.clear()
-            listDokter.addAll(data)
-            showRecyclerList(listDokter)
         }
     }
 
@@ -99,7 +100,7 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
 
         bsd.setOnItemClickCallback(object : SpesialisBottomSheetDialog.OnItemClickCallback {
             override fun onItemClicked(speciality: String) {
-                doctorBySpecialityFragment("Saraf")
+                doctorBySpecialityFragment(speciality)
                 bsd.dismiss()
             }
 
