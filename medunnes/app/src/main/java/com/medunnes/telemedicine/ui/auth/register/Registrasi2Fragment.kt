@@ -28,6 +28,7 @@ class Registrasi2Fragment :
         ViewModelFactory.getInstance(requireContext())
     }
     private lateinit var dataSpinner: String
+    private var datePicked = "date"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +71,7 @@ class Registrasi2Fragment :
             putString(Registrasi3Fragment.GENDER, dataSpinner)
 
             with(binding) {
-                putString(Registrasi3Fragment.DATE, "${tieTglLahir.text}")
+                putString(Registrasi3Fragment.DATE, datePicked)
                 putString(Registrasi3Fragment.ADDRESS, "${tieAlamat.text}")
                 putString(Registrasi3Fragment.PLACE, "${tieAlamat.text}")
             }
@@ -121,10 +122,14 @@ class Registrasi2Fragment :
                 calendar.set(year, month, day)
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 binding.tieTglLahir.setText(dateFormat.format(calendar.time))
-
+                datePicked = "${calendar.time}"
             }, cYear, cMonth, cDay)
 
         datePickerDialog.show()
+    }
+
+    private fun setDatePicked(date: String) {
+        datePicked = date
     }
 
     companion object {

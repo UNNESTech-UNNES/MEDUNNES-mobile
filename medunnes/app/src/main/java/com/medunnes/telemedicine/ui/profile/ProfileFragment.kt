@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,9 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
 import com.medunnes.telemedicine.ui.main.MainActivity
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ProfileFragment : Fragment(), View.OnClickListener {
 

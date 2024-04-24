@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,9 @@ import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityProfileEditBinding
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityProfileEditBinding
@@ -19,6 +23,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
     private val viewModel by viewModels<ProfileViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
+    private var datePicked: String = "date"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             btnBack.setOnClickListener(this@ProfileEditActivity)
             btnEditSend.setOnClickListener(this@ProfileEditActivity)
             ivEditPicture.setOnClickListener(this@ProfileEditActivity)
+            tilEditTglLahir.setEndIconOnClickListener { showDatePicker() }
         }
 
         lifecycleScope.launch {
@@ -62,6 +69,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private suspend fun getUserProfileData() {
+        val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
         viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
             data.forEach {
                 with(binding) {
@@ -87,7 +95,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditEmail.text}",
                         it.user.password,
                         "${tieEditNamaLengkap.text}",
-                        "${tieEditTglLahir.text}",
+                        datePicked,
                         it.user.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
@@ -123,7 +131,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditEmail.text}",
                         it.password,
                         "${tieEditNamaLengkap.text}",
-                        "${tieEditTglLahir.text}",
+                        datePicked,
                         it.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
@@ -135,6 +143,25 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val cYear = calendar.get(Calendar.YEAR)
+        val cMonth = calendar.get(Calendar.MONTH)
+        val cDay = calendar.get(Calendar.DATE)
+
+        val datePickerDialog = DatePickerDialog(
+            this, { _, year, month, day ->
+                calendar.set(year, month, day)
+                val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                binding.tieEditTglLahir.setText(fullDateFormat.format(calendar.time))
+                datePicked = "${calendar.time}"
+                Log.d("DATE", datePicked)
+
+            }, cYear, cMonth, cDay)
+
+        datePickerDialog.show()
     }
 
     override fun onClick(view: View) {
