@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.medunnes.telemedicine.data.model.Dokter
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.room.dao.UserDao
 
-@Database(entities = [User::class, Dokter::class], version = 5, exportSchema = false)
+@Database(entities = [User::class, Dokter::class, Janji::class], version = 6, exportSchema = false)
 abstract class UserDatabase: RoomDatabase() {
 
     abstract fun userDao(): UserDao

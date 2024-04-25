@@ -7,17 +7,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.Messanger
 import com.medunnes.telemedicine.databinding.FragmentJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.JanjiDokterAdapter
+import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
+import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 
 class JanjiDokterFragment : Fragment() {
     private var _binding: FragmentJanjiDokterBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<LayananDokterViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     private val listMessanger = ArrayList<Messanger>()
+    private val listJanji = ArrayList<Janji>()
     private val filteredListMessanger = ArrayList<Messanger>()
 
     override fun onCreateView(
@@ -26,24 +36,30 @@ class JanjiDokterFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentJanjiDokterBinding.inflate(inflater, container, false)
-
-        showRecycleList(getMessangerList())
-        searchMessanger()
+        showRecycleList()
+        //searchMessanger()
 
         return binding.root
     }
 
-    private fun showRecycleList(listAdapter: ArrayList<Messanger>) {
+    private fun showRecycleList() {
+        getAllJanji()
         binding.rvMessageList.layoutManager = LinearLayoutManager(context)
-        val messangersAdapter = JanjiDokterAdapter(listAdapter)
+        val messangersAdapter = JanjiDokterAdapter(listJanji)
         binding.rvMessageList.adapter = messangersAdapter
 
         messangersAdapter.setOnItemClickCallback(object : JanjiDokterAdapter.OnItemClickCallback {
-            override fun onItemClicked(messanger: Messanger) {
+            override fun onItemClicked(janji: Janji) {
                 Toast.makeText(context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
             }
 
         })
+    }
+
+    private fun getAllJanji() {
+        viewModel.getJanji().observe(viewLifecycleOwner) { data ->
+            listJanji.addAll(data)
+        }
     }
 
     private fun getMessangerList() : ArrayList<Messanger> {
@@ -77,7 +93,7 @@ class JanjiDokterFragment : Fragment() {
                     searchView.hide()
                     filteredListMessanger.clear()
                     filteredListMessanger.addAll(getFilteredMessangerList("${searchView.text}"))
-                    showRecycleList(filteredListMessanger)
+                    showRecycleList()
                     Log.d("GET", "${getFilteredMessangerList("${searchView.text}")}")
                     false
                 }

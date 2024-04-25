@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.medunnes.telemedicine.data.model.Dokter
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 
@@ -45,4 +46,10 @@ interface UserDao {
 
     @Update
     fun updateUserAndDokter(dokter: Dokter)
+
+    @Query("SELECT * FROM janji")
+    fun getAllJanji(): LiveData<List<Janji>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertJanjiPasien(janji: Janji)
 }

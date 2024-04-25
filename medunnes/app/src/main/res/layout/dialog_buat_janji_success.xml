@@ -8,7 +8,6 @@
         android:id="@+id/cv_buat_janji_alert"
         android:layout_width="270dp"
         android:layout_height="270dp"
-        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/sixth_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout

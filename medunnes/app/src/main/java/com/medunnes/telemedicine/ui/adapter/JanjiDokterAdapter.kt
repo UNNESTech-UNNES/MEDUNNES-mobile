@@ -5,20 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.Messanger
 import com.medunnes.telemedicine.databinding.MessageListBinding
 
-class JanjiDokterAdapter(private val messangerList: ArrayList<Messanger>) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
+class JanjiDokterAdapter(private val janjiList: ArrayList<Janji>) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: MessageListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(messanger: Messanger) {
+        fun bind(janji: Janji) {
             with(binding) {
-                tvPatientName.text = messanger.namaMessanger
-                tvPatientSession.text = "Sesi: " + messanger.sesiMessanger
-                tvMessangerStatus.text  = messanger.startusMessanger
-                Glide.with(itemView.context)
-                    .load(messanger.fotoMessanger)
-                    .into(ivMessanger)
-                    .clearOnDetach()
+                tvPatientName.text = janji.pasienId.toString()
+                tvPatientSession.text = "Sesi: " + janji.sesi
+                tvMessangerStatus.text  = janji.dokterId.toString()
             }
         }
 
@@ -30,22 +27,22 @@ class JanjiDokterAdapter(private val messangerList: ArrayList<Messanger>) : Recy
     }
 
     override fun getItemCount(): Int {
-        Log.d("SIZE", messangerList.size.toString())
-        return messangerList.size
+        Log.d("SIZE", janjiList.size.toString())
+        return janjiList.size
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(messangerList[position])
+        holder.bind(janjiList[position])
 
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(messangerList[position])
+            onItemClickCallback.onItemClicked(janjiList[position])
         }
     }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(messanger: Messanger)
+        fun onItemClicked(janji: Janji)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.Sesi
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.SesiAdapter
@@ -34,6 +35,9 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private var datePicked: String = "date"
     private var listSesi = ArrayList<Sesi>()
 
+    private val bjcd = BuatJanjiConfirmationDialog()
+    private val bjsd = BuatJanjiSuccessDialog()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -41,13 +45,16 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         _binding = FragmentBuatJanjiDokterBinding.inflate(inflater, container, false)
         val doctorId = arguments?.getInt(DOCTOR_ID)
         Log.d("ID", "$doctorId")
-        if (doctorId != null) setDoctorProfile(doctorId)
+        setDoctorProfile()
 
         lifecycleScope.launch { setPasienData() }
 
         with(binding) {
             tilJanjiTanggal.setEndIconOnClickListener { showDatePicker() }
             btnBuatJanjiDokter.setOnClickListener(this@BuatJanjiDokterFragment)
+            tvFormIsEmpty.visibility = View.VISIBLE
+            tvSesiPicked.visibility = View.GONE
+            tvDatePicked.visibility = View.GONE
         }
 
         Log.d("SESI", "${getSesiList()}")
@@ -56,18 +63,21 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun setDoctorProfile(doctorId: Int) {
-        viewModel.getDokterById(doctorId).observe(viewLifecycleOwner) { data ->
-            data.forEach {
-                with(binding) {
-                    tvDoctorName.text = getString(R.string.nama_and_titel,
-                        it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang
-                    )
-                    tvDoctorExperience.text = it.dokter.pendidikan
-                    tvDoctorSpeciality.text = it.dokter.spesialis
+    private fun setDoctorProfile() {
+        val doctorId = arguments?.getInt(DOCTOR_ID)?.toInt()
+        doctorId?.let {
+            viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
+                data.forEach {
+                    with(binding) {
+                        tvDoctorName.text = getString(R.string.nama_and_titel,
+                            it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang
+                        )
+                        tvDoctorExperience.text = it.dokter.pendidikan
+                        tvDoctorSpeciality.text = it.dokter.spesialis
+                    }
                 }
-            }
 
+            }
         }
     }
 
@@ -75,6 +85,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
                 binding.tiePasienPicked.setText(it.fullname)
+                binding.tiePasienIdPicked.setText("${it.id}")
             }
         }
     }
@@ -93,6 +104,9 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                 binding.tieSesiDate.setText(dateFormat.format(calendar.time))
                 binding.tvDatePicked.setText(fullDateFormat.format(calendar.time))
                 datePicked = "${calendar.time}"
+
+                binding.tvFormIsEmpty.visibility = View.GONE
+                binding.tvDatePicked.visibility = View.VISIBLE
 
             }, cYear, cMonth, cDay)
 
@@ -114,7 +128,11 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
         sesiAdapter.setOnItemClickCallback(object : SesiAdapter.OnItemClickCallback {
             override fun onClick(sesi: Sesi) {
-                binding.tvSesiPicked.text = getString(R.string.no_sesi, sesi.noSesi)
+                with(binding) {
+                    tvFormIsEmpty.visibility = View.GONE
+                    tvSesiPicked.visibility = View.VISIBLE
+                    tvSesiPicked.text = getString(R.string.no_sesi, sesi.noSesi)
+                }
             }
 
         })
@@ -131,15 +149,31 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         return listSesi
     }
 
-    private val bjcd = BuatJanjiConfirmationDialog()
-    private val bjsd = BuatJanjiSuccessDialog()
-
     private fun postJanji(isConfirm: Boolean) {
+        val doctorId = arguments?.getInt(DOCTOR_ID)
         if (isConfirm) {
             bjcd.dismiss()
-            showSuccessDialog()
+            try {
+                doctorId?.let {
+                    viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
+                        data.forEach {
+                            viewModel.insertJanjiPasien(Janji(
+                                0,
+                                datePicked,
+                                "${binding.tvSesiPicked.text}",
+                                "Menunggu",
+                                it.dokter.dokterId,
+                                "${binding.tiePasienIdPicked.text}".toInt()
+                                ))
+                        }
+                    }
+                }
+                showSuccessDialog()
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
         } else {
-            Toast.makeText(context, "Tidak Dikonfirmasi", Toast.LENGTH_SHORT).show()
+            bjcd.dismiss()
         }
     }
 

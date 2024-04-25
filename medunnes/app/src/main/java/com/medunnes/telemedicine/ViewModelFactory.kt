@@ -7,6 +7,7 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.di.Injection
 import com.medunnes.telemedicine.ui.auth.login.LoginViewModel
 import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
+import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
 import com.medunnes.telemedicine.ui.home.HomeViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
@@ -19,6 +20,7 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
         HomeViewModel::class.java -> HomeViewModel(repository)
         ProfileViewModel::class.java -> ProfileViewModel(repository)
         LayananPasienViewModel::class.java -> LayananPasienViewModel(repository)
+        LayananDokterViewModel::class.java -> LayananDokterViewModel(repository)
 
         else -> throw IllegalArgumentException("Uknown view model class: " + modelClass.name)
     } as T

@@ -236,4 +236,6 @@
     <string name="sukses">SUKSES!</string>
     <string name="buat_janji_sukses">Menunggu persetujuan dokter tersebut</string>
     <string name="ok">OK</string>
+    <string name="buat_janji_form_is_empty">*silahkan pilih tanggal dan sesi</string>
+    <string name="id">ID</string>
 </resources>

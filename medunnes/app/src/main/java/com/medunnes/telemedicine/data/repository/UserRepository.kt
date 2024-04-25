@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.model.Dokter
+import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.room.dao.UserDao
@@ -28,6 +29,8 @@ class UserRepository private constructor(
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
     fun getDokterBySpeciality(speciality: String): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
+    fun getJanji(): LiveData<List<Janji>> = mUserDao.getAllJanji()
+    fun insertJanjiPasien(janji: Janji) = executorService.execute { mUserDao.insertJanjiPasien(janji) }
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
     suspend fun getLoginStatus(): Boolean = authDataStore.isLogin()
