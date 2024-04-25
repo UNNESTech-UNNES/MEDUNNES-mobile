@@ -26,9 +26,7 @@ class JanjiDokterFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
-    private val listMessanger = ArrayList<Messanger>()
     private val listJanji = ArrayList<Janji>()
-    private val filteredListMessanger = ArrayList<Messanger>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +35,6 @@ class JanjiDokterFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentJanjiDokterBinding.inflate(inflater, container, false)
         showRecycleList()
-        //searchMessanger()
 
         return binding.root
     }
@@ -62,41 +59,20 @@ class JanjiDokterFragment : Fragment() {
         }
     }
 
-    private fun getMessangerList() : ArrayList<Messanger> {
-        val fotoMessanger = resources.getStringArray(R.array.poster_film)
-        val namaMessanger = resources.getStringArray(R.array.film_judul)
-        val sesiMessanger = resources.getStringArray(R.array.rilis_tahun)
-        val statusMessanger = resources.getStringArray(R.array.rilis_tahun)
-        listMessanger.clear()
-        if (namaMessanger.isNotEmpty()) {
-            for (i in namaMessanger.indices) {
-                val messanger = Messanger(fotoMessanger[i], namaMessanger[i], sesiMessanger[i], statusMessanger[i])
-                listMessanger.add(messanger)
-            }
-        }
-        return listMessanger
-    }
-
-    private fun getFilteredMessangerList(filter: String): ArrayList<Messanger> {
-        return getMessangerList().filter {
-            it.namaMessanger.lowercase().contains(filter.lowercase())
-        } as ArrayList<Messanger>
-    }
-
-    private fun searchMessanger() {
-        with(binding) {
-            searchView.setupWithSearchBar(searchBar)
-            searchView
-                .editText
-                .setOnEditorActionListener { _, _, _ ->
-                    searchBar.setText(searchView.text)
-                    searchView.hide()
-                    filteredListMessanger.clear()
-                    filteredListMessanger.addAll(getFilteredMessangerList("${searchView.text}"))
-                    showRecycleList()
-                    Log.d("GET", "${getFilteredMessangerList("${searchView.text}")}")
-                    false
-                }
-        }
-    }
+//    private fun searchMessanger() {
+//        with(binding) {
+//            searchView.setupWithSearchBar(searchBar)
+//            searchView
+//                .editText
+//                .setOnEditorActionListener { _, _, _ ->
+//                    searchBar.setText(searchView.text)
+//                    searchView.hide()
+//                    filteredListMessanger.clear()
+//                    filteredListMessanger.addAll(getFilteredMessangerList("${searchView.text}"))
+//                    showRecycleList()
+//                    Log.d("GET", "${getFilteredMessangerList("${searchView.text}")}")
+//                    false
+//                }
+//        }
+//    }
 }

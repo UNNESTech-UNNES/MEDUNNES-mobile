@@ -31,9 +31,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
             app:layout_constraintBottom_toTopOf="@id/cv_form_registrasi"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
             android:textStyle="bold"
             android:textSize="20sp"
             android:text="@string/daftar_akun"/>
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_register_akun"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="30dp"
             android:paddingHorizontal="16dp">
