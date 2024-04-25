@@ -12,18 +12,15 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Sesi
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiDokterBinding
-import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.SesiAdapter
+import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
+import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -134,6 +131,33 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         return listSesi
     }
 
+    private val bjcd = BuatJanjiConfirmationDialog()
+    private val bjsd = BuatJanjiSuccessDialog()
+
+    private fun postJanji(isConfirm: Boolean) {
+        if (isConfirm) {
+            bjcd.dismiss()
+            showSuccessDialog()
+        } else {
+            Toast.makeText(context, "Tidak Dikonfirmasi", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showConfirmationDialog() {
+        bjcd.show(childFragmentManager, BuatJanjiConfirmationDialog.TAG)
+
+        bjcd.setOnItemClickCallback(object : BuatJanjiConfirmationDialog.OnItemClickCallback {
+            override fun onItemClicked(isConfirm: Boolean) {
+                postJanji(isConfirm)
+            }
+
+        })
+    }
+
+    private fun showSuccessDialog() {
+        bjsd.show(childFragmentManager, BuatJanjiSuccessDialog.TAG)
+    }
+
     companion object {
         const val DOCTOR_ID = "doctor_id"
     }
@@ -142,7 +166,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         with(binding) {
             when(view) {
                 tilJanjiTanggal -> showDatePicker()
-                btnBuatJanjiDokter -> Toast.makeText(context, datePicked, Toast.LENGTH_SHORT).show()
+                btnBuatJanjiDokter -> showConfirmationDialog()
             }
         }
     }

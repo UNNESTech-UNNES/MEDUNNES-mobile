@@ -13,6 +13,7 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
+import com.medunnes.telemedicine.ui.dialog.SpesialisBottomSheetDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 
 class JanjiPasienFragment : Fragment(), View.OnClickListener {

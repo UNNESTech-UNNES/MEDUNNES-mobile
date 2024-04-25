@@ -229,4 +229,11 @@
     <string name="pilih_sesi">Pilih Sesi</string>
     <string name="no_sesi">Sesi %1d</string>
     <string name="sesi_pukul">%1d - %2d</string>
+    <string name="buat_janji_sekarang">Buat janji sekarang?</string>
+    <string name="alert_buat_janji_deskripsi">Data yang sudah disimpan tidak bisa disubah</string>
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
+    <string name="sukses">SUKSES!</string>
+    <string name="buat_janji_sukses">Menunggu persetujuan dokter tersebut</string>
+    <string name="ok">OK</string>
 </resources>

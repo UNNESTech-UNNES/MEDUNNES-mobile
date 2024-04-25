@@ -1,4 +1,4 @@
-package com.medunnes.telemedicine.ui.pasien.janjiPasien
+package com.medunnes.telemedicine.ui.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,23 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.BottomSheetKonsultasiBinding
-import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 
 class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var binding: BottomSheetKonsultasiBinding
-    private val viewModel by viewModels<LayananPasienViewModel> {
-        ViewModelFactory.getInstance(requireContext())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
