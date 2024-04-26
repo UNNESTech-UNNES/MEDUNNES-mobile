@@ -8,6 +8,7 @@ data class JanjiDanPasien(
     val user: User,
 
     @Relation(
+        entity = Janji::class,
         parentColumn = "user_id",
         entityColumn = "pasien_id",
     )

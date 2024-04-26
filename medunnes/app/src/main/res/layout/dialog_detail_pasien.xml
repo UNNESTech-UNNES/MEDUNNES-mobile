@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/sixth_color">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_pasien_pictrue"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:id="@+id/iv_pasien_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/person"/>
+            </androidx.cardview.widget.CardView>
+
+            <TableLayout
+                android:id="@+id/tbl_pasien_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cv_pasien_pictrue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginTop="16dp">
+
+                <TableRow
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/tv_pasien_name_title"
+                        android:gravity="start"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="@string/nama_lenkap"/>
+
+                    <TextView
+                        android:id="@+id/tv_pasien_name"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="@string/nama_lenkap"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/tv_pasien_sesi_title"
+                        android:gravity="start"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="@string/sesi"/>
+
+                    <TextView
+                        android:id="@+id/tv_pasien_sesi"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="@string/no_sesi"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:gravity="center"
+
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/tv_pasien_tanggal_title"
+                        android:gravity="start"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="@string/tanggal_sesi"/>
+
+                    <TextView
+                        android:id="@+id/tv_pasien_tanggal"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="@string/format_tangagl"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/tv_pasien_telepon_title"
+                        android:gravity="start"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="@string/no_telepon"/>
+
+                    <TextView
+                        android:id="@+id/tv_pasien_telepon"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="@string/no_telepon"
+                        android:textSize="16sp" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/btn_setuju"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tbl_pasien_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_tidak_setuju"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/setujui"/>
+
+            <Button
+                android:id="@+id/btn_tidak_setuju"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tbl_pasien_detail"
+                app:layout_constraintStart_toEndOf="@id/btn_setuju"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/red"
+                android:text="@string/tolak"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

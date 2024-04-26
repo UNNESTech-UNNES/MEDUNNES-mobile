@@ -24,6 +24,7 @@ import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
@@ -32,7 +33,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var datePicked: String = "date"
+    private lateinit var datePicked: String
     private var listSesi = ArrayList<Sesi>()
 
     private val bjcd = BuatJanjiConfirmationDialog()

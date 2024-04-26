@@ -9,7 +9,7 @@
     <string name="masuk_daftar">Masuk/Daftar</string>
     <string name="user_location">User\'s location</string>
     <string name="greeting">Selamat %1$s,</string>
-    <string name="nama_and_titel">%1$s %2$s, %3$s.</string>
+    <string name="nama_and_titel">%1$s %2$s, %3$s</string>
     <string name="greetings">Salam sehat dan sejahtera</string>
     <string name="layanan_utama">Layanan Utama</string>
     <string name="konsultasi_sekarang">Konsultasi\nSekarang</string>
@@ -240,4 +240,7 @@
     <string name="id">ID</string>
     <string name="tanggal_sesi">Tanggal Sesi</string>
     <string name="masukkan_pendidikan">Masukkan Asal Kampus</string>
+    <string name="sesi">Sesi</string>
+    <string name="setujui">Setujui</string>
+    <string name="tolak">Tolak</string>
 </resources>

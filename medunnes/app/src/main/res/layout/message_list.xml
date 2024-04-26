@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="@id/tv_patient_name"
         app:layout_constraintBottom_toBottomOf="@id/cv_messanger_picture"
         android:textSize="10sp"
-        android:textColor="@color/blue"
+        android:textColor="@color/fifth_color"
         android:text="@string/status"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
