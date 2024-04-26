@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,7 +23,6 @@ import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
@@ -65,7 +63,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setDoctorProfile() {
-        val doctorId = arguments?.getInt(DOCTOR_ID)?.toInt()
+        val doctorId = arguments?.getInt(DOCTOR_ID)
         doctorId?.let {
             viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
                 data.forEach {
@@ -162,7 +160,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                                 0,
                                 datePicked,
                                 "${binding.tvSesiPicked.text}",
-                                "Menunggu",
+                                "Belum disetujui",
                                 it.dokter.dokterId,
                                 "${binding.tiePasienIdPicked.text}".toInt()
                                 ))

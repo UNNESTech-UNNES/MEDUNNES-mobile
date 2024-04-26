@@ -26,9 +26,6 @@
             android:label="@string/title_activity_layanan_dokter"
             android:theme="@style/Theme.MedUnnes" />
         <activity
-            android:name=".ui.dokter.janji.JanjiActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.auth.register.RegisterAkunActivity"
             android:exported="false" />
         <activity

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.medunnes.telemedicine.databinding.FragmentJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.JanjiDokterAdapter
 import com.medunnes.telemedicine.ui.dialog.PasienDetailDialog
 import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
-import com.medunnes.telemedicine.ui.pasien.janjiPasien.BuatJanjiDokterFragment
 import kotlinx.coroutines.launch
 
 class JanjiDokterFragment : Fragment() {
@@ -30,7 +28,6 @@ class JanjiDokterFragment : Fragment() {
     }
 
     private lateinit var messangersAdapter: JanjiDokterAdapter
-    private val listJanji = ArrayList<Janji>()
     private val listJanjiAndPasien = ArrayList<JanjiDanPasien>()
     private val pdd = PasienDetailDialog()
 
@@ -38,9 +35,9 @@ class JanjiDokterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentJanjiDokterBinding.inflate(inflater, container, false)
-        lifecycleScope.launch { getJanjiByDokterId() }
+        lifecycleScope.launch { getJanjiByDokterId("") }
+        searchPasien()
 
         return binding.root
     }
@@ -105,22 +102,19 @@ class JanjiDokterFragment : Fragment() {
             .commit()
     }
 
-//    private fun getAllJanji() {
-//        viewModel.getJanji().observe(viewLifecycleOwner) { data ->
-//            listJanji.addAll(data)
-//            showRecycleList(listJanji)
-//        }
-//    }
-
-    private suspend fun getJanjiByDokterId() {
+    private suspend fun getJanjiByDokterId(filter: String) {
         val uid = viewModel.getUserLogin()
         viewModel.getUserAndDokterId(uid).observe(viewLifecycleOwner) { data ->
             data.forEach {
                 val dokterId = it.dokter.dokterId
                 viewModel.getJanjiAndPasien(dokterId).observe(viewLifecycleOwner) { data ->
                     if (!data.isNullOrEmpty()) {
+                        listJanjiAndPasien.clear()
                         listJanjiAndPasien.addAll(data)
-                        showRecycleList(listJanjiAndPasien)
+                        val filteredData = listJanjiAndPasien.filter { name ->
+                            name.user.fullname.lowercase().contains(filter)
+                        } as ArrayList<JanjiDanPasien>
+                        showRecycleList(filteredData)
                     } else {
                         Log.d("DATA", "Data is empty")
                     }
@@ -129,20 +123,17 @@ class JanjiDokterFragment : Fragment() {
         }
     }
 
-//    private fun searchMessanger() {
-//        with(binding) {
-//            searchView.setupWithSearchBar(searchBar)
-//            searchView
-//                .editText
-//                .setOnEditorActionListener { _, _, _ ->
-//                    searchBar.setText(searchView.text)
-//                    searchView.hide()
-//                    filteredListMessanger.clear()
-//                    filteredListMessanger.addAll(getFilteredMessangerList("${searchView.text}"))
-//                    showRecycleList()
-//                    Log.d("GET", "${getFilteredMessangerList("${searchView.text}")}")
-//                    false
-//                }
-//        }
-//    }
+    private fun searchPasien() {
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener { _, _, _ ->
+                    searchBar.setText(searchView.text)
+                    searchView.hide()
+                    lifecycleScope.launch { getJanjiByDokterId("${searchView.text}") }
+                    false
+                }
+        }
+    }
 }

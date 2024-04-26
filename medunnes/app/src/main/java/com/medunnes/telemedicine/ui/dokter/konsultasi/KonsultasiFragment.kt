@@ -80,6 +80,7 @@ class KonsultasiFragment : Fragment() {
                     showRecycleList(filteredListPatient)
                     Log.d("GET", "${getFilteredMessangerList("${searchView.text}")}")
                     false
+
                 }
         }
     }
