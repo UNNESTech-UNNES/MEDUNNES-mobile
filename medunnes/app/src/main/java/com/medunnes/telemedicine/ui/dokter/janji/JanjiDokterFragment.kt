@@ -103,7 +103,6 @@ class JanjiDokterFragment : Fragment() {
         val fragmentManager = parentFragmentManager
         fragmentManager.beginTransaction()
             .replace(R.id.dokter_frame_container, janjiDokterFragment, JanjiDokterFragment::class.java.simpleName)
-            .addToBackStack(null)
             .commit()
     }
 
@@ -115,7 +114,7 @@ class JanjiDokterFragment : Fragment() {
                 viewModel.getJanjiAndPasien(dokterId).observe(viewLifecycleOwner) { data ->
                     Log.d("PASIEN", data.toString())
                     if (!data.isNullOrEmpty()) {
-                        //listJanjiAndPasien.clear()
+                        listJanjiAndPasien.clear()
                         listJanjiAndPasien.addAll(data)
                         val filteredData = listJanjiAndPasien.filter { name ->
                             name.user.fullname.lowercase().contains(filter)

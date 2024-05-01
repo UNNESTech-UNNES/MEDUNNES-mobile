@@ -8,4 +8,9 @@
     </style>
 
     <style name="Theme.MedUnnes" parent="Base.Theme.MedUnnes" />
+    
+    <style name="BottomNavigationView">
+        <item name="android:textSize">10sp</item>
+        <item name="iconSize">12dp</item>
+    </style>
 </resources>
