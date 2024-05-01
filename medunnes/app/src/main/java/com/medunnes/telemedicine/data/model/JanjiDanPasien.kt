@@ -5,12 +5,10 @@ import androidx.room.Relation
 
 data class JanjiDanPasien(
     @Embedded
-    val user: User,
-
+    val janji: Janji,
     @Relation(
-        entity = Janji::class,
-        parentColumn = "user_id",
-        entityColumn = "pasien_id",
+        parentColumn = "pasien_id",
+        entityColumn = "user_id",
     )
-    val janji: Janji
+    val user: User
 )

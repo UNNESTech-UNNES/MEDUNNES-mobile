@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,173 +9,177 @@
     android:paddingStart="32dp"
     android:paddingEnd="32dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_user_profile"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/grey_less_less"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="20dp">
+        android:layout_height="wrap_content">
 
-        <TableLayout
-            android:id="@+id/tbl_profile"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_user_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:stretchColumns="1"
-            android:padding="20dp">
+            android:backgroundTint="@color/grey_less_less"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp">
 
-            <TableRow>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_user_picture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:cardCornerRadius="50dp">
-
-                    <ImageView
-                        android:id="@+id/iv_user_picture"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/person"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:stretchColumns="0,1,2,3,4,5,6"
-                    android:layout_marginStart="8dp">
-
-                    <TableRow>
-                        <TextView
-                            android:id="@+id/tv_user_name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:maxLines="2"
-                            android:text="@string/nama_lenkap"/>
-
-                        <TextView
-                            android:id="@+id/tv_profile_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="@string/edit_profil"
-                            android:textSize="12sp" />
-                    </TableRow>
-
-                    <TableRow android:layout_width="match_parent">
-
-                        <TextView
-                            android:id="@+id/tv_user_role"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/status"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/tv_user_name"
-                            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
-                    </TableRow>
-                </TableLayout>
-            </TableRow>
-
-            <TableRow
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:padding="8dp"
-                android:background="@color/grey_less">
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/email"/>
-
-                <TextView
-                    android:id="@+id/tv_user_email"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="10sp"
-                    android:text="@string/nama_lenkap" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tbl_tempat_praktik"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:padding="8dp"
-                android:background="@color/grey_less">
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/medical"/>
-
-                <TextView
-                    android:id="@+id/tv_user_praktik"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="10sp"
-                    android:text="@string/nama_lenkap" />
-            </TableRow>
-        </TableLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_faq"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
-        app:layout_constraintStart_toStartOf="@id/cv_user_profile"
-        app:layout_constraintTop_toBottomOf="@id/cv_user_profile"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/grey_less">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp">
-            <ImageView
-                android:id="@+id/iv_faq"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_faq"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="16dp"/>
-
-            <TextView
-                android:id="@+id/tv_faq"
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:id="@+id/tbl_profile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/iv_faq"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="32dp"
-                android:textSize="16sp"
-                android:text="@string/faq"/>
-
-            <ImageView
-                android:id="@+id/iv_faq_action"
-                android:layout_width="30dp"
-                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/next_button"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:stretchColumns="1"
+                android:padding="20dp">
 
-    </androidx.cardview.widget.CardView><androidx.cardview.widget.CardView
+                <TableRow>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_user_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:cardCornerRadius="50dp">
+
+                        <ImageView
+                            android:id="@+id/iv_user_picture"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:src="@drawable/person"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:stretchColumns="0,1,2,3,4,5,6"
+                        android:layout_marginStart="8dp">
+
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/tv_user_name"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:maxLines="2"
+                                android:text="@string/nama_lenkap"/>
+
+                            <TextView
+                                android:id="@+id/tv_profile_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="@string/edit_profil"
+                                android:textSize="12sp" />
+                        </TableRow>
+
+                        <TableRow android:layout_width="match_parent">
+
+                            <TextView
+                                android:id="@+id/tv_user_role"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="@id/tv_user_name"
+                                app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+                        </TableRow>
+                    </TableLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="8dp"
+                    android:background="@color/grey_less">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/email"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_email"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="10sp"
+                        android:text="@string/nama_lenkap" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tbl_tempat_praktik"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="8dp"
+                    android:background="@color/grey_less">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/medical"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_praktik"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="10sp"
+                        android:text="@string/nama_lenkap" />
+                </TableRow>
+            </TableLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_faq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
+            app:layout_constraintStart_toStartOf="@id/cv_user_profile"
+            app:layout_constraintTop_toBottomOf="@id/cv_user_profile"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/grey_less">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+                <ImageView
+                    android:id="@+id/iv_faq"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/hint"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_faq"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="16dp"/>
+
+                <TextView
+                    android:id="@+id/tv_faq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/iv_faq"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="32dp"
+                    android:textSize="16sp"
+                    android:text="@string/faq"/>
+
+                <ImageView
+                    android:id="@+id/iv_faq_action"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/next_button"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView><androidx.cardview.widget.CardView
         android:id="@+id/cv_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -184,7 +188,7 @@
         app:layout_constraintStart_toStartOf="@id/cv_user_profile"
         app:layout_constraintTop_toBottomOf="@id/cv_faq"
         app:cardElevation="10dp"
-    app:cardCornerRadius="10dp"
+        app:cardCornerRadius="10dp"
         android:backgroundTint="@color/grey_less">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -272,53 +276,55 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_delete_account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
-        app:layout_constraintStart_toStartOf="@id/cv_user_profile"
-        app:layout_constraintTop_toBottomOf="@id/cv_languange"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/grey_less">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_delete_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
-            <ImageView
-                android:id="@+id/iv_delete_account"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_delete_account"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/logout"/>
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@id/cv_user_profile"
+            app:layout_constraintStart_toStartOf="@id/cv_user_profile"
+            app:layout_constraintTop_toBottomOf="@id/cv_languange"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/grey_less">
 
-            <TextView
-                android:id="@+id/tv_delete_account"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/iv_delete_account"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="32dp"
-                android:textSize="16sp"
-                android:text="@string/hapus_akun"/>
+                android:padding="12dp">
+                <ImageView
+                    android:id="@+id/iv_delete_account"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_delete_account"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/logout"/>
 
-            <ImageView
-                android:id="@+id/iv_delete_account_action"
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/next_button"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_delete_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/iv_delete_account"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="32dp"
+                    android:textSize="16sp"
+                    android:text="@string/hapus_akun"/>
 
-    </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/iv_delete_account_action"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/next_button"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

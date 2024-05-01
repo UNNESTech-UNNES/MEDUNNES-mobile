@@ -8,7 +8,7 @@ import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 
 class LayananDokterViewModel(private val repository: UserRepository) : ViewModel() {
-    fun getJanji(): LiveData<List<Janji>> = repository.getJanji()
+    fun getJanji(): LiveData<List<JanjiDanPasien>> = repository.getJanji()
     fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>> = repository.getJanjiAndPasien(dokter_id)
     fun getUserAndDokterId(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
     fun updateJanjiPasien(janji: Janji) = repository.updateJanjiPasien(janji)

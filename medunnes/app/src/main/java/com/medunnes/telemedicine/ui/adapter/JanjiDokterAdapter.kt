@@ -1,19 +1,13 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
-import com.medunnes.telemedicine.data.model.Messanger
 import com.medunnes.telemedicine.databinding.MessageListBinding
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.Locale
 
 class JanjiDokterAdapter(private val janjiList: ArrayList<JanjiDanPasien>) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
@@ -22,20 +16,22 @@ class JanjiDokterAdapter(private val janjiList: ArrayList<JanjiDanPasien>) : Rec
             with(binding) {
                 val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                val date = dateFormat.parse(janjiDanPasien.janji.dateTime)
-                val status = janjiDanPasien.janji.status
 
-                if (status == "Telah disetujui") {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.blue))
-                } else if (status == "Tidak disetujui") {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.red))
-                } else {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.fifth_color))
+                with(janjiDanPasien) {
+                    val date = dateFormat.parse(janji.dateTime)
+                    val status = janji.status
+                    tvPatientName.text = janjiDanPasien.user.fullname
+                    if (status == "Telah disetujui") {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.blue))
+                    } else if (status == "Tidak disetujui") {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.red))
+                    } else {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.fifth_color))
+                    }
+                    tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/${janji.sesi}"
+                    tvMessangerStatus.text  = janji.status
                 }
 
-                tvPatientName.text = janjiDanPasien.user.fullname
-                tvPatientSession.text = "${fullDateFormat.format(date)}/${janjiDanPasien.janji.sesi}"
-                tvMessangerStatus.text  = janjiDanPasien.janji.status
             }
         }
 

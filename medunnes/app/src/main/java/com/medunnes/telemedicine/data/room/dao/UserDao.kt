@@ -49,7 +49,7 @@ interface UserDao {
     fun updateUserAndDokter(dokter: Dokter)
 
     @Query("SELECT * FROM janji")
-    fun getAllJanji(): LiveData<List<Janji>>
+    fun getAllJanji(): LiveData<List<JanjiDanPasien>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertJanjiPasien(janji: Janji)
@@ -59,6 +59,7 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM janji " +
-            "JOIN user ON user.user_id = janji.pasien_id WHERE dokter_id = :dokter_id")
+            "JOIN user ON janji.pasien_id = user.user_id " +
+            "WHERE janji.dokter_id = :dokter_id")
     fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>>
 }
