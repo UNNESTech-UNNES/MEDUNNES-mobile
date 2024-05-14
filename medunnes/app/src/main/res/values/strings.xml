@@ -243,4 +243,9 @@
     <string name="sesi">Sesi</string>
     <string name="setujui">Setujui</string>
     <string name="tolak">Tolak</string>
+    <string name="data_empty">Tidak ada data yang ditemukan</string>
+    <string name="tambah_pasien_hint">Isi form di bawah untuk menambahkan pasien</string>
+    <string name="detail_informasi">Detail Informasi</string>
+    <string name="hubungan">Hubungan</string>
+    <string name="unggah_kartu_identitas">Unggah Foto KTP/KIA/Paspor Pasien</string>
 </resources>

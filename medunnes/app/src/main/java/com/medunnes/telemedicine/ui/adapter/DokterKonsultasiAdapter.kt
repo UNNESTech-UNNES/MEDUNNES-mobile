@@ -5,21 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.databinding.KonsultasiPasienListBinding
 import com.medunnes.telemedicine.databinding.PasienKonsultasiListBinding
 
 class DokterKonsultasiAdapter(private val dokterList: List<UserAndDokter>): RecyclerView.Adapter<DokterKonsultasiAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: PasienKonsultasiListBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: KonsultasiPasienListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(dokter: UserAndDokter) {
             with(binding) {
-                tvDoctorName.text = dokter.user.fullname
-                tvDoctorRole.text= dokter.dokter.tempatPraktik
-                tvDoctorExperience.text = dokter.dokter.noStr
+                tvDokterNama.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
+                tvDokterSpesialis.text= dokter.dokter.spesialis
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = PasienKonsultasiListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = KonsultasiPasienListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

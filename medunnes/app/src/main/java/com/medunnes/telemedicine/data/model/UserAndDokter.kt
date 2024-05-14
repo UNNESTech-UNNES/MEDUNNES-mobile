@@ -8,7 +8,6 @@ data class UserAndDokter(
     val user: User,
 
     @Relation(
-        entity = Dokter::class,
         parentColumn = "user_id",
         entityColumn = "user_id"
     )

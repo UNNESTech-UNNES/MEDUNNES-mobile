@@ -40,7 +40,7 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
 
     private fun setProfileData() {
         arguments?.getInt(DOKTER_ID)?.let {
-            viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
+            viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
                 data.forEach {
                     with(binding) {
                         tvUserFullname.text = getString(R.string.nama_and_titel,

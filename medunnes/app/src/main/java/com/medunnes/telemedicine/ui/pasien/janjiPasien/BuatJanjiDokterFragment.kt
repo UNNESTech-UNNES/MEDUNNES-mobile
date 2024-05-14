@@ -54,6 +54,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             tvFormIsEmpty.visibility = View.VISIBLE
             tvSesiPicked.visibility = View.GONE
             tvDatePicked.visibility = View.GONE
+            tilPasien.setEndIconOnClickListener { selectPatient() }
         }
 
         Log.d("SESI", "${getSesiList()}")
@@ -65,7 +66,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private fun setDoctorProfile() {
         val doctorId = arguments?.getInt(DOCTOR_ID)
         doctorId?.let {
-            viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
+            viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
                 data.forEach {
                     with(binding) {
                         tvDoctorName.text = getString(R.string.nama_and_titel,
@@ -154,7 +155,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             bjcd.dismiss()
             try {
                 doctorId?.let {
-                    viewModel.getDokterById(it).observe(viewLifecycleOwner) { data ->
+                    viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
                         data.forEach {
                             viewModel.insertJanjiPasien(Janji(
                                 0,
@@ -187,6 +188,17 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         })
     }
 
+    private fun selectPatient() {
+        val tambahPasienFragment = TambahPasienFragment()
+        val fragmentManager = parentFragmentManager
+
+        fragmentManager.beginTransaction()
+            .replace(R.id.pasien_frame_container, tambahPasienFragment, TambahPasienFragment::class.java.simpleName)
+            .addToBackStack(null)
+            .commit()
+
+    }
+
     private fun showSuccessDialog() {
         bjsd.show(childFragmentManager, BuatJanjiSuccessDialog.TAG)
     }
@@ -200,6 +212,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             when(view) {
                 tilJanjiTanggal -> showDatePicker()
                 btnBuatJanjiDokter -> showConfirmationDialog()
+                tilPasien -> selectPatient()
             }
         }
     }

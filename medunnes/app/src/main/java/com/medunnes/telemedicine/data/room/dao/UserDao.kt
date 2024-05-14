@@ -58,8 +58,20 @@ interface UserDao {
     fun updateJanjiPasien(janji: Janji)
 
     @Transaction
+    @Query("SELECT * FROM dokter " +
+            "JOIN user ON dokter.user_id = user.user_id " +
+            "WHERE dokter.dokterId = :dokterId")
+    fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>>
+
+    @Transaction
     @Query("SELECT * FROM janji " +
             "JOIN user ON janji.pasien_id = user.user_id " +
             "WHERE janji.dokter_id = :dokter_id")
     fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>>
+
+    @Transaction
+    @Query("SELECT * FROM janji " +
+            "JOIN user ON janji.pasien_id = user.user_id " +
+            "WHERE janji.pasien_id = :user_id")
+    fun getDokterByJanji(user_id: Int): LiveData<List<JanjiDanPasien>>
 }
