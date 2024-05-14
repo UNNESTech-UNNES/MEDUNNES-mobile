@@ -57,7 +57,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             tilPasien.setEndIconOnClickListener { selectPatient() }
         }
 
-        Log.d("SESI", "${getSesiList()}")
         showRecycleList()
 
         return binding.root
