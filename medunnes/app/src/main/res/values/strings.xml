@@ -164,6 +164,7 @@
     <string name="hubungan">Hubungan</string>
     <string name="unggah_kartu_identitas">Unggah Foto KTP/KIA/Paspor Pasien</string>
     <string name="simpan">Simpan</string>
+    <string name="tambah_pasien">+ Pasien</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>
