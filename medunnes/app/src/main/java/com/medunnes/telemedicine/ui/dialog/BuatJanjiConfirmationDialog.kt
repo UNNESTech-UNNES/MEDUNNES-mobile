@@ -23,6 +23,7 @@ class BuatJanjiConfirmationDialog : DialogFragment(), View.OnClickListener {
         with(binding) {
             btnYes.setOnClickListener(this@BuatJanjiConfirmationDialog)
             btnNo.setOnClickListener(this@BuatJanjiConfirmationDialog)
+            tvAlertDescription.text = arguments?.getString(DIALOG)
         }
         return binding.root
     }
@@ -39,6 +40,7 @@ class BuatJanjiConfirmationDialog : DialogFragment(), View.OnClickListener {
 
     companion object {
         const val TAG = "BuatJanjiConfirmationDialog"
+        const val DIALOG = "dialog"
     }
 
     override fun onClick(view: View) {

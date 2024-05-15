@@ -29,10 +29,32 @@
         android:text="@string/detail_informasi"/>
 
     <TextView
-        android:id="@+id/tv_pasien_nama_title"
+        android:id="@+id/tv_pasien_hubungan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_informasi"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/fifth_color"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="@string/hubungan"/>
+
+    <Spinner
+        android:id="@+id/spinner_pasien_hubungan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_pasien_hubungan"
+        app:layout_constraintBottom_toTopOf="@id/tv_pasien_nama_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:id="@+id/tv_pasien_nama_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/spinner_pasien_hubungan"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
         android:textColor="@color/fifth_color"
@@ -59,34 +81,12 @@
     </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
     <TextView
-        android:id="@+id/tv_pasien_hubungan"
+        android:id="@+id/tv_pasien_tgl_lahir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/til_pasien_nama"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/fifth_color"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="@string/hubungan"/>
-
-    <Spinner
-        android:id="@+id/spinner_pasien_hubungan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_pasien_hubungan"
-        app:layout_constraintBottom_toTopOf="@id/tv_pasien_tgl_lahir"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:spinnerMode="dropdown"/>
-
-    <TextView
-        android:id="@+id/tv_pasien_tgl_lahir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/spinner_pasien_hubungan"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
         android:textStyle="bold"
         android:textColor="@color/fifth_color"
         android:textSize="18sp"
@@ -117,6 +117,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/til_pasien_tgl_lahir"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
         android:textColor="@color/fifth_color"
         android:textStyle="bold"
         android:textSize="18sp"
@@ -141,5 +142,15 @@
             android:src="@drawable/cloud_upload"/>
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_simpan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cv_pasien_kartu_identitas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/third_choice_color"
+        android:text="@string/simpan"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

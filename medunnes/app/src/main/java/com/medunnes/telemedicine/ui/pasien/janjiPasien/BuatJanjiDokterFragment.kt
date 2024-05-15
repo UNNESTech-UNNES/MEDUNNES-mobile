@@ -177,6 +177,9 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showConfirmationDialog() {
+        val bundle = Bundle()
+        bundle.putString(BuatJanjiConfirmationDialog.DIALOG, getString(R.string.alert_buat_janji_deskripsi))
+        bjcd.arguments = bundle
         bjcd.show(childFragmentManager, BuatJanjiConfirmationDialog.TAG)
 
         bjcd.setOnItemClickCallback(object : BuatJanjiConfirmationDialog.OnItemClickCallback {
@@ -199,6 +202,9 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showSuccessDialog() {
+        val bundle = Bundle()
+        bundle.putString(BuatJanjiConfirmationDialog.DIALOG, getString(R.string.buat_janji_sukses))
+        bjcd.arguments = bundle
         bjsd.show(childFragmentManager, BuatJanjiSuccessDialog.TAG)
     }
 

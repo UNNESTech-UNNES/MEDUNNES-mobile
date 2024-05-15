@@ -163,6 +163,7 @@
     <string name="detail_informasi">Detail Informasi</string>
     <string name="hubungan">Hubungan</string>
     <string name="unggah_kartu_identitas">Unggah Foto KTP/KIA/Paspor Pasien</string>
+    <string name="simpan">Simpan</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>
@@ -248,9 +249,9 @@
 
 
     <string-array name="hubungan_pasien">
-        <item>Diri sendiri</item>
         <item>Keluarga</item>
         <item>Teman</item>
+        <item>Diri sendiri</item>
     </string-array>
 
 </resources>

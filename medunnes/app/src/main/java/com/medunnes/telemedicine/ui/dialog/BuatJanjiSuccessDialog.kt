@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.databinding.DialogBuatJanjiSuccessBinding
 
 class BuatJanjiSuccessDialog : DialogFragment(), View.OnClickListener {
@@ -16,12 +17,16 @@ class BuatJanjiSuccessDialog : DialogFragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = DialogBuatJanjiSuccessBinding.inflate(inflater, container, false)
+
+        binding.tvAlertDescription.text = arguments?.getString(DIALOG)
         binding.btnOk.setOnClickListener(this)
+
         return binding.root
     }
 
     companion object {
         const val TAG = "BuatJanjiSuccessDialog"
+        const val DIALOG = "dialog"
     }
 
     override fun onClick(view: View) {

@@ -6,6 +6,7 @@ import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
+import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.room.dao.UserDao
@@ -36,6 +37,7 @@ class UserRepository private constructor(
     fun updateJanjiPasien(janji: Janji) = executorService.execute { mUserDao.updateJanjiPasien(janji) }
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
+    fun insertPasien(pasien: Pasien) = executorService.execute { mUserDao.insertPasien(pasien) }
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
     suspend fun getLoginStatus(): Boolean = authDataStore.isLogin()

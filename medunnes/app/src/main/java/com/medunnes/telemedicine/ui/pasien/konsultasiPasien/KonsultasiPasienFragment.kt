@@ -72,15 +72,17 @@ class KonsultasiPasienFragment : Fragment() {
     private suspend fun getDoctorList(filter: String) {
         val uid = viewModel.getUserLoginId()
         viewModel.getDokterByJanji(uid).observe(viewLifecycleOwner) { data ->
+            listDokter.clear()
             data.forEach {
                 val dokterId = it.janji.dokterId
-                viewModel.getDokterByDokterId(dokterId).observe(viewLifecycleOwner) { data ->
+                viewModel.getDokterByDokterId(dokterId).observe(viewLifecycleOwner) { data1 ->
                     if (!data.isNullOrEmpty()) {
-                        listDokter.addAll(data)
+                        listDokter.addAll(data1)
                         if (listDokter.isNotEmpty()) {
                             val filteredData = listDokter.filter {
                                 it.user.fullname.lowercase().contains(filter) } as ArrayList<UserAndDokter>
                             showRecyclerList(filteredData)
+                            Log.d("FILDATA", filteredData.toString())
                         } else {
                             binding.tvDataEmpty.visibility = View.VISIBLE
                         }

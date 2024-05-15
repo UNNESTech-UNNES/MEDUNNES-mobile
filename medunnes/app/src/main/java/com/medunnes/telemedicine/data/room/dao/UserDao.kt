@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.data.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -10,6 +11,7 @@ import androidx.room.Update
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
+import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 
@@ -74,4 +76,13 @@ interface UserDao {
             "JOIN user ON janji.pasien_id = user.user_id " +
             "WHERE janji.pasien_id = :user_id")
     fun getDokterByJanji(user_id: Int): LiveData<List<JanjiDanPasien>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPasien(pasien: Pasien)
+
+    @Update
+    fun updatePasien(pasien: Pasien)
+
+    @Delete
+    fun deletePasien(pasien: Pasien)
 }
