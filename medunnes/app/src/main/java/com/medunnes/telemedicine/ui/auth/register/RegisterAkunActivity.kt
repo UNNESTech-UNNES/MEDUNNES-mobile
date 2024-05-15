@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
@@ -20,6 +21,7 @@ import java.util.Locale
 class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     private lateinit var binding: ActivityRegisterAkunBinding
     private var dataSpinner: String = ""
+    private var datePicked: String = ""
 
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(this)
@@ -35,23 +37,29 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             btnBack.setOnClickListener(this@RegisterAkunActivity)
             tilTglLahir.setEndIconOnClickListener { showDatePicker() }
         }
-
-        registerUser()
     }
 
     private fun registerUser() {
         with(binding) {
-         viewModel.register(User(
+         val user = User(
              0,
              "${tieEmail.text}",
              "${tiePassword.text}",
              "${tieNamaLengkap.text}",
-             "${tieTglLahir.text}",
+             datePicked,
              dataSpinner,
              "${tieAlamat.text}",
              "${tieNoTelepon.text}",
              intent.getIntExtra(ROLE, 0)
-         ))
+         )
+
+            viewModel.insertPasien(Pasien(
+                0,
+                "${tieNamaLengkap.text}",
+                "Diri sendiri",
+                datePicked,
+                viewModel.register(user).toInt()
+            ))
         }
     }
 
@@ -66,6 +74,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                 calendar.set(year, month, day)
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 binding.tieTglLahir.setText(dateFormat.format(calendar.time))
+                datePicked = "${calendar.time}"
 
             }, cYear, cMonth, cDay)
 

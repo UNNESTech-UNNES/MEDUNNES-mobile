@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
+import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
@@ -88,6 +89,17 @@ class Registrasi3Fragment : Fragment(),
                                             register(user).toInt()
                                         )
                                     )
+
+                                    insertPasien(
+                                        Pasien(
+                                            0,
+                                            getData(FULLNAME),
+                                            "Diri sendiri",
+                                            getData(DATE),
+                                            register(user).toInt()
+                                        )
+                                    )
+
                                 }
 
                                 val intent = Intent(context, LoginActivity::class.java)
