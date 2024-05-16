@@ -7,6 +7,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.repository.UserRepository
 
 class LayananPasienViewModel(private val repository: UserRepository) : ViewModel() {
@@ -17,6 +18,7 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     fun insertJanjiPasien(janji: Janji) = repository.insertJanjiPasien(janji)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = repository.getDokterByDokterId(dokterId)
+    fun getPasienByUser(uid: Int): LiveData<List<Pasien>> = repository.getPasiebByUser(uid)
     fun insertPasien(pasien: Pasien) = repository.insertPasien(pasien)
     suspend fun getUserLoginId(): Int = repository.getUserId()
 }

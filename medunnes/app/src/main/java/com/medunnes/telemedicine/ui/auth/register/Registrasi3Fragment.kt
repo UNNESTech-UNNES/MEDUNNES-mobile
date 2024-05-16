@@ -2,7 +2,6 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -77,17 +76,15 @@ class Registrasi3Fragment : Fragment(),
                                         "${binding.tieNoTelepon.text}",
                                         arguments?.getInt(ROLE) ?: 2
                                     )
-                                    registerDokter(
-                                        Dokter(
-                                            0,
-                                            getData(TITLE_ONE),
-                                            getData(TITLE_TWO),
-                                            getData(NO_STR),
-                                            getData(PLACE),
-                                            "${binding.tiePendidikan.text}",
-                                            dataSpinner,
-                                            register(user).toInt()
-                                        )
+                                    val dokter = Dokter(
+                                        0,
+                                        getData(TITLE_ONE),
+                                        getData(TITLE_TWO),
+                                        getData(NO_STR),
+                                        getData(PLACE),
+                                        "${binding.tiePendidikan.text}",
+                                        dataSpinner,
+                                        register(user).toInt()
                                     )
 
                                     insertPasien(
@@ -96,7 +93,7 @@ class Registrasi3Fragment : Fragment(),
                                             getData(FULLNAME),
                                             "Diri sendiri",
                                             getData(DATE),
-                                            register(user).toInt()
+                                            registerDokter(dokter).toInt()
                                         )
                                     )
 
@@ -142,8 +139,6 @@ class Registrasi3Fragment : Fragment(),
         const val PLACE = "place"
         const val ROLE = "role"
     }
-
-    private fun getDataSpinner(gender: String): String = gender
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         dataSpinner = "${parent?.getItemAtPosition(pos)}"

@@ -9,7 +9,7 @@ data class UserAndDokter(
 
     @Relation(
         parentColumn = "user_id",
-        entityColumn = "user_id"
+        entityColumn = "user_id",
     )
     val dokter: Dokter
 )

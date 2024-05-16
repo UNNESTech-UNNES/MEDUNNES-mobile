@@ -9,6 +9,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.room.dao.UserDao
 import com.medunnes.telemedicine.data.room.database.UserDatabase
 import java.util.concurrent.ExecutorService
@@ -26,7 +27,7 @@ class UserRepository private constructor(
     fun login(email: String, password: String): LiveData<List<User>> = mUserDao.loginUser(email, password)
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
     fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
-    fun registerDokter(dokter: Dokter) = executorService.execute { mUserDao.insertDokter(dokter) }
+    fun registerDokter(dokter: Dokter): Long = mUserDao.insertDokter(dokter)
     fun getAllDokter(): LiveData<List<UserAndDokter>> = mUserDao.getAllDokter()
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
@@ -37,6 +38,7 @@ class UserRepository private constructor(
     fun updateJanjiPasien(janji: Janji) = executorService.execute { mUserDao.updateJanjiPasien(janji) }
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
+    fun getPasiebByUser(uid: Int): LiveData<List<Pasien>> = mUserDao.getPasienByUser(uid)
     fun insertPasien(pasien: Pasien) = executorService.execute { mUserDao.insertPasien(pasien) }
 
     suspend fun setLoginStatus() = authDataStore.loginUser()

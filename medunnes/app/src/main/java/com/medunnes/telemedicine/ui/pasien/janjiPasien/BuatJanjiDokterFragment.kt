@@ -191,11 +191,11 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun selectPatient() {
-        val tambahPasienFragment = TambahPasienFragment()
+        val daftarPasienFragment = DaftarPasienFragment()
         val fragmentManager = parentFragmentManager
 
         fragmentManager.beginTransaction()
-            .replace(R.id.pasien_frame_container, tambahPasienFragment, TambahPasienFragment::class.java.simpleName)
+            .replace(R.id.pasien_frame_container, daftarPasienFragment, DaftarPasienFragment::class.java.simpleName)
             .addToBackStack(null)
             .commit()
 
@@ -210,6 +210,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
     companion object {
         const val DOCTOR_ID = "doctor_id"
+        //const val PASIEN_ID = "pasien_id"
     }
 
     override fun onClick(view: View?) {
