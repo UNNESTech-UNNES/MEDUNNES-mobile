@@ -83,7 +83,11 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     suspend fun setPasienData() {
         viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
-                binding.tiePasienPicked.setText(it.fullname)
+                if (arguments?.getInt(PASIEN_ID)  == 0) {
+                    binding.tiePasienPicked.setText(it.fullname)
+                } else {
+                    binding.tiePasienPicked.setText("${arguments?.getString(PASIEN_NAME)}")
+                }
                 binding.tiePasienIdPicked.setText("${it.id}")
             }
         }
@@ -191,8 +195,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun selectPatient() {
+        val doctorId = arguments?.getInt(DOCTOR_ID)
         val daftarPasienFragment = DaftarPasienFragment()
         val fragmentManager = parentFragmentManager
+        val bundle = Bundle()
+        doctorId?.let { bundle.putInt(DaftarPasienFragment.DOKTER_ID, it) }
+        daftarPasienFragment.arguments = bundle
 
         fragmentManager.beginTransaction()
             .replace(R.id.pasien_frame_container, daftarPasienFragment, DaftarPasienFragment::class.java.simpleName)
@@ -210,7 +218,8 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
     companion object {
         const val DOCTOR_ID = "doctor_id"
-        //const val PASIEN_ID = "pasien_id"
+        const val PASIEN_ID = "pasien_id"
+        const val PASIEN_NAME = "pasien_nama"
     }
 
     override fun onClick(view: View?) {

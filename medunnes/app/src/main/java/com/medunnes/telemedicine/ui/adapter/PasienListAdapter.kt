@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.medunnes.telemedicine.data.model.Pasien
@@ -17,6 +18,8 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
         }
         val radioButton = binding.rbtnPasien
         val editButton = binding.ivEditPasien
+        val deleteButton = binding.ivDeletePasien
+        val tvPasienHubungan = binding.tvPasienHubungan
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -34,6 +37,10 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
             onItemClickCallback.onItemClicked(listPasien[position])
         }
 
+        if (holder.tvPasienHubungan.text == "Diri sendiri") {
+            holder.editButton.visibility = View.GONE
+            holder.deleteButton.visibility = View.GONE
+        }
 
         holder.radioButton.isChecked = selectedItem == position
         holder.radioButton.setOnClickListener {
@@ -45,16 +52,13 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
                 onItemClickCallback.onRadioButtonChecked(listPasien[position])
             }
         }
-//        holder.radioButton.setOnCheckedChangeListener { _, b ->
-//            if (b) {
-//                selectedItem = holder.adapterPosition
-//                onItemClickCallback.onEditButtonClicked(listPasien[position])
-//            }
-//        }
-
 
         holder.editButton.setOnClickListener {
             onItemClickCallback.onEditButtonClicked(listPasien[position])
+        }
+
+        holder.deleteButton.setOnClickListener {
+            onItemClickCallback.onDeleteButtonClicked(listPasien[position])
         }
     }
 
@@ -64,6 +68,7 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
     interface OnItemClickCallback {
         fun onItemClicked(pasien: Pasien)
         fun onEditButtonClicked(pasien: Pasien)
+        fun onDeleteButtonClicked(pasien: Pasien)
         fun onRadioButtonChecked(pasien: Pasien)
     }
 

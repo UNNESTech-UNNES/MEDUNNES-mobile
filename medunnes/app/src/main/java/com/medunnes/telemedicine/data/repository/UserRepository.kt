@@ -40,6 +40,7 @@ class UserRepository private constructor(
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
     fun getPasiebByUser(uid: Int): LiveData<List<Pasien>> = mUserDao.getPasienByUser(uid)
     fun insertPasien(pasien: Pasien) = executorService.execute { mUserDao.insertPasien(pasien) }
+    fun deletePasien(pasien: Pasien) = executorService.execute { mUserDao.deletePasien(pasien) }
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
     suspend fun getLoginStatus(): Boolean = authDataStore.isLogin()

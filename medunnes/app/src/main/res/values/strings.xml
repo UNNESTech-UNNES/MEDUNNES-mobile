@@ -165,6 +165,8 @@
     <string name="unggah_kartu_identitas">Unggah Foto KTP/KIA/Paspor Pasien</string>
     <string name="simpan">Simpan</string>
     <string name="tambah_pasien">+ Pasien</string>
+    <string name="delete_pasien_alert_deskripsi">Data yang sudah dihapus tidak dapat dikembalikan</string>
+    <string name="hapus_data_pasien">Hapus data pasien?</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

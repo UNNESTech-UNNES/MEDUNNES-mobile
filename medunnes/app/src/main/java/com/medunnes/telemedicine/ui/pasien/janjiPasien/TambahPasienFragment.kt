@@ -123,6 +123,10 @@ class TambahPasienFragment : Fragment(),
         }
     }
 
+    fun updatePasien() {
+
+    }
+
     private fun showConfirmationDialog() {
         val bundle = Bundle()
         bundle.putString(BuatJanjiConfirmationDialog.DIALOG, "Pastikan data sudah benar")
@@ -148,6 +152,10 @@ class TambahPasienFragment : Fragment(),
         when(view) {
             binding.btnSimpan -> showConfirmationDialog()
         }
+    }
+
+    companion object {
+        const val INTENTION = "intention"
     }
 
 }
