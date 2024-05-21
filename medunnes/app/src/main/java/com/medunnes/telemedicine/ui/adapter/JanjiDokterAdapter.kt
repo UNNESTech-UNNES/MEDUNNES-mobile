@@ -1,6 +1,5 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +42,6 @@ class JanjiDokterAdapter(private val janjiList: ArrayList<JanjiDanPasien>) : Rec
     }
 
     override fun getItemCount(): Int {
-        Log.d("SIZE", janjiList.size.toString())
         return janjiList.size
     }
 

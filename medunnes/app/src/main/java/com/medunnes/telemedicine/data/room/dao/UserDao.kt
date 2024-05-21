@@ -14,7 +14,6 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.data.model.UserAndPasien
 
 @Dao
 interface UserDao {
@@ -81,6 +80,9 @@ interface UserDao {
     @Transaction
     @Query("SELECT * FROM pasien WHERE user_id = :uid")
     fun getPasienByUser(uid: Int): LiveData<List<Pasien>>
+
+    @Query("SELECT * FROM pasien WHERE pasien_id = :pasienId")
+    fun getPasienById(pasienId: Int): LiveData<List<Pasien>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPasien(pasien: Pasien)

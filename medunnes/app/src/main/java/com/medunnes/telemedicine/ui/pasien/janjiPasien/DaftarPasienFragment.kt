@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,6 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.databinding.FragmentDaftarPasienBinding
 import com.medunnes.telemedicine.ui.adapter.PasienListAdapter
-import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.dialog.DeletePasienConfirmationDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
@@ -48,8 +46,6 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
         binding.btnTambahPasien.setOnClickListener(this)
         binding.btnSimpan.setOnClickListener(this)
 
-        Toast.makeText(context, doctorId.toString(), Toast.LENGTH_SHORT).show()
-
         return binding.root
     }
 
@@ -74,7 +70,16 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onEditButtonClicked(pasien: Pasien) {
-                Toast.makeText(context, "Edit Button", Toast.LENGTH_SHORT).show()
+                val editPasienFragment = EditPasienFragment()
+                val fragmentManager = parentFragmentManager
+                val bundle = Bundle()
+                bundle.putInt(EditPasienFragment.PASIEN_ID, pasien.pasienId)
+                editPasienFragment.arguments = bundle
+
+                fragmentManager.beginTransaction()
+                    .replace(R.id.pasien_frame_container, editPasienFragment, EditPasienFragment::class.java.simpleName)
+                    .addToBackStack(null)
+                    .commit()
             }
 
             override fun onDeleteButtonClicked(pasien: Pasien) {
@@ -82,7 +87,6 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onRadioButtonChecked(pasien: Pasien) {
-                Toast.makeText(context, "${pasien.pasienId}", Toast.LENGTH_SHORT).show()
                 pasienId = pasien.pasienId
                 pasienName = pasien.namaPasien
             }
@@ -99,7 +103,6 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
         dpcd.setOnItemClickCallback(object : DeletePasienConfirmationDialog.OnItemClickCallback {
             override fun onItemClicked(isConfirm: Boolean) {
                 deletePasien(pasien, isConfirm)
-                Log.d("CLICK", "clickkk")
             }
 
         })
@@ -132,7 +135,6 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
                 btnTambahPasien -> {
                     val tambahPasienFragment = TambahPasienFragment()
                     val parentManager = parentFragmentManager
-
                     parentManager.beginTransaction()
                         .replace(R.id.pasien_frame_container, tambahPasienFragment, TambahPasienFragment::class.java.simpleName)
                         .addToBackStack(null)
@@ -140,8 +142,6 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
                 }
 
                 btnSimpan -> {
-                    Toast.makeText(context, pasienId.toString(), Toast.LENGTH_SHORT).show()
-
                     val buatJanjiFragment = BuatJanjiDokterFragment()
                     val parentManager = parentFragmentManager
                     val bundle = Bundle()

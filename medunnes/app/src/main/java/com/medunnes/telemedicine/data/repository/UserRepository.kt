@@ -9,9 +9,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.room.dao.UserDao
-import com.medunnes.telemedicine.data.room.database.UserDatabase
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -39,7 +37,9 @@ class UserRepository private constructor(
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
     fun getPasiebByUser(uid: Int): LiveData<List<Pasien>> = mUserDao.getPasienByUser(uid)
+    fun getPasienById(pasienId: Int): LiveData<List<Pasien>> = mUserDao.getPasienById(pasienId)
     fun insertPasien(pasien: Pasien) = executorService.execute { mUserDao.insertPasien(pasien) }
+    fun updatePasien(pasien: Pasien) = executorService.execute { mUserDao.updatePasien(pasien) }
     fun deletePasien(pasien: Pasien) = executorService.execute { mUserDao.deletePasien(pasien) }
 
     suspend fun setLoginStatus() = authDataStore.loginUser()
