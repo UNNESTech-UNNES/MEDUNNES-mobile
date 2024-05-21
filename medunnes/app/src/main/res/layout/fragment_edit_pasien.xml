@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_informasi"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
         android:textColor="@color/fifth_color"
         android:textStyle="bold"
         android:textSize="18sp"
@@ -43,12 +44,12 @@
         android:id="@+id/spinner_pasien_hubungan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_pasien_hubungan"
+        android:layout_marginBottom="8dp"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@id/tv_pasien_nama_title"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:spinnerMode="dropdown"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_pasien_hubungan" />
 
     <TextView
         android:id="@+id/tv_pasien_nama_title"
@@ -56,7 +57,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/spinner_pasien_hubungan"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/fifth_color"
         android:textStyle="bold"
         android:textSize="18sp"

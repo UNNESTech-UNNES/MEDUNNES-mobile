@@ -1,18 +1,13 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.R.string
-import android.graphics.drawable.Drawable
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.model.Sesi
 import com.medunnes.telemedicine.databinding.SesiDokterListBinding
-import kotlin.coroutines.coroutineContext
 
 class SesiAdapter(private val sesiLis: ArrayList<Sesi>): RecyclerView.Adapter<SesiAdapter.ListViewModel>() {
-    private var sesi1 =  ArrayList<Int>()
     class ListViewModel(private val binding: SesiDokterListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(sesi: Sesi) {
             with(binding) {
@@ -21,6 +16,8 @@ class SesiAdapter(private val sesiLis: ArrayList<Sesi>): RecyclerView.Adapter<Se
             }
         }
 
+        val tableRow = binding.tblRowSesiTop
+        val cardView = binding.cvSesiDokter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewModel {
@@ -34,38 +31,26 @@ class SesiAdapter(private val sesiLis: ArrayList<Sesi>): RecyclerView.Adapter<Se
         holder.bind(sesiLis[position])
 
         //var isClicked = true
+        if (selectedItem == position) {
+            holder.tableRow.setBackgroundColor(Color.parseColor("#E6C38C"))
+            holder.cardView.elevation = 10F
+        } else {
+            holder.tableRow.setBackgroundColor(Color.parseColor("#E1C8A5"))
+            holder.cardView.elevation = 0F
+        }
+
         holder.itemView.setOnClickListener {
-//            if (isClicked) {
-//                sesi1.add(position)
-//                it.elevation = 100.0F
-//                isClicked = false
-//                Log.d("ARRSESI", sesi1.toString())
-//                if (position  == sesi1.last()) {
-//                    it.setBackgroundColor(it.resources.getColor(R.color.grey_less))
-//                } else {
-//                    it.setBackgroundColor(it.resources.getColor(R.color.white))
-//                }
-//                if (sesi == sesiLis[position]) {
-//                    it.elevation = 100.0F
-//                    //it.setBackgroundColor(it.resources.getColor(R.color.grey_less))
-//                    isClicked = false
-//                    sesi1.add(position)
-//                } else {
-//                    it.elevation = 0.0F
-//                    //it.setBackgroundColor(it.resources.getColor(R.color.grey_less))
-//                    isClicked = true
-//                }
-//            } else {
-//                it.elevation = 0.0F
-//                //it.setBackgroundColor(it.resources.getColor(R.color.white))
-//                isClicked = true
-//                Log.d("CL", "${sesiLis[position]}")
-//            }
-            onItemClickCallback.onClick(sesiLis[position])
+            if (selectedItem != position) {
+                notifyItemChanged(selectedItem)
+                selectedItem = holder.adapterPosition
+                notifyItemChanged(selectedItem)
+                onItemClickCallback.onClick(sesiLis[position])
+            }
         }
     }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
+    private var selectedItem: Int = -1
 
     interface OnItemClickCallback {
         fun onClick(sesi: Sesi)

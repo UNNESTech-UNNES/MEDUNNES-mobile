@@ -48,7 +48,6 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
                 notifyItemChanged(selectedItem)
                 selectedItem = holder.adapterPosition
                 notifyItemChanged(selectedItem)
-                Log.d("STATUS", "checked")
                 onItemClickCallback.onRadioButtonChecked(listPasien[position])
             }
         }
@@ -62,7 +61,7 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
         }
     }
 
-    private var selectedItem: Int = -1
+    private var selectedItem: Int = 0
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {

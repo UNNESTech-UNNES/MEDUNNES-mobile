@@ -202,6 +202,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         doctorId?.let { bundle.putInt(DaftarPasienFragment.DOKTER_ID, it) }
         daftarPasienFragment.arguments = bundle
 
+        fragmentManager.popBackStack()
         fragmentManager.beginTransaction()
             .replace(R.id.pasien_frame_container, daftarPasienFragment, DaftarPasienFragment::class.java.simpleName)
             .addToBackStack(null)

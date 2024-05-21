@@ -76,7 +76,7 @@ class Registrasi3Fragment : Fragment(),
                                         "${binding.tieNoTelepon.text}",
                                         arguments?.getInt(ROLE) ?: 2
                                     )
-                                    val dokter = Dokter(
+                                    registerDokter(Dokter(
                                         0,
                                         getData(TITLE_ONE),
                                         getData(TITLE_TWO),
@@ -85,17 +85,7 @@ class Registrasi3Fragment : Fragment(),
                                         "${binding.tiePendidikan.text}",
                                         dataSpinner,
                                         register(user).toInt()
-                                    )
-
-                                    insertPasien(
-                                        Pasien(
-                                            0,
-                                            getData(FULLNAME),
-                                            "Diri sendiri",
-                                            getData(DATE),
-                                            registerDokter(dokter).toInt()
-                                        )
-                                    )
+                                    ))
 
                                 }
 
