@@ -1,20 +1,32 @@
 package com.medunnes.telemedicine.ui.profile
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
+import android.content.Context
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityProfileEditBinding
+import com.medunnes.telemedicine.utils.getImageUri
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
@@ -25,6 +37,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private var datePicked: String = "date"
+    private var currentImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +76,11 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                     tieEditAlamat.setText(it.user.alamat)
                     tieEditEmail.setText(it.user.email)
                 }
-                Log.d("DOKDATA", data.toString())
             }
         }
     }
 
     private suspend fun getUserProfileData() {
-        val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
         viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
             data.forEach {
                 with(binding) {
@@ -164,6 +175,29 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         datePickerDialog.show()
     }
 
+    private fun galeryStart() {
+        galeryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val galeryLauncher = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUri = uri
+            showImage()
+        } else {
+            makeToast("Tidak ada gambar yang tersedia")
+        }
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            binding.ivEditPicture.setImageURI(it)
+        }
+    }
+
+
+
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
@@ -175,11 +209,11 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         } else {
                             updateUserProfile()
                         }
-
                     }
+                    currentImageUri?.let { getImageUri(this@ProfileEditActivity, it) }
                     makeToast("Data berhasil diperbarui")
                 }
-                ivEditPicture -> makeToast("Fitur belum tersedia")
+                ivEditPicture -> galeryStart()
             }
         }
     }
