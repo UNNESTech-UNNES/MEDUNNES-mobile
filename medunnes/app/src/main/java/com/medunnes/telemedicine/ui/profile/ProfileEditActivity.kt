@@ -1,22 +1,18 @@
 package com.medunnes.telemedicine.ui.profile
 
 import android.app.DatePickerDialog
-import android.content.ContentValues
-import android.content.Context
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.User
@@ -24,9 +20,10 @@ import com.medunnes.telemedicine.databinding.ActivityProfileEditBinding
 import com.medunnes.telemedicine.utils.getImageUri
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
@@ -38,6 +35,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private var datePicked: String = "date"
     private var currentImageUri: Uri? = null
+    private var imagePath: String = "path"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +89,13 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                     tieEditEmail.setText(it.email)
                     tvEditRumahSakitTitle.visibility = View.GONE
                     tilEditRumahSakit.visibility = View.GONE
+
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                    Glide.with(this@ProfileEditActivity)
+                        .load(imageFile)
+                        .into(ivEditPicture)
+                        .clearOnDetach()
                 }
             }
         }
@@ -110,7 +115,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         it.user.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
-                        it.user.role
+                        it.user.role,
+                        imagePath
                     )
                     with(viewModel) {
                         updateUserProfile(user)
@@ -146,7 +152,8 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         it.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
-                        it.role
+                        it.role,
+                        imagePath
                     )
                     with(viewModel) {
                         updateUserProfile(user)
@@ -168,7 +175,6 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
                 binding.tieEditTglLahir.setText(fullDateFormat.format(calendar.time))
                 datePicked = "${calendar.time}"
-                Log.d("DATE", datePicked)
 
             }, cYear, cMonth, cDay)
 
@@ -210,7 +216,43 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                             updateUserProfile()
                         }
                     }
-                    currentImageUri?.let { getImageUri(this@ProfileEditActivity, it) }
+                    currentImageUri?.let { sourceUri ->
+                        val uri = getImageUri(this@ProfileEditActivity, sourceUri)
+                        try {
+                            uri.let {
+                                    try {
+                                        val inputStream: InputStream? = this@ProfileEditActivity.contentResolver.openInputStream(sourceUri)
+                                        val outputStream: OutputStream? = this@ProfileEditActivity.contentResolver.openOutputStream(it)
+
+                                        inputStream?.use { input ->
+                                            outputStream?.use { output ->
+                                                val buffer = ByteArray(1024)
+                                                var bytesRead: Int
+                                                while (input.read(buffer).also { bytesRead = it } != -1) {
+                                                    output.write(buffer, 0, bytesRead)
+                                                }
+                                            }
+                                        }
+                                        imagePath = "${it.path}"
+
+                                } catch (e: Exception) {
+                                    this@ProfileEditActivity.contentResolver.delete(uri, null, null)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.d("ERROR", e.toString())
+                        }
+
+                    }
+
+                    lifecycleScope.launch {
+                        if (viewModel.getUserRole() == 1) {
+                            updateDokterProfile()
+                        } else {
+                            updateUserProfile()
+                        }
+                    }
+
                     makeToast("Data berhasil diperbarui")
                 }
                 ivEditPicture -> galeryStart()

@@ -50,7 +50,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
              dataSpinner,
              "${tieAlamat.text}",
              "${tieNoTelepon.text}",
-             intent.getIntExtra(ROLE, 0)
+             intent.getIntExtra(ROLE, 0),
          )
 
             viewModel.insertPasien(Pasien(

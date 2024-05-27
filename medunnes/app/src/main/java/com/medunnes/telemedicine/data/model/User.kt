@@ -32,5 +32,8 @@ data class User(
     var noTelepon: String? = null,
 
     @ColumnInfo(name = "role")
-    var role: Int
+    var role: Int,
+
+    @ColumnInfo(name = "image")
+    var image: String? = null
 )

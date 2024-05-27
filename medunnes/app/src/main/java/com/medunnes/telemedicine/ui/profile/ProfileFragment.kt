@@ -1,9 +1,8 @@
 package com.medunnes.telemedicine.ui.profile
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
 import com.medunnes.telemedicine.ui.main.MainActivity
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.io.File
 
 class ProfileFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentProfileBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<ProfileViewModel> {
@@ -68,7 +63,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     suspend fun setDokterProfile() {
-        Log.d("UIDPRO", viewModel.getUserLoginId().toString())
         viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
             data.forEach {
                 with(binding) {
@@ -89,6 +83,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserRole.text = it.jenisKelamin
                     tvUserEmail.text = it.email
                     tblTempatPraktik.visibility = View.GONE
+
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                    Glide.with(this@ProfileFragment)
+                        .load(imageFile)
+                        .into(ivUserPicture)
+                        .clearOnDetach()
                 }
             }
         }

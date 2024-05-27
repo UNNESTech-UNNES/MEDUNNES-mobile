@@ -36,26 +36,27 @@ fun getImageUri(context: Context, sourceUri: Uri) : Uri {
             contentValues
         )
 
-        uri?.let {
-            try {
-                val inputStream: InputStream? = context.contentResolver.openInputStream(sourceUri)
-                val outputStream: OutputStream? = context.contentResolver.openOutputStream(it)
-
-                inputStream?.use { input ->
-                    outputStream?.use { output ->
-                        val buffer = ByteArray(1024)
-                        var bytesRead: Int
-                        while (input.read(buffer).also { bytesRead = it } != 1) {
-                            output.write(buffer, 0, bytesRead)
-                        }
-                    }
-                }
-
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
-                context.contentResolver.delete(uri, null, null)
-            }
-        }
+//        uri?.let {
+//            try {
+//                val inputStream: InputStream? = context.contentResolver.openInputStream(sourceUri)
+//                val outputStream: OutputStream? = context.contentResolver.openOutputStream(it)
+//
+//                inputStream?.use { input ->
+//                    outputStream?.use { output ->
+//                        val buffer = ByteArray(1024)
+//                        var bytesRead: Int
+//                        while (input.read(buffer).also { bytesRead = it } != 0) {
+//                            output.write(buffer, 0, bytesRead)
+//                        }
+//                    }
+//                    Log.d("UP", inputStream.toString())
+//                }
+//
+//            } catch (e: Exception) {
+//                Log.d("ERROR", e.toString())
+//                context.contentResolver.delete(uri, null, null)
+//            }
+//        }
     }
 
     return uri ?: getImageUriForPreQ(context)
