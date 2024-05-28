@@ -1,11 +1,14 @@
 package com.medunnes.telemedicine.ui.adapter
 
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.data.model.Faskes
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.databinding.PasienJanjiListBinding
+import java.io.File
 
 class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : RecyclerView.Adapter<DokterListAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: PasienJanjiListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -14,6 +17,13 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
                 tvPatientName.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
                 tvDoctorRole.text = dokter.dokter.spesialis
                 tvDoctorExperience.text = dokter.user.tanggalLahir
+
+                val path = Environment.getExternalStorageDirectory()
+                val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
+                Glide.with(itemView.context)
+                    .load(imageFile)
+                    .into(ivMessanger)
+                    .clearOnDetach()
             }
         }
     }

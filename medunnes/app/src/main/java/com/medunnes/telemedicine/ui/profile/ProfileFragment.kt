@@ -38,7 +38,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
 
         with(binding) {
-            tvProfileEdit.setOnClickListener(this@ProfileFragment)
+            cvUserProfile.setOnClickListener(this@ProfileFragment)
             cvFaq.setOnClickListener(this@ProfileFragment)
             cvHint.setOnClickListener(this@ProfileFragment)
             cvLanguange.setOnClickListener(this@ProfileFragment)
@@ -70,6 +70,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserRole.text = it.dokter.spesialis
                     tvUserEmail.text = it.user.email
                     tvUserPraktik.text = it.dokter.tempatPraktik
+
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                    Glide.with(this@ProfileFragment)
+                        .load(imageFile)
+                        .into(ivUserPicture)
+                        .clearOnDetach()
                 }
             }
         }
@@ -111,7 +118,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
-                tvProfileEdit -> {
+                cvUserProfile -> {
                     val intent = Intent(context, ProfileEditActivity::class.java)
                     startActivity(intent)
                 }

@@ -24,6 +24,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
@@ -35,7 +36,10 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private var datePicked: String = "date"
     private var currentImageUri: Uri? = null
-    private var imagePath: String = "path"
+    private var imagePath: String? = null
+    private val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
+    private val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+    private lateinit var date: Date
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +72,21 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tieEditNamaLengkap.setText(it.user.fullname)
-                    tieEditTglLahir.setText(it.user.tanggalLahir)
                     tieEditNoTelepon.setText(it.user.noTelepon)
                     tieEditRumahSakit.setText(it.dokter.tempatPraktik)
                     tieEditAlamat.setText(it.user.alamat)
                     tieEditEmail.setText(it.user.email)
+
+                    date = dateFormat.parse(it.user.tanggalLahir.toString()) as Date
+                    tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
+
+
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                    Glide.with(this@ProfileEditActivity)
+                        .load(imageFile)
+                        .into(ivEditPicture)
+                        .clearOnDetach()
                 }
             }
         }
@@ -83,12 +97,14 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tieEditNamaLengkap.setText(it.fullname)
-                    tieEditTglLahir.setText(it.tanggalLahir)
                     tieEditNoTelepon.setText(it.noTelepon)
                     tieEditAlamat.setText(it.alamat)
                     tieEditEmail.setText(it.email)
                     tvEditRumahSakitTitle.visibility = View.GONE
                     tilEditRumahSakit.visibility = View.GONE
+
+                    date = dateFormat.parse(it.tanggalLahir.toString()) as Date
+                    tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
 
                     val path = Environment.getExternalStorageDirectory()
                     val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
@@ -111,12 +127,12 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditEmail.text}",
                         it.user.password,
                         "${tieEditNamaLengkap.text}",
-                        datePicked,
+                        if (datePicked == "date") it.user.tanggalLahir else datePicked,
                         it.user.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
                         it.user.role,
-                        imagePath
+                        if (imagePath == null) it.user.image else imagePath
                     )
                     with(viewModel) {
                         updateUserProfile(user)
@@ -148,12 +164,12 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                         "${tieEditEmail.text}",
                         it.password,
                         "${tieEditNamaLengkap.text}",
-                        datePicked,
+                        if (datePicked == "date") it.tanggalLahir else datePicked,
                         it.jenisKelamin,
                         "${tieEditAlamat.text}",
                         "${tieEditNoTelepon.text}",
                         it.role,
-                        imagePath
+                        if (imagePath == null) it.image else imagePath
                     )
                     with(viewModel) {
                         updateUserProfile(user)
@@ -202,7 +218,36 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun uploadImage() {
+        currentImageUri?.let { sourceUri ->
+            val uri = getImageUri(this@ProfileEditActivity)
+            try {
+                uri.let {
+                    try {
+                        val inputStream: InputStream? = this@ProfileEditActivity.contentResolver.openInputStream(sourceUri)
+                        val outputStream: OutputStream? = this@ProfileEditActivity.contentResolver.openOutputStream(it)
 
+                        inputStream?.use { input ->
+                            outputStream?.use { output ->
+                                val buffer = ByteArray(1024)
+                                var bytesRead: Int
+                                while (input.read(buffer).also { bytesRead = it } != -1) {
+                                    output.write(buffer, 0, bytesRead)
+                                }
+                            }
+                        }
+                        imagePath = "${it.path}"
+
+                    } catch (e: Exception) {
+                        this@ProfileEditActivity.contentResolver.delete(uri, null, null)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+
+        }
+    }
 
     override fun onClick(view: View) {
         with(binding) {
@@ -210,42 +255,7 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                 btnBack -> finish()
                 btnEditSend -> {
                     lifecycleScope.launch {
-                        if (viewModel.getUserRole() == 1) {
-                            updateDokterProfile()
-                        } else {
-                            updateUserProfile()
-                        }
-                    }
-                    currentImageUri?.let { sourceUri ->
-                        val uri = getImageUri(this@ProfileEditActivity, sourceUri)
-                        try {
-                            uri.let {
-                                    try {
-                                        val inputStream: InputStream? = this@ProfileEditActivity.contentResolver.openInputStream(sourceUri)
-                                        val outputStream: OutputStream? = this@ProfileEditActivity.contentResolver.openOutputStream(it)
-
-                                        inputStream?.use { input ->
-                                            outputStream?.use { output ->
-                                                val buffer = ByteArray(1024)
-                                                var bytesRead: Int
-                                                while (input.read(buffer).also { bytesRead = it } != -1) {
-                                                    output.write(buffer, 0, bytesRead)
-                                                }
-                                            }
-                                        }
-                                        imagePath = "${it.path}"
-
-                                } catch (e: Exception) {
-                                    this@ProfileEditActivity.contentResolver.delete(uri, null, null)
-                                }
-                            }
-                        } catch (e: Exception) {
-                            Log.d("ERROR", e.toString())
-                        }
-
-                    }
-
-                    lifecycleScope.launch {
+                        uploadImage()
                         if (viewModel.getUserRole() == 1) {
                             updateDokterProfile()
                         } else {

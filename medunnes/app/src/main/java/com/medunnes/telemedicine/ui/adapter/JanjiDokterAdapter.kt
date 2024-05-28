@@ -1,11 +1,14 @@
 package com.medunnes.telemedicine.ui.adapter
 
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.databinding.MessageListBinding
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -30,6 +33,13 @@ class JanjiDokterAdapter(private val janjiList: ArrayList<JanjiDanPasien>) : Rec
                     tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/${janji.sesi}"
                     tvMessangerStatus.text  = janji.status
                 }
+
+                val path = Environment.getExternalStorageDirectory()
+                val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${janjiDanPasien.user.image}")}"
+                Glide.with(itemView.context)
+                    .load(imageFile)
+                    .into(ivMessanger)
+                    .clearOnDetach()
 
             }
         }
