@@ -21,7 +21,7 @@
             android:layout_height="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:cardCornerRadius="50dp">
+            app:cardCornerRadius="10dp">
 
             <ImageView
                 android:id="@+id/iv_user_picture"

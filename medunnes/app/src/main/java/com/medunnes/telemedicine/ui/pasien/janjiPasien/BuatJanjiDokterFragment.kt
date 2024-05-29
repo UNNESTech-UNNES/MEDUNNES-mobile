@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,7 +35,8 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private lateinit var datePicked: String
+    private var datePicked: String? = null
+    private var sesiPicked: String? = null
     private var listSesi = ArrayList<Sesi>()
 
     private val bjcd = BuatJanjiConfirmationDialog()
@@ -75,12 +77,14 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                         tvDoctorExperience.text = it.dokter.pendidikan
                         tvDoctorSpeciality.text = it.dokter.spesialis
 
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-                        Glide.with(this@BuatJanjiDokterFragment)
-                            .load(imageFile)
-                            .into(binding.ivDoctorImage)
-                            .clearOnDetach()
+                        if (!it.user.image.isNullOrEmpty()) {
+                            val path = Environment.getExternalStorageDirectory()
+                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                            Glide.with(this@BuatJanjiDokterFragment)
+                                .load(imageFile)
+                                .into(binding.ivDoctorImage)
+                                .clearOnDetach()
+                        }
                     }
                 }
 
@@ -142,7 +146,8 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                 with(binding) {
                     tvFormIsEmpty.visibility = View.GONE
                     tvSesiPicked.visibility = View.VISIBLE
-                    tvSesiPicked.text = getString(R.string.no_sesi, sesi.noSesi)
+                    sesiPicked = getString(R.string.no_sesi, sesi.noSesi)
+                    tvSesiPicked.text = sesiPicked
                 }
             }
 
@@ -170,7 +175,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                         data.forEach {
                             viewModel.insertJanjiPasien(Janji(
                                 0,
-                                datePicked,
+                                datePicked!!,
                                 "${binding.tvSesiPicked.text}",
                                 "Belum disetujui",
                                 it.dokter.dokterId,
@@ -235,7 +240,14 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         with(binding) {
             when(view) {
                 tilJanjiTanggal -> showDatePicker()
-                btnBuatJanjiDokter -> showConfirmationDialog()
+                btnBuatJanjiDokter -> {
+                    if (!datePicked.isNullOrEmpty() && !sesiPicked.isNullOrEmpty()) {
+                        showConfirmationDialog()
+                    } else {
+                        Toast.makeText(context, "Harap lengkapi data", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
                 tilPasien -> selectPatient()
             }
         }
