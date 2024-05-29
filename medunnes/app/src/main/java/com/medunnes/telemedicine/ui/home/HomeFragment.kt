@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Artikel
@@ -22,6 +24,7 @@ import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -45,32 +48,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setUserProfile()
         getArticleList()
         showArticleRecycleList()
 
         getFaskesList()
         showFaskesRecycleList()
-
-        lifecycleScope.launch {
-            val user = viewModel.getUser(viewModel.getUserLoginId())
-            if (viewModel.getUserStatus()) {
-                user.observe(viewLifecycleOwner) { data ->
-                    data.forEach {
-                        binding.tvAuthenticate.text = it.fullname
-                        Log.d("USER ROLE", it.role.toString())
-                    }
-                }
-                Log.d("STAT", "${viewModel.getUserStatus()}")
-                binding.tvAuthenticate.isClickable = false
-            }
-
-            val role = viewModel.getUserRole()
-            if (role == 1) {
-                menuDifference(true)
-            } else {
-                menuDifference(false)
-            }
-        }
 
         with(binding) {
             btnKonsultasi.setOnClickListener(this@HomeFragment)
@@ -86,6 +69,35 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setUserProfile() {
+        lifecycleScope.launch {
+            val user = viewModel.getUser(viewModel.getUserLoginId())
+            if (viewModel.getUserStatus()) {
+                user.observe(viewLifecycleOwner) { data ->
+                    data.forEach {
+                        binding.tvAuthenticate.text = it.fullname
+                        binding.tvAuthenticate.isClickable = false
+
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                        Glide.with(this@HomeFragment)
+                            .load(imageFile)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
+                    }
+                }
+                binding.tvAuthenticate.isClickable = false
+            }
+
+            val role = viewModel.getUserRole()
+            if (role == 1) {
+                menuDifference(true)
+            } else {
+                menuDifference(false)
+            }
+        }
     }
 
     private fun showArticleRecycleList() {

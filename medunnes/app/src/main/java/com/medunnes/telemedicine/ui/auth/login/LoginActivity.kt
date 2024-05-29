@@ -12,6 +12,7 @@ import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
 import com.medunnes.telemedicine.ui.home.HomeFragment
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -33,6 +34,44 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun setUserLogin() {
+        val homeFragment = HomeFragment()
+        val bundle = Bundle()
+        homeFragment.arguments = bundle
+
+        val userEmail = "${binding.tieUserEmail.text}"
+        val userPassword = "${binding.tieUserPassword.text}"
+        viewModel.login(userEmail, userPassword).observe(this@LoginActivity) { data ->
+            if (!data.isNullOrEmpty()) {
+                lifecycleScope.launch {
+                    viewModel.setLoginStatus()
+                    data.forEach {
+                        viewModel.setUserLoginId(it.id)
+                        viewModel.setUserLoginRole(it.role)
+                    }
+                }
+
+                lifecycleScope.launch { loginIfSuccess() }
+
+            } else {
+                Toast.makeText(this@LoginActivity,
+                    "Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private suspend fun loginIfSuccess() {
+        while (!viewModel.getUserStatus()) {
+            binding.progressBar.visibility = View.VISIBLE
+            delay(1000)
+        }
+
+        binding.progressBar.visibility = View.GONE
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+
+    }
+
     override fun onClick(view: View?) {
         with(binding) {
             when(view) {
@@ -40,30 +79,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this@LoginActivity, RegisterAsActivity::class.java)
                     startActivity(intent)
                 }
-                btnLogin -> {
-                    val homeFragment = HomeFragment()
-                    val bundle = Bundle()
-                    homeFragment.arguments = bundle
-
-                    val userEmail = "${binding.tieUserEmail.text}"
-                    val userPassword = "${binding.tieUserPassword.text}"
-                    viewModel.login(userEmail, userPassword).observe(this@LoginActivity) { data ->
-                        if (!data.isNullOrEmpty()) {
-                            lifecycleScope.launch {
-                                viewModel.setLoginStatus()
-                                data.forEach {
-                                    viewModel.setUserLoginId(it.id)
-                                    viewModel.setUserLoginRole(it.role)
-                                }
-                            }
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(this@LoginActivity,
-                                "Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+                btnLogin -> setUserLogin()
                 btnBack -> finish()
             }
         }
