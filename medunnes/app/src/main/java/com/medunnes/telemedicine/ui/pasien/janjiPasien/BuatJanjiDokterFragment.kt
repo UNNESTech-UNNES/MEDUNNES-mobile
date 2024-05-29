@@ -38,7 +38,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private var datePicked: String? = null
     private var sesiPicked: String? = null
     private var listSesi = ArrayList<Sesi>()
-
     private val bjcd = BuatJanjiConfirmationDialog()
     private val bjsd = BuatJanjiSuccessDialog()
 
