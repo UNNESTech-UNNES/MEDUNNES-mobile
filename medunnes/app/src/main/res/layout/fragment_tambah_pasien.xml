@@ -135,11 +135,19 @@
         android:elevation="10dp">
 
         <ImageView
-            android:id="@+id/iv_pasien_kartu_identitas"
+            android:id="@+id/iv_pasien_kartu_identitas_empty"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:src="@drawable/cloud_upload"/>
+
+        <ImageView
+            android:id="@id/iv_pasien_kartu_identitas"
+            android:layout_width="162dp"
+            android:layout_height="108dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cloud_upload"
+            android:visibility="gone"/>
 
     </androidx.cardview.widget.CardView>
 

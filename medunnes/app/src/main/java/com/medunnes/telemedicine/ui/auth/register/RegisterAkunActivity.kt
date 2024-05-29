@@ -51,6 +51,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
              "${tieAlamat.text}",
              "${tieNoTelepon.text}",
              intent.getIntExtra(ROLE, 0),
+             null,
          )
 
             viewModel.insertPasien(Pasien(
@@ -58,6 +59,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                 "${tieNamaLengkap.text}",
                 "Diri sendiri",
                 datePicked,
+                "empty",
                 viewModel.register(user).toInt()
             ))
         }

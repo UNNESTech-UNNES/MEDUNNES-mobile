@@ -85,6 +85,7 @@ class EditPasienFragment : Fragment(),
                                 "${binding.tiePasienNama.text}",
                                 spinnerHubungan,
                                 datePicked,
+                                it.kartuIdentitas,
                                 it.userId
                             )
                         )

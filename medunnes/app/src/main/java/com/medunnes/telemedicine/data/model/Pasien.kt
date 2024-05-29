@@ -19,6 +19,9 @@ data class Pasien(
     @ColumnInfo(name = "tanggal_Lahir")
     val tanggalLahir: String? = null,
 
+    @ColumnInfo(name = "kartu_identitas")
+    val kartuIdentitas: String? = null,
+
     @ColumnInfo(name = "user_id")
     val userId: Int
 )

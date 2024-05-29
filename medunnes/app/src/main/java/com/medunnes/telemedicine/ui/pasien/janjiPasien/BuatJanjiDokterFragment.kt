@@ -3,6 +3,7 @@ package com.medunnes.telemedicine.ui.pasien.janjiPasien
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Janji
@@ -21,6 +23,7 @@ import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -42,8 +45,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBuatJanjiDokterBinding.inflate(inflater, container, false)
-        val doctorId = arguments?.getInt(DOCTOR_ID)
-        Log.d("ID", "$doctorId")
         setDoctorProfile()
 
         lifecycleScope.launch { setPasienData() }
@@ -73,6 +74,13 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                         )
                         tvDoctorExperience.text = it.dokter.pendidikan
                         tvDoctorSpeciality.text = it.dokter.spesialis
+
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                        Glide.with(this@BuatJanjiDokterFragment)
+                            .load(imageFile)
+                            .into(binding.ivDoctorImage)
+                            .clearOnDetach()
                     }
                 }
 
