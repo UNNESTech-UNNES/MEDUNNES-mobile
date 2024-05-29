@@ -91,12 +91,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     tvUserEmail.text = it.email
                     tblTempatPraktik.visibility = View.GONE
 
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
-                    Glide.with(this@ProfileFragment)
-                        .load(imageFile)
-                        .into(ivUserPicture)
-                        .clearOnDetach()
+                    if (!it.image.isNullOrEmpty()) {
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                        Glide.with(this@ProfileFragment)
+                            .load(imageFile)
+                            .into(ivUserPicture)
+                            .clearOnDetach()
+                    }
                 }
             }
         }

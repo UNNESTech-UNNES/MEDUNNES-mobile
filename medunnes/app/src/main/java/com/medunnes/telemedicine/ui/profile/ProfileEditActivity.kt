@@ -80,13 +80,14 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                     date = dateFormat.parse(it.user.tanggalLahir.toString()) as Date
                     tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
 
-
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-                    Glide.with(this@ProfileEditActivity)
-                        .load(imageFile)
-                        .into(ivEditPicture)
-                        .clearOnDetach()
+                    if (!it.user.image.isNullOrEmpty()) {
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                        Glide.with(this@ProfileEditActivity)
+                            .load(imageFile)
+                            .into(ivEditPicture)
+                            .clearOnDetach()
+                    }
                 }
             }
         }
@@ -106,12 +107,14 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
                     date = dateFormat.parse(it.tanggalLahir.toString()) as Date
                     tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
 
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
-                    Glide.with(this@ProfileEditActivity)
-                        .load(imageFile)
-                        .into(ivEditPicture)
-                        .clearOnDetach()
+                    if (!it.image.isNullOrEmpty()) {
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                        Glide.with(this@ProfileEditActivity)
+                            .load(imageFile)
+                            .into(ivEditPicture)
+                            .clearOnDetach()
+                    }
                 }
             }
         }

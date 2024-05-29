@@ -18,12 +18,14 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
                 tvDoctorRole.text = dokter.dokter.spesialis
                 tvDoctorExperience.text = dokter.user.tanggalLahir
 
-                val path = Environment.getExternalStorageDirectory()
-                val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
-                Glide.with(itemView.context)
-                    .load(imageFile)
-                    .into(ivMessanger)
-                    .clearOnDetach()
+                if (!dokter.user.image.isNullOrEmpty()) {
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
+                    Glide.with(itemView.context)
+                        .load(imageFile)
+                        .into(ivMessanger)
+                        .clearOnDetach()
+                }
             }
         }
     }

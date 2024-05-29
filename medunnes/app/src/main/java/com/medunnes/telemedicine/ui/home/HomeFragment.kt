@@ -80,12 +80,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         binding.tvAuthenticate.text = it.fullname
                         binding.tvAuthenticate.isClickable = false
 
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
-                        Glide.with(this@HomeFragment)
-                            .load(imageFile)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
+                        if (!it.image.isNullOrEmpty()) {
+                            val path = Environment.getExternalStorageDirectory()
+                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+                            Glide.with(this@HomeFragment)
+                                .load(imageFile)
+                                .into(binding.ivUserPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
                 binding.tvAuthenticate.isClickable = false

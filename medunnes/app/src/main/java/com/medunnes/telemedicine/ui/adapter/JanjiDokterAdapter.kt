@@ -34,12 +34,14 @@ class JanjiDokterAdapter(private val janjiList: ArrayList<JanjiDanPasien>) : Rec
                     tvMessangerStatus.text  = janji.status
                 }
 
-                val path = Environment.getExternalStorageDirectory()
-                val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${janjiDanPasien.user.image}")}"
-                Glide.with(itemView.context)
-                    .load(imageFile)
-                    .into(ivMessanger)
-                    .clearOnDetach()
+                if (!janjiDanPasien.user.image.isNullOrEmpty()) {
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${janjiDanPasien.user.image}")}"
+                    Glide.with(itemView.context)
+                        .load(imageFile)
+                        .into(ivMessanger)
+                        .clearOnDetach()
+                }
 
             }
         }

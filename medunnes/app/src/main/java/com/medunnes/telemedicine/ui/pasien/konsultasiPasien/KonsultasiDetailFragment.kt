@@ -1,6 +1,7 @@
 package com.medunnes.telemedicine.ui.pasien.konsultasiPasien
 
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.User
@@ -17,6 +19,7 @@ import com.medunnes.telemedicine.databinding.FragmentKonsultasiDetailBinding
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
+import java.io.File
 
 class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentKonsultasiDetailBinding? = null
@@ -50,6 +53,15 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
                         tvUserEducation.text = it.user.jenisKelamin
                         tvUserLocation.text = it.dokter.tempatPraktik
                         tvUserStr.text = it.dokter.noStr
+
+                        if (!it.user.image.isNullOrEmpty()) {
+                            val path = Environment.getExternalStorageDirectory()
+                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                            Glide.with(this@KonsultasiDetailFragment)
+                                .load(imageFile)
+                                .into(ivUserPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             }
