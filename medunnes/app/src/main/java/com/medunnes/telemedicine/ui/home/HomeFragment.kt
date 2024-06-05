@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Faskes
+import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
@@ -24,6 +26,9 @@ import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.util.Calendar
 
@@ -62,6 +67,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
         }
+
+        getAllUser()
+
 
         return root
     }
@@ -230,5 +238,33 @@ class HomeFragment : Fragment(), View.OnClickListener {
                  else -> Log.d("CLICK", "error")
              }
         }
+    }
+
+    fun getAllUser() {
+        val client = ApiConfig.getApiService().getAllUsers("1")
+        client.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
+            ) {
+                try {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        responseBody?.data?.forEach {
+                            Log.d("RESPONSE", it.name)
+                        }
+                    } else {
+                        Log.d("RESPONSE", "FAILED")
+                    }
+                } catch (e: Exception) {
+                    Log.d("RESPONSE", e.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.d("ERROR", t.toString())
+            }
+
+        })
     }
 }

@@ -1,7 +1,10 @@
 package com.medunnes.telemedicine.data.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
+import com.medunnes.telemedicine.data.api.ApiConfig
+import com.medunnes.telemedicine.data.api.ApiService
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Janji
@@ -9,7 +12,11 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.data.room.dao.UserDao
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -49,6 +56,32 @@ class UserRepository private constructor(
     suspend fun getUserId() = authDataStore.getUserId()
     suspend fun setUserRole(role: Int) = authDataStore.setUserRole(role)
     suspend fun getUserRole(): Int = authDataStore.getUserRole()
+
+//    suspend fun getAllUser(page: String): Call<UserResponse> {
+//        val client = ApiConfig.getApiService().getAllUsers(page)
+//        client.enqueue(object : Callback<UserResponse> {
+//            override fun onResponse(
+//                call: Call<UserResponse>,
+//                response: Response<UserResponse>
+//            ) {
+//                try {
+//                    if (response.isSuccessful) {
+//                        val responseBody = response.body()
+//                        Log.d("RESPONSE", responseBody.toString())
+//                    } else {
+//                        Log.d("RESPONSE", "FAILED")
+//                    }
+//                } catch (e: Exception) {
+//                    Log.d("RESPONSE", e.toString())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+//                Log.d("ERROR", t.toString())
+//            }
+//
+//        })
+//    }
 
     companion object {
         @Volatile
