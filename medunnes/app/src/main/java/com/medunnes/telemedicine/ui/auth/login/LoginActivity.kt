@@ -3,6 +3,7 @@ package com.medunnes.telemedicine.ui.auth.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -41,21 +42,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val userEmail = "${binding.tieUserEmail.text}"
         val userPassword = "${binding.tieUserPassword.text}"
-        viewModel.login(userEmail, userPassword).observe(this@LoginActivity) { data ->
-            if (!data.isNullOrEmpty()) {
+//        val userLogin = viewModel.login(userEmail, userPassword)
+
+        with(viewModel) {
+            try {
                 lifecycleScope.launch {
-                    viewModel.setLoginStatus()
-                    data.forEach {
-                        viewModel.setUserLoginId(it.id)
-                        viewModel.setUserLoginRole(it.role)
+                    if (!userEmail.isNullOrEmpty() && !userPassword.isNullOrEmpty()) {
+                        val login = login(userEmail, userPassword)
+                        if (login.status) {
+                            Log.d("IDLOF", login.user.toString())
+                            setUserLoginId(login.user.idUser)
+                            setUserLoginRole(1)
+                            setLoginStatus()
+                            loginIfSuccess()
+                        } else {
+                            Toast.makeText(this@LoginActivity,"Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@LoginActivity, "Lengkapi email dan password", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-                lifecycleScope.launch { loginIfSuccess() }
-
-            } else {
-                Toast.makeText(this@LoginActivity,
-                    "Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
             }
         }
     }

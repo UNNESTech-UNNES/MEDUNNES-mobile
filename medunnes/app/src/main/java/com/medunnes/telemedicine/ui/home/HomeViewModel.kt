@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.PasienResponse
+import com.medunnes.telemedicine.data.response.UserResponse
 
 class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -17,4 +19,7 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
     suspend fun getUserStatus(): Boolean = userRepository.getLoginStatus()
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
     suspend fun getUserRole(): Int = userRepository.getUserRole()
+    suspend fun getAllUser(page: String): UserResponse = userRepository.getAllUser(page)
+    suspend fun getUserLogin(id: Int): UserResponse = userRepository.getUserLogin(id)
+    suspend fun getPasienByUser(userId: Int): PasienResponse = userRepository.getPasienByUser(userId)
 }
