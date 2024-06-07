@@ -20,19 +20,19 @@ data class DataItem(
 	val password: String,
 
 	@field:SerializedName("created_token")
-	val createdToken: String,
+	val createdToken: String? = null,
 
 	@field:SerializedName("updated_at")
-	val updatedAt: String,
+	val updatedAt: String? = null,
 
 	@field:SerializedName("name")
 	val name: String,
 
 	@field:SerializedName("created_at")
-	val createdAt: String,
+	val createdAt: String? = null,
 
 	@field:SerializedName("email_verified_at")
-	val emailVerifiedAt: Any,
+	val emailVerifiedAt: Any? = null,
 
 	@field:SerializedName("id_user")
 	val idUser: Int,

@@ -86,10 +86,37 @@
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
-                    android:id="@+id/tv_nama_lengkao"
+                    android:id="@+id/tv_nik"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/til_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/nik"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_nik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nik"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:startIconTint="@color/grey">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_nik"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/masukkan_nik"
+                        android:inputType="number"/>
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_nama_lengkao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_nik"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
                     android:text="@string/nama_lenkap"/>
@@ -215,10 +242,59 @@
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
-                    android:id="@+id/tv_password_title"
+                    android:id="@+id/tv_tb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/tinggi_badan"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_tb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/til_bb"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tb">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_tb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="@string/dalam_cm"/>
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_bb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
+                    app:layout_constraintStart_toStartOf="@id/til_bb"
+                    android:textStyle="bold"
+                    android:text="@string/berat_badan"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_bb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/til_tb"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tb"
+                    android:layout_marginStart="8dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_bb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="@string/dalam_kg"/>
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_password_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_tb"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
                     android:text="@string/password"/>

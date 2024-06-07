@@ -34,20 +34,20 @@ data class PasienDataItem(
 	@field:SerializedName("alamat")
 	val alamat: String,
 
-	@field:SerializedName("nik")
+	@field:SerializedName("NIK")
 	val nik: Long,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
 
 	@field:SerializedName("user_id")
-	val userId: Int,
+	val userId: Long,
 
 	@field:SerializedName("id_pasien")
 	val idPasien: Int,
 
 	@field:SerializedName("img_pasien")
-	val imgPasien: String,
+	val imgPasien: String? = null,
 
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String,

@@ -167,6 +167,14 @@
     <string name="tambah_pasien">+ Pasien</string>
     <string name="delete_pasien_alert_deskripsi">Data yang sudah dihapus tidak dapat dikembalikan</string>
     <string name="hapus_data_pasien">Hapus data pasien?</string>
+    <string name="nik">NIK</string>
+    <string name="masukkan_nik">Masukkan NIK</string>
+    <string name="masukkan_tinggi_badan_cm">Masukkan Tinggi Badan (cm)</string>
+    <string name="tinggi_badan">Tinggi Badan</string>
+    <string name="masukkan_berat_badan_kg">Masukkan Berat Badan (kg)</string>
+    <string name="berat_badan">Berat Badan</string>
+    <string name="dalam_cm">Dalam cm</string>
+    <string name="dalam_kg">dalam kg</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

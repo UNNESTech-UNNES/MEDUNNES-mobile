@@ -10,6 +10,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.UserResponse
@@ -28,10 +29,49 @@ class UserRepository private constructor(
     suspend fun getAllUser(page: String): UserResponse = ApiConfig.getApiService().getAllUsers(page)
     suspend fun getUserLogin(id: Int): UserResponse = ApiConfig.getApiService().getUser(id)
     suspend fun login(email: String, password: String): LoginResponse = ApiConfig.getApiService().login(email, password)
+    suspend fun register(
+        name: String,
+        email: String,
+        password: String,
+        type: String
+    ): UserResponse = ApiConfig.getApiService().register(name, email, type, password)
 
     //Pasien
     suspend fun getAllPasien(page: String): PasienResponse = ApiConfig.getApiService().getAllPasien(page)
     suspend fun getPasienByUser(userId: Int): PasienResponse = ApiConfig.getApiService().getPasienByUser(userId)
+    suspend fun insertPasien(
+        userId: Long,
+        nik: Long,
+        nama: String,
+        img: String? = null,
+        kelamin: String,
+        alamat: String,
+        noTlp: String,
+        tb: Int,
+        bb: Int,
+        status: String
+    ): PasienResponse = ApiConfig.getApiService().insertPasien(
+        userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
+    )
+
+    // Dokter
+    suspend fun insertDokter(
+        userId: Int,
+        spesialisId: Int,
+        titleDepan: String,
+        nama: String,
+        titleBelakang: String,
+        img: String,
+        alamat: String,
+        noTlp: String,
+        tempatKerja: String,
+        tempatLulue: Int,
+        tglAktif: String,
+        alumni: String,
+        noReg: Int
+    ): DokterResponse = ApiConfig.getApiService().insertDokter(
+        userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp, tempatKerja, tempatLulue, tglAktif, alumni, noReg
+    )
 
     // Room
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)

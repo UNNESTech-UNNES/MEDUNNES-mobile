@@ -4,16 +4,17 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,29 +40,38 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         }
     }
 
-    private fun registerUser() {
+    private suspend fun registerUser() {
         with(binding) {
-         val user = User(
-             0,
-             "${tieEmail.text}",
-             "${tiePassword.text}",
-             "${tieNamaLengkap.text}",
-             datePicked,
-             dataSpinner,
-             "${tieAlamat.text}",
-             "${tieNoTelepon.text}",
-             intent.getIntExtra(ROLE, 0),
-             null,
-         )
 
-            viewModel.insertPasien(Pasien(
-                0,
-                "${tieNamaLengkap.text}",
-                "Diri sendiri",
-                datePicked,
-                "empty",
-                viewModel.register(user).toInt()
-            ))
+            var userId: Long = 0
+            try {
+                val userRegister = viewModel.registerAPI(
+                    "${tieNamaLengkap.text}",
+                    "${tieEmail.text}",
+                    "${tiePassword.text}",
+                    "pasien"
+                )
+
+                userRegister.data.forEach {
+                    userId = it.idUser.toLong()
+                }
+
+                viewModel.insertPasien(
+                    userId,
+                    tieNik.text.toString().toLong(),
+                    "${tieNamaLengkap.text}",
+                    null,
+                    dataSpinner,
+                    "${tieAlamat.text}",
+                    "${tieNoTelepon.text}",
+                    tieTb.text.toString().toInt(),
+                    tieBb.text.toString().toInt(),
+                    "active",
+                )
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+
         }
     }
 
@@ -74,7 +84,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         val datePickerDialog = DatePickerDialog(
             this, { _, year, month, day ->
                 calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 binding.tieTglLahir.setText(dateFormat.format(calendar.time))
                 datePicked = "${calendar.time}"
 
@@ -97,7 +107,8 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        dataSpinner = "${parent?.getItemAtPosition(pos)}"
+        val genderPicked = "${parent?.getItemAtPosition(pos)}"
+        dataSpinner = if (genderPicked == "Laki-laki") "L" else "P"
         getDataSpinner(dataSpinner)
     }
 
@@ -113,7 +124,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         with(binding) {
             when(view) {
                 btnRegister -> {
-                    registerUser()
+                    lifecycleScope.launch { registerUser() }
 
                     val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
                     startActivity(intent)
