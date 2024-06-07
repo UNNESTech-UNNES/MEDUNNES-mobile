@@ -54,6 +54,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             setViewBasedOnStatus()
         }
 
+        lifecycleScope.launch {
+            setProfile()
+            setUserPasienProfile()
+        }
+
         return root
     }
 
@@ -67,16 +72,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
-                    tvUserRole.text = it.dokter.spesialis
+//                    tvUserRole.text = it.dokter.spesialis
                     tvUserEmail.text = it.user.email
-                    tvUserPraktik.text = it.dokter.tempatPraktik
+                    tvUserPraktik.text = it.dokter.alumni
+                    tblBadan.visibility = View.GONE
 
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-                    Glide.with(this@ProfileFragment)
-                        .load(imageFile)
-                        .into(ivUserPicture)
-                        .clearOnDetach()
+//                    val path = Environment.getExternalStorageDirectory()
+//                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+//                    Glide.with(this@ProfileFragment)
+//                        .load(imageFile)
+//                        .into(ivUserPicture)
+//                        .clearOnDetach()
                 }
             }
         }
@@ -87,19 +93,79 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tvUserName.text = it.fullname
-                    tvUserRole.text = it.jenisKelamin
                     tvUserEmail.text = it.email
                     tblTempatPraktik.visibility = View.GONE
 
-                    if (!it.image.isNullOrEmpty()) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
-                        Glide.with(this@ProfileFragment)
-                            .load(imageFile)
-                            .into(ivUserPicture)
-                            .clearOnDetach()
-                    }
+//                    if (!it.image.isNullOrEmpty()) {
+//                        val path = Environment.getExternalStorageDirectory()
+//                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+//                        Glide.with(this@ProfileFragment)
+//                            .load(imageFile)
+//                            .into(ivUserPicture)
+//                            .clearOnDetach()
+//                    }
                 }
+            }
+        }
+        setUserPasienProfile()
+    }
+
+    private suspend fun setPasienProfile() {
+        val userId = viewModel.getUserLoginId()
+        viewModel.getPasienByUser(userId).observe(viewLifecycleOwner) { data ->
+            data.forEach {
+                with(binding) {
+                    tvTinggiBadan.text = it.tb.toString()
+                    tvBeratBadan.text = it.bb.toString()
+                }
+            }
+
+        }
+    }
+
+    private suspend fun setUserPasienProfile() {
+        val userId = viewModel.getUserLoginId()
+        var name = ""
+        var email = ""
+        var role = ""
+        var tb = ""
+        var bb = ""
+        var img = ""
+        viewModel.getUserProfile(userId).observe(viewLifecycleOwner) { data ->
+            data.forEach {
+                name = it.fullname
+                email = it.fullname
+                role = it.type
+            }
+        }
+
+        viewModel.getPasienByUser(userId).observe(viewLifecycleOwner) { data ->
+            data.forEach {
+                tb = it.tb.toString()
+                bb = it.bb.toString()
+            }
+        }
+
+        viewModel.getUserPasienProfile(userId).data.forEach {
+            tb = it.tB.toString()
+            bb = it.bB.toString()
+        }
+
+        with(binding) {
+            tvUserName.text = name
+            tvUserRole.text = role
+            tvUserEmail.text = email
+            tvTinggiBadan.text = tb
+            tvBeratBadan.text = bb
+            tblTempatPraktik.visibility = View.GONE
+
+            if (!img.isNullOrEmpty()) {
+                val path = Environment.getExternalStorageDirectory()
+                val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${img}")}"
+                Glide.with(this@ProfileFragment)
+                    .load(imageFile)
+                    .into(ivUserPicture)
+                    .clearOnDetach()
             }
         }
     }

@@ -19,21 +19,6 @@ data class User(
     @ColumnInfo(name = "fullname")
     var fullname: String,
 
-    @ColumnInfo(name = "tanggal_lahir")
-    var tanggalLahir: String? = null,
-
-    @ColumnInfo(name = "jenis_kelamin")
-    var jenisKelamin: String? = null,
-
-    @ColumnInfo(name = "alamat")
-    var alamat: String? = null,
-
-    @ColumnInfo(name = "no_telepon")
-    var noTelepon: String? = null,
-
-    @ColumnInfo(name = "role")
-    var role: Int,
-
-    @ColumnInfo(name = "image")
-    var image: String? = null
+   @ColumnInfo(name = "type")
+   var type: String
 )

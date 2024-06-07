@@ -73,17 +73,17 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                         tvDoctorName.text = getString(R.string.nama_and_titel,
                             it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang
                         )
-                        tvDoctorExperience.text = it.dokter.pendidikan
-                        tvDoctorSpeciality.text = it.dokter.spesialis
+                        tvDoctorExperience.text = it.dokter.alumni
+//                        tvDoctorSpeciality.text = it.dokter.
 
-                        if (!it.user.image.isNullOrEmpty()) {
-                            val path = Environment.getExternalStorageDirectory()
-                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-                            Glide.with(this@BuatJanjiDokterFragment)
-                                .load(imageFile)
-                                .into(binding.ivDoctorImage)
-                                .clearOnDetach()
-                        }
+//                        if (!it.user.image.isNullOrEmpty()) {
+//                            val path = Environment.getExternalStorageDirectory()
+//                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+//                            Glide.with(this@BuatJanjiDokterFragment)
+//                                .load(imageFile)
+//                                .into(binding.ivDoctorImage)
+//                                .clearOnDetach()
+//                        }
                     }
                 }
 

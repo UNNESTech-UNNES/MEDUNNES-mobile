@@ -53,7 +53,7 @@ class JanjiDokterFragment : Fragment() {
                 val bundle = Bundle()
                 with(bundle) {
                     putString(PasienDetailDialog.NAMA_PASIEN, janjiDanPasien.user.fullname)
-                    putString(PasienDetailDialog.TELEPON_PASIEN, janjiDanPasien.user.noTelepon)
+                    //putString(PasienDetailDialog.TELEPON_PASIEN, janjiDanPasien.)
                     putString(PasienDetailDialog.SESI_PASIEN, janjiDanPasien.janji.sesi)
                     putString(PasienDetailDialog.TANGGAL_PASIEN, janjiDanPasien.janji.dateTime)
                 }

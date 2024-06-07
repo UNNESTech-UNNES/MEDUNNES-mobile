@@ -75,11 +75,11 @@ class TambahPasienFragment : Fragment(),
             lifecycleScope.launch {
                 viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
                     data.forEach {
-                        Log.d("DAATE", it.tanggalLahir.toString())
+                        //Log.d("DAATE", it.tanggalLahir.toString())
                         with(binding) {
                             tiePasienNama.setText(it.fullname)
                             tiePasienNama.isEnabled = false
-                            tiePasienTglLahir.setText(it.tanggalLahir)
+                            //tiePasienTglLahir.setText(it.tanggalLahir)
                             tilPasienTglLahir.setEndIconOnClickListener { /* DO NOTHING */ }
                         }
                     }
@@ -111,29 +111,29 @@ class TambahPasienFragment : Fragment(),
         datePickerDialog.show()
     }
 
-    private suspend fun insertPasien(isConfirm: Boolean) {
-        with(binding) {
-            if (isConfirm) {
-                try {
-                    viewModel.insertPasien(Pasien(
-                        0,
-                        "${tiePasienNama.text}",
-                        dataSpinner,
-                        datePicked,
-                        imagePath,
-                        viewModel.getUserLoginId()
-                    ))
-                    uploadImage()
-                    bjcd.dismiss()
-                    showSuccessDialog()
-                } catch (e: Exception) {
-                    Log.d("ERROR", e.toString())
-                }
-            } else {
-                bjcd.dismiss()
-            }
-        }
-    }
+//    private suspend fun insertPasien(isConfirm: Boolean) {
+//        with(binding) {
+//            if (isConfirm) {
+//                try {
+//                    viewModel.insertPasien(Pasien(
+//                        0,
+//                        "${tiePasienNama.text}",
+//                        dataSpinner,
+//                        datePicked,
+//                        imagePath,
+//                        viewModel.getUserLoginId()
+//                    ))
+//                    uploadImage()
+//                    bjcd.dismiss()
+//                    showSuccessDialog()
+//                } catch (e: Exception) {
+//                    Log.d("ERROR", e.toString())
+//                }
+//            } else {
+//                bjcd.dismiss()
+//            }
+//        }
+//    }
 
     private fun showConfirmationDialog() {
         val bundle = Bundle()
@@ -143,7 +143,7 @@ class TambahPasienFragment : Fragment(),
 
         bjcd.setOnItemClickCallback(object : BuatJanjiConfirmationDialog.OnItemClickCallback {
             override fun onItemClicked(isConfirm: Boolean) {
-                lifecycleScope.launch { insertPasien(true) }
+                // lifecycleScope.launch { insertPasien(true) }
             }
 
         })

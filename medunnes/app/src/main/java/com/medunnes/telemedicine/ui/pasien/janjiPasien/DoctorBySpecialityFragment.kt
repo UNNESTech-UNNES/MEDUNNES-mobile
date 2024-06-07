@@ -34,7 +34,7 @@ class DoctorBySpecialityFragment : Fragment() {
         speciality = "${arguments?.getString(SPECIALITY)}"
         binding.tvSpesialisasiTitle.setText(getString(R.string.spesialis_dokter, speciality))
 
-        getDoctorBySpeciality("", speciality)
+        //getDoctorBySpeciality("", 1)
         searchMessanger()
 
         return binding.root
@@ -62,7 +62,7 @@ class DoctorBySpecialityFragment : Fragment() {
         })
     }
 
-    private fun getDoctorBySpeciality(filter: String, speciality: String) {
+    private fun getDoctorBySpeciality(filter: String, speciality: Int) {
         viewModel.getDokterBySpeciality(speciality).observe(viewLifecycleOwner) { data ->
             listDokter.clear()
             listDokter.addAll(data)
@@ -82,7 +82,7 @@ class DoctorBySpecialityFragment : Fragment() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.setText(searchView.text)
                     searchView.hide()
-                    getDoctorBySpeciality("${searchView.text}", speciality)
+                    //getDoctorBySpeciality("${searchView.text}", 1)
                     false
                 }
         }

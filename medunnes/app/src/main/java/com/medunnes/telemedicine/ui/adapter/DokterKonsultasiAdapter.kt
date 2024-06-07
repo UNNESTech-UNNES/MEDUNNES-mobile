@@ -16,16 +16,16 @@ class DokterKonsultasiAdapter(private val dokterList: List<UserAndDokter>): Recy
         fun bind(dokter: UserAndDokter) {
             with(binding) {
                 tvDokterNama.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
-                tvDokterSpesialis.text= dokter.dokter.spesialis
+                tvDokterSpesialis.text= dokter.dokter.spesialidId.toString()
 
-                if (!dokter.user.image.isNullOrEmpty()) {
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
-                    Glide.with(itemView.context)
-                        .load(imageFile)
-                        .into(ivDokterPicture)
-                        .clearOnDetach()
-                }
+//                if (!dokter.dokter..isNullOrEmpty()) {
+//                    val path = Environment.getExternalStorageDirectory()
+//                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
+//                    Glide.with(itemView.context)
+//                        .load(imageFile)
+//                        .into(ivDokterPicture)
+//                        .clearOnDetach()
+//                }
             }
         }
     }

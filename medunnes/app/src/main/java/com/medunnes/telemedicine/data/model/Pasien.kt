@@ -10,18 +10,33 @@ data class Pasien(
     @ColumnInfo(name = "pasien_id")
     val pasienId: Int,
 
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
+
+    @ColumnInfo(name = "nik")
+    val nik: Long,
+
     @ColumnInfo(name = "nama_pasien")
     val namaPasien: String,
 
-    @ColumnInfo(name = "hubungan")
-    val hubungan: String? = null,
+    @ColumnInfo(name = "img_pasien")
+    val imgPasien: String? = null,
 
-    @ColumnInfo(name = "tanggal_Lahir")
-    val tanggalLahir: String? = null,
+    @ColumnInfo(name = "jenis_kelamin")
+    val jenisKelamin: String,
 
-    @ColumnInfo(name = "kartu_identitas")
-    val kartuIdentitas: String? = null,
+    @ColumnInfo(name = "alamat")
+    val alamat: String,
 
-    @ColumnInfo(name = "user_id")
-    val userId: Int
+    @ColumnInfo(name = "no_tlp")
+    val noTlp: String,
+
+    @ColumnInfo(name = "tb")
+    val tb: Int,
+
+    @ColumnInfo(name = "bb")
+    val bb: Int,
+
+    @ColumnInfo(name = "status")
+    val status: String
 )

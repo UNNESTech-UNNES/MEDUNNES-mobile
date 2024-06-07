@@ -12,6 +12,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.model.Pasien
+import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import kotlinx.coroutines.launch
@@ -71,6 +73,28 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
             }
+
+            viewModel.register(User(
+                0,
+                "${tieNamaLengkap.text}",
+                "${tieEmail.text}",
+                "${tiePassword.text}",
+                "pasien"
+            ))
+
+            viewModel.insertPasien(Pasien(
+                0,
+                userId.toInt(),
+                tieNik.text.toString().toLong(),
+                "${tieNamaLengkap.text}",
+                null,
+                dataSpinner,
+                "${tieAlamat.text}",
+                "${tieNoTelepon.text}",
+                tieTb.text.toString().toInt(),
+                tieBb.text.toString().toInt(),
+                "active",
+            ))
 
         }
     }

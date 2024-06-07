@@ -15,17 +15,17 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
         fun bind(dokter: UserAndDokter) {
             with(binding) {
                 tvPatientName.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
-                tvDoctorRole.text = dokter.dokter.spesialis
-                tvDoctorExperience.text = dokter.user.tanggalLahir
+                //tvDoctorRole.text = dokter.dokter.spesialis
+                tvDoctorExperience.text = dokter.user.fullname
 
-                if (!dokter.user.image.isNullOrEmpty()) {
-                    val path = Environment.getExternalStorageDirectory()
-                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
-                    Glide.with(itemView.context)
-                        .load(imageFile)
-                        .into(ivMessanger)
-                        .clearOnDetach()
-                }
+//                if (!dokter.user.isNullOrEmpty()) {
+//                    val path = Environment.getExternalStorageDirectory()
+//                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
+//                    Glide.with(itemView.context)
+//                        .load(imageFile)
+//                        .into(ivMessanger)
+//                        .clearOnDetach()
+//                }
             }
         }
     }

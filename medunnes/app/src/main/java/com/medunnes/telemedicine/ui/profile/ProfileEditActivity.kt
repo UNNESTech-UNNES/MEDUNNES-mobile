@@ -72,114 +72,114 @@ class ProfileEditActivity : AppCompatActivity(), View.OnClickListener {
             data.forEach {
                 with(binding) {
                     tieEditNamaLengkap.setText(it.user.fullname)
-                    tieEditNoTelepon.setText(it.user.noTelepon)
-                    tieEditRumahSakit.setText(it.dokter.tempatPraktik)
-                    tieEditAlamat.setText(it.user.alamat)
+                    tieEditNoTelepon.setText(it.dokter.noTlp)
+                    tieEditRumahSakit.setText(it.dokter.tempatKerja)
+                    tieEditAlamat.setText(it.dokter.alamat)
                     tieEditEmail.setText(it.user.email)
 
-                    date = dateFormat.parse(it.user.tanggalLahir.toString()) as Date
+                    date = dateFormat.parse(it.dokter.tglMulaiAktif.toString()) as Date
                     tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
 
-                    if (!it.user.image.isNullOrEmpty()) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-                        Glide.with(this@ProfileEditActivity)
-                            .load(imageFile)
-                            .into(ivEditPicture)
-                            .clearOnDetach()
-                    }
+//                    if (!it.us.isNullOrEmpty()) {
+//                        val path = Environment.getExternalStorageDirectory()
+//                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+//                        Glide.with(this@ProfileEditActivity)
+//                            .load(imageFile)
+//                            .into(ivEditPicture)
+//                            .clearOnDetach()
+//                    }
                 }
             }
         }
     }
 
     private suspend fun getUserProfileData() {
-        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
-            data.forEach {
-                with(binding) {
-                    tieEditNamaLengkap.setText(it.fullname)
-                    tieEditNoTelepon.setText(it.noTelepon)
-                    tieEditAlamat.setText(it.alamat)
-                    tieEditEmail.setText(it.email)
-                    tvEditRumahSakitTitle.visibility = View.GONE
-                    tilEditRumahSakit.visibility = View.GONE
-
-                    date = dateFormat.parse(it.tanggalLahir.toString()) as Date
-                    tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
-
-                    if (!it.image.isNullOrEmpty()) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
-                        Glide.with(this@ProfileEditActivity)
-                            .load(imageFile)
-                            .into(ivEditPicture)
-                            .clearOnDetach()
-                    }
-                }
-            }
-        }
+//        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(this@ProfileEditActivity) { data ->
+//            data.forEach {
+//                with(binding) {
+//                    tieEditNamaLengkap.setText(it.fullname)
+//                    tieEditNoTelepon.setText(it.)
+//                    tieEditAlamat.setText(it.alamat)
+//                    tieEditEmail.setText(it.email)
+//                    tvEditRumahSakitTitle.visibility = View.GONE
+//                    tilEditRumahSakit.visibility = View.GONE
+//
+//                    date = dateFormat.parse(it.tanggalLahir.toString()) as Date
+//                    tieEditTglLahir.setText(date.let { it1 -> fullDateFormat.format(it1) })
+//
+//                    if (!it.image.isNullOrEmpty()) {
+//                        val path = Environment.getExternalStorageDirectory()
+//                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.image}")}"
+//                        Glide.with(this@ProfileEditActivity)
+//                            .load(imageFile)
+//                            .into(ivEditPicture)
+//                            .clearOnDetach()
+//                    }
+//                }
+//            }
+//        }
     }
 
     private suspend fun updateDokterProfile() {
-        val userId = viewModel.getUserLoginId()
-        with(binding) {
-            viewModel.getUserAndDokter(userId).observe(this@ProfileEditActivity) { data ->
-                data.forEach {
-                    val user = User(
-                        it.user.id,
-                        "${tieEditEmail.text}",
-                        it.user.password,
-                        "${tieEditNamaLengkap.text}",
-                        if (datePicked == "date") it.user.tanggalLahir else datePicked,
-                        it.user.jenisKelamin,
-                        "${tieEditAlamat.text}",
-                        "${tieEditNoTelepon.text}",
-                        it.user.role,
-                        if (imagePath == null) it.user.image else imagePath
-                    )
-                    with(viewModel) {
-                        updateUserProfile(user)
-                        updateDokter(
-                            Dokter(
-                                it.dokter.userId,
-                                it.dokter.titelDepan,
-                                it.dokter.titelBelakang,
-                                it.dokter.noStr,
-                                "${tieEditRumahSakit.text}",
-                                it.dokter.pendidikan,
-                                it.dokter.spesialis,
-                                userId
-                            )
-                        )
-                    }
-                }
-            }
-        }
+//        val userId = viewModel.getUserLoginId()
+//        with(binding) {
+//            viewModel.getUserAndDokter(userId).observe(this@ProfileEditActivity) { data ->
+//                data.forEach {
+//                    val user = User(
+//                        it.user.id,
+//                        "${tieEditEmail.text}",
+//                        it.user.password,
+//                        "${tieEditNamaLengkap.text}",
+//                        if (datePicked == "date") it.user.tanggalLahir else datePicked,
+//                        it.user.jenisKelamin,
+//                        "${tieEditAlamat.text}",
+//                        "${tieEditNoTelepon.text}",
+//                        it.user.role,
+//                        if (imagePath == null) it.user.image else imagePath
+//                    )
+//                    with(viewModel) {
+//                        updateUserProfile(user)
+//                        updateDokter(
+//                            Dokter(
+//                                it.dokter.userId,
+//                                it.dokter.titelDepan,
+//                                it.dokter.titelBelakang,
+//                                it.dokter.noStr,
+//                                "${tieEditRumahSakit.text}",
+//                                it.dokter.pendidikan,
+//                                it.dokter.spesialis,
+//                                userId
+//                            )
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
 
     private suspend fun updateUserProfile() {
-        val userId = viewModel.getUserLoginId()
-        with(binding) {
-            viewModel.getUserProfile(userId).observe(this@ProfileEditActivity) { data ->
-                data.forEach {
-                    val user = User(
-                        it.id,
-                        "${tieEditEmail.text}",
-                        it.password,
-                        "${tieEditNamaLengkap.text}",
-                        if (datePicked == "date") it.tanggalLahir else datePicked,
-                        it.jenisKelamin,
-                        "${tieEditAlamat.text}",
-                        "${tieEditNoTelepon.text}",
-                        it.role,
-                        if (imagePath == null) it.image else imagePath
-                    )
-                    with(viewModel) {
-                        updateUserProfile(user)
-                    }
-                }
-            }
-        }
+//        val userId = viewModel.getUserLoginId()
+//        with(binding) {
+//            viewModel.getUserProfile(userId).observe(this@ProfileEditActivity) { data ->
+//                data.forEach {
+//                    val user = User(
+//                        it.id,
+//                        "${tieEditEmail.text}",
+//                        it.password,
+//                        "${tieEditNamaLengkap.text}",
+//                        if (datePicked == "date") it.tanggalLahir else datePicked,
+//                        it.jenisKelamin,
+//                        "${tieEditAlamat.text}",
+//                        "${tieEditNoTelepon.text}",
+//                        it.role,
+//                        if (imagePath == null) it.image else imagePath
+//                    )
+//                    with(viewModel) {
+//                        updateUserProfile(user)
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun showDatePicker() {

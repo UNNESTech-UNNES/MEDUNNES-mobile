@@ -131,6 +131,62 @@
                         android:textSize="10sp"
                         android:text="@string/nama_lenkap" />
                 </TableRow>
+
+                <TableRow
+                    android:id="@+id/tbl_badan"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <TableLayout>
+
+                        <TableRow
+                            android:layout_marginTop="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:background="@color/grey_less">
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/monitor_weight"/>
+
+                            <TextView
+                                android:id="@+id/tv_berat_badan"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="16dp"
+                                android:textSize="10sp"
+                                android:text="@string/berat_badan" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <TableLayout>
+
+                        <TableRow
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:background="@color/grey_less">
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/height"/>
+
+                            <TextView
+                                android:id="@+id/tv_tinggi_badan"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="10sp"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/tinggi_badan" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </TableRow>
             </TableLayout>
 
         </androidx.cardview.widget.CardView>

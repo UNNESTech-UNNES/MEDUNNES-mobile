@@ -14,6 +14,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.model.UserAndPasien
 
 @Dao
 interface UserDao {
@@ -41,8 +42,8 @@ interface UserDao {
     fun getAllDokter(): LiveData<List<UserAndDokter>>
 
     @Transaction
-    @Query("SELECT * FROM user JOIN dokter ON user.user_id = dokter.user_id WHERE spesialis = :speciality")
-    fun getDokterBySpeciality(speciality: String): LiveData<List<UserAndDokter>>
+    @Query("SELECT * FROM user JOIN dokter ON user.user_id = dokter.user_id WHERE spesialis_id = :speciality")
+    fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDokter(dokter: Dokter): Long

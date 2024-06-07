@@ -53,52 +53,52 @@ class EditPasienFragment : Fragment(),
             viewModel.getPasienById(pasienId).observe(viewLifecycleOwner) { data ->
                 data.forEach {
                     with(binding) {
-                        datePicked = "${it.tanggalLahir}"
+                        //datePicked = "${it.tanggalLahir}"
                         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
                         val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
                         val date = dateFormat.parse(datePicked)
                         tiePasienNama.setText(it.namaPasien)
                         tiePasienTglLahir.setText(date?.let { it1 -> fullDateFormat.format(it1) })
 
-                        if (it.hubungan == "Keluarga") {
-                            spinnerPasienHubungan.setSelection(0)
-                        } else if (it.hubungan == "Teman") {
-                            spinnerPasienHubungan.setSelection(1)
-                        } else {
-                            spinnerPasienHubungan.setSelection(2)
-                        }
+//                        if (it.hubungan == "Keluarga") {
+//                            spinnerPasienHubungan.setSelection(0)
+//                        } else if (it.hubungan == "Teman") {
+//                            spinnerPasienHubungan.setSelection(1)
+//                        } else {
+//                            spinnerPasienHubungan.setSelection(2)
+//                        }
                     }
                 }
             }
         }
     }
 
-    private fun updatePasien() {
-        val pasienId = arguments?.getInt(PASIEN_ID)
-        try {
-            if (pasienId != null) {
-                viewModel.getPasienById(pasienId).observe(viewLifecycleOwner) { data ->
-                    data.forEach {
-                        viewModel.updatePasien(
-                            Pasien(
-                                it.pasienId,
-                                "${binding.tiePasienNama.text}",
-                                spinnerHubungan,
-                                datePicked,
-                                it.kartuIdentitas,
-                                it.userId
-                            )
-                        )
-                    }
-                }
-            }
-
-            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
-
-        } catch (e: Exception) {
-            Log.d("ERROR", e.toString())
-        }
-    }
+//    private fun updatePasien() {
+//        val pasienId = arguments?.getInt(PASIEN_ID)
+//        try {
+//            if (pasienId != null) {
+//                viewModel.getPasienById(pasienId).observe(viewLifecycleOwner) { data ->
+//                    data.forEach {
+//                        viewModel.updatePasien(
+//                            Pasien(
+//                                it.pasienId,
+//                                "${binding.tiePasienNama.text}",
+//                                spinnerHubungan,
+//                                datePicked,
+//                                it.kartuIdentitas,
+//                                it.userId
+//                            )
+//                        )
+//                    }
+//                }
+//            }
+//
+//            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
+//
+//        } catch (e: Exception) {
+//            Log.d("ERROR", e.toString())
+//        }
+//    }
 
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
@@ -140,7 +140,7 @@ class EditPasienFragment : Fragment(),
 
     override fun onClick(view: View) {
         when(view) {
-            binding.btnSimpan -> updatePasien()
+            // binding.btnSimpan -> updatePasien()
         }
     }
 

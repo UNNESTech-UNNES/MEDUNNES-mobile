@@ -12,7 +12,7 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 class LayananPasienViewModel(private val repository: UserRepository) : ViewModel() {
     fun getAllDokter(): LiveData<List<UserAndDokter>> = repository.getAllDokter()
     fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
-    fun getDokterBySpeciality(speciality: String): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
+    fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
     fun getUserProfile(uid: Int): LiveData<List<User>> = repository.getUser(uid)
     fun insertJanjiPasien(janji: Janji) = repository.insertJanjiPasien(janji)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)

@@ -58,49 +58,49 @@ class Registrasi3Fragment : Fragment(),
                 startActivity(intent)
             }
             binding.btnRegister -> {
-                viewModel.isEmailExist(getData(EMAIL)).observe(viewLifecycleOwner) { data ->
-                    if ( getData(EMAIL).isNotEmpty() &&
-                        getData(FULLNAME).isNotEmpty() &&
-                        !binding.tiePassword.text.isNullOrEmpty()) {
-                        if ("${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}") {
-                            if (data.isNullOrEmpty()) {
-                                with(viewModel) {
-                                    val user = User(
-                                        0,
-                                        getData(EMAIL),
-                                        "${binding.tiePassword.text}",
-                                        getData(FULLNAME),
-                                        getData(DATE),
-                                        getData(GENDER),
-                                        getData(ADDRESS),
-                                        "${binding.tieNoTelepon.text}",
-                                        arguments?.getInt(ROLE) ?: 2
-                                    )
-                                    registerDokter(Dokter(
-                                        0,
-                                        getData(TITLE_ONE),
-                                        getData(TITLE_TWO),
-                                        getData(NO_STR),
-                                        getData(PLACE),
-                                        "${binding.tiePendidikan.text}",
-                                        dataSpinner,
-                                        register(user).toInt()
-                                    ))
-
-                                }
-
-                                val intent = Intent(context, LoginActivity::class.java)
-                                startActivity(intent)
-                            } else {
-                                makeToast("Email sudah terdaftar")
-                            }
-                        } else {
-                            makeToast("Password tidak sesuai")
-                        }
-                    } else {
-                        makeToast("Nama lengkap, email, dan password wajib diisi")
-                    }
-                }
+//                viewModel.isEmailExist(getData(EMAIL)).observe(viewLifecycleOwner) { data ->
+//                    if ( getData(EMAIL).isNotEmpty() &&
+//                        getData(FULLNAME).isNotEmpty() &&
+//                        !binding.tiePassword.text.isNullOrEmpty()) {
+//                        if ("${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}") {
+//                            if (data.isNullOrEmpty()) {
+//                                with(viewModel) {
+//                                    val user = User(
+//                                        0,
+//                                        getData(EMAIL),
+//                                        "${binding.tiePassword.text}",
+//                                        getData(FULLNAME),
+//                                        getData(DATE),
+//                                        getData(GENDER),
+//                                        getData(ADDRESS),
+//                                        "${binding.tieNoTelepon.text}",
+//                                        arguments?.getInt(ROLE) ?: 2
+//                                    )
+//                                    registerDokter(Dokter(
+//                                        0,
+//                                        getData(TITLE_ONE),
+//                                        getData(TITLE_TWO),
+//                                        getData(NO_STR),
+//                                        getData(PLACE),
+//                                        "${binding.tiePendidikan.text}",
+//                                        dataSpinner,
+//                                        register(user).toInt()
+//                                    ))
+//
+//                                }
+//
+//                                val intent = Intent(context, LoginActivity::class.java)
+//                                startActivity(intent)
+//                            } else {
+//                                makeToast("Email sudah terdaftar")
+//                            }
+//                        } else {
+//                            makeToast("Password tidak sesuai")
+//                        }
+//                    } else {
+//                        makeToast("Nama lengkap, email, dan password wajib diisi")
+//                    }
+//                }
             }
         }
     }

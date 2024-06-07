@@ -10,6 +10,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
@@ -82,7 +83,7 @@ class UserRepository private constructor(
     fun getAllDokter(): LiveData<List<UserAndDokter>> = mUserDao.getAllDokter()
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
-    fun getDokterBySpeciality(speciality: String): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
+    fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
     fun getJanji(): LiveData<List<JanjiDanPasien>> = mUserDao.getAllJanji()
     fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getJanjiAndPasien(dokter_id)
     fun insertJanjiPasien(janji: Janji) = executorService.execute { mUserDao.insertJanjiPasien(janji) }

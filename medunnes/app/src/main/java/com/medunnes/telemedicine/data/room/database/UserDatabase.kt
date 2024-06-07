@@ -10,7 +10,7 @@ import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.room.dao.UserDao
 
-@Database(entities = [User::class, Dokter::class, Janji::class, Pasien::class], version = 10, exportSchema = false)
+@Database(entities = [User::class, Dokter::class, Janji::class, Pasien::class], version = 11, exportSchema = false)
 abstract class UserDatabase: RoomDatabase() {
 
     abstract fun userDao(): UserDao

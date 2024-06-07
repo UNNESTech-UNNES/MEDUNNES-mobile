@@ -48,15 +48,15 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvUserFullname.text = getString(R.string.nama_and_titel,
                             it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
-                        tvUserField.text = it.dokter.tempatPraktik
-                        tvUserExperience.text = it.user.tanggalLahir
-                        tvUserEducation.text = it.user.jenisKelamin
-                        tvUserLocation.text = it.dokter.tempatPraktik
-                        tvUserStr.text = it.dokter.noStr
+                        tvUserField.text = it.dokter.spesialidId.toString()
+                        tvUserExperience.text = it.dokter.tglMulaiAktif
+                        tvUserEducation.text = it.dokter.alumni
+                        tvUserLocation.text = it.dokter.tempatKerja
+                        tvUserStr.text = it.dokter.noReg?.toString()
 
-                        if (!it.user.image.isNullOrEmpty()) {
+                        if (!it.dokter.imgDokter.isNullOrEmpty()) {
                             val path = Environment.getExternalStorageDirectory()
-                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
+                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.dokter.imgDokter}")}"
                             Glide.with(this@KonsultasiDetailFragment)
                                 .load(imageFile)
                                 .into(ivUserPicture)

@@ -13,7 +13,6 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
         fun bind(pasien: Pasien) {
             with(binding) {
                 tvPasienNama.text = pasien.namaPasien
-                tvPasienHubungan.text = pasien.hubungan
             }
         }
         val radioButton = binding.rbtnPasien
