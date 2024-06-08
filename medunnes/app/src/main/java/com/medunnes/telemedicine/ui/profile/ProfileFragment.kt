@@ -45,19 +45,19 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             cvDeleteAccount.setOnClickListener(this@ProfileFragment)
         }
 
-        lifecycleScope.launch {
-            if (viewModel.getUserRole() == 1) {
-                setDokterProfile()
-            } else {
-                setProfile()
-            }
-            setViewBasedOnStatus()
-        }
+//        lifecycleScope.launch {
+//            if (viewModel.getUserRole() == 1) {
+//                setDokterProfile()
+//            } else {
+//                setProfile()
+//            }
+//            setViewBasedOnStatus()
+//        }
 
-        lifecycleScope.launch {
-            setProfile()
-            setUserPasienProfile()
-        }
+//        lifecycleScope.launch {
+//            setProfile()
+//            setUserPasienProfile()
+//        }
 
         return root
     }
@@ -68,33 +68,33 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     suspend fun setDokterProfile() {
-        viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
-            data.forEach {
-                with(binding) {
-                    tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
+//        viewModel.getUserAndDokter(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
+//            data.forEach {
+//                with(binding) {
+//                    tvUserName.text = getString(R.string.nama_and_titel, it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
 //                    tvUserRole.text = it.dokter.spesialis
-                    tvUserEmail.text = it.user.email
-                    tvUserPraktik.text = it.dokter.alumni
-                    tblBadan.visibility = View.GONE
-
+//                    tvUserEmail.text = it.user.email
+//                    tvUserPraktik.text = it.dokter.alumni
+//                    tblBadan.visibility = View.GONE
+//
 //                    val path = Environment.getExternalStorageDirectory()
 //                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
 //                    Glide.with(this@ProfileFragment)
 //                        .load(imageFile)
 //                        .into(ivUserPicture)
 //                        .clearOnDetach()
-                }
-            }
-        }
+//                }
+//            }
+//        }
     }
 
     private suspend fun setProfile() {
-        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
-            data.forEach {
-                with(binding) {
-                    tvUserName.text = it.fullname
-                    tvUserEmail.text = it.email
-                    tblTempatPraktik.visibility = View.GONE
+//        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
+//            data.forEach {
+//                with(binding) {
+//                    tvUserName.text = it.fullname
+//                    tvUserEmail.text = it.email
+//                    tblTempatPraktik.visibility = View.GONE
 
 //                    if (!it.image.isNullOrEmpty()) {
 //                        val path = Environment.getExternalStorageDirectory()
@@ -104,10 +104,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 //                            .into(ivUserPicture)
 //                            .clearOnDetach()
 //                    }
-                }
-            }
-        }
-        setUserPasienProfile()
+//                }
+//            }
+//        }
+//        setUserPasienProfile()
     }
 
     private suspend fun setPasienProfile() {

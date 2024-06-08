@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Mengatur login user
     private fun setUserLogin() {
         val homeFragment = HomeFragment()
         val bundle = Bundle()
@@ -42,18 +43,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val userEmail = "${binding.tieUserEmail.text}"
         val userPassword = "${binding.tieUserPassword.text}"
-//        val userLogin = viewModel.login(userEmail, userPassword)
 
         with(viewModel) {
             try {
                 lifecycleScope.launch {
-                    if (!userEmail.isNullOrEmpty() && !userPassword.isNullOrEmpty()) {
+                    if (userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
                         val login = login(userEmail, userPassword)
                         if (login.status) {
-                            Log.d("IDLOF", login.user.toString())
                             setUserLoginId(login.user.idUser)
-                            setUserLoginRole(1)
-                            setLoginStatus()
+                            if (login.user.type == "dokter") { // Menyimpan type useer ke DataStore
+                                setUserLoginRole(1)
+                            } else {
+                                setUserLoginRole(2)
+                            }
+                            setLoginStatus() // Menyimpan status login user
                             loginIfSuccess()
                         } else {
                             Toast.makeText(this@LoginActivity,"Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
@@ -68,8 +71,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Mengalihkan user ke home apbila login berhasil
     private suspend fun loginIfSuccess() {
-        while (!viewModel.getUserStatus()) {
+        while (!viewModel.getUserStatus()) { // Menunggu hingga proses login direspon api
             binding.progressBar.visibility = View.VISIBLE
             delay(1000)
         }

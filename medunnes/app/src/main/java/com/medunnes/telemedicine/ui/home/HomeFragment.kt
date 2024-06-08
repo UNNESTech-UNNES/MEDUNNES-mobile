@@ -80,51 +80,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private suspend fun setUserProfile() {
-        lifecycleScope.launch {
+        val userStatus = viewModel.getUserStatus()
+        if (userStatus) {
             val userId = viewModel.getUserLoginId()
-            Log.d("STATT", viewModel.getUserStatus().toString())
-            if (viewModel.getUserStatus()) {
-                viewModel.getUser(userId).observe(viewLifecycleOwner) { data ->
+            viewModel.getUserLogin(userId)
+            viewModel.user.observe(viewLifecycleOwner) { data ->
+                if (!data.isNullOrEmpty()) {
                     data.forEach {
-                        Log.d("DDA", data.toString())
-                        binding.tvAuthenticate.text = it.fullname
+                        binding.tvAuthenticate.text = it.name
                         binding.tvAuthenticate.isClickable = false
-                    }
-                }
 
-                Log.d("TTA", "Kosong")
-
-                viewModel.getPasienByUserId(userId).observe(viewLifecycleOwner) { data ->
-                    data.forEach {
-                        if (!it.imgPasien.isNullOrEmpty()) {
-                            val path = Environment.getExternalStorageDirectory()
-                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgPasien}")}"
-                            Glide.with(this@HomeFragment)
-                                .load(imageFile)
-                                .into(binding.ivUserPicture)
-                                .clearOnDetach()
-                        }
                     }
                 }
             }
-
-//            if (viewModel.getUserStatus()) {
-//                viewModel.getUserLogin(userId).data.forEach {
-//                    binding.tvAuthenticate.text = it.name
-//                    binding.tvAuthenticate.isClickable = false
-//                }
-//                viewModel.getPasienByUser(userId).data.forEach { pasien ->
-//                    if (!pasien.imgPasien.isNullOrEmpty()) {
-//                        val path = Environment.getExternalStorageDirectory()
-//                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${pasien.imgPasien}")}"
-//                        Glide.with(this@HomeFragment)
-//                            .load(imageFile)
-//                            .into(binding.ivUserPicture)
-//                            .clearOnDetach()
-//                    }
-//                }
-//                binding.tvAuthenticate.isClickable = false
-//            }
 
             val role = viewModel.getUserRole()
             if (role == 1) {

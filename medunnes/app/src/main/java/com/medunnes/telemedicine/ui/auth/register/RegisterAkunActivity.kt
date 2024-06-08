@@ -73,29 +73,6 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
             }
-
-            viewModel.register(User(
-                0,
-                "${tieNamaLengkap.text}",
-                "${tieEmail.text}",
-                "${tiePassword.text}",
-                "pasien"
-            ))
-
-            viewModel.insertPasien(Pasien(
-                0,
-                userId.toInt(),
-                tieNik.text.toString().toLong(),
-                "${tieNamaLengkap.text}",
-                null,
-                dataSpinner,
-                "${tieAlamat.text}",
-                "${tieNoTelepon.text}",
-                tieTb.text.toString().toInt(),
-                tieBb.text.toString().toInt(),
-                "active",
-            ))
-
         }
     }
 
