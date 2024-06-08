@@ -15,8 +15,6 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
     val data: LiveData<String> = _data
     fun getUser(userId: Int): LiveData<List<User>> = userRepository.getUser(userId)
     fun register(user: User): Long =  userRepository.register(user)
-    fun registerDokter(dokter: Dokter): Long = userRepository.registerDokter(dokter)
-    fun insertPasien(pasien: Pasien) = userRepository.insertPasien(pasien)
     suspend fun registerAPI(
         name: String,
         email: String,

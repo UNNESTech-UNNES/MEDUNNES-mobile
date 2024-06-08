@@ -181,7 +181,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         with(binding) {
             when(view) {
                 cvUserProfile -> {
-                    val intent = Intent(context, ProfileEditActivity::class.java)
+                    val intent = Intent(context, ProfilePasienEditActivity::class.java)
                     startActivity(intent)
                 }
                 cvFaq -> makeToast("Fitur belum tersedia")

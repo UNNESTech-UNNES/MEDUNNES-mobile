@@ -2,15 +2,13 @@ package com.medunnes.telemedicine.data.api
 
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
-import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienResponse
-import com.medunnes.telemedicine.data.response.User
 import com.medunnes.telemedicine.data.response.UserResponse
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -66,11 +64,21 @@ interface ApiService {
         @Field("status") status: String
     ) : PasienResponse
 
-//    @FormUrlEncoded
-//    @POST("api/pasien")
-//    suspend fun insertPasien(
-//        @Field("data") dataPasien: List<PasienDataItem>
-//    )
+    @FormUrlEncoded
+    @PUT("api/pasien/{id}")
+    suspend fun updatePasien(
+        @Path("id") id: Int,
+        @Field("user_id") userId: Long,
+        @Field("NIK") nik: Long,
+        @Field("nama_pasien") nama: String,
+        @Field("img_pasien") img: String? = null,
+        @Field("jenis_kelamin") kelamin: String,
+        @Field("alamat") alamat: String,
+        @Field("no_tlp") noTlp: String,
+        @Field("TB") tb: Int,
+        @Field("BB") bb: Int,
+        @Field("status") status: String
+    ) : PasienResponse
 
     @GET("api/dokter/{id}")
     suspend fun getDokterByUser(

@@ -19,8 +19,6 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = repository.getDokterByDokterId(dokterId)
     fun getPasienByUser(uid: Int): LiveData<List<Pasien>> = repository.getPasiebByUser(uid)
     fun getPasienById(pasienId: Int): LiveData<List<Pasien>> =  repository.getPasienById(pasienId)
-    fun insertPasien(pasien: Pasien) = repository.insertPasien(pasien)
-    fun updatePasien(pasien: Pasien) =  repository.updatePasien(pasien)
     fun deletePasien(pasien: Pasien) = repository.deletePasien(pasien)
     suspend fun getUserLoginId(): Int = repository.getUserId()
 }

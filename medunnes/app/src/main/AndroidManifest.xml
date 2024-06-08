@@ -22,7 +22,7 @@
             android:name=".ui.pasien.LayananPasienActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.ProfileEditActivity"
+            android:name=".ui.profile.ProfilePasienEditActivity"
             android:exported="false" />
         <activity
             android:name=".ui.dokter.LayananDokterActivity"

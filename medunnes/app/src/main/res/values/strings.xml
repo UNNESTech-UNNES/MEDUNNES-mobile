@@ -171,8 +171,10 @@
     <string name="masukkan_nik">Masukkan NIK</string>
     <string name="masukkan_tinggi_badan_cm">Masukkan Tinggi Badan (cm)</string>
     <string name="tinggi_badan">Tinggi Badan</string>
+    <string name="tinggi_badan_cm">%1$s cm</string>
     <string name="masukkan_berat_badan_kg">Masukkan Berat Badan (kg)</string>
     <string name="berat_badan">Berat Badan</string>
+    <string name="berat_badan_kg">%1$d kg</string>
     <string name="dalam_cm">Dalam cm</string>
     <string name="dalam_kg">dalam kg</string>
 

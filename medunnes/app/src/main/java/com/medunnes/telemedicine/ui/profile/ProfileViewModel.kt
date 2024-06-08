@@ -85,4 +85,20 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
             }
         }
     }
+
+    suspend fun updatePasien(
+        id: Int,
+        userId: Long,
+        nik: Long,
+        nama: String,
+        img: String? = null,
+        kelamin: String,
+        alamat: String,
+        noTlp: String,
+        tb: Int,
+        bb: Int,
+        status: String
+    ): PasienResponse = userRepository.updatePasien(
+        id, userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
+    )
 }

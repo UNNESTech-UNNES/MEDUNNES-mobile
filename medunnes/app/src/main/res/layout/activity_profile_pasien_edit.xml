@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.profile.ProfileEditActivity">
+    tools:context=".ui.profile.ProfilePasienEditActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar"
@@ -94,51 +94,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_edit_nama_tgl_lahir_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/tanggal_lahir"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_edit_nama_lengkap" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_tgl_lahir"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                app:boxBackgroundColor="@color/grey_less_less"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxCornerRadiusTopStart="20dp"
-                app:endIconDrawable="@drawable/calendar"
-                app:endIconMode="custom"
-                app:layout_constraintEnd_toStartOf="@id/til_edit_no_telepon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_tgl_lahir_title">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tie_edit_tgl_lahir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/tanggal_lahir"
-                    android:inputType="date"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
                 android:id="@+id/tv_edit_nama_no_hp_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/no_telepon"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/til_edit_no_telepon"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_edit_nama_lengkap" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -151,8 +113,8 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/til_edit_tgl_lahir"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_tgl_lahir_title">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_nama_no_hp_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tie_edit_no_telepon"
@@ -168,17 +130,17 @@
 
 
             <TextView
-                android:id="@+id/tv_edit_rumah_sakit_title"
+                android:id="@+id/tv_edit_nik_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/rumah_sakit"
+                android:text="@string/nik"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_edit_tgl_lahir" />
+                app:layout_constraintTop_toBottomOf="@id/til_edit_no_telepon" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_rumah_sakit"
+                android:id="@+id/til_edit_nik"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/grey_less_less"
@@ -188,14 +150,14 @@
                 app:boxCornerRadiusTopStart="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_rumah_sakit_title">
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_nik_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tie_edit_rumah_sakit"
+                    android:id="@+id/tie_edit_nik"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textLongMessage"
-                    android:text="@string/rumah_sakit"
+                    android:inputType="number"
+                    android:text="@string/nik"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +170,7 @@
                 android:text="@string/alamat"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_edit_rumah_sakit" />
+                app:layout_constraintTop_toBottomOf="@id/til_edit_nik" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_edit_alamat"
@@ -235,34 +197,68 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_edit_email_title"
+                android:id="@+id/tv_edit_tb_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/email"
+                android:text="@string/tinggi_badan"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_edit_alamat" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_edit_email"
-                android:layout_width="match_parent"
+                android:id="@+id/til_edit_tb"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/grey_less_less"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/til_edit_bb"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_email_title">
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_tb_title">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tie_edit_email"
+                    android:id="@+id/tie_edit_tb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:text="@string/email"
+                    android:inputType="number"
+                    android:text="@string/tinggi_badan"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_edit_bb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/berat_badan"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/til_edit_bb"
+                app:layout_constraintTop_toBottomOf="@id/til_edit_alamat" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_edit_bb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:boxBackgroundColor="@color/grey_less_less"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/til_edit_tb"
+                app:layout_constraintTop_toBottomOf="@id/tv_edit_bb_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_edit_bb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="@string/berat_badan"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -278,7 +274,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_edit_email" />
+                app:layout_constraintTop_toBottomOf="@id/til_edit_tb" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -55,6 +55,22 @@ class UserRepository private constructor(
         userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
     )
 
+    suspend fun updatePasien(
+        id: Int,
+        userId: Long,
+        nik: Long,
+        nama: String,
+        img: String? = null,
+        kelamin: String,
+        alamat: String,
+        noTlp: String,
+        tb: Int,
+        bb: Int,
+        status: String
+    ): PasienResponse = ApiConfig.getApiService().updatePasien(
+        id, userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
+    )
+
     // Dokter
     suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
     suspend fun insertDokter(
@@ -80,7 +96,6 @@ class UserRepository private constructor(
     fun register(user: User): Long = mUserDao.insertUser(user)
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
     fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
-    fun registerDokter(dokter: Dokter): Long = mUserDao.insertDokter(dokter)
     fun getAllDokter(): LiveData<List<UserAndDokter>> = mUserDao.getAllDokter()
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
@@ -93,8 +108,6 @@ class UserRepository private constructor(
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
     fun getPasiebByUser(uid: Int): LiveData<List<Pasien>> = mUserDao.getPasienByUser(uid)
     fun getPasienById(pasienId: Int): LiveData<List<Pasien>> = mUserDao.getPasienById(pasienId)
-    fun insertPasien(pasien: Pasien) = executorService.execute { mUserDao.insertPasien(pasien) }
-    fun updatePasien(pasien: Pasien) = executorService.execute { mUserDao.updatePasien(pasien) }
     fun deletePasien(pasien: Pasien) = executorService.execute { mUserDao.deletePasien(pasien) }
 
     //DataStore
