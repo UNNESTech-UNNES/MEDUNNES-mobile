@@ -56,6 +56,7 @@ class UserRepository private constructor(
     )
 
     // Dokter
+    suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
     suspend fun insertDokter(
         userId: Int,
         spesialisId: Int,

@@ -72,6 +72,11 @@ interface ApiService {
 //        @Field("data") dataPasien: List<PasienDataItem>
 //    )
 
+    @GET("api/dokter/{id}")
+    suspend fun getDokterByUser(
+        @Path("id") id: Int
+    ) : DokterResponse
+
     @FormUrlEncoded
     @POST("api/dokter")
     suspend fun insertDokter(

@@ -5,12 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DataItem
+import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.PasienDataItem
-import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import kotlinx.coroutines.launch
 
@@ -27,7 +25,9 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _pasien = MutableLiveData<List<PasienDataItem>>()
     val pasien: LiveData<List<PasienDataItem>> get() = _pasien
 
-    fun getUser(uid: Int): LiveData<List<User>> = userRepository.getUser(uid)
+    private val _dokter = MutableLiveData<List<DokterDataItem>>()
+    val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
     suspend fun getUserStatus(): Boolean = userRepository.getLoginStatus()
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
     suspend fun getUserRole(): Int = userRepository.getUserRole()
@@ -61,6 +61,19 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
             }
         }
     }
-    suspend fun getPasienByUser(userId: Int): PasienResponse = userRepository.getPasienByUser(userId)
-    fun getPasienByUserId(userId: Int): LiveData<List<Pasien>> = userRepository.getPasiebByUser(userId)
+
+    fun getDokterByUserLogin(userId: Int) {
+        viewModelScope.launch {
+            try {
+                val dokterData = userRepository.getDokterByUser(userId)
+                if (dokterData.data.isNotEmpty()) {
+                    _dokter.value = dokterData.data
+                } else {
+                    Log.d("DATA pasien", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
 }

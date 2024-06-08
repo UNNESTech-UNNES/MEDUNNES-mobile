@@ -88,12 +88,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
-            showImageFromFile(userId)
-            setMenuDifference()
+            setViewDifference(userId)
         }
     }
 
-    private fun showImageFromFile(userId: Int) {
+    private fun showPasienImageFromFile(userId: Int) {
         viewModel.getPasienByUserLogin(userId)
         viewModel.pasien.observe(viewLifecycleOwner) { data ->
             if (data.isNotEmpty()) {
@@ -111,11 +110,31 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private suspend fun setMenuDifference() {
+    private fun showDokterImageFromFile(userId: Int) {
+        viewModel.getDokterByUserLogin(userId)
+        viewModel.dokter.observe(viewLifecycleOwner) { data ->
+            if (data.isNotEmpty()) {
+                data.forEach {
+                    if (it.imgDokter.isNotEmpty()) {
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgDokter}")}"
+                        Glide.with(this@HomeFragment)
+                            .load(imageFile)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun setViewDifference(userId: Int) {
         val role = viewModel.getUserRole()
         if (role == 1) {
+            showDokterImageFromFile(userId)
             menuDifference(true)
         } else {
+            showPasienImageFromFile(userId)
             menuDifference(false)
         }
     }
