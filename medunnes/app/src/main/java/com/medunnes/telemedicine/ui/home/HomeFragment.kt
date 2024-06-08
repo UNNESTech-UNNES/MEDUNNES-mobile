@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Faskes
-import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
@@ -26,9 +24,6 @@ import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.util.Calendar
 
@@ -93,13 +88,35 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
+            showImageFromFile(userId)
+            setMenuDifference()
+        }
+    }
 
-            val role = viewModel.getUserRole()
-            if (role == 1) {
-                menuDifference(true)
-            } else {
-                menuDifference(false)
+    private fun showImageFromFile(userId: Int) {
+        viewModel.getPasienByUserLogin(userId)
+        viewModel.pasien.observe(viewLifecycleOwner) { data ->
+            if (data.isNotEmpty()) {
+                data.forEach {
+                    if (!it.imgPasien.isNullOrEmpty()) {
+                        val path = Environment.getExternalStorageDirectory()
+                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgPasien}")}"
+                        Glide.with(this@HomeFragment)
+                            .load(imageFile)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
+                    }
+                }
             }
+        }
+    }
+
+    private suspend fun setMenuDifference() {
+        val role = viewModel.getUserRole()
+        if (role == 1) {
+            menuDifference(true)
+        } else {
+            menuDifference(false)
         }
     }
 
@@ -112,7 +129,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             override fun onItemClicked(artikel: Artikel) {
                 makeToast(undoneText())
             }
-
         })
 
     }
