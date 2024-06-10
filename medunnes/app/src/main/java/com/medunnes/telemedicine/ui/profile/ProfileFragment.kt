@@ -89,7 +89,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         titleBelakang = it.titleBelakang
                         namaDokter = it.namaDokter
                         tvUserName.text = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
-                        tvUserRole.text = spesialis[it.spesialisId.toInt()+1]
+                        tvUserRole.text = spesialis[(it.spesialisId.toInt())-1]
                         tvUserPraktik.text = it.tempatKerja
                     }
                 }
