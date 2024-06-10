@@ -103,37 +103,37 @@
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
-                    android:id="@+id/tv_tempat_lulus_title"
+                    android:id="@+id/tv_tahun_lulus_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/til_tempat_praktik"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
-                    android:text="@string/tempat_lulus"/>
+                    android:text="@string/tahun_lulus"/>
 
                 <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_tempat_lulus"
+                    android:id="@+id/til_tahun_lulus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_tempat_lulus_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tahun_lulus_title"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:startIconTint="@color/grey">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_tempat_lulus"
+                        android:id="@+id/tie_tahun_lulus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_tempat_lulus"
-                        android:inputType="text"/>
+                        android:hint="@string/masukkan_tahun_lulus"
+                        android:inputType="number"/>
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
                     android:id="@+id/tv_tgl_mulai_aktif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_tempat_lulus"
+                    app:layout_constraintTop_toBottomOf="@id/til_tahun_lulus"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
                     android:text="@string/tanggal_mulai_aktif"/>

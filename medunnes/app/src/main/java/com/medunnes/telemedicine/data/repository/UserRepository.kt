@@ -83,7 +83,7 @@ class UserRepository private constructor(
         alamat: String,
         noTlp: String,
         tempatKerja: String,
-        tempatLulue: String,
+        tahunLulus: Int,
         tglAktif: String,
         alumni: String,
         noReg: Long,
@@ -91,7 +91,7 @@ class UserRepository private constructor(
         status: String
     ): DokterResponse = ApiConfig.getApiService().insertDokter(
         userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
-        tempatKerja, tempatLulue, tglAktif, alumni, noReg, jenisKelamin,status
+        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
     )
 
     // Room

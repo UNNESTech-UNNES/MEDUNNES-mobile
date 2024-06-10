@@ -97,9 +97,9 @@ interface ApiService {
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
         @Field("tempat_kerja") tempatKerja: String,
-        @Field("tempat_lulus") tempatLulue: String,
+        @Field("tahun_lulus") tahunLulus: Int,
         @Field("tgl_mulai_aktif") tglAktif: String,
-        @Field("alumni") alumni: String,
+        @Field("alumni_kampus") alumni: String,
         @Field("no_reg") noReg: Long,
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("status") status: String

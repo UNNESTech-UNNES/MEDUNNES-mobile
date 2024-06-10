@@ -51,7 +51,7 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
         alamat: String,
         noTlp: String,
         tempatKerja: String,
-        tempatLulue: String,
+        tahunLulus: Int,
         tglAktif: String,
         alumni: String,
         noReg: Long,
@@ -59,7 +59,7 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
         status: String
     ): DokterResponse = userRepository.insertDokter(
         userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
-        tempatKerja, tempatLulue, tglAktif, alumni, noReg, jenisKelamin, status
+        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin, status
     )
 
     fun isEmailExist(email: String): LiveData<List<User>> = userRepository.isEmailExist(email)

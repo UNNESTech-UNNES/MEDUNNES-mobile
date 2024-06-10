@@ -37,10 +37,10 @@ data class DokterDataItem(
 	@field:SerializedName("alamat")
 	val alamat: String,
 
-	@field:SerializedName("tempat_lulus")
-	val tempatLulus: String,
+	@field:SerializedName("tahun_lulus")
+	val tahunLulus: Int,
 
-	@field:SerializedName("alumni")
+	@field:SerializedName("alumni_kampus")
 	val alumni: String,
 
 	@field:SerializedName("title_depan")

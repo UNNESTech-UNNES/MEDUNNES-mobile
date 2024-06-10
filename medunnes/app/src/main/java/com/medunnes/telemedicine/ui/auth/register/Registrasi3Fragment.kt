@@ -64,11 +64,11 @@ class Registrasi3Fragment : Fragment(),
                     && arguments?.getLong(NO_STR) != null
                     && getData(PLACE).isNotEmpty()
                     && arguments?.getInt(ROLE) != null
-                    && getData(GRADUATE_PLACE).isNotEmpty())
+                    && arguments?.getInt(GRADUATE_YEAR) != null
                     && !tiePendidikan.text.isNullOrEmpty()
                     && !tieNoTelepon.text.isNullOrEmpty()
                     && !tiePassword.text.isNullOrEmpty()
-                    && !tiePasswordConfirmation.text.isNullOrEmpty()
+                    && !tiePasswordConfirmation.text.isNullOrEmpty())
         }
     }
 
@@ -104,7 +104,7 @@ class Registrasi3Fragment : Fragment(),
                     getData(ADDRESS),
                     "${binding.tieNoTelepon.text}",
                     getData(PLACE),
-                    getData(GRADUATE_PLACE),
+                    arguments?.getInt(GRADUATE_YEAR)!!,
                     getData(DATE),
                     "${binding.tiePendidikan.text}",
                     arguments?.getLong(NO_STR)!!,
@@ -162,7 +162,7 @@ class Registrasi3Fragment : Fragment(),
         const val ADDRESS = "address"
         const val PLACE = "place"
         const val ROLE = "role"
-        const val GRADUATE_PLACE = "graduate_place"
+        const val GRADUATE_YEAR = "graduate_year"
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {

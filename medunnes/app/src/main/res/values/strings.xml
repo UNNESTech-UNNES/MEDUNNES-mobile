@@ -181,6 +181,8 @@
     <string name="masukkan_tempat_lulus">Masukkan tempat lulus</string>
     <string name="tanggal_mulai_aktif">Tanggal Mulai Aktif</string>
     <string name="yyyy_mm_dd">YYYY-MM-DD</string>
+    <string name="masukkan_tahun_lulus">Masukkan tahun lulus</string>
+    <string name="tahun_lulus">Tahun Lulus</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

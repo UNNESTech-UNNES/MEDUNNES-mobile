@@ -2,7 +2,6 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -25,10 +22,6 @@ class Registrasi2Fragment :
 
     private var _binding: FragmentRegistrasi2Binding? = null
     private val binding get() = _binding!!
-
-    private val viewModel by viewModels<RegisterViewModel> {
-        ViewModelFactory.getInstance(requireContext())
-    }
     private lateinit var dataSpinner: String
     private var datePicked = "date"
 
@@ -76,7 +69,7 @@ class Registrasi2Fragment :
                 putString(Registrasi3Fragment.DATE, datePicked)
                 putString(Registrasi3Fragment.ADDRESS, "${tieAlamat.text}")
                 putString(Registrasi3Fragment.PLACE, "${tieTempatPraktik.text}")
-                putString(Registrasi3Fragment.GRADUATE_PLACE, "${tieTempatLulus.text}")
+                putInt(Registrasi3Fragment.GRADUATE_YEAR, tieTahunLulus.text?.toString()?.toInt() ?: 0)
             }
 
         }
@@ -95,7 +88,7 @@ class Registrasi2Fragment :
                     && datePicked.isNotEmpty()
                     && !tieAlamat.text.isNullOrEmpty()
                     && !tieTempatPraktik.text.isNullOrEmpty()
-                    && !tieTempatLulus.text.isNullOrEmpty())
+                    && !tieTahunLulus.text.isNullOrEmpty())
         }
     }
 
@@ -149,10 +142,6 @@ class Registrasi2Fragment :
             }, cYear, cMonth, cDay)
 
         datePickerDialog.show()
-    }
-
-    private fun setDatePicked(date: String) {
-        datePicked = date
     }
 
     companion object {
