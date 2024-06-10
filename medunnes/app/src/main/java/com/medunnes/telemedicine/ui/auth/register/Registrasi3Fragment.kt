@@ -14,9 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Dokter
-import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
@@ -68,15 +65,15 @@ class Registrasi3Fragment : Fragment(),
                     && getData(PLACE).isNotEmpty()
                     && arguments?.getInt(ROLE) != null
                     && getData(GRADUATE_PLACE).isNotEmpty())
-                    && tiePendidikan.text.isNullOrEmpty()
-                    && tieNoTelepon.text.isNullOrEmpty()
-                    && tiePassword.text.isNullOrEmpty()
-                    && tiePasswordConfirmation.text.isNullOrEmpty()
+                    && !tiePendidikan.text.isNullOrEmpty()
+                    && !tieNoTelepon.text.isNullOrEmpty()
+                    && !tiePassword.text.isNullOrEmpty()
+                    && !tiePasswordConfirmation.text.isNullOrEmpty()
         }
     }
 
     private fun passwordValidation(): Boolean {
-        return binding.tiePassword.text == binding.tiePasswordConfirmation.text
+        return "${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}"
     }
 
     private suspend fun insertUser(): UserResponse {
