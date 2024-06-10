@@ -183,6 +183,7 @@
     <string name="yyyy_mm_dd">YYYY-MM-DD</string>
     <string name="masukkan_tahun_lulus">Masukkan tahun lulus</string>
     <string name="tahun_lulus">Tahun Lulus</string>
+    <string name="tanggal_lulus">Tanggal Lulus</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

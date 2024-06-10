@@ -93,6 +93,27 @@ class UserRepository private constructor(
         userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
     )
+    suspend fun updateDokter(
+        id: Long,
+        userId: Long,
+        spesialisId: Long,
+        titleDepan: String,
+        nama: String,
+        titleBelakang: String,
+        img: String? = null,
+        alamat: String,
+        noTlp: String,
+        tempatKerja: String,
+        tahunLulus: Int,
+        tglAktif: String,
+        alumni: String,
+        noReg: Long,
+        jenisKelamin: String,
+        status: String
+    ): DokterResponse = ApiConfig.getApiService().updateDokter(
+        id, userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
+        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
+    )
 
     // Room
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)

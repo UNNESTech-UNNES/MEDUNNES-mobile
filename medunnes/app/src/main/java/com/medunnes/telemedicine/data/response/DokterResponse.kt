@@ -32,7 +32,7 @@ data class DokterDataItem(
 	val createdAt: String,
 
 	@field:SerializedName("id_dokter")
-	val idDokter: Int,
+	val idDokter: Long,
 
 	@field:SerializedName("alamat")
 	val alamat: String,
@@ -47,7 +47,7 @@ data class DokterDataItem(
 	val titleDepan: String,
 
 	@field:SerializedName("spesialis_id")
-	val spesialisId: Int,
+	val spesialisId: Long,
 
 	@field:SerializedName("tempat_kerja")
 	val tempatKerja: String,
@@ -56,7 +56,7 @@ data class DokterDataItem(
 	val updatedAt: String,
 
 	@field:SerializedName("user_id")
-	val userId: Int,
+	val userId: Long,
 
 	@field:SerializedName("title_belakang")
 	val titleBelakang: String,

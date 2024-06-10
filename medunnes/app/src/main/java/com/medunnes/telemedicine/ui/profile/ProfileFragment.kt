@@ -48,7 +48,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         lifecycleScope.launch {
             setViewBasedOnStatus()
             setViewBasedOnUserRole()
-            setUserProfile()
         }
 
         return root
@@ -80,7 +79,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private suspend fun setDokterProfile() {
         val userId = viewModel.getUserLoginId()
-        val doctorName = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
+        val spesialis = resources.getStringArray(R.array.spesialissasi)
         viewModel.getDokterByUserLogin(userId)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
@@ -88,8 +87,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         titleDepan = it.titleDepan
                         titleBelakang = it.titleBelakang
-                        tvUserName.text = doctorName
-                        tvUserRole.text = it.spesialisId.toString()
+                        namaDokter = it.namaDokter
+                        tvUserName.text = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
+                        tvUserRole.text = spesialis[it.spesialisId.toInt()+1]
                         tvUserPraktik.text = it.tempatKerja
                     }
                 }
@@ -158,6 +158,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             showDokterImageFromFile(userId)
             binding.tblBadan.visibility = View.GONE
         } else {
+            setUserProfile()
             setPasienProfile()
             showPasienImageFromFile(userId)
             binding.tblTempatPraktik.visibility = View.GONE
@@ -173,6 +174,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private suspend fun editProfileBasedonRole() {
+        if (viewModel.getUserRole() == 1) {
+            val intent = Intent(context, ProfileEditDokterActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(context, ProfilePasienEditActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     private fun makeToast(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
@@ -180,10 +191,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
-                cvUserProfile -> {
-                    val intent = Intent(context, ProfilePasienEditActivity::class.java)
-                    startActivity(intent)
-                }
+                cvUserProfile -> lifecycleScope.launch { editProfileBasedonRole() }
                 cvFaq -> makeToast("Fitur belum tersedia")
                 cvHint -> makeToast("Fitur belum tersedia")
                 cvLanguange -> makeToast("Fitur belum tersedia")
@@ -192,6 +200,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                 }
+                else -> makeToast("NO CLICK")
             }
         }
     }

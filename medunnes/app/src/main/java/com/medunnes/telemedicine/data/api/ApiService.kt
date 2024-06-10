@@ -104,4 +104,25 @@ interface ApiService {
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("status") status: String
     ): DokterResponse
+
+    @FormUrlEncoded
+    @POST("api/dokter/{id}")
+    suspend fun updateDokter(
+        @Path("id") id: Long,
+        @Field("user_id") userId: Long,
+        @Field("spesialis_id") spesialisId: Long,
+        @Field("title_depan") titleDepan: String,
+        @Field("nama_dokter") nama: String,
+        @Field("title_belakang") titleBelakang: String,
+        @Field("img_dokter") img: String? = null,
+        @Field("alamat") alamat: String,
+        @Field("no_tlp") noTlp: String,
+        @Field("tempat_kerja") tempatKerja: String,
+        @Field("tahun_lulus") tahunLulus: Int,
+        @Field("tgl_mulai_aktif") tglAktif: String,
+        @Field("alumni_kampus") alumni: String,
+        @Field("no_reg") noReg: Long,
+        @Field("jenis_kelamin") jenisKelamin: String,
+        @Field("status") status: String
+    ): DokterResponse
 }
