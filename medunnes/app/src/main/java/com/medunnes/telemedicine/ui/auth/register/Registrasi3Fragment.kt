@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
+import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import kotlinx.coroutines.launch
 
 class Registrasi3Fragment : Fragment(),
     View.OnClickListener,
@@ -29,7 +33,7 @@ class Registrasi3Fragment : Fragment(),
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private lateinit var dataSpinner: String
+    private var dataSpinner = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +55,76 @@ class Registrasi3Fragment : Fragment(),
 
     private fun getData(data: String): String ="${arguments?.getString(data)}"
 
+    private fun inputValidation(): Boolean {
+        with(binding) {
+            return ((getData(EMAIL).isNotEmpty()
+                    && getData(FULLNAME).isNotEmpty()
+                    && getData(DATE).isNotEmpty()
+                    && getData(GENDER).isNotEmpty()
+                    && getData(ADDRESS).isNotEmpty())
+                    && getData(TITLE_ONE).isNotEmpty()
+                    && getData(TITLE_TWO).isNotEmpty()
+                    && arguments?.getLong(NO_STR) != null
+                    && getData(PLACE).isNotEmpty()
+                    && arguments?.getInt(ROLE) != null
+                    && getData(GRADUATE_PLACE).isNotEmpty())
+                    && tiePendidikan.text.isNullOrEmpty()
+                    && tieNoTelepon.text.isNullOrEmpty()
+                    && tiePassword.text.isNullOrEmpty()
+                    && tiePasswordConfirmation.text.isNullOrEmpty()
+        }
+    }
+
+    private fun passwordValidation(): Boolean {
+        return binding.tiePassword.text == binding.tiePasswordConfirmation.text
+    }
+
+    private suspend fun insertUser(): UserResponse {
+        val registerUser = viewModel.registerAPI(
+            getData(FULLNAME),
+            getData(EMAIL),
+            "${binding.tiePassword.text}",
+            "dokter"
+        )
+        return registerUser
+    }
+
+    private suspend fun insertDokter() {
+        var userId = 0
+        if (inputValidation()) {
+            if (passwordValidation()) {
+                insertUser().data.forEach {
+                    userId = it.idUser
+                }
+
+                viewModel.insertDokter(
+                    userId,
+                    dataSpinner,
+                    getData(TITLE_ONE),
+                    getData(FULLNAME),
+                    getData(TITLE_TWO),
+                    null,
+                    getData(ADDRESS),
+                    "${binding.tieNoTelepon.text}",
+                    getData(PLACE),
+                    getData(GRADUATE_PLACE),
+                    getData(DATE),
+                    "${binding.tiePendidikan.text}",
+                    arguments?.getLong(NO_STR)!!,
+                    getData(GENDER),
+                    "pending"
+                )
+
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+                makeToast("Password tidak sesuai")
+            }
+        } else {
+            makeToast("Lengkapi data terlebih dahulu")
+        }
+    }
+
     override fun onClick(view: View?) {
         when(view) {
             binding.tvMasuk -> {
@@ -58,49 +132,12 @@ class Registrasi3Fragment : Fragment(),
                 startActivity(intent)
             }
             binding.btnRegister -> {
-//                viewModel.isEmailExist(getData(EMAIL)).observe(viewLifecycleOwner) { data ->
-//                    if ( getData(EMAIL).isNotEmpty() &&
-//                        getData(FULLNAME).isNotEmpty() &&
-//                        !binding.tiePassword.text.isNullOrEmpty()) {
-//                        if ("${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}") {
-//                            if (data.isNullOrEmpty()) {
-//                                with(viewModel) {
-//                                    val user = User(
-//                                        0,
-//                                        getData(EMAIL),
-//                                        "${binding.tiePassword.text}",
-//                                        getData(FULLNAME),
-//                                        getData(DATE),
-//                                        getData(GENDER),
-//                                        getData(ADDRESS),
-//                                        "${binding.tieNoTelepon.text}",
-//                                        arguments?.getInt(ROLE) ?: 2
-//                                    )
-//                                    registerDokter(Dokter(
-//                                        0,
-//                                        getData(TITLE_ONE),
-//                                        getData(TITLE_TWO),
-//                                        getData(NO_STR),
-//                                        getData(PLACE),
-//                                        "${binding.tiePendidikan.text}",
-//                                        dataSpinner,
-//                                        register(user).toInt()
-//                                    ))
-//
-//                                }
-//
-//                                val intent = Intent(context, LoginActivity::class.java)
-//                                startActivity(intent)
-//                            } else {
-//                                makeToast("Email sudah terdaftar")
-//                            }
-//                        } else {
-//                            makeToast("Password tidak sesuai")
-//                        }
-//                    } else {
-//                        makeToast("Nama lengkap, email, dan password wajib diisi")
-//                    }
-//                }
+                try {
+                    lifecycleScope.launch { insertDokter() }
+                } catch (e: Exception) {
+                    makeToast("Ada kesalahan. Coba lagi nanti")
+                    Log.d("REGISTER DOKTER ERROR", e.message.toString())
+                }
             }
         }
     }
@@ -128,10 +165,12 @@ class Registrasi3Fragment : Fragment(),
         const val ADDRESS = "address"
         const val PLACE = "place"
         const val ROLE = "role"
+        const val GRADUATE_PLACE = "graduate_place"
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        dataSpinner = "${parent?.getItemAtPosition(pos)}"
+        Toast.makeText(context, (pos+1).toString(), Toast.LENGTH_SHORT).show()
+        dataSpinner = pos+1
         //getDataSpinner(dataSpinner)
     }
 

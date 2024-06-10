@@ -79,16 +79,19 @@ class UserRepository private constructor(
         titleDepan: String,
         nama: String,
         titleBelakang: String,
-        img: String,
+        img: String? = null,
         alamat: String,
         noTlp: String,
         tempatKerja: String,
-        tempatLulue: Int,
+        tempatLulue: String,
         tglAktif: String,
         alumni: String,
-        noReg: Int
+        noReg: Long,
+        jenisKelamin: String,
+        status: String
     ): DokterResponse = ApiConfig.getApiService().insertDokter(
-        userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp, tempatKerja, tempatLulue, tglAktif, alumni, noReg
+        userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
+        tempatKerja, tempatLulue, tglAktif, alumni, noReg, jenisKelamin,status
     )
 
     // Room

@@ -151,29 +151,29 @@
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
-                    android:id="@+id/tv_tempat_praktik_title"
+                    android:id="@+id/tv_no_reg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/til_alamat"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
-                    android:text="@string/no_str"/>
+                    android:text="@string/no_reg"/>
 
                 <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_tempat_praktik"
+                    android:id="@+id/til_no_reg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_tempat_praktik_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_no_reg"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:startIconTint="@color/grey">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_no_str"
+                        android:id="@+id/tie_no_reg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_nomor_str"
+                        android:hint="@string/masukkan_nomor_reg"
                         android:inputType="text"/>
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 

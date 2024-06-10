@@ -16,9 +16,6 @@ import com.medunnes.telemedicine.utils.getImageUri
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityProfilePasienEditBinding
@@ -27,12 +24,8 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
         ViewModelFactory.getInstance(this)
     }
 
-    private var datePicked: String = "date"
     private var currentImageUri: Uri? = null
     private var imagePath: String? = null
-    private val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
-    private val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-    private lateinit var date: Date
     private var pasienId: Int = 0
     private var kelamin: String = "kelamin"
     private var status: String = "status"
@@ -139,7 +132,7 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
         currentImageUri?.let { sourceUri ->
             val uri = getImageUri(this@ProfilePasienEditActivity)
             try {
-                uri.let {
+                uri.let { it ->
                     try {
                         val inputStream: InputStream? = this@ProfilePasienEditActivity.contentResolver.openInputStream(sourceUri)
                         val outputStream: OutputStream? = this@ProfilePasienEditActivity.contentResolver.openOutputStream(it)

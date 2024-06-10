@@ -93,13 +93,15 @@ interface ApiService {
         @Field("title_depan") titleDepan: String,
         @Field("nama_dokter") nama: String,
         @Field("title_belakang") titleBelakang: String,
-        @Field("img_dokter") img: String,
+        @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
         @Field("tempat_kerja") tempatKerja: String,
-        @Field("tempat_lulus") tempatLulue: Int,
+        @Field("tempat_lulus") tempatLulue: String,
         @Field("tgl_mulai_aktif") tglAktif: String,
         @Field("alumni") alumni: String,
-        @Field("no_reg") noReg: Int
+        @Field("no_reg") noReg: Long,
+        @Field("jenis_kelamin") jenisKelamin: String,
+        @Field("status") status: String
     ): DokterResponse
 }

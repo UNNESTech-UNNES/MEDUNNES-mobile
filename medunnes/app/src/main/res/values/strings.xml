@@ -40,8 +40,8 @@
     <string name="titel_belakang">Titel Belakang</string>
     <string name="masukkan_titel_belakang">contoh: SpOG</string>
     <string name="masukkan_nama_lengkap">Masukkan nama lengkap</string>
-    <string name="no_str">No. STR</string>
-    <string name="masukkan_nomor_str">Masukkan nomor STR</string>
+    <string name="no_reg">No. Reg.</string>
+    <string name="masukkan_nomor_reg">Masukkan nomor reg.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lanjut">Lanjut</string>
     <string name="tanggal_lahir">Tanggal Lahir</string>
@@ -177,6 +177,10 @@
     <string name="berat_badan_kg">%1$d kg</string>
     <string name="dalam_cm">Dalam cm</string>
     <string name="dalam_kg">dalam kg</string>
+    <string name="tempat_lulus">Tempat Lulus</string>
+    <string name="masukkan_tempat_lulus">Masukkan tempat lulus</string>
+    <string name="tanggal_mulai_aktif">Tanggal Mulai Aktif</string>
+    <string name="yyyy_mm_dd">YYYY-MM-DD</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

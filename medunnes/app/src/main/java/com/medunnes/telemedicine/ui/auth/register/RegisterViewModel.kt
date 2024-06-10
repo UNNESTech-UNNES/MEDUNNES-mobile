@@ -3,10 +3,13 @@ package com.medunnes.telemedicine.ui.auth.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.DokterDataItem
+import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 
@@ -37,5 +40,27 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
     ): PasienResponse = userRepository.insertPasien(
         userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
     )
+
+    suspend fun insertDokter(
+        userId: Int,
+        spesialisId: Int,
+        titleDepan: String,
+        nama: String,
+        titleBelakang: String,
+        img: String? = null,
+        alamat: String,
+        noTlp: String,
+        tempatKerja: String,
+        tempatLulue: String,
+        tglAktif: String,
+        alumni: String,
+        noReg: Long,
+        jenisKelamin: String,
+        status: String
+    ): DokterResponse = userRepository.insertDokter(
+        userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
+        tempatKerja, tempatLulue, tglAktif, alumni, noReg, jenisKelamin, status
+    )
+
     fun isEmailExist(email: String): LiveData<List<User>> = userRepository.isEmailExist(email)
 }

@@ -30,38 +30,10 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:id="@+id/tv_tgl_lahir_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/tanggal_lahir"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_no_telepon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_tgl_lahir_title"
-                    app:endIconMode="custom"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey"
-                    app:endIconDrawable="@drawable/calendar">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_tgl_lahir"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/dd_mm_yyyy"
-                        android:inputType="datetime"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
                     android:id="@+id/tv_kelamin_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
                     android:text="@string/jenis_kelamin"/>
@@ -130,6 +102,60 @@
                         android:inputType="text"/>
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
+                <TextView
+                    android:id="@+id/tv_tempat_lulus_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_tempat_praktik"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/tempat_lulus"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_tempat_lulus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tempat_lulus_title"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:startIconTint="@color/grey">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_tempat_lulus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/masukkan_tempat_lulus"
+                        android:inputType="text"/>
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_tgl_mulai_aktif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_tempat_lulus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/tanggal_mulai_aktif"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_tgl_lulus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tgl_mulai_aktif"
+                    app:endIconMode="custom"
+                    app:endIconTint="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:startIconTint="@color/grey"
+                    app:endIconDrawable="@drawable/calendar">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_tgl_lulus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/yyyy_mm_dd"
+                        android:inputType="datetime"/>
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

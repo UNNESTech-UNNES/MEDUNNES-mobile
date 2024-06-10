@@ -2,12 +2,14 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
@@ -40,7 +42,7 @@ class Registrasi2Fragment :
         setSpinner()
         binding.btnLanjut1.setOnClickListener(this)
 
-        binding.tilNoTelepon.setEndIconOnClickListener {
+        binding.tilTglLulus.setEndIconOnClickListener {
             showDatePicker()
         }
 
@@ -66,19 +68,35 @@ class Registrasi2Fragment :
             putString(Registrasi3Fragment.FULLNAME, getDataBundle(FULLNAME))
             putString(Registrasi3Fragment.TITLE_ONE, getDataBundle(TITLE_ONE))
             putString(Registrasi3Fragment.TITLE_TWO, getDataBundle(TITLE_TWO))
-            putString(Registrasi3Fragment.NO_STR, getDataBundle(NO_STR))
+            putLong(Registrasi3Fragment.NO_STR, arguments?.getLong(NO_STR)!!)
             putInt(Registrasi3Fragment.ROLE, arguments?.getInt(ROLE)!!)
             putString(Registrasi3Fragment.GENDER, dataSpinner)
 
             with(binding) {
                 putString(Registrasi3Fragment.DATE, datePicked)
                 putString(Registrasi3Fragment.ADDRESS, "${tieAlamat.text}")
-                putString(Registrasi3Fragment.PLACE, "${tieAlamat.text}")
+                putString(Registrasi3Fragment.PLACE, "${tieTempatPraktik.text}")
+                putString(Registrasi3Fragment.GRADUATE_PLACE, "${tieTempatLulus.text}")
             }
 
         }
 
         return bundle
+    }
+
+    private fun inputValidation(): Boolean {
+        with(binding) {
+            return (!getDataBundle(EMAIL).isNullOrEmpty()
+                    && !getDataBundle(FULLNAME).isNullOrEmpty()
+                    && !getDataBundle(TITLE_ONE).isNullOrEmpty()
+                    && !getDataBundle(TITLE_TWO).isNullOrEmpty()
+                    && arguments?.getLong(NO_STR) !== null
+                    && dataSpinner.isNotEmpty()
+                    && datePicked.isNotEmpty()
+                    && !tieAlamat.text.isNullOrEmpty()
+                    && !tieTempatPraktik.text.isNullOrEmpty()
+                    && !tieTempatLulus.text.isNullOrEmpty())
+        }
     }
 
     private fun getDataBundle(data: String) = arguments?.getString(data)
@@ -89,19 +107,23 @@ class Registrasi2Fragment :
                 val registrasi3Fragment = Registrasi3Fragment()
                 val fragmentManager = parentFragmentManager
 
-                registrasi3Fragment.arguments = bundle()
-
-                fragmentManager.beginTransaction().apply {
-                    replace(R.id.frame_container, registrasi3Fragment, Registrasi3Fragment::class.java.simpleName)
-                    addToBackStack(null)
-                    commit()
+                if (inputValidation()) {
+                    registrasi3Fragment.arguments = bundle()
+                    fragmentManager.beginTransaction().apply {
+                        replace(R.id.frame_container, registrasi3Fragment, Registrasi3Fragment::class.java.simpleName)
+                        addToBackStack(null)
+                        commit()
+                    }
+                } else {
+                    Toast.makeText(context, "Lengkapi data terlebih dahulu", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        dataSpinner = "${parent?.getItemAtPosition(pos)}"
+        dataSpinner = if (pos == 1) "P" else "L"
+        Toast.makeText(context, dataSpinner, Toast.LENGTH_SHORT).show()
         getDataSpinner(dataSpinner)
     }
 
@@ -120,9 +142,10 @@ class Registrasi2Fragment :
         val datePickerDialog = DatePickerDialog(
             requireContext(), { _, year, month, day ->
                 calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.tieTglLahir.setText(dateFormat.format(calendar.time))
-                datePicked = "${calendar.time}"
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val dateFormatted =  dateFormat.format(calendar.time)
+                binding.tieTglLulus.setText(dateFormatted)
+                datePicked = dateFormatted
             }, cYear, cMonth, cDay)
 
         datePickerDialog.show()

@@ -137,7 +137,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (data.isNotEmpty()) {
                 data.forEach {
-                    if (it.imgDokter.isNotEmpty()) {
+                    if (it.imgDokter?.isNotEmpty() == true) {
                         val path = Environment.getExternalStorageDirectory()
                         val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgDokter}")}"
                         Glide.with(this@ProfileFragment)

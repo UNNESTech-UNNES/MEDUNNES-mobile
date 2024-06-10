@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
@@ -44,11 +45,23 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
             bundle.putString(Registrasi2Fragment.FULLNAME, "${tieNamaLengkap.text}")
             bundle.putString(Registrasi2Fragment.TITLE_ONE, "${tieTitelDepan.text}")
             bundle.putString(Registrasi2Fragment.TITLE_TWO, "${tieTitelBelakang.text}")
-            bundle.putString(Registrasi2Fragment.NO_STR, "${tieNoStr.text}")
+            bundle.putLong(Registrasi2Fragment.NO_STR, tieNoReg.text.toString().toLong())
             bundle.putInt(Registrasi2Fragment.ROLE, arguments?.getInt(ROLE, 0) ?: 0)
         }
 
         return bundle
+    }
+
+    private fun inputValidation(): Boolean {
+        with(binding) {
+            return (
+                    !tieEmail.text.isNullOrEmpty()
+                    && !tieNamaLengkap.text.isNullOrEmpty()
+                    && !tieTitelDepan.text.isNullOrEmpty()
+                    && !tieTitelBelakang.text.isNullOrEmpty()
+                    && !tieNoReg.text.isNullOrEmpty()
+                    )
+        }
     }
 
     override fun onClick(view: View?) {
@@ -57,12 +70,15 @@ class Registrasi1Fragment : Fragment(), View.OnClickListener {
                 val registrasi2Fragment = Registrasi2Fragment()
                 val fragmentManager = parentFragmentManager
 
-                registrasi2Fragment.arguments = bundle()
-
-                fragmentManager.beginTransaction().apply {
-                    replace(R.id.frame_container, registrasi2Fragment, Registrasi2Fragment::class.java.simpleName)
-                    addToBackStack(null)
-                    commit()
+                if (inputValidation()) {
+                    registrasi2Fragment.arguments = bundle()
+                    fragmentManager.beginTransaction().apply {
+                        replace(R.id.frame_container, registrasi2Fragment, Registrasi2Fragment::class.java.simpleName)
+                        addToBackStack(null)
+                        commit()
+                    }
+                } else {
+                    Toast.makeText(context, "Lengkapi data terlebih dahulu", Toast.LENGTH_SHORT).show()
                 }
             }
         }

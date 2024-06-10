@@ -17,7 +17,7 @@ data class DokterResponse(
 data class DokterDataItem(
 
 	@field:SerializedName("img_dokter")
-	val imgDokter: String,
+	val imgDokter: String? = null,
 
 	@field:SerializedName("no_tlp")
 	val noTlp: String,

@@ -151,7 +151,7 @@
             android:layout_marginStart="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@string/no_str"/>
+            android:text="@string/no_reg"/>
 
         <TextView
             android:id="@+id/tv_user_str"
@@ -161,7 +161,7 @@
             app:layout_constraintStart_toStartOf="@id/tv_str"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
-            android:text="@string/no_str"/>
+            android:text="@string/no_reg"/>
 
         <Button
             android:id="@+id/btn_konsultasi_now"
