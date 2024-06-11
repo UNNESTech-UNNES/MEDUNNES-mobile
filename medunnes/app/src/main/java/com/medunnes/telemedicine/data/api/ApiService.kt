@@ -3,6 +3,7 @@ package com.medunnes.telemedicine.data.api
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
+import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -53,7 +54,7 @@ interface ApiService {
     @POST("api/pasien")
     suspend fun insertPasien(
         @Field("user_id") userId: Long,
-        @Field("nik") nik: Long,
+        @Field("NIK") nik: Long,
         @Field("nama_pasien") nama: String,
         @Field("img_pasien") img: String? = null,
         @Field("jenis_kelamin") kelamin: String,
@@ -130,4 +131,21 @@ interface ApiService {
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("status") status: String
     ): DokterResponse
+
+    @GET("api/pasienTambahan/{id}")
+    suspend fun getPasienTambahanByPasien(
+        @Path("id") id: Int
+    ): PasienTambahanResponse
+
+    @FormUrlEncoded
+    @POST("api/pasienTambahan")
+    suspend fun insertPasienTambahan(
+        @Field("pasien_id") pasienId: Long,
+        @Field("nama_pasien_tambahan") namaPasienTambahan: String,
+        @Field("TB") tb: Int,
+        @Field("BB") bb: Int,
+        @Field("jenis_kelamin") jenisKelamin: String,
+        @Field("tgl_lahir") tglLahir: String,
+        @Field("hubungan_keluarga") hubunganKeluarga: String
+    ): PasienTambahanResponse
 }

@@ -11,6 +11,7 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
+import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 
 class RegisterViewModel(private val userRepository: UserRepository): ViewModel() {
@@ -60,6 +61,18 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
     ): DokterResponse = userRepository.insertDokter(
         userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin, status
+    )
+
+    suspend fun insertPasienTambahan(
+        pasienId: Long,
+        namaPasienTambahan: String,
+        tb: Int,
+        bb: Int,
+        jenisKelamin: String,
+        tglLahir: String,
+        hubunganKeluarga: String
+    ): PasienTambahanResponse = userRepository.insertPasienTambahan(
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 
     fun isEmailExist(email: String): LiveData<List<User>> = userRepository.isEmailExist(email)

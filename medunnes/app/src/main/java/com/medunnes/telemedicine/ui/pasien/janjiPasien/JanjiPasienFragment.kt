@@ -59,7 +59,7 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
                 val buatJanjiDokterFragment = BuatJanjiDokterFragment()
                 val fragmentManager = parentFragmentManager
                 val bundle = Bundle()
-                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.idDokter.toInt())
+                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.userId.toInt())
                 buatJanjiDokterFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()

@@ -46,6 +46,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         with(binding) {
 
             var userId: Long = 0
+            var pasienId: Long = 0
             try {
                 val userRegister = viewModel.registerAPI(
                     "${tieNamaLengkap.text}",
@@ -54,11 +55,9 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     "pasien"
                 )
 
-                userRegister.data.forEach {
-                    userId = it.idUser.toLong()
-                }
+                userRegister.data.forEach { userId = it.idUser.toLong() }
 
-                viewModel.insertPasien(
+                val pasienInsert = viewModel.insertPasien(
                     userId,
                     tieNik.text.toString().toLong(),
                     "${tieNamaLengkap.text}",
@@ -70,8 +69,20 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     tieBb.text.toString().toInt(),
                     "active",
                 )
+
+                pasienInsert.data
+
+                viewModel.insertPasienTambahan(
+                    pasienId,
+                    "${tieNamaLengkap.text}",
+                    tieTb.text.toString().toInt(),
+                    tieBb.text.toString().toInt(),
+                    dataSpinner,
+                    datePicked,
+                    "Diri sendiri"
+                )
             } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
+                Log.d("ERROR", e.message.toString())
             }
         }
     }
@@ -86,8 +97,9 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             this, { _, year, month, day ->
                 calendar.set(year, month, day)
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                binding.tieTglLahir.setText(dateFormat.format(calendar.time))
-                datePicked = "${calendar.time}"
+                val date = dateFormat.format(calendar.time)
+                binding.tieTglLahir.setText(date)
+                datePicked = date
 
             }, cYear, cMonth, cDay)
 

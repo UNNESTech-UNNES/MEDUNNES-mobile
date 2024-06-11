@@ -66,27 +66,16 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
     private fun setDoctorProfile() {
         val doctorId = arguments?.getInt(DOCTOR_ID)
-        doctorId?.let {
-            viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
-                data.forEach {
-                    with(binding) {
-                        tvDoctorName.text = getString(R.string.nama_and_titel,
-                            it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang
-                        )
-                        tvDoctorExperience.text = it.dokter.alumni
-//                        tvDoctorSpeciality.text = it.dokter.
-
-//                        if (!it.user.image.isNullOrEmpty()) {
-//                            val path = Environment.getExternalStorageDirectory()
-//                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.user.image}")}"
-//                            Glide.with(this@BuatJanjiDokterFragment)
-//                                .load(imageFile)
-//                                .into(binding.ivDoctorImage)
-//                                .clearOnDetach()
-//                        }
-                    }
+        Log.d("DOID", doctorId.toString())
+        doctorId?.let { viewModel.getDokterById(it) }
+        val spesialis = resources.getStringArray(R.array.spesialissasi)
+        viewModel.dokter.observe(viewLifecycleOwner) { data ->
+            with(binding) {
+                data.forEach { dokter ->
+                    tvDoctorName.text = dokter.namaDokter
+                    tvDoctorSpeciality.text = spesialis[(dokter.spesialisId.toInt())-1]
+                    tvDoctorExperience.text = dokter.tempatKerja
                 }
-
             }
         }
     }

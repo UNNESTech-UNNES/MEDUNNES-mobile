@@ -14,8 +14,10 @@ import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
+import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.data.room.dao.UserDao
+import retrofit2.http.Field
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -114,6 +116,20 @@ class UserRepository private constructor(
     ): DokterResponse = ApiConfig.getApiService().updateDokter(
         id, userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
+    )
+
+    // Pasien Tambahan
+    suspend fun getPasienTambahanByPasien(id: Int): PasienTambahanResponse = ApiConfig.getApiService().getPasienTambahanByPasien(id)
+    suspend fun insertPasienTambahan(
+        pasienId: Long,
+        namaPasienTambahan: String,
+        tb: Int,
+        bb: Int,
+        jenisKelamin: String,
+        tglLahir: String,
+        hubunganKeluarga: String
+    ): PasienTambahanResponse = ApiConfig.getApiService().insertPasienTambahan(
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 
     // Room

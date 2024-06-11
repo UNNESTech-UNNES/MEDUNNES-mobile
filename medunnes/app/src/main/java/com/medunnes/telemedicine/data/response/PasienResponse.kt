@@ -44,7 +44,7 @@ data class PasienDataItem(
 	val userId: Long,
 
 	@field:SerializedName("id_pasien")
-	val idPasien: Int,
+	val idPasien: Long,
 
 	@field:SerializedName("img_pasien")
 	val imgPasien: String? = null,

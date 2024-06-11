@@ -26,7 +26,7 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private var currentImageUri: Uri? = null
     private var imagePath: String? = null
-    private var pasienId: Int = 0
+    private var pasienId: Long = 0
     private var kelamin: String = "kelamin"
     private var status: String = "status"
 

@@ -43,4 +43,19 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
             }
         }
     }
+
+    fun getDokterById(id: Int) {
+        viewModelScope.launch {
+            try {
+                val dokterData = repository.getDokterByUser(id)
+                if (dokterData.data.isNotEmpty()) {
+                    _dokter.value = dokterData.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
 }
