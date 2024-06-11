@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
@@ -42,6 +44,7 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
             btnBack.setOnClickListener(this@ProfileEditDokterActivity)
             btnEditSend.setOnClickListener(this@ProfileEditDokterActivity)
             ivEditPicture.setOnClickListener(this@ProfileEditDokterActivity)
+            tilEditTglMulaiAktif.setEndIconOnClickListener { showDatePicker() }
         }
 
         lifecycleScope.launch { getUserProfileData() }
@@ -66,8 +69,6 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
 
     private suspend fun setDokterProfileData() {
         val userId = viewModel.getUserLoginId()
-        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
-        val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("id", "ID"))
 
         viewModel.getDokterByUserLogin(userId)
         viewModel.dokter.observe(this) { data ->
@@ -88,6 +89,7 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                         kelamin = it.jenisKelamin
                         status = it.status
                         spesialisId = it.spesialisId
+                        imagePath = it.imgDokter
                     }
                 }
             } else {
@@ -123,6 +125,23 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
             makeToast("Data gagal diperbarui")
             Log.d("EXCEPTION", e.message.toString())
         }
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val cYear = calendar.get(Calendar.YEAR)
+        val cMonth = calendar.get(Calendar.MONTH)
+        val cDay = calendar.get(Calendar.DATE)
+
+        val datePickerDialog = DatePickerDialog(
+            this, { _, year, month, day ->
+                calendar.set(year, month, day)
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val dateFormatted =  dateFormat.format(calendar.time)
+                binding.tieEditTglMulaiAktif.setText(dateFormatted)
+            }, cYear, cMonth, cDay)
+
+        datePickerDialog.show()
     }
 
     private fun galeryStart() {

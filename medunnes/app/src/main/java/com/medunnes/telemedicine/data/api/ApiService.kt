@@ -106,7 +106,7 @@ interface ApiService {
     ): DokterResponse
 
     @FormUrlEncoded
-    @POST("api/dokter/{id}")
+    @PUT("api/dokter/{id}")
     suspend fun updateDokter(
         @Path("id") id: Long,
         @Field("user_id") userId: Long,
