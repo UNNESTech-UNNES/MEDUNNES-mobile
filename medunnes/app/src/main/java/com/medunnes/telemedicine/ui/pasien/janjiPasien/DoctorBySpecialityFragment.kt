@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.databinding.FragmentDoctorBySpecialityBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
@@ -34,23 +35,23 @@ class DoctorBySpecialityFragment : Fragment() {
         speciality = "${arguments?.getString(SPECIALITY)}"
         binding.tvSpesialisasiTitle.setText(getString(R.string.spesialis_dokter, speciality))
 
-        //getDoctorBySpeciality("", 1)
+        getDoctorBySpeciality("", 1)
         searchMessanger()
 
         return binding.root
     }
 
-    private fun showRecyclerList(listAdapter: ArrayList<UserAndDokter>) {
+    private fun showRecyclerList(listAdapter: ArrayList<DokterDataItem>) {
         binding.rvDoctorList.layoutManager = LinearLayoutManager(context)
         val dokterAdapter = DokterListAdapter(listAdapter)
         binding.rvDoctorList.adapter = dokterAdapter
 
         dokterAdapter.setOnItemClickCallback(object : DokterListAdapter.OnItemClickCallback {
-            override fun onItemClicked(dokter: UserAndDokter) {
+            override fun onItemClicked(dokter: DokterDataItem) {
                 val buatJanjiDokterFragment = BuatJanjiDokterFragment()
                 val fragmentManager = parentFragmentManager
                 val bundle = Bundle()
-                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.user.id)
+                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.idDokter.toInt())
                 buatJanjiDokterFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()
@@ -69,7 +70,7 @@ class DoctorBySpecialityFragment : Fragment() {
 
             val filteredData = listDokter.filter {
                 it.user.fullname.lowercase().contains(filter)
-            } as ArrayList<UserAndDokter>
+            } as ArrayList<DokterDataItem>
             showRecyclerList(filteredData)
         }
     }

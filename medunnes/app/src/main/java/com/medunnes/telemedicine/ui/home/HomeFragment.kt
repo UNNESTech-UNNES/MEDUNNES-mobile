@@ -63,9 +63,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvAuthenticate.setOnClickListener(this@HomeFragment)
         }
 
-        lifecycleScope.launch { getAllUser() }
-
-
         return root
     }
 
@@ -266,10 +263,5 @@ class HomeFragment : Fragment(), View.OnClickListener {
                  else -> Log.d("CLICK", "error")
              }
         }
-    }
-
-    suspend fun getAllUser() {
-        val allUser = viewModel.getAllUser("1")
-        Log.d("USERS", allUser.data.toString())
     }
 }

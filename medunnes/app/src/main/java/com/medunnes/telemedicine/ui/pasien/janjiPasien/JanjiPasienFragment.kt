@@ -1,6 +1,7 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.dialog.SpesialisBottomSheetDialog
@@ -19,7 +20,7 @@ import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 class JanjiPasienFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentBuatJanjiBinding? = null
     private val binding get() = _binding!!
-    private val listDokter = ArrayList<UserAndDokter>()
+    private val listDokter = ArrayList<DokterDataItem>()
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -48,17 +49,17 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun showRecyclerList(listAdapter: ArrayList<UserAndDokter>) {
+    private fun showRecyclerList(listAdapter: ArrayList<DokterDataItem>) {
         binding.rvDoctorList.layoutManager = LinearLayoutManager(context)
         val dokterAdapter = DokterListAdapter(listAdapter)
         binding.rvDoctorList.adapter = dokterAdapter
 
         dokterAdapter.setOnItemClickCallback(object : DokterListAdapter.OnItemClickCallback {
-            override fun onItemClicked(dokter: UserAndDokter) {
+            override fun onItemClicked(dokter: DokterDataItem) {
                 val buatJanjiDokterFragment = BuatJanjiDokterFragment()
                 val fragmentManager = parentFragmentManager
                 val bundle = Bundle()
-                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.user.id)
+                bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, dokter.idDokter.toInt())
                 buatJanjiDokterFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()
@@ -71,13 +72,17 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getDoctorList(filter: String) {
-        viewModel.getAllDokter().observe(viewLifecycleOwner) { data ->
-            listDokter.clear()
-            listDokter.addAll(data)
-            val filteredData = listDokter.filter {
-                it.user.fullname.lowercase().contains(filter)
-            } as ArrayList<UserAndDokter>
-            showRecyclerList(filteredData)
+        viewModel.getAllDokter(1)
+        viewModel.dokter.observe(viewLifecycleOwner) { data ->
+            if (!data.isNullOrEmpty()) {
+                listDokter.clear()
+                listDokter.addAll(data)
+                val filteredData = listDokter.filter {
+                    it.namaDokter.lowercase().contains(filter)
+                } as ArrayList<DokterDataItem>
+                showRecyclerList(filteredData)
+            }
+            Log.d("DOKTERS", data.toString())
         }
     }
 

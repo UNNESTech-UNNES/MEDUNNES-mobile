@@ -80,6 +80,11 @@ interface ApiService {
         @Field("status") status: String
     ) : PasienResponse
 
+    @GET("api/dokter")
+    suspend fun getAllDokter(
+        @Query("page") page: Int
+    ) : DokterResponse
+
     @GET("api/dokter/{id}")
     suspend fun getDokterByUser(
         @Path("id") id: Int

@@ -263,7 +263,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_doctor_list"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_rekomendasi_dokter_desk"
             app:layout_constraintBottom_toBottomOf="parent"

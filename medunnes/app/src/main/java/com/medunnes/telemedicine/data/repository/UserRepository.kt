@@ -72,6 +72,7 @@ class UserRepository private constructor(
     )
 
     // Dokter
+    suspend fun getAllDokter(page: Int): DokterResponse = ApiConfig.getApiService().getAllDokter(page)
     suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
     suspend fun insertDokter(
         userId: Int,

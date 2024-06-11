@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.data.model.Faskes
-import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.databinding.PasienJanjiListBinding
 import java.io.File
 
-class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : RecyclerView.Adapter<DokterListAdapter.ListViewHolder>() {
+class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : RecyclerView.Adapter<DokterListAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: PasienJanjiListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(dokter: UserAndDokter) {
+        fun bind(dokter: DokterDataItem) {
             with(binding) {
-                tvPatientName.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
-                //tvDoctorRole.text = dokter.dokter.spesialis
-                tvDoctorExperience.text = dokter.user.fullname
+                tvPatientName.text = "${dokter.titleDepan} ${dokter.namaDokter} ${dokter.titleBelakang}"
+
+                val spesialis = root.resources.getStringArray(R.array.spesialissasi)
+                tvDoctorRole.text = spesialis[(dokter.spesialisId.toInt())-1]
+                tvDoctorExperience.text = dokter.tempatKerja
 
 //                if (!dokter.user.isNullOrEmpty()) {
 //                    val path = Environment.getExternalStorageDirectory()
@@ -48,7 +50,7 @@ class DokterListAdapter(private val dokterList: ArrayList<UserAndDokter>) : Recy
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(dokter: UserAndDokter)
+        fun onItemClicked(dokter: DokterDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
