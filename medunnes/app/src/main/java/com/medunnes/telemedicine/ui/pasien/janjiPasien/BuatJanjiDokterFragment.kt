@@ -81,14 +81,32 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     suspend fun setPasienData() {
-        viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
-            data.forEach {
-                if (arguments?.getInt(PASIEN_ID)  == 0) {
-                    binding.tiePasienPicked.setText(it.fullname)
-                } else {
-                    binding.tiePasienPicked.setText("${arguments?.getString(PASIEN_NAME)}")
+        var pasienId = arguments?.getInt(PASIEN_ID)
+        val pasienTambahanId = arguments?.getInt(PASIEN_TAMBAHAN_ID)
+        Log.d("PASIEN & PASTAMBAH", "$pasienId & $pasienTambahanId")
+        if (pasienId != null && pasienTambahanId != null && pasienId != 0 && pasienTambahanId != 0) {
+            viewModel.getPasienTambahanById(pasienId, pasienTambahanId)
+            viewModel.pasienTambahan.observe(viewLifecycleOwner) { data ->
+                if (!data.isNullOrEmpty()) {
+                    data.forEach {
+                        binding.tiePasienPicked.setText(it.namaPasienTambahan)
+                        binding.tiePasienIdPicked.setText(it.pasienId)
+                        binding.tiePasienTambahanIdPicked.setText(it.idPasienTambahan)
+                    }
                 }
-                binding.tiePasienIdPicked.setText("${it.id}")
+            }
+        } else {
+            viewModel.getPasienByUserLogin(viewModel.getUserLoginId())
+            viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
+                pasien.forEach { pasienId = it.idPasien.toInt() }
+                Log.d("PASID", pasienId.toString())
+                viewModel.getPasienTambahanByPasien(pasienId!!)
+                viewModel.pasienTambahan.observe(viewLifecycleOwner) { pasienTambahan ->
+                    binding.tiePasienPicked.setText(pasienTambahan[0].namaPasienTambahan)
+                    binding.tiePasienIdPicked.setText(pasienTambahan[0].pasienId)
+                    binding.tiePasienTambahanIdPicked.setText(pasienTambahan[0].idPasienTambahan)
+
+                }
             }
         }
     }
@@ -221,6 +239,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     companion object {
         const val DOCTOR_ID = "doctor_id"
         const val PASIEN_ID = "pasien_id"
+        const val PASIEN_TAMBAHAN_ID = "pasien_tambahan_id"
         const val PASIEN_NAME = "pasien_nama"
     }
 

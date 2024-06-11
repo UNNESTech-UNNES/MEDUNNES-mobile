@@ -127,6 +127,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_pasien_tambahan_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cv_doctor_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="20dp"
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="358dp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/arrow_right"
+                android:outlineProvider="bounds"
+                android:visibility="invisible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_pasien_tambahan_id_picked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:textColor="@color/third_choice_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_pasien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

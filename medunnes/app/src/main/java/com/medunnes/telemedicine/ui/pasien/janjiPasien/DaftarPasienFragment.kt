@@ -28,6 +28,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
     private val listPasien = ArrayList<PasienTambahanDataItem>()
 
     private var pasienId: Int = 0
+    private var pasienTambahanId: Int = 0
     private var pasienName: String = ""
     private var doctorId: Int = 0
 
@@ -99,6 +100,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
 
             override fun onRadioButtonChecked(pasien: PasienTambahanDataItem) {
                 pasienId = pasien.pasienId
+                pasienTambahanId = pasien.idPasienTambahan
                 pasienName = pasien.namaPasienTambahan
             }
 
@@ -157,6 +159,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
                     val parentManager = parentFragmentManager
                     val bundle = Bundle()
                     bundle.putInt(BuatJanjiDokterFragment.PASIEN_ID, pasienId)
+                    bundle.putInt(BuatJanjiDokterFragment.PASIEN_TAMBAHAN_ID, pasienTambahanId)
                     bundle.putString(BuatJanjiDokterFragment.PASIEN_NAME, pasienName)
                     bundle.putInt(BuatJanjiDokterFragment.DOCTOR_ID, doctorId)
                     buatJanjiFragment.arguments = bundle

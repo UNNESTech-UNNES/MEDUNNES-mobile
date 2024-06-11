@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
@@ -16,6 +17,7 @@ import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.dialog.SpesialisBottomSheetDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
+import kotlinx.coroutines.launch
 
 class JanjiPasienFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentBuatJanjiBinding? = null

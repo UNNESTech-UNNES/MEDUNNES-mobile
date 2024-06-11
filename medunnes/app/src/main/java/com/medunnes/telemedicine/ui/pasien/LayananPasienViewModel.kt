@@ -96,4 +96,19 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
             }
         }
     }
+
+    fun getPasienTambahanById(pasienId: Int, id: Int) {
+        viewModelScope.launch {
+            try {
+                val pasienTambahanData = repository.getPasienTambahanById(pasienId, id)
+                if (pasienTambahanData.data.isNotEmpty()) {
+                    _pasienTambahan.value = pasienTambahanData.data
+                } else {
+                    Log.d("DATA PASIEN", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.message.toString())
+            }
+        }
+    }
 }

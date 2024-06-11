@@ -119,7 +119,10 @@ class UserRepository private constructor(
     )
 
     // Pasien Tambahan
-    suspend fun getPasienTambahanByPasien(id: Int): PasienTambahanResponse = ApiConfig.getApiService().getPasienTambahanByPasien(id)
+    suspend fun getPasienTambahanByPasien(id: Int): PasienTambahanResponse =
+        ApiConfig.getApiService().getPasienTambahanByPasien(id)
+    suspend fun getPasienTambahanById(pasienId: Int, id: Int): PasienTambahanResponse =
+        ApiConfig.getApiService().getPasienTambahanById(pasienId, id)
     suspend fun insertPasienTambahan(
         pasienId: Long,
         namaPasienTambahan: String,
