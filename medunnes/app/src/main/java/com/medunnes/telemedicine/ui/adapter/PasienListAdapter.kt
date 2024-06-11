@@ -1,18 +1,18 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.medunnes.telemedicine.data.model.Pasien
+import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.databinding.ListPasienBinding
 
-class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerView.Adapter<PasienListAdapter.ListViewHolder>() {
+class PasienListAdapter(private val listPasien: ArrayList<PasienTambahanDataItem>) : RecyclerView.Adapter<PasienListAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: ListPasienBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(pasien: Pasien) {
+        fun bind(pasien: PasienTambahanDataItem) {
             with(binding) {
-                tvPasienNama.text = pasien.namaPasien
+                tvPasienNama.text = pasien.namaPasienTambahan
+                tvPasienHubungan.text = pasien.hubunganKeluarga
             }
         }
         val radioButton = binding.rbtnPasien
@@ -64,10 +64,10 @@ class PasienListAdapter(private val listPasien: ArrayList<Pasien>) : RecyclerVie
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(pasien: Pasien)
-        fun onEditButtonClicked(pasien: Pasien)
-        fun onDeleteButtonClicked(pasien: Pasien)
-        fun onRadioButtonChecked(pasien: Pasien)
+        fun onItemClicked(pasien: PasienTambahanDataItem)
+        fun onEditButtonClicked(pasien: PasienTambahanDataItem)
+        fun onDeleteButtonClicked(pasien: PasienTambahanDataItem)
+        fun onRadioButtonChecked(pasien: PasienTambahanDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

@@ -13,11 +13,19 @@ import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.DokterResponse
+import com.medunnes.telemedicine.data.response.PasienDataItem
+import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import kotlinx.coroutines.launch
 
 class LayananPasienViewModel(private val repository: UserRepository) : ViewModel() {
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
+    private val _pasien = MutableLiveData<List<PasienDataItem>>()
+    val pasien: LiveData<List<PasienDataItem>> get() = _pasien
+
+    private val _pasienTambahan = MutableLiveData<List<PasienTambahanDataItem>>()
+    val pasienTambahan: LiveData<List<PasienTambahanDataItem>> get() = _pasienTambahan
     fun getAllDokter(): LiveData<List<UserAndDokter>> = repository.getAllDokter()
     fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
@@ -44,6 +52,21 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         }
     }
 
+    fun getPasienByUserLogin(userId: Int) {
+        viewModelScope.launch {
+            try {
+                val pasienData = repository.getPasienByUser(userId)
+                if (pasienData.data.isNotEmpty()) {
+                    _pasien.value = pasienData.data
+                } else {
+                    Log.d("DATA pasien", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
     fun getDokterById(id: Int) {
         viewModelScope.launch {
             try {
@@ -55,6 +78,21 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getPasienTambahanByPasien(id: Int) {
+        viewModelScope.launch {
+            try {
+                val pasienTambahanData = repository.getPasienTambahanByPasien(id)
+                if (pasienTambahanData.data.isNotEmpty()) {
+                    _pasienTambahan.value = pasienTambahanData.data
+                } else {
+                    Log.d("DATA PASIEN", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.message.toString())
             }
         }
     }

@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Pasien
+import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.databinding.FragmentDaftarPasienBinding
 import com.medunnes.telemedicine.ui.adapter.PasienListAdapter
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
@@ -25,7 +25,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private val listPasien = ArrayList<Pasien>()
+    private val listPasien = ArrayList<PasienTambahanDataItem>()
 
     private var pasienId: Int = 0
     private var pasienName: String = ""
@@ -51,25 +51,36 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
 
     private suspend fun getDataPasien() {
         val uid = viewModel.getUserLoginId()
-        viewModel.getPasienByUser(uid).observe(viewLifecycleOwner) { data ->
-            listPasien.clear()
-            listPasien.addAll(data)
-            showRecyclerList(listPasien)
+        var pasienId = 0
+        // Get pasienId
+        viewModel.getPasienByUserLogin(uid)
+        viewModel.pasien.observe(viewLifecycleOwner) { data ->
+            data.forEach { pasienId = it.idPasien.toInt() }
+
+            // Get PasienTambahan
+            viewModel.getPasienTambahanByPasien(pasienId)
+            viewModel.pasienTambahan.observe(viewLifecycleOwner) { pasien ->
+                if (!pasien.isNullOrEmpty()) {
+                    listPasien.clear()
+                    listPasien.addAll(pasien)
+                    showRecyclerList(listPasien)
+                }
+            }
         }
     }
 
-    private fun showRecyclerList(listAdapter: ArrayList<Pasien>) {
+    private fun showRecyclerList(listAdapter: ArrayList<PasienTambahanDataItem>) {
         binding.rvPatientList.layoutManager = LinearLayoutManager(context)
         val pasienAdapter = PasienListAdapter(listAdapter)
         binding.rvPatientList.setItemViewCacheSize(listAdapter.size)
         binding.rvPatientList.adapter = pasienAdapter
 
         pasienAdapter.setOnItemClickCallback(object : PasienListAdapter.OnItemClickCallback {
-            override fun onItemClicked(pasien: Pasien) {
+            override fun onItemClicked(pasien: PasienTambahanDataItem) {
 
             }
 
-            override fun onEditButtonClicked(pasien: Pasien) {
+            override fun onEditButtonClicked(pasien: PasienTambahanDataItem) {
                 val editPasienFragment = EditPasienFragment()
                 val fragmentManager = parentFragmentManager
                 val bundle = Bundle()
@@ -82,19 +93,19 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
                     .commit()
             }
 
-            override fun onDeleteButtonClicked(pasien: Pasien) {
+            override fun onDeleteButtonClicked(pasien: PasienTambahanDataItem) {
                 showConfirmationDialog(pasien)
             }
 
-            override fun onRadioButtonChecked(pasien: Pasien) {
+            override fun onRadioButtonChecked(pasien: PasienTambahanDataItem) {
                 pasienId = pasien.pasienId
-                pasienName = pasien.namaPasien
+                pasienName = pasien.namaPasienTambahan
             }
 
         })
     }
 
-    private fun showConfirmationDialog(pasien: Pasien) {
+    private fun showConfirmationDialog(pasien: PasienTambahanDataItem) {
         val bundle = Bundle()
         bundle.putString(DeletePasienConfirmationDialog.DIALOG, getString(R.string.delete_pasien_alert_deskripsi))
         dpcd.arguments = bundle
@@ -116,10 +127,10 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
         bjsd.show(childFragmentManager, BuatJanjiSuccessDialog.TAG)
     }
 
-    private fun deletePasien(pasien: Pasien, isConfirm: Boolean) {
+    private fun deletePasien(pasien: PasienTambahanDataItem, isConfirm: Boolean) {
         if (isConfirm) {
             try {
-                viewModel.deletePasien(pasien)
+                //viewModel.deletePasien(pasien)
                 showSuccessDialog()
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
