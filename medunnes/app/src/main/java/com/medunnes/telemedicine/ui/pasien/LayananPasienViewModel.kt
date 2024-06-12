@@ -14,6 +14,7 @@ import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
+import com.medunnes.telemedicine.data.response.SesiDataItem
 import kotlinx.coroutines.launch
 
 class LayananPasienViewModel(private val repository: UserRepository) : ViewModel() {
@@ -25,6 +26,9 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
 
     private val _pasienTambahan = MutableLiveData<List<PasienTambahanDataItem>>()
     val pasienTambahan: LiveData<List<PasienTambahanDataItem>> get() = _pasienTambahan
+
+    private val _sesi = MutableLiveData<List<SesiDataItem>>()
+    val sesi: LiveData<List<SesiDataItem>> get() = _sesi
     fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
     fun getUserProfile(uid: Int): LiveData<List<User>> = repository.getUser(uid)
@@ -55,6 +59,21 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
                     _pasien.value = pasienData.data
                 } else {
                     Log.d("DATA pasien", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getAllSesi() {
+        viewModelScope.launch {
+            try {
+                val sesi = repository.getAllSesi()
+                if (sesi.data.isNotEmpty()) {
+                    _sesi.value = sesi.data
+                } else {
+                    Log.d("DATA sesi", "Data pasien sesi")
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())

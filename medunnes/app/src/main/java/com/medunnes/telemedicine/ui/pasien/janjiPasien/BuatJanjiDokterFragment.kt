@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Sesi
+import com.medunnes.telemedicine.data.response.SesiDataItem
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.SesiAdapter
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
@@ -33,7 +33,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
     private var datePicked: String = "date"
     private var sesiPicked: String? = null
-    private var listSesi = ArrayList<Sesi>()
+    private var listSesi = ArrayList<SesiDataItem>()
     private val bjcd = BuatJanjiConfirmationDialog()
     private val bjsd = BuatJanjiSuccessDialog()
     private var sesiNumber = 0
@@ -56,7 +56,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             tilPasien.setEndIconOnClickListener { selectPatient() }
         }
 
-        showRecycleList()
+        getSesiList()
 
         return binding.root
     }
@@ -85,8 +85,8 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                 if (!data.isNullOrEmpty()) {
                     data.forEach {
                         binding.tiePasienPicked.setText(it.namaPasienTambahan)
-                        binding.tiePasienIdPicked.setText(it.pasienId)
-                        binding.tiePasienTambahanIdPicked.setText(it.idPasienTambahan)
+                        binding.tiePasienIdPicked.setText(it.pasienId.toString())
+                        binding.tiePasienTambahanIdPicked.setText(it.idPasienTambahan.toString())
                     }
                 }
             }
@@ -131,7 +131,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showRecycleList() {
-        getSesiList()
         val orientation = resources.configuration.orientation
         val column: Int = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             2
@@ -143,13 +142,13 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         binding.rvSesiList.adapter = sesiAdapter
 
         sesiAdapter.setOnItemClickCallback(object : SesiAdapter.OnItemClickCallback {
-            override fun onClick(sesi: Sesi) {
+            override fun onClick(sesi: SesiDataItem) {
                 with(binding) {
                     tvFormIsEmpty.visibility = View.GONE
                     tvSesiPicked.visibility = View.VISIBLE
-                    sesiPicked = getString(R.string.no_sesi, sesi.noSesi)
+                    sesiPicked = getString(R.string.no_sesi, sesi.idSesi)
                     tvSesiPicked.text = sesiPicked
-                    sesiNumber = sesi.noSesi
+                    sesiNumber = sesi.idSesi
                 }
             }
 
@@ -157,12 +156,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
     }
 
-    private fun getSesiList() : ArrayList<Sesi> {
-        val waktuSesi = resources.getStringArray(R.array.sesi_dokter)
-        listSesi.clear()
-        for (i in waktuSesi.indices) {
-            val sesi = Sesi(i+1, waktuSesi[i])
-            listSesi.add(sesi)
+    private fun getSesiList() : ArrayList<SesiDataItem> {
+        viewModel.getAllSesi()
+        viewModel.sesi.observe(viewLifecycleOwner) { sesi ->
+            listSesi.clear()
+            listSesi.addAll(sesi)
+            showRecycleList()
         }
         return listSesi
     }

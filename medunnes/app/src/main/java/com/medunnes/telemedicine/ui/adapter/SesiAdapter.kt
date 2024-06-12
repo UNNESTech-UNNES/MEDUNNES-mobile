@@ -4,15 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.medunnes.telemedicine.data.model.Sesi
+import com.medunnes.telemedicine.data.response.SesiDataItem
 import com.medunnes.telemedicine.databinding.SesiDokterListBinding
 
-class SesiAdapter(private val sesiLis: ArrayList<Sesi>): RecyclerView.Adapter<SesiAdapter.ListViewModel>() {
+class SesiAdapter(private val sesiLis: ArrayList<SesiDataItem>): RecyclerView.Adapter<SesiAdapter.ListViewModel>() {
     class ListViewModel(private val binding: SesiDokterListBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(sesi: Sesi) {
+        fun bind(sesi: SesiDataItem) {
             with(binding) {
-                tvSesi.text = "Sesi ${sesi.noSesi}"
-                tvSesiPukul.text = sesi.waktuSesi
+                tvSesi.text = "Sesi ${sesi.idSesi}"
+                tvSesiPukul.text = "${sesi.dari} - ${sesi.sampai}"
             }
         }
 
@@ -53,7 +53,7 @@ class SesiAdapter(private val sesiLis: ArrayList<Sesi>): RecyclerView.Adapter<Se
     private var selectedItem: Int = -1
 
     interface OnItemClickCallback {
-        fun onClick(sesi: Sesi)
+        fun onClick(sesi: SesiDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

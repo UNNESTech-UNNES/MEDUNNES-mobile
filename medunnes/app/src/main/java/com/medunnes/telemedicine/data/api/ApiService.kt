@@ -5,6 +5,7 @@ import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
+import com.medunnes.telemedicine.data.response.SesiResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -40,11 +41,6 @@ interface ApiService {
         @Field("type") type: String,
         @Field("password") password: String,
     ) : UserResponse
-
-    @GET("api/pasien")
-    suspend fun getAllPasien(
-        @Query("page") page: String
-    ) : PasienResponse
 
     @GET("api/pasien/{id}")
     suspend fun getPasienByUser(
@@ -167,4 +163,7 @@ interface ApiService {
         @Field("catatan") catatan: String,
         @Field("status") status: String
     ): JanjiResponse
+
+    @GET("api/sesi")
+    suspend fun getAllSesi(): SesiResponse
 }

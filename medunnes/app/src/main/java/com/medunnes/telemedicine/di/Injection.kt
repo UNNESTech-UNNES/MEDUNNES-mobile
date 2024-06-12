@@ -13,9 +13,8 @@ object Injection {
     fun provideRepository(context: Context): UserRepository {
         val database = UserDatabase.getDatabase(context)
         val userDao = database.userDao()
-        val application = Application()
         val executorService = Executors.newSingleThreadScheduledExecutor()
         val authDataStore = AuthDataStore(context)
-        return UserRepository.getInstance(userDao, application, executorService, authDataStore)
+        return UserRepository.getInstance(userDao, executorService, authDataStore)
     }
 }

@@ -16,6 +16,7 @@ import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
+import com.medunnes.telemedicine.data.response.SesiResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.data.room.dao.UserDao
 import retrofit2.http.Field
@@ -24,7 +25,6 @@ import java.util.concurrent.Executors
 
 class UserRepository private constructor(
     private val mUserDao: UserDao,
-    private val application: Application,
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor(),
     private val authDataStore: AuthDataStore
 ){
@@ -41,7 +41,6 @@ class UserRepository private constructor(
     ): UserResponse = ApiConfig.getApiService().register(name, email, type, password)
 
     //Pasien
-    suspend fun getAllPasien(page: String): PasienResponse = ApiConfig.getApiService().getAllPasien(page)
     suspend fun getPasienByUser(userId: Int): PasienResponse = ApiConfig.getApiService().getPasienByUser(userId)
     suspend fun insertPasien(
         userId: Long,
@@ -149,6 +148,9 @@ class UserRepository private constructor(
         pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
     )
 
+    // Sesi
+    suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()
+
     // Room
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)
     fun register(user: User): Long = mUserDao.insertUser(user)
@@ -164,9 +166,7 @@ class UserRepository private constructor(
     fun updateJanjiPasien(janji: Janji) = executorService.execute { mUserDao.updateJanjiPasien(janji) }
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
-    fun getPasiebByUser(uid: Int): LiveData<List<Pasien>> = mUserDao.getPasienByUser(uid)
     fun getPasienById(pasienId: Int): LiveData<List<Pasien>> = mUserDao.getPasienById(pasienId)
-    fun deletePasien(pasien: Pasien) = executorService.execute { mUserDao.deletePasien(pasien) }
 
     //DataStore
     suspend fun setLoginStatus() = authDataStore.loginUser()
@@ -183,11 +183,10 @@ class UserRepository private constructor(
 
         fun getInstance(
             mUserDao: UserDao,
-            application: Application,
             executorService: ExecutorService,
             authDataStore: AuthDataStore
         ): UserRepository = instances ?: synchronized(this) {
-            instances ?: UserRepository(mUserDao, application, executorService, authDataStore)
+            instances ?: UserRepository(mUserDao, executorService, authDataStore)
                 .also { instances = it }
         }
     }
