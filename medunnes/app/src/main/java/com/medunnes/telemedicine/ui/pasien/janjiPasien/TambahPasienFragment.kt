@@ -1,7 +1,6 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
 import android.app.DatePickerDialog
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,22 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.databinding.FragmentTambahPasienBinding
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import com.medunnes.telemedicine.utils.getImageUri
 import kotlinx.coroutines.launch
-import java.io.InputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -41,8 +33,6 @@ class TambahPasienFragment : Fragment(),
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var currentImageUri: Uri? = null
-    private var imagePath: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +41,8 @@ class TambahPasienFragment : Fragment(),
         binding = FragmentTambahPasienBinding.inflate(layoutInflater)
         setSpinner()
 
+        binding.tilPasienTglLahir.setEndIconOnClickListener { showDatePicker() }
         binding.btnSimpan.setOnClickListener(this)
-        binding.cvPasienKartuIdentitas.setOnClickListener(this)
 
         return binding.root
     }
@@ -60,34 +50,17 @@ class TambahPasienFragment : Fragment(),
     private fun setSpinner() {
         ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.hubungan_pasien,
+            R.array.jenis_kelamin,
             android.R.layout.simple_spinner_item
         ).also { arrayAdapter ->
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerPasienHubungan.adapter = arrayAdapter
+            binding.spinnerPasienJenisKelamin.adapter = arrayAdapter
         }
-        binding.spinnerPasienHubungan.onItemSelectedListener = this
+        binding.spinnerPasienJenisKelamin.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        dataSpinner = "${parent?.getItemAtPosition(pos)}"
-        if (dataSpinner == "Diri sendiri") {
-            lifecycleScope.launch {
-                viewModel.getUserProfile(viewModel.getUserLoginId()).observe(viewLifecycleOwner) { data ->
-                    data.forEach {
-                        //Log.d("DAATE", it.tanggalLahir.toString())
-                        with(binding) {
-                            tiePasienNama.setText(it.fullname)
-                            tiePasienNama.isEnabled = false
-                            //tiePasienTglLahir.setText(it.tanggalLahir)
-                            tilPasienTglLahir.setEndIconOnClickListener { /* DO NOTHING */ }
-                        }
-                    }
-                }
-            }
-        } else {
-            binding.tilPasienTglLahir.setEndIconOnClickListener { showDatePicker() }
-        }
+        dataSpinner = if (pos == 0) "L" else "P"
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -103,37 +76,42 @@ class TambahPasienFragment : Fragment(),
         val datePickerDialog = DatePickerDialog(
             requireContext(), { _, year, month, day ->
                 calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.tiePasienTglLahir.setText(dateFormat.format(calendar.time))
-                datePicked = "${calendar.time}"
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val date = dateFormat.format(calendar.time)
+                binding.tiePasienTglLahir.setText(date)
+                datePicked = date
             }, cYear, cMonth, cDay)
 
         datePickerDialog.show()
     }
 
-//    private suspend fun insertPasien(isConfirm: Boolean) {
-//        with(binding) {
-//            if (isConfirm) {
-//                try {
-//                    viewModel.insertPasien(Pasien(
-//                        0,
-//                        "${tiePasienNama.text}",
-//                        dataSpinner,
-//                        datePicked,
-//                        imagePath,
-//                        viewModel.getUserLoginId()
-//                    ))
-//                    uploadImage()
-//                    bjcd.dismiss()
-//                    showSuccessDialog()
-//                } catch (e: Exception) {
-//                    Log.d("ERROR", e.toString())
-//                }
-//            } else {
-//                bjcd.dismiss()
-//            }
-//        }
-//    }
+    private suspend fun insertPasien(isConfirm: Boolean) {
+        if (isConfirm) {
+            try {
+                val uid = viewModel.getUserLoginId()
+                viewModel.getPasienByUserLogin(uid)
+                viewModel.pasien.observe(viewLifecycleOwner) { data ->
+                    lifecycleScope.launch {
+                        viewModel.insertPasienTambahan(
+                            data[0].idPasien,
+                            "${binding.tiePasienNama.text}",
+                            binding.tiePasienTb.text.toString().toInt(),
+                            binding.tiePasienBb.text.toString().toInt(),
+                            dataSpinner,
+                            datePicked,
+                            "${binding.tiePasienHubungan.text}"
+                        )
+                    }
+                }
+                bjcd.dismiss()
+                showSuccessDialog()
+            } catch (e: Exception) {
+                Log.d("INSERT DATA FAIL", e.message.toString())
+            }
+        } else {
+            bjcd.dismiss()
+        }
+    }
 
     private fun showConfirmationDialog() {
         val bundle = Bundle()
@@ -143,70 +121,9 @@ class TambahPasienFragment : Fragment(),
 
         bjcd.setOnItemClickCallback(object : BuatJanjiConfirmationDialog.OnItemClickCallback {
             override fun onItemClicked(isConfirm: Boolean) {
-                // lifecycleScope.launch { insertPasien(true) }
+                lifecycleScope.launch { insertPasien(isConfirm) }
             }
-
         })
-    }
-
-    private fun galeryStart() {
-        galeryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
-    private val galeryLauncher = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            currentImageUri = uri
-            showImage()
-        } else {
-            Toast.makeText(context, "Tidak ada gambar yang tersedia", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun showImage() {
-        currentImageUri?.let {
-            binding.ivPasienKartuIdentitasEmpty.visibility = View.GONE
-            binding.ivPasienKartuIdentitas.visibility = View.VISIBLE
-            binding.ivPasienKartuIdentitas.setImageURI(it)
-        }
-    }
-
-    private fun uploadImage() {
-        currentImageUri?.let { sourceUri ->
-            val uri = context?.let { getImageUri(it) }
-            try {
-                uri.let {
-                    try {
-                        val inputStream: InputStream? = requireContext().contentResolver.openInputStream(sourceUri)
-                        val outputStream: OutputStream? = it?.let { it1 ->
-                            requireContext().contentResolver.openOutputStream(
-                                it1
-                            )
-                        }
-
-                        inputStream?.use { input ->
-                            outputStream?.use { output ->
-                                val buffer = ByteArray(1024)
-                                var bytesRead: Int
-                                while (input.read(buffer).also { bytesRead = it } != -1) {
-                                    output.write(buffer, 0, bytesRead)
-                                }
-                            }
-                        }
-                        imagePath = "${it?.path}"
-
-                    } catch (e: Exception) {
-                        if (uri != null) {
-                            requireContext().contentResolver.delete(uri, null, null)
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
-            }
-
-        }
     }
 
     private fun showSuccessDialog() {
@@ -219,14 +136,6 @@ class TambahPasienFragment : Fragment(),
     override fun onClick(view: View) {
         when(view) {
             binding.btnSimpan -> showConfirmationDialog()
-            binding.cvPasienKartuIdentitas -> {
-                galeryStart()
-            }
         }
     }
-
-    companion object {
-        const val INTENTION = "intention"
-    }
-
 }

@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
+import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.SesiDataItem
 import kotlinx.coroutines.launch
 
@@ -31,7 +31,6 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     val sesi: LiveData<List<SesiDataItem>> get() = _sesi
     fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
-    fun getUserProfile(uid: Int): LiveData<List<User>> = repository.getUser(uid)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = repository.getDokterByDokterId(dokterId)
     fun getPasienById(pasienId: Int): LiveData<List<Pasien>> =  repository.getPasienById(pasienId)
@@ -136,5 +135,17 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         status: String
     ): JanjiResponse = repository.insertJanji(
         pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
+    )
+
+    suspend fun insertPasienTambahan(
+        pasienId: Long,
+        namaPasienTambahan: String,
+        tb: Int,
+        bb: Int,
+        jenisKelamin: String,
+        tglLahir: String,
+        hubunganKeluarga: String
+    ): PasienTambahanResponse = repository.insertPasienTambahan(
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 }

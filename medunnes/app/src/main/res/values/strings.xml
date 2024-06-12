@@ -186,6 +186,8 @@
     <string name="tanggal_lulus">Tanggal Lulus</string>
     <string name="catatan">Catatan</string>
     <string name="berikan_catatan_kepada_dokter">Berikan catatan kepada dokter</string>
+    <string name="cm">cm</string>
+    <string name="kg">kg</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>
