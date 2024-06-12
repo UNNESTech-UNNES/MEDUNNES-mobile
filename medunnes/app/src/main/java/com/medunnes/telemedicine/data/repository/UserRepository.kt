@@ -1,16 +1,13 @@
 package com.medunnes.telemedicine.data.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
-import com.medunnes.telemedicine.data.model.Dokter
 import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
@@ -19,7 +16,6 @@ import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.SesiResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.data.room.dao.UserDao
-import retrofit2.http.Field
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -135,6 +131,19 @@ class UserRepository private constructor(
         pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 
+    suspend fun updatePasienTambahan(
+        id: Int,
+        pasienId: Long,
+        namaPasienTambahan: String,
+        tb: Int,
+        bb: Int,
+        jenisKelamin: String,
+        tglLahir: String,
+        hubunganKeluarga: String
+    ): PasienTambahanResponse = ApiConfig.getApiService().updatePasienTambahan(
+        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+    )
+
     // Janji
     suspend fun insertJanji(
         pasienId: Long,
@@ -156,13 +165,10 @@ class UserRepository private constructor(
     fun register(user: User): Long = mUserDao.insertUser(user)
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
     fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
-    fun getAllDokter(): LiveData<List<UserAndDokter>> = mUserDao.getAllDokter()
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
-    fun updateDokter(dokter: Dokter) = mUserDao.updateUserAndDokter(dokter)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
     fun getJanji(): LiveData<List<JanjiDanPasien>> = mUserDao.getAllJanji()
     fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getJanjiAndPasien(dokter_id)
-    fun insertJanjiPasien(janji: Janji) = executorService.execute { mUserDao.insertJanjiPasien(janji) }
     fun updateJanjiPasien(janji: Janji) = executorService.execute { mUserDao.updateJanjiPasien(janji) }
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)

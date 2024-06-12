@@ -11,11 +11,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.databinding.FragmentEditPasienBinding
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -29,7 +30,7 @@ class EditPasienFragment : Fragment(),
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var spinnerHubungan: String = ""
+    private var spinnerKelamin: String = ""
     private var datePicked: String = ""
 
     override fun onCreateView(
@@ -49,56 +50,51 @@ class EditPasienFragment : Fragment(),
 
     private fun setPasien() {
         val pasienId = arguments?.getInt(PASIEN_ID)
-        if (pasienId != null) {
-            viewModel.getPasienById(pasienId).observe(viewLifecycleOwner) { data ->
+        val pasienTambahanId = arguments?.getInt(PASIEN_TAMBAHAN_ID)
+        viewModel.getPasienTambahanById(pasienId!!, pasienTambahanId!!)
+        viewModel.pasienTambahan.observe(viewLifecycleOwner) { data ->
+            if (!data.isNullOrEmpty()) {
                 data.forEach {
                     with(binding) {
-                        //datePicked = "${it.tanggalLahir}"
-                        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
-                        val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                        val date = dateFormat.parse(datePicked)
-                        tiePasienNama.setText(it.namaPasien)
-                        tiePasienTglLahir.setText(date?.let { it1 -> fullDateFormat.format(it1) })
+                        tiePasienNama.setText(it.namaPasienTambahan)
+                        tiePasienHubungan.setText(it.hubunganKeluarga)
+                        tiePasienTglLahir.setText(it.tglLahir)
+                        tiePasienTb.setText(it.tB)
+                        tiePasienBb.setText(it.bB)
+                        tiePasienTambahanId.setText(it.pasienId.toString())
 
-//                        if (it.hubungan == "Keluarga") {
-//                            spinnerPasienHubungan.setSelection(0)
-//                        } else if (it.hubungan == "Teman") {
-//                            spinnerPasienHubungan.setSelection(1)
-//                        } else {
-//                            spinnerPasienHubungan.setSelection(2)
-//                        }
+                        if (it.jenisKelamin == "L") {
+                            spinnerPasienJenisKelamin.setSelection(0)
+                        } else {
+                            spinnerPasienJenisKelamin.setSelection(1)
+                        }
                     }
                 }
             }
         }
     }
 
-//    private fun updatePasien() {
-//        val pasienId = arguments?.getInt(PASIEN_ID)
-//        try {
-//            if (pasienId != null) {
-//                viewModel.getPasienById(pasienId).observe(viewLifecycleOwner) { data ->
-//                    data.forEach {
-//                        viewModel.updatePasien(
-//                            Pasien(
-//                                it.pasienId,
-//                                "${binding.tiePasienNama.text}",
-//                                spinnerHubungan,
-//                                datePicked,
-//                                it.kartuIdentitas,
-//                                it.userId
-//                            )
-//                        )
-//                    }
-//                }
-//            }
-//
-//            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
-//
-//        } catch (e: Exception) {
-//            Log.d("ERROR", e.toString())
-//        }
-//    }
+    private fun updatePasien() {
+        val pasienTambahanId = arguments?.getInt(PASIEN_TAMBAHAN_ID)
+        try {
+            lifecycleScope.launch {
+                viewModel.updatePasienTambahan(
+                    pasienTambahanId!!,
+                    binding.tiePasienTambahanId.text.toString().toLong(),
+                    "${binding.tiePasienNama.text}",
+                    binding.tiePasienTb.text.toString().toInt(),
+                    binding.tiePasienBb.text.toString().toInt(),
+                    spinnerKelamin,
+                    "${binding.tiePasienTglLahir.text}",
+                    "${binding.tiePasienHubungan.text}"
+                )
+            }
+
+            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.d("UPDATE PASIEN FAIL", e.message.toString())
+        }
+    }
 
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
@@ -109,9 +105,10 @@ class EditPasienFragment : Fragment(),
         val datePickerDialog = DatePickerDialog(
             requireContext(), { _, year, month, day ->
                 calendar.set(year, month, day)
-                val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                binding.tiePasienTglLahir.setText(fullDateFormat.format(calendar.time))
-                datePicked = "${calendar.time}"
+                val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("id", "ID"))
+                val date = fullDateFormat.format(calendar.time)
+                binding.tiePasienTglLahir.setText(date)
+                datePicked = date
 
             }, cYear, cMonth, cDay)
 
@@ -121,17 +118,17 @@ class EditPasienFragment : Fragment(),
     private fun setSpinner() {
         ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.hubungan_pasien,
+            R.array.jenis_kelamin,
             android.R.layout.simple_spinner_item
         ).also { arrayAdapter ->
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerPasienHubungan.adapter = arrayAdapter
+            binding.spinnerPasienJenisKelamin.adapter = arrayAdapter
         }
-        binding.spinnerPasienHubungan.onItemSelectedListener = this
+        binding.spinnerPasienJenisKelamin.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        spinnerHubungan = "${parent?.getItemAtPosition(pos)}"
+        spinnerKelamin = if (pos == 0) "L" else "P"
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -140,12 +137,13 @@ class EditPasienFragment : Fragment(),
 
     override fun onClick(view: View) {
         when(view) {
-            // binding.btnSimpan -> updatePasien()
+            binding.btnSimpan -> updatePasien()
         }
     }
 
     companion object {
         const val PASIEN_ID = "pasien_id"
+        const val PASIEN_TAMBAHAN_ID = "pasien_tambahan_id"
     }
 
 }

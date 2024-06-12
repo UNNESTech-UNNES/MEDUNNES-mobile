@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
-import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
@@ -33,7 +32,6 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = repository.getDokterByDokterId(dokterId)
-    fun getPasienById(pasienId: Int): LiveData<List<Pasien>> =  repository.getPasienById(pasienId)
     suspend fun getUserLoginId(): Int = repository.getUserId()
     fun getAllDokter(page: Int) {
         viewModelScope.launch {
@@ -147,5 +145,18 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         hubunganKeluarga: String
     ): PasienTambahanResponse = repository.insertPasienTambahan(
         pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+    )
+
+    suspend fun updatePasienTambahan(
+        id: Int,
+        pasienId: Long,
+        namaPasienTambahan: String,
+        tb: Int,
+        bb: Int,
+        jenisKelamin: String,
+        tglLahir: String,
+        hubunganKeluarga: String
+    ): PasienTambahanResponse = repository.updatePasienTambahan(
+        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 }

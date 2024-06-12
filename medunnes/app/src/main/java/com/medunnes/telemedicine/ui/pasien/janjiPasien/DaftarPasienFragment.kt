@@ -86,6 +86,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
                 val fragmentManager = parentFragmentManager
                 val bundle = Bundle()
                 bundle.putInt(EditPasienFragment.PASIEN_ID, pasien.pasienId)
+                bundle.putInt(EditPasienFragment.PASIEN_TAMBAHAN_ID, pasien.idPasienTambahan)
                 editPasienFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()

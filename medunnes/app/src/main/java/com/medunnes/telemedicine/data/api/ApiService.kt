@@ -153,6 +153,19 @@ interface ApiService {
     ): PasienTambahanResponse
 
     @FormUrlEncoded
+    @PUT("api/pasienTambahan/{id}")
+    suspend fun updatePasienTambahan(
+        @Path("id") id: Int,
+        @Field("pasien_id") pasienId: Long,
+        @Field("nama_pasien_tambahan") namaPasienTambahan: String,
+        @Field("TB") tb: Int,
+        @Field("BB") bb: Int,
+        @Field("jenis_kelamin") jenisKelamin: String,
+        @Field("tgl_lahir") tglLahir: String,
+        @Field("hubungan_keluarga") hubunganKeluarga: String
+    ): PasienTambahanResponse
+
+    @FormUrlEncoded
     @POST("api/janji")
     suspend fun insertJanji(
         @Field("pasien_id") pasienId: Long,
