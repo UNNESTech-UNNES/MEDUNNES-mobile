@@ -116,7 +116,7 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
 
         dpcd.setOnItemClickCallback(object : DeletePasienConfirmationDialog.OnItemClickCallback {
             override fun onItemClicked(isConfirm: Boolean) {
-                deletePasien(pasien, isConfirm)
+                deletePasien(pasien.idPasienTambahan, isConfirm)
             }
 
         })
@@ -130,13 +130,16 @@ class DaftarPasienFragment : Fragment(), View.OnClickListener {
         bjsd.show(childFragmentManager, BuatJanjiSuccessDialog.TAG)
     }
 
-    private fun deletePasien(pasien: PasienTambahanDataItem, isConfirm: Boolean) {
+    private fun deletePasien(id: Int, isConfirm: Boolean) {
         if (isConfirm) {
             try {
-                //viewModel.deletePasien(pasien)
+                lifecycleScope.launch {
+                    viewModel.deletePasien(id)
+                    getDataPasien()
+                }
                 showSuccessDialog()
             } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
+                Log.d("DELETE PASIEN ERROR", e.toString())
             }
         } else {
             dpcd.dismiss()

@@ -159,4 +159,6 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     ): PasienTambahanResponse = repository.updatePasienTambahan(
         id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
+
+    suspend fun deletePasien(id: Int): PasienTambahanResponse = repository.deletePasien(id)
 }

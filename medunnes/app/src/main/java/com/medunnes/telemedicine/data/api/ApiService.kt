@@ -7,6 +7,7 @@ import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.SesiResponse
 import com.medunnes.telemedicine.data.response.UserResponse
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -163,6 +164,11 @@ interface ApiService {
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("tgl_lahir") tglLahir: String,
         @Field("hubungan_keluarga") hubunganKeluarga: String
+    ): PasienTambahanResponse
+
+    @DELETE("api/pasienTambahan/{id}")
+    suspend fun deletePasienTambahan(
+        @Path("id") id: Int,
     ): PasienTambahanResponse
 
     @FormUrlEncoded

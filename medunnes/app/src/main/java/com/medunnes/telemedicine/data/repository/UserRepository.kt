@@ -144,6 +144,8 @@ class UserRepository private constructor(
         id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
 
+    suspend fun deletePasien(id: Int): PasienTambahanResponse = ApiConfig.getApiService().deletePasienTambahan(id)
+
     // Janji
     suspend fun insertJanji(
         pasienId: Long,
