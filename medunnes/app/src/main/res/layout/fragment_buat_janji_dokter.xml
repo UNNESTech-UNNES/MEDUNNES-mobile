@@ -232,6 +232,41 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_sesi_title" />
 
+            <TextView
+                android:id="@+id/tv_catatan_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rv_sesi_list"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/third_choice_color"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/catatan"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_catatan_pasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_catatan_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="16dp"
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="358dp"
+                android:outlineProvider="bounds">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_sesi_catatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textLongMessage"
+                    android:hint="@string/berikan_catatan_kepada_dokter"
+                    android:textColorHint="@color/third_choice_color"
+                    android:textColor="@color/third_choice_color" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

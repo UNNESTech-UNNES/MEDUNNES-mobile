@@ -3,7 +3,6 @@ package com.medunnes.telemedicine.ui.pasien.janjiPasien
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,10 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.Sesi
 import com.medunnes.telemedicine.databinding.FragmentBuatJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.SesiAdapter
@@ -24,7 +21,6 @@ import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -35,11 +31,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var datePicked: String? = null
+    private var datePicked: String = "date"
     private var sesiPicked: String? = null
     private var listSesi = ArrayList<Sesi>()
     private val bjcd = BuatJanjiConfirmationDialog()
     private val bjsd = BuatJanjiSuccessDialog()
+    private var sesiNumber = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +63,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
 
     private fun setDoctorProfile() {
         val doctorId = arguments?.getInt(DOCTOR_ID)
-        Log.d("DOID", doctorId.toString())
         doctorId?.let { viewModel.getDokterById(it) }
         val spesialis = resources.getStringArray(R.array.spesialissasi)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
@@ -80,10 +76,9 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    suspend fun setPasienData() {
+    private suspend fun setPasienData() {
         var pasienId = arguments?.getInt(PASIEN_ID)
         val pasienTambahanId = arguments?.getInt(PASIEN_TAMBAHAN_ID)
-        Log.d("PASIEN & PASTAMBAH", "$pasienId & $pasienTambahanId")
         if (pasienId != null && pasienTambahanId != null && pasienId != 0 && pasienTambahanId != 0) {
             viewModel.getPasienTambahanById(pasienId, pasienTambahanId)
             viewModel.pasienTambahan.observe(viewLifecycleOwner) { data ->
@@ -99,12 +94,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             viewModel.getPasienByUserLogin(viewModel.getUserLoginId())
             viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
                 pasien.forEach { pasienId = it.idPasien.toInt() }
-                Log.d("PASID", pasienId.toString())
                 viewModel.getPasienTambahanByPasien(pasienId!!)
                 viewModel.pasienTambahan.observe(viewLifecycleOwner) { pasienTambahan ->
+                    pasienTambahan.forEach { pasienId = it.idPasienTambahan }
                     binding.tiePasienPicked.setText(pasienTambahan[0].namaPasienTambahan)
-                    binding.tiePasienIdPicked.setText(pasienTambahan[0].pasienId)
-                    binding.tiePasienTambahanIdPicked.setText(pasienTambahan[0].idPasienTambahan)
+                    binding.tiePasienIdPicked.setText(pasienTambahan[0].pasienId.toString())
+                    binding.tiePasienTambahanIdPicked.setText(pasienTambahan[0].idPasienTambahan.toString())
 
                 }
             }
@@ -120,11 +115,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         val datePickerDialog = DatePickerDialog(
             requireContext(), { _, year, month, day ->
                 calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                binding.tieSesiDate.setText(dateFormat.format(calendar.time))
+                val date = dateFormat.format(calendar.time)
+                binding.tieSesiDate.setText(date)
                 binding.tvDatePicked.setText(fullDateFormat.format(calendar.time))
-                datePicked = "${calendar.time}"
+                datePicked = date
 
                 binding.tvFormIsEmpty.visibility = View.GONE
                 binding.tvDatePicked.visibility = View.VISIBLE
@@ -137,11 +133,10 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
     private fun showRecycleList() {
         getSesiList()
         val orientation = resources.configuration.orientation
-        var column = 0
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            column = 2
+        val column: Int = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            2
         } else {
-            column = 4
+            4
         }
         binding.rvSesiList.layoutManager = GridLayoutManager(context, column)
         val sesiAdapter = SesiAdapter(listSesi)
@@ -154,6 +149,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                     tvSesiPicked.visibility = View.VISIBLE
                     sesiPicked = getString(R.string.no_sesi, sesi.noSesi)
                     tvSesiPicked.text = sesiPicked
+                    sesiNumber = sesi.noSesi
                 }
             }
 
@@ -176,19 +172,16 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         if (isConfirm) {
             bjcd.dismiss()
             try {
-                doctorId?.let {
-                    viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
-                        data.forEach {
-                            viewModel.insertJanjiPasien(Janji(
-                                0,
-                                datePicked!!,
-                                "${binding.tvSesiPicked.text}",
-                                "Belum disetujui",
-                                it.dokter.dokterId,
-                                "${binding.tiePasienIdPicked.text}".toInt()
-                                ))
-                        }
-                    }
+                lifecycleScope.launch {
+                    viewModel.insertJanji(
+                        binding.tiePasienIdPicked.text.toString().toLong(),
+                        doctorId!!.toLong(),
+                        binding.tiePasienTambahanIdPicked.text.toString().toLong(),
+                        sesiNumber.toLong(),
+                        datePicked,
+                        "${binding.tieSesiCatatan.text}",
+                        "pending"
+                    )
                 }
                 showSuccessDialog()
             } catch (e: Exception) {
@@ -248,7 +241,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
             when(view) {
                 tilJanjiTanggal -> showDatePicker()
                 btnBuatJanjiDokter -> {
-                    if (!datePicked.isNullOrEmpty() && !sesiPicked.isNullOrEmpty()) {
+                    if (datePicked.isNotEmpty()
+                        && !sesiPicked.isNullOrEmpty()
+                        && !tiePasienIdPicked.text.isNullOrEmpty()
+                        && !tiePasienTambahanIdPicked.text.isNullOrEmpty()
+                        && !tieSesiCatatan.text.isNullOrEmpty()
+                    ) {
                         showConfirmationDialog()
                     } else {
                         Toast.makeText(context, "Harap lengkapi data", Toast.LENGTH_SHORT).show()

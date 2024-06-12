@@ -12,6 +12,7 @@ import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.response.DokterResponse
+import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
@@ -133,6 +134,19 @@ class UserRepository private constructor(
         hubunganKeluarga: String
     ): PasienTambahanResponse = ApiConfig.getApiService().insertPasienTambahan(
         pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+    )
+
+    // Janji
+    suspend fun insertJanji(
+        pasienId: Long,
+        dokterId: Long,
+        pasien_tambahanId: Long,
+        sesiId: Long,
+        jadwal: String,
+        catatan: String,
+        status: String
+    ): JanjiResponse = ApiConfig.getApiService().insertJanji(
+        pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
     )
 
     // Room
