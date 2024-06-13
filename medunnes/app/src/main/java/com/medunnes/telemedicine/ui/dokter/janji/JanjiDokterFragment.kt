@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Janji
-import com.medunnes.telemedicine.data.model.JanjiDanPasien
+import com.medunnes.telemedicine.data.response.JanjiDataItem
+import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.databinding.FragmentJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.JanjiDokterAdapter
 import com.medunnes.telemedicine.ui.dialog.PasienDetailDialog
@@ -29,7 +30,6 @@ class JanjiDokterFragment : Fragment() {
     }
 
     private lateinit var messangersAdapter: JanjiDokterAdapter
-    private val listJanjiAndPasien = ArrayList<JanjiDanPasien>()
     private val pdd = PasienDetailDialog()
 
     override fun onCreateView(
@@ -43,19 +43,20 @@ class JanjiDokterFragment : Fragment() {
         return binding.root
     }
 
-    private fun showRecycleList(listAdapter: ArrayList<JanjiDanPasien>) {
+    private fun showRecycleList(
+        listAdapter: ArrayList<JanjiDataItem>,
+    ) {
         binding.rvMessageList.layoutManager = LinearLayoutManager(context)
         messangersAdapter = JanjiDokterAdapter(listAdapter)
         binding.rvMessageList.adapter = messangersAdapter
 
         messangersAdapter.setOnItemClickCallback(object : JanjiDokterAdapter.OnItemClickCallback {
-            override fun onItemClicked(janjiDanPasien: JanjiDanPasien) {
+            override fun onItemClicked(janji: JanjiDataItem) {
                 val bundle = Bundle()
                 with(bundle) {
-                    putString(PasienDetailDialog.NAMA_PASIEN, janjiDanPasien.user.fullname)
-                    //putString(PasienDetailDialog.TELEPON_PASIEN, janjiDanPasien.)
-                    putString(PasienDetailDialog.SESI_PASIEN, janjiDanPasien.janji.sesi)
-                    putString(PasienDetailDialog.TANGGAL_PASIEN, janjiDanPasien.janji.dateTime)
+                    putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahanId.toString())
+                    putString(PasienDetailDialog.SESI_PASIEN, "Sesi: ${janji.sesiId}")
+                    putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
                 }
 
                 pdd.arguments = bundle
@@ -63,33 +64,6 @@ class JanjiDokterFragment : Fragment() {
 
                 pdd.setOnItemClickCallback(object : PasienDetailDialog.OnItemClickCallback {
                     override fun onItemClicked(isDisetujui: Boolean) {
-                        if (isDisetujui) {
-                            with(janjiDanPasien) {
-                                viewModel.updateJanjiPasien(Janji(
-                                    janji.janjidId,
-                                    janji.dateTime,
-                                    janji.sesi,
-                                    "Telah disetujui",
-                                    janji.dokterId,
-                                    janji.pasienId
-                                ))
-                            }
-                            pdd.dismiss()
-                            restartFragment()
-                        } else {
-                            with(janjiDanPasien) {
-                                viewModel.updateJanjiPasien(Janji(
-                                    janji.janjidId,
-                                    janji.dateTime,
-                                    janji.sesi,
-                                    "Tidak disetujui",
-                                    janji.dokterId,
-                                    janji.pasienId
-                                ))
-                            }
-                            pdd.dismiss()
-                            restartFragment()
-                        }
                     }
 
                 })
@@ -107,22 +81,22 @@ class JanjiDokterFragment : Fragment() {
     }
 
     private suspend fun getJanjiByDokterId(filter: String) {
+        val listJanjiPasien = ArrayList<JanjiDataItem>()
+        val listJanjiPasienTambahan = ArrayList<PasienTambahanDataItem>()
         val uid = viewModel.getUserLogin()
-        viewModel.getUserAndDokterId(uid).observe(viewLifecycleOwner) { data ->
-            data.forEach {
-                val dokterId = it.dokter.dokterId
-                viewModel.getJanjiAndPasien(dokterId).observe(viewLifecycleOwner) { data ->
-                    Log.d("PASIEN", data.toString())
-                    if (!data.isNullOrEmpty()) {
-                        listJanjiAndPasien.clear()
-                        listJanjiAndPasien.addAll(data)
-                        val filteredData = listJanjiAndPasien.filter { name ->
-                            name.user.fullname.lowercase().contains(filter)
-                        } as ArrayList<JanjiDanPasien>
-                        showRecycleList(filteredData)
-                    } else {
-                        Log.d("DATA", "Data is empty")
-                    }
+        var dokterId: Int
+        viewModel.getDokterByUserId(uid)
+        viewModel.dokter.observe(viewLifecycleOwner) { data ->
+            if (!data.isNullOrEmpty()) {
+                dokterId = data[0].idDokter.toInt()
+                viewModel.getJanjiByDokterId(dokterId)
+                viewModel.janji.observe(viewLifecycleOwner) { janji ->
+                    listJanjiPasien.clear()
+                    listJanjiPasien.addAll(janji)
+//                    val filteredData = listJanjiPasien.filter { name ->
+//                        name..lowercase().contains(filter)
+//                    } as ArrayList<JanjiDataItem>
+                    showRecycleList(listJanjiPasien)
                 }
             }
         }

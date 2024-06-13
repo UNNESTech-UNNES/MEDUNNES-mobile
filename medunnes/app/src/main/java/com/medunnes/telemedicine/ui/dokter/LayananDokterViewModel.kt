@@ -1,16 +1,73 @@
 package com.medunnes.telemedicine.ui.dokter
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.DokterDataItem
+import com.medunnes.telemedicine.data.response.JanjiDataItem
+import com.medunnes.telemedicine.data.response.PasienDataItem
+import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
+import kotlinx.coroutines.launch
 
 class LayananDokterViewModel(private val repository: UserRepository) : ViewModel() {
-    fun getJanji(): LiveData<List<JanjiDanPasien>> = repository.getJanji()
-    fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>> = repository.getJanjiAndPasien(dokter_id)
-    fun getUserAndDokterId(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
-    fun updateJanjiPasien(janji: Janji) = repository.updateJanjiPasien(janji)
+    private val _janji = MutableLiveData<List<JanjiDataItem>>()
+    val janji: LiveData<List<JanjiDataItem>> get() = _janji
+
+    private val _dokter = MutableLiveData<List<DokterDataItem>>()
+    val dokter: LiveData<List<DokterDataItem>> get() = _dokter
     suspend fun getUserLogin() = repository.getUserId()
+
+    private val _pasienTambahan = MutableLiveData<List<PasienTambahanDataItem>>()
+    val pasienTambahan: LiveData<List<PasienTambahanDataItem>> get() = _pasienTambahan
+
+    fun getJanjiByDokterId(id: Int) {
+        viewModelScope.launch {
+            try {
+                val janjiData = repository.getJanjiByDokterId(id)
+                if (janjiData.data.isNotEmpty()) {
+                    _janji.value = janjiData.data
+                } else {
+                    Log.d("DATA JANJI", "Data janji kosong, id: $id")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR JANJI", e.message.toString())
+            }
+        }
+    }
+
+    fun getDokterByUserId(id: Int) {
+        viewModelScope.launch {
+            try {
+                val dokter = repository.getDokterByUser(id)
+                if (dokter.data.isNotEmpty()) {
+                    _dokter.value = dokter.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR DOKTER", e.message.toString())
+            }
+        }
+    }
+
+    fun getPasienById(pasienId: Int, id: Int) {
+        viewModelScope.launch {
+            try {
+                val pasienData = repository.getPasienTambahanById(pasienId, id)
+                if (pasienData.data.isNotEmpty()) {
+                    _pasienTambahan.value = pasienData.data
+                } else {
+                    Log.d("DATA pasien", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
 }

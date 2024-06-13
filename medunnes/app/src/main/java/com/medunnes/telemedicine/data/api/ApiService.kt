@@ -171,6 +171,11 @@ interface ApiService {
         @Path("id") id: Int,
     ): PasienTambahanResponse
 
+    @GET("api/janji/{id}")
+    suspend fun getJanjiByDokterId(
+        @Path("id") id: Int
+    ): JanjiResponse
+
     @FormUrlEncoded
     @POST("api/janji")
     suspend fun insertJanji(

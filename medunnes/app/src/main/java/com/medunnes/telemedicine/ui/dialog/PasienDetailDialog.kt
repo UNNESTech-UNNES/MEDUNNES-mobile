@@ -28,7 +28,7 @@ class PasienDetailDialog : DialogFragment(), View.OnClickListener {
     }
 
     private fun setPasienProfile() {
-        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
         val date = arguments?.getString(TANGGAL_PASIEN)?.let { dateFormat.parse(it) }
 
