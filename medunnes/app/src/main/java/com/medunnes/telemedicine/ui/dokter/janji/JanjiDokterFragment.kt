@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Janji
 import com.medunnes.telemedicine.data.response.JanjiDataItem
-import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.databinding.FragmentJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.JanjiDokterAdapter
 import com.medunnes.telemedicine.ui.dialog.PasienDetailDialog
@@ -64,6 +61,24 @@ class JanjiDokterFragment : Fragment() {
 
                 pdd.setOnItemClickCallback(object : PasienDetailDialog.OnItemClickCallback {
                     override fun onItemClicked(isDisetujui: Boolean) {
+                        lifecycleScope.launch {
+                            try {
+                                viewModel.updateJanji(
+                                    janji.idJanji,
+                                    janji.pasienId.toLong(),
+                                    janji.dokterId.toLong(),
+                                    janji.pasienTambahanId.toLong(),
+                                    janji.sesiId.toLong(),
+                                    janji.datetime,
+                                    janji.catatan,
+                                    if (isDisetujui) "accepted" else "rejected"
+                                )
+
+                                restartFragment()
+                            } catch (e: Exception) {
+                                Log.d("UPDATE JANJI FAIL", e.message.toString())
+                            }
+                        }
                     }
 
                 })
@@ -82,7 +97,6 @@ class JanjiDokterFragment : Fragment() {
 
     private suspend fun getJanjiByDokterId(filter: String) {
         val listJanjiPasien = ArrayList<JanjiDataItem>()
-        val listJanjiPasienTambahan = ArrayList<PasienTambahanDataItem>()
         val uid = viewModel.getUserLogin()
         var dokterId: Int
         viewModel.getDokterByUserId(uid)

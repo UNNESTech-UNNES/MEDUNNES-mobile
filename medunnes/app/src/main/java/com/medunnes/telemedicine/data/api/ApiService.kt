@@ -188,6 +188,19 @@ interface ApiService {
         @Field("status") status: String
     ): JanjiResponse
 
+    @FormUrlEncoded
+    @PUT("api/janji/{id}")
+    suspend fun updatetJanji(
+        @Path("id") id: Int,
+        @Field("pasien_id") pasienId: Long,
+        @Field("dokter_id") dokterId: Long,
+        @Field("pasien_tambahan_id") pasien_tambahanId: Long,
+        @Field("sesi_id") sesiId: Long,
+        @Field("datetime") jadwal: String,
+        @Field("catatan") catatan: String,
+        @Field("status") status: String
+    ): JanjiResponse
+
     @GET("api/sesi")
     suspend fun getAllSesi(): SesiResponse
 }

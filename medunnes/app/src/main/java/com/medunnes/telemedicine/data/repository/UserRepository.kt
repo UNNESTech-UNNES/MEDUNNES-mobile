@@ -160,6 +160,19 @@ class UserRepository private constructor(
         pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
     )
 
+    suspend fun updateJanji(
+        id: Int,
+        pasienId: Long,
+        dokterId: Long,
+        pasien_tambahanId: Long,
+        sesiId: Long,
+        jadwal: String,
+        catatan: String,
+        status: String
+    ): JanjiResponse = ApiConfig.getApiService().updatetJanji(
+        id, pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
+    )
+
     // Sesi
     suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()
 
@@ -170,9 +183,6 @@ class UserRepository private constructor(
     fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
     fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
-    fun getJanji(): LiveData<List<JanjiDanPasien>> = mUserDao.getAllJanji()
-    fun getJanjiAndPasien(dokter_id: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getJanjiAndPasien(dokter_id)
-    fun updateJanjiPasien(janji: Janji) = executorService.execute { mUserDao.updateJanjiPasien(janji) }
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
     fun getPasienById(pasienId: Int): LiveData<List<Pasien>> = mUserDao.getPasienById(pasienId)

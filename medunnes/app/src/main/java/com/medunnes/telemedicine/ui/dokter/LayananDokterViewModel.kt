@@ -5,13 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.medunnes.telemedicine.data.model.Janji
-import com.medunnes.telemedicine.data.model.JanjiDanPasien
-import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
-import com.medunnes.telemedicine.data.response.PasienDataItem
+import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import kotlinx.coroutines.launch
 
@@ -70,4 +67,17 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
             }
         }
     }
+
+    suspend fun updateJanji(
+        id: Int,
+        pasienId: Long,
+        dokterId: Long,
+        pasien_tambahanId: Long,
+        sesiId: Long,
+        jadwal: String,
+        catatan: String,
+        status: String
+    ): JanjiResponse = repository.updateJanji(
+        id, pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
+    )
 }
