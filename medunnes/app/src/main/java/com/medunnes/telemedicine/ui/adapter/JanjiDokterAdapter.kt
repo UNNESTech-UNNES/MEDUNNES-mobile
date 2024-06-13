@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.JanjiDataItem
-import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.databinding.MessageListBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -31,7 +30,7 @@ class JanjiDokterAdapter(
                 } else {
                     tvMessangerStatus.setTextColor(root.resources.getColor(R.color.fifth_color))
                 }
-                tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}Sesi: ${janji.sesiId}"
+                tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/Sesi ${janji.sesiId}"
                 tvMessangerStatus.text  = janji.status
 
             }

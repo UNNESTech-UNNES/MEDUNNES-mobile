@@ -100,17 +100,17 @@
                     android:gravity="center"
                     android:layout_marginBottom="8dp">
                     <TextView
-                        android:id="@+id/tv_pasien_telepon_title"
+                        android:id="@+id/tv_pasien_catatan_title"
                         android:gravity="start"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:text="@string/no_telepon"/>
+                        android:text="@string/catatan"/>
 
                     <TextView
-                        android:id="@+id/tv_pasien_telepon"
+                        android:id="@+id/tv_pasien_catatan"
                         android:gravity="end"
                         android:layout_weight="1"
-                        android:text="@string/no_telepon"
+                        android:text="@string/catatan"
                         android:textSize="16sp" />
                 </TableRow>
 

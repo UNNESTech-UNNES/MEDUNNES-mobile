@@ -54,6 +54,7 @@ class JanjiDokterFragment : Fragment() {
                     putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahanId.toString())
                     putString(PasienDetailDialog.SESI_PASIEN, "Sesi: ${janji.sesiId}")
                     putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
+                    putString(PasienDetailDialog.CATATAN, janji.catatan)
                 }
 
                 pdd.arguments = bundle
