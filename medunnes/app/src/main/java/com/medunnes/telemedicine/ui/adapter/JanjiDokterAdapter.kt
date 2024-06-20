@@ -4,8 +4,10 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.JanjiDataItem
+import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.databinding.MessageListBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import java.io.File
@@ -20,10 +22,9 @@ class JanjiDokterAdapter(
             with(binding) {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-
                 val date = dateFormat.parse(janji.datetime)
                 val status = janji.status
-                tvPatientName.text = janji.pasienId.toString()
+                tvPatientName.text = janji.pasien.namaPasien
                 if (status == "accepted") {
                     tvMessangerStatus.setTextColor(root.resources.getColor(R.color.blue))
                 } else if (status == "rejected") {
@@ -33,6 +34,12 @@ class JanjiDokterAdapter(
                 }
                 tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/Sesi ${janji.sesiId}"
                 tvMessangerStatus.text  = janji.status
+
+                val imagePath = "${imageBaseUrl()}/${janji.pasien.imgPasien}"
+                Glide.with(itemView.context)
+                    .load(imagePath)
+                    .into(ivMessanger)
+                    .clearOnDetach()
             }
         }
     }

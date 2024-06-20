@@ -9,7 +9,6 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
-import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import kotlinx.coroutines.launch
 
 class LayananDokterViewModel(private val repository: UserRepository) : ViewModel() {
@@ -19,9 +18,6 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
     suspend fun getUserLogin() = repository.getUserId()
-
-    private val _pasienTambahan = MutableLiveData<List<PasienTambahanDataItem>>()
-    val pasienTambahan: LiveData<List<PasienTambahanDataItem>> get() = _pasienTambahan
 
     fun getJanjiByDokterId(id: Int) {
         viewModelScope.launch {
@@ -49,21 +45,6 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
                 }
             } catch (e: Exception) {
                 Log.d("ERROR DOKTER", e.message.toString())
-            }
-        }
-    }
-
-    fun getPasienById(pasienId: Int, id: Int) {
-        viewModelScope.launch {
-            try {
-                val pasienData = repository.getPasienTambahanById(pasienId, id)
-                if (pasienData.data.isNotEmpty()) {
-                    _pasienTambahan.value = pasienData.data
-                } else {
-                    Log.d("DATA pasien", "Data pasien kosong")
-                }
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
             }
         }
     }
