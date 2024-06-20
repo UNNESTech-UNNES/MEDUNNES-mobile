@@ -130,4 +130,9 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         id: Int,
         multipartBody: MultipartBody.Part
     ): PasienResponse = userRepository.uploadImagePasien(id, multipartBody)
+
+    suspend fun uploadImageDokter(
+        id: Int,
+        multipartBody: MultipartBody.Part
+    ): PasienResponse = userRepository.uploadImageDokter(id, multipartBody)
 }

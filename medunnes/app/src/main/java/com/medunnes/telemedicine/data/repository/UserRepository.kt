@@ -151,6 +151,10 @@ class UserRepository private constructor(
         id: Int, multipartBody: MultipartBody.Part
     ): PasienResponse = ApiConfig.getApiService().uploadImagePasien(id, multipartBody)
 
+    suspend fun uploadImageDokter(
+        id: Int, multipartBody: MultipartBody.Part
+    ): PasienResponse = ApiConfig.getApiService().uploadImageDokter(id, multipartBody)
+
     // Janji
     suspend fun getJanjiByDokterId(id: Int): JanjiResponse = ApiConfig.getApiService().getJanjiByDokterId(id)
     suspend fun insertJanji(

@@ -14,7 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityProfileEditDokterBinding
 import com.medunnes.telemedicine.utils.getImageUri
+import com.medunnes.telemedicine.utils.uriToFile
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
@@ -167,32 +171,22 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun uploadImage() {
         currentImageUri?.let { sourceUri ->
-            val uri = getImageUri(this@ProfileEditDokterActivity)
-            try {
-                uri.let { it ->
-                    try {
-                        val inputStream: InputStream? = this@ProfileEditDokterActivity.contentResolver.openInputStream(sourceUri)
-                        val outputStream: OutputStream? = this@ProfileEditDokterActivity.contentResolver.openOutputStream(it)
+            val imageFile = uriToFile(sourceUri, this)
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "image",
+                imageFile.name,
+                requestImageFile
+            )
 
-                        inputStream?.use { input ->
-                            outputStream?.use { output ->
-                                val buffer = ByteArray(1024)
-                                var bytesRead: Int
-                                while (input.read(buffer).also { bytesRead = it } != -1) {
-                                    output.write(buffer, 0, bytesRead)
-                                }
-                            }
-                        }
-                        imagePath = "${it.path}"
-
-                    } catch (e: Exception) {
-                        this@ProfileEditDokterActivity.contentResolver.delete(uri, null, null)
-                    }
+            lifecycleScope.launch {
+                try {
+                    val uid = viewModel.getUserLoginId()
+                    viewModel.uploadImageDokter(uid, multipartBody)
+                } catch (e: Exception) {
+                    Log.d("UPLOAD IMAGE FAIL", e.message.toString())
                 }
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
             }
-
         }
     }
 

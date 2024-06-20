@@ -213,4 +213,11 @@ interface ApiService {
         @Path("id") id: Int,
         @Part file: MultipartBody.Part
     ): PasienResponse
+
+    @Multipart
+    @POST("api/dokter/uploadImage/{id}")
+    suspend fun uploadImageDokter(
+        @Path("id") id: Int,
+        @Part file: MultipartBody.Part
+    ): PasienResponse
 }
