@@ -13,7 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityProfilePasienEditBinding
 import com.medunnes.telemedicine.utils.getImageUri
+import com.medunnes.telemedicine.utils.uriToFile
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -130,32 +134,22 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun uploadImage() {
         currentImageUri?.let { sourceUri ->
-            val uri = getImageUri(this@ProfilePasienEditActivity)
-            try {
-                uri.let { it ->
-                    try {
-                        val inputStream: InputStream? = this@ProfilePasienEditActivity.contentResolver.openInputStream(sourceUri)
-                        val outputStream: OutputStream? = this@ProfilePasienEditActivity.contentResolver.openOutputStream(it)
+            val imageFile = uriToFile(sourceUri, this)
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "image",
+                imageFile.name,
+                requestImageFile
+            )
 
-                        inputStream?.use { input ->
-                            outputStream?.use { output ->
-                                val buffer = ByteArray(1024)
-                                var bytesRead: Int
-                                while (input.read(buffer).also { bytesRead = it } != -1) {
-                                    output.write(buffer, 0, bytesRead)
-                                }
-                            }
-                        }
-                        imagePath = "${it.path}"
-
-                    } catch (e: Exception) {
-                        this@ProfilePasienEditActivity.contentResolver.delete(uri, null, null)
-                    }
+            lifecycleScope.launch {
+                try {
+                    val uid = viewModel.getUserLoginId()
+                    viewModel.uploadImagePasien(uid, multipartBody)
+                } catch (e: Exception) {
+                    Log.d("UPLOAD IMAGE FAIL", e.message.toString())
                 }
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
             }
-
         }
     }
 

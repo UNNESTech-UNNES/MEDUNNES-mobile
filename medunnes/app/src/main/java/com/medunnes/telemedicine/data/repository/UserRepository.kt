@@ -16,6 +16,7 @@ import com.medunnes.telemedicine.data.response.PasienTambahanResponse
 import com.medunnes.telemedicine.data.response.SesiResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.data.room.dao.UserDao
+import okhttp3.MultipartBody
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -143,8 +144,12 @@ class UserRepository private constructor(
     ): PasienTambahanResponse = ApiConfig.getApiService().updatePasienTambahan(
         id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
     )
-
     suspend fun deletePasien(id: Int): PasienTambahanResponse = ApiConfig.getApiService().deletePasienTambahan(id)
+
+    // Upload Image
+    suspend fun uploadImagePasien(
+        id: Int, multipartBody: MultipartBody.Part
+    ): PasienResponse = ApiConfig.getApiService().uploadImagePasien(id, multipartBody)
 
     // Janji
     suspend fun getJanjiByDokterId(id: Int): JanjiResponse = ApiConfig.getApiService().getJanjiByDokterId(id)

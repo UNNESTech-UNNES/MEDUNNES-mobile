@@ -19,6 +19,7 @@ import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.UserResponse
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<List<DataItem>>()
@@ -124,4 +125,9 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         id, userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
     )
+
+    suspend fun uploadImagePasien(
+        id: Int,
+        multipartBody: MultipartBody.Part
+    ): PasienResponse = userRepository.uploadImagePasien(id, multipartBody)
 }
