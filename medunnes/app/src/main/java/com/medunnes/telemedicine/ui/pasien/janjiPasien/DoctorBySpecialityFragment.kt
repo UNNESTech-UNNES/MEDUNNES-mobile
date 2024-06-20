@@ -1,17 +1,14 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.databinding.FragmentDoctorBySpecialityBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
@@ -20,11 +17,11 @@ import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 class DoctorBySpecialityFragment : Fragment() {
     private var _binding: FragmentDoctorBySpecialityBinding? = null
     private val binding get() = _binding!!
-    private val listDokter = ArrayList<UserAndDokter>()
+    private val listDokter = ArrayList<DokterDataItem>()
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private lateinit var speciality: String
+    private var specialityId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +29,11 @@ class DoctorBySpecialityFragment : Fragment() {
     ): View {
         _binding = FragmentDoctorBySpecialityBinding.inflate(inflater, container, false)
 
-        speciality = "${arguments?.getString(SPECIALITY)}"
-        binding.tvSpesialisasiTitle.setText(getString(R.string.spesialis_dokter, speciality))
+        val spesialisasi = resources.getStringArray(R.array.spesialissasi)
 
-        getDoctorBySpeciality("", 1)
+        specialityId = arguments?.getInt(SPECIALITY)!!
+        binding.tvSpesialisasiTitle.text = getString(R.string.spesialis_dokter, spesialisasi[specialityId])
+        getDoctorBySpeciality("", specialityId.toLong())
         searchMessanger()
 
         return binding.root
@@ -63,13 +61,15 @@ class DoctorBySpecialityFragment : Fragment() {
         })
     }
 
-    private fun getDoctorBySpeciality(filter: String, speciality: Int) {
-        viewModel.getDokterBySpeciality(speciality).observe(viewLifecycleOwner) { data ->
+    private fun getDoctorBySpeciality(filter: String, speciality: Long) {
+        viewModel.getAllDokter(1)
+        viewModel.dokter.observe(viewLifecycleOwner) { data ->
             listDokter.clear()
             listDokter.addAll(data)
 
             val filteredData = listDokter.filter {
-                it.user.fullname.lowercase().contains(filter)
+                it.namaDokter.lowercase().contains(filter) &&
+                it.spesialisId == speciality+1
             } as ArrayList<DokterDataItem>
             showRecyclerList(filteredData)
         }
@@ -83,14 +83,10 @@ class DoctorBySpecialityFragment : Fragment() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.setText(searchView.text)
                     searchView.hide()
-                    //getDoctorBySpeciality("${searchView.text}", 1)
+                    getDoctorBySpeciality("${searchView.text}", specialityId.toLong())
                     false
                 }
         }
-    }
-
-    private fun makeToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

@@ -2,7 +2,6 @@ package com.medunnes.telemedicine.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,6 @@ import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
-import java.io.File
 import java.util.Calendar
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -183,6 +181,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return listFaskes
     }
 
+    @Suppress("DEPRECATION")
     private fun setGreeting() {
         val currentTime: String = when (Calendar.getInstance().time.hours) {
             in 4..11 -> {

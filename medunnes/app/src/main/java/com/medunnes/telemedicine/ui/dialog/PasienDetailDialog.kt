@@ -40,11 +40,14 @@ class PasienDetailDialog : DialogFragment(), View.OnClickListener {
             tvPasienTanggal.text = date?.let { fullDateFormat.format(it) }
             tvPasienCatatan.text = arguments?.getString(CATATAN)
 
-            val imagePath = "${imageBaseUrl()}/${arguments?.getString(IMG_PASIEN)}"
-            Glide.with(this@PasienDetailDialog)
-                .load(imagePath)
-                .into(ivPasienImage)
-                .clearOnDetach()
+            val imgPasien = arguments?.getString(IMG_PASIEN)
+            if (!imgPasien.isNullOrEmpty()) {
+                val imagePath = "${imageBaseUrl()}/$imgPasien"
+                Glide.with(this@PasienDetailDialog)
+                    .load(imagePath)
+                    .into(ivPasienImage)
+                    .clearOnDetach()
+            }
         }
     }
 

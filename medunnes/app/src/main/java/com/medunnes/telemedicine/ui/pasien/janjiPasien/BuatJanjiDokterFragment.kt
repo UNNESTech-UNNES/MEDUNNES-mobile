@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.os.Bundle
@@ -63,6 +64,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setDoctorProfile() {
         val doctorId = arguments?.getInt(DOCTOR_ID)
         doctorId?.let { viewModel.getDokterById(it) }
@@ -127,7 +129,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
                 val date = dateFormat.format(calendar.time)
                 binding.tieSesiDate.setText(date)
-                binding.tvDatePicked.setText(fullDateFormat.format(calendar.time))
+                binding.tvDatePicked.text = fullDateFormat.format(calendar.time)
                 datePicked = date
 
                 binding.tvFormIsEmpty.visibility = View.GONE

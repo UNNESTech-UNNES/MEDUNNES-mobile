@@ -1,14 +1,11 @@
 package com.medunnes.telemedicine.ui.pasien.janjiPasien
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
@@ -17,7 +14,6 @@ import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
 import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.dialog.SpesialisBottomSheetDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import kotlinx.coroutines.launch
 
 class JanjiPasienFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentBuatJanjiBinding? = null
@@ -84,7 +80,6 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
                 } as ArrayList<DokterDataItem>
                 showRecyclerList(filteredData)
             }
-            Log.d("DOKTERS", data.toString())
         }
     }
 
@@ -107,7 +102,7 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
         childFragmentManager.let { bsd.show(it, SpesialisBottomSheetDialog.TAG) }
 
         bsd.setOnItemClickCallback(object : SpesialisBottomSheetDialog.OnItemClickCallback {
-            override fun onItemClicked(speciality: String) {
+            override fun onItemClicked(speciality: Int) {
                 doctorBySpecialityFragment(speciality)
                 bsd.dismiss()
             }
@@ -115,11 +110,11 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    private fun doctorBySpecialityFragment(speciality: String) {
+    private fun doctorBySpecialityFragment(speciality: Int) {
         val doctorBySpecilityFragment = DoctorBySpecialityFragment()
         val fragmentManager = parentFragmentManager
         val bundle = Bundle()
-        bundle.putString(DoctorBySpecialityFragment.SPECIALITY, speciality)
+        bundle.putInt(DoctorBySpecialityFragment.SPECIALITY, speciality)
         doctorBySpecilityFragment.arguments = bundle
 
         fragmentManager.beginTransaction()
@@ -128,17 +123,13 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
             .commit()
     }
 
-    private fun makeToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
     override fun onClick(view: View?) {
         with(binding) {
             when(view) {
-                btnDokterUmum -> doctorBySpecialityFragment("Dokter Umum")
-                btnKandungan -> doctorBySpecialityFragment("Kandungan")
-                btnPsikiater -> doctorBySpecialityFragment("Psikiater")
-                btnKulitDanKelamin -> doctorBySpecialityFragment("Kulit dan Kelamin")
+                btnDokterUmum -> doctorBySpecialityFragment(0)
+                btnKandungan -> doctorBySpecialityFragment(1)
+                btnPsikiater -> doctorBySpecialityFragment(2)
+                btnKulitDanKelamin -> doctorBySpecialityFragment(3)
             }
         }
     }

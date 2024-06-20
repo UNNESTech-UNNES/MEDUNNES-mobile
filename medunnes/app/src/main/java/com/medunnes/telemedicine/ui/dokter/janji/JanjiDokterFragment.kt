@@ -51,8 +51,10 @@ class JanjiDokterFragment : Fragment() {
             override fun onItemClicked(janji: JanjiDataItem) {
                 val bundle = Bundle()
                 with(bundle) {
-                    putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahanId.toString())
-                    putString(PasienDetailDialog.SESI_PASIEN, "Sesi: ${janji.sesiId}")
+                    if (janji.pasien.namaPasien == janji.pasienTambahan.namaPasienTambahan)
+                        putString(PasienDetailDialog.IMG_PASIEN, janji.pasien.imgPasien)
+                    putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahan.namaPasienTambahan)
+                    putString(PasienDetailDialog.SESI_PASIEN, "${janji.sesiId}")
                     putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
                     putString(PasienDetailDialog.CATATAN, janji.catatan)
                 }
@@ -108,10 +110,10 @@ class JanjiDokterFragment : Fragment() {
                 viewModel.janji.observe(viewLifecycleOwner) { janji ->
                     listJanjiPasien.clear()
                     listJanjiPasien.addAll(janji)
-//                    val filteredData = listJanjiPasien.filter { name ->
-//                        name..lowercase().contains(filter)
-//                    } as ArrayList<JanjiDataItem>
-                    showRecycleList(listJanjiPasien)
+                    val filteredData = listJanjiPasien.filter { name ->
+                        name.pasienTambahan.namaPasienTambahan.lowercase().contains(filter)
+                    } as ArrayList<JanjiDataItem>
+                    showRecycleList(filteredData)
                 }
             }
         }

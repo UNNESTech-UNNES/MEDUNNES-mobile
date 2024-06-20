@@ -21,6 +21,7 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
         savedInstanceState: Bundle?
     ): View {
         binding = BottomSheetKonsultasiBinding.inflate(inflater, container, false)
+        @Suppress("DEPRECATION")
         binding.root.setBackgroundColor(resources.getColor(R.color.secondary_color))
 
         itemClicked()
@@ -45,7 +46,7 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(speciality: String)
+        fun onItemClicked(speciality: Int)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -78,18 +79,18 @@ class SpesialisBottomSheetDialog : BottomSheetDialogFragment(), View.OnClickList
     override fun onClick(view: View?) {
         with(binding) {
             when(view) {
-                btnDokterUmum -> onItemClickCallback.onItemClicked("Dokter Umum")
-                btnKandungan -> onItemClickCallback.onItemClicked("Kandungan")
-                btnPsikiater -> onItemClickCallback.onItemClicked("Psikiater")
-                btnKulitDanKelamin -> onItemClickCallback.onItemClicked("Kulit dan Kelamin")
-                btnAnak -> onItemClickCallback.onItemClicked("Anak")
-                btnSaraf -> onItemClickCallback.onItemClicked("Saraf")
-                btnJantung -> onItemClickCallback.onItemClicked("Jantung")
-                btnBedah -> onItemClickCallback.onItemClicked("Bedah")
-                btnPenyakitDalam -> onItemClickCallback.onItemClicked("Penyakit Dalam")
-                btnMata -> onItemClickCallback.onItemClicked("Mata")
-                btnTht -> onItemClickCallback.onItemClicked("THT")
-                btnGigi -> onItemClickCallback.onItemClicked("Gigi")
+                btnDokterUmum -> onItemClickCallback.onItemClicked(0)
+                btnKandungan -> onItemClickCallback.onItemClicked(1)
+                btnPsikiater -> onItemClickCallback.onItemClicked(2)
+                btnKulitDanKelamin -> onItemClickCallback.onItemClicked(3)
+                btnAnak -> onItemClickCallback.onItemClicked(4)
+                btnSaraf -> onItemClickCallback.onItemClicked(5)
+                btnJantung -> onItemClickCallback.onItemClicked(6)
+                btnBedah -> onItemClickCallback.onItemClicked(7)
+                btnPenyakitDalam -> onItemClickCallback.onItemClicked(8)
+                btnMata -> onItemClickCallback.onItemClicked(9)
+                btnTht -> onItemClickCallback.onItemClicked(10)
+                btnGigi -> onItemClickCallback.onItemClicked(11)
                 btnExpand -> dismiss()
                 else -> Log.d("CLICK", "no respond")
             }
