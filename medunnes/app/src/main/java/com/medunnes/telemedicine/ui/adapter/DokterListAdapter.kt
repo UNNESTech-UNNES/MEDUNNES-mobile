@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.databinding.PasienJanjiListBinding
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import java.io.File
 
 class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : RecyclerView.Adapter<DokterListAdapter.ListViewHolder>() {
@@ -20,14 +21,14 @@ class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : Rec
                 tvDoctorRole.text = spesialis[(dokter.spesialisId.toInt())-1]
                 tvDoctorExperience.text = dokter.tempatKerja
 
-//                if (!dokter.user.isNullOrEmpty()) {
-//                    val path = Environment.getExternalStorageDirectory()
-//                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
-//                    Glide.with(itemView.context)
-//                        .load(imageFile)
-//                        .into(ivMessanger)
-//                        .clearOnDetach()
-//                }
+                if (!dokter.imgDokter.isNullOrEmpty()) {
+                    val path = Environment.getExternalStorageDirectory()
+                    val imageFile = "${imageBaseUrl()}/${dokter.imgDokter}"
+                    Glide.with(itemView.context)
+                        .load(imageFile)
+                        .into(ivMessanger)
+                        .clearOnDetach()
+                }
             }
         }
     }

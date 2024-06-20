@@ -11,9 +11,11 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityProfileEditDokterBinding
 import com.medunnes.telemedicine.utils.getImageUri
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import com.medunnes.telemedicine.utils.uriToFile
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -94,6 +96,12 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                         status = it.status
                         spesialisId = it.spesialisId
                         imagePath = it.imgDokter
+
+                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                        Glide.with(this@ProfileEditDokterActivity)
+                            .load(imagePath)
+                            .into(binding.ivEditPicture)
+                            .clearOnDetach()
                     }
                 }
             } else {

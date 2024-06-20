@@ -36,23 +36,25 @@
                 android:padding="20dp">
 
                 <TableRow>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_user_picture"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:cardCornerRadius="35dp">
-
-                        <ImageView
-                            android:id="@+id/iv_user_picture"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                    <LinearLayout
+                        android:orientation="vertical">
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_user_picture"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
                             android:layout_gravity="center"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/person"/>
+                            app:cardCornerRadius="45dp">
 
-                    </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:id="@+id/iv_user_picture"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/person"/>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
                     <TableLayout
                         android:layout_width="match_parent"

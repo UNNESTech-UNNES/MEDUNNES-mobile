@@ -23,6 +23,7 @@ import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Calendar
@@ -95,10 +96,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             if (data.isNotEmpty()) {
                 data.forEach {
                     if (!it.imgPasien.isNullOrEmpty()) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgPasien}")}"
-                        Glide.with(this@HomeFragment)
-                            .load(imageFile)
+                        val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
+                        Glide.with(this)
+                            .load(imagePath)
                             .into(binding.ivUserPicture)
                             .clearOnDetach()
                     }
@@ -113,10 +113,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             if (data.isNotEmpty()) {
                 data.forEach {
                     if (it.imgDokter?.isNotEmpty() == true) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgDokter}")}"
-                        Glide.with(this@HomeFragment)
-                            .load(imageFile)
+                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                        Glide.with(this)
+                            .load(imagePath)
                             .into(binding.ivUserPicture)
                             .clearOnDetach()
                     }

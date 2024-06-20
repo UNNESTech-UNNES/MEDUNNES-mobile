@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.databinding.DialogDetailPasienBinding
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -37,6 +39,12 @@ class PasienDetailDialog : DialogFragment(), View.OnClickListener {
             tvPasienSesi.text = arguments?.getString(SESI_PASIEN)
             tvPasienTanggal.text = date?.let { fullDateFormat.format(it) }
             tvPasienCatatan.text = arguments?.getString(CATATAN)
+
+            val imagePath = "${imageBaseUrl()}/${arguments?.getString(IMG_PASIEN)}"
+            Glide.with(this@PasienDetailDialog)
+                .load(imagePath)
+                .into(ivPasienImage)
+                .clearOnDetach()
         }
     }
 
@@ -54,6 +62,7 @@ class PasienDetailDialog : DialogFragment(), View.OnClickListener {
         const val NAMA_PASIEN = "nama_pasien"
         const val SESI_PASIEN = "sesi_pasien"
         const val TANGGAL_PASIEN = "tanggal_pasien"
+        const val IMG_PASIEN = "img_pasien"
         const val CATATAN = "catatan"
         const val TAG = "PasienDetailDialog"
     }

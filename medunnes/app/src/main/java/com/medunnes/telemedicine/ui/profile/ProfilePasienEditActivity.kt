@@ -10,9 +10,11 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityProfilePasienEditBinding
 import com.medunnes.telemedicine.utils.getImageUri
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import com.medunnes.telemedicine.utils.uriToFile
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -81,6 +83,12 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
                         imagePath =  it.imgPasien
                         kelamin = it.jenisKelamin
                         status = it.status
+
+                        val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
+                        Glide.with(this@ProfilePasienEditActivity)
+                            .load(imagePath)
+                            .into(ivEditPicture)
+                            .clearOnDetach()
                     }
                 }
             }

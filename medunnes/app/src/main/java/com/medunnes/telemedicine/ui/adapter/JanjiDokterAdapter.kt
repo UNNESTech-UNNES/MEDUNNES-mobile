@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.databinding.MessageListBinding
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -32,7 +33,6 @@ class JanjiDokterAdapter(
                 }
                 tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/Sesi ${janji.sesiId}"
                 tvMessangerStatus.text  = janji.status
-
             }
         }
     }

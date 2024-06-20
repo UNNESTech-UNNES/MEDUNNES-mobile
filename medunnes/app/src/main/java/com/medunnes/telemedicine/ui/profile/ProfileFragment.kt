@@ -1,8 +1,8 @@
 package com.medunnes.telemedicine.ui.profile
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +15,8 @@ import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
 import com.medunnes.telemedicine.ui.main.MainActivity
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
-import java.io.File
 
 class ProfileFragment : Fragment(), View.OnClickListener {
 
@@ -62,6 +62,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private var titleDepan: String = ""
     private var titleBelakang: String = ""
 
+    @SuppressLint("SetTextI18n")
     private suspend fun setPasienProfile() {
         val userId = viewModel.getUserLoginId()
         viewModel.getPasienByUserLogin(userId)
@@ -71,6 +72,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvBeratBadan.text = it.bB.toString() + "kg"
                         tvTinggiBadan.text = it.tB.toString() + "cm"
+
+                        val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
+                        Glide.with(this@ProfileFragment)
+                            .load(imagePath)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
                     }
                 }
             }
@@ -91,6 +98,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         tvUserName.text = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
                         tvUserRole.text = spesialis[(it.spesialisId.toInt())-1]
                         tvUserPraktik.text = it.tempatKerja
+
+                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                        Glide.with(this@ProfileFragment)
+                            .load(imagePath)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
                     }
                 }
             }
@@ -114,53 +127,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun showPasienImageFromFile(userId: Int) {
-        viewModel.getPasienByUserLogin(userId)
-        viewModel.pasien.observe(viewLifecycleOwner) { data ->
-            if (data.isNotEmpty()) {
-                data.forEach {
-                    if (!it.imgPasien.isNullOrEmpty()) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgPasien}")}"
-                        Glide.with(this@ProfileFragment)
-                            .load(imageFile)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showDokterImageFromFile(userId: Int) {
-        viewModel.getDokterByUserLogin(userId)
-        viewModel.dokter.observe(viewLifecycleOwner) { data ->
-            if (data.isNotEmpty()) {
-                data.forEach {
-                    if (it.imgDokter?.isNotEmpty() == true) {
-                        val path = Environment.getExternalStorageDirectory()
-                        val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.imgDokter}")}"
-                        Glide.with(this@ProfileFragment)
-                            .load(imageFile)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
-                    }
-                }
-            }
-        }
-    }
-
     private suspend fun setViewBasedOnUserRole() {
         val userRole = viewModel.getUserRole()
-        val userId = viewModel.getUserLoginId()
         if (userRole == 1) {
             setDokterProfile()
-            showDokterImageFromFile(userId)
             binding.tblBadan.visibility = View.GONE
         } else {
             setUserProfile()
             setPasienProfile()
-            showPasienImageFromFile(userId)
             binding.tblTempatPraktik.visibility = View.GONE
         }
     }

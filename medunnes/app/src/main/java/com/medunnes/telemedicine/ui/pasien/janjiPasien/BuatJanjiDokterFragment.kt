@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.response.SesiDataItem
@@ -20,6 +21,7 @@ import com.medunnes.telemedicine.ui.adapter.SesiAdapter
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiConfirmationDialog
 import com.medunnes.telemedicine.ui.dialog.BuatJanjiSuccessDialog
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
+import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -71,6 +73,12 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                     tvDoctorName.text = "${dokter.titleDepan}. ${dokter.namaDokter} ${dokter.titleBelakang}"
                     tvDoctorSpeciality.text = spesialis[(dokter.spesialisId.toInt())-1]
                     tvDoctorExperience.text = dokter.tempatKerja
+
+                    val imagePath = "${imageBaseUrl()}/${dokter.imgDokter}"
+                    Glide.with(this@BuatJanjiDokterFragment)
+                        .load(imagePath)
+                        .into(ivDoctorImage)
+                        .clearOnDetach()
                 }
             }
         }
