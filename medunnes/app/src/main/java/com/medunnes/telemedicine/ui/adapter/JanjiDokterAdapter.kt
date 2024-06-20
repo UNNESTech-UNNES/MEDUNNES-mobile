@@ -1,16 +1,14 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.os.Environment
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.JanjiDataItem
-import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.databinding.MessageListBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -18,28 +16,36 @@ class JanjiDokterAdapter(
     private val janjiList: ArrayList<JanjiDataItem>
 ) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: MessageListBinding) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
+        @Suppress("DEPRECATION")
         fun bind(janji: JanjiDataItem) {
             with(binding) {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
                 val date = dateFormat.parse(janji.datetime)
                 val status = janji.status
-                tvPatientName.text = janji.pasien.namaPasien
-                if (status == "accepted") {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.blue))
-                } else if (status == "rejected") {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.red))
-                } else {
-                    tvMessangerStatus.setTextColor(root.resources.getColor(R.color.fifth_color))
+                tvPatientName.text = janji.pasienTambahan.namaPasienTambahan
+                when (status) {
+                    "accepted" -> {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.blue))
+                    }
+                    "rejected" -> {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.red))
+                    }
+                    else -> {
+                        tvMessangerStatus.setTextColor(root.resources.getColor(R.color.fifth_color))
+                    }
                 }
                 tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/Sesi ${janji.sesiId}"
                 tvMessangerStatus.text  = janji.status
 
-                val imagePath = "${imageBaseUrl()}/${janji.pasien.imgPasien}"
-                Glide.with(itemView.context)
-                    .load(imagePath)
-                    .into(ivMessanger)
-                    .clearOnDetach()
+                if (janji.pasien.namaPasien == janji.pasienTambahan.namaPasienTambahan) {
+                    val imagePath = "${imageBaseUrl()}/${janji.pasien.imgPasien}"
+                    Glide.with(itemView.context)
+                        .load(imagePath)
+                        .into(ivMessanger)
+                        .clearOnDetach()
+                }
             }
         }
     }

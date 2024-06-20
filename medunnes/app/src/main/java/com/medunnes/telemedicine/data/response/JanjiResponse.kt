@@ -14,6 +14,45 @@ data class JanjiResponse(
 	val status: Boolean
 )
 
+data class JanjiDataItem(
+
+	@field:SerializedName("datetime")
+	val datetime: String,
+
+	@field:SerializedName("pasien_tambahan")
+	val pasienTambahan: PasienTambahan,
+
+	@field:SerializedName("pasien_id")
+	val pasienId: Int,
+
+	@field:SerializedName("updated_at")
+	val updatedAt: String,
+
+	@field:SerializedName("dokter_id")
+	val dokterId: Int,
+
+	@field:SerializedName("id_janji")
+	val idJanji: Int,
+
+	@field:SerializedName("sesi_id")
+	val sesiId: Int,
+
+	@field:SerializedName("catatan")
+	val catatan: String,
+
+	@field:SerializedName("created_at")
+	val createdAt: String,
+
+	@field:SerializedName("pasien")
+	val pasien: Pasien,
+
+	@field:SerializedName("pasien_tambahan_id")
+	val pasienTambahanId: Int,
+
+	@field:SerializedName("status")
+	val status: String
+)
+
 data class Pasien(
 
 	@field:SerializedName("BB")
@@ -56,10 +95,13 @@ data class Pasien(
 	val status: String
 )
 
-data class JanjiDataItem(
+data class PasienTambahan(
 
-	@field:SerializedName("datetime")
-	val datetime: String,
+	@field:SerializedName("BB")
+	val bB: Int,
+
+	@field:SerializedName("hubungan_keluarga")
+	val hubunganKeluarga: String,
 
 	@field:SerializedName("pasien_id")
 	val pasienId: Int,
@@ -67,27 +109,21 @@ data class JanjiDataItem(
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
 
-	@field:SerializedName("dokter_id")
-	val dokterId: Int,
+	@field:SerializedName("nama_pasien_tambahan")
+	val namaPasienTambahan: String,
 
-	@field:SerializedName("id_janji")
-	val idJanji: Int,
-
-	@field:SerializedName("sesi_id")
-	val sesiId: Int,
-
-	@field:SerializedName("catatan")
-	val catatan: String,
+	@field:SerializedName("id_pasien_tambahan")
+	val idPasienTambahan: Int,
 
 	@field:SerializedName("created_at")
 	val createdAt: String,
 
-	@field:SerializedName("pasien")
-	val pasien: Pasien,
+	@field:SerializedName("jenis_kelamin")
+	val jenisKelamin: String,
 
-	@field:SerializedName("pasien_tambahan_id")
-	val pasienTambahanId: Int,
+	@field:SerializedName("TB")
+	val tB: Int,
 
-	@field:SerializedName("status")
-	val status: String
+	@field:SerializedName("tgl_lahir")
+	val tglLahir: String
 )
