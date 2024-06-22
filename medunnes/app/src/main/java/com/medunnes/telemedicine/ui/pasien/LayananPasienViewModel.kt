@@ -10,6 +10,7 @@ import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
@@ -28,6 +29,10 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
 
     private val _sesi = MutableLiveData<List<SesiDataItem>>()
     val sesi: LiveData<List<SesiDataItem>> get() = _sesi
+
+    private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
+    val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
+
     fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)
@@ -52,13 +57,13 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         viewModelScope.launch {
             try {
                 val pasienData = repository.getPasienByUser(userId)
-                if (pasienData.data.isNotEmpty()) {
+                if (!pasienData.data.isNullOrEmpty()) {
                     _pasien.value = pasienData.data
                 } else {
                     Log.d("DATA pasien", "Data pasien kosong")
                 }
             } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
+                Log.d("ERROR PP", e.message.toString())
             }
         }
     }
@@ -161,4 +166,19 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     )
 
     suspend fun deletePasien(id: Int): PasienTambahanResponse = repository.deletePasien(id)
+
+    fun getKonsultasiByPasienId(id: Int) {
+        viewModelScope.launch {
+            try {
+                val konsultasiData = repository.getKonsultasiByPasienId(id)
+                if (!konsultasiData.data.isNullOrEmpty()) {
+                    _konsultasi.value = konsultasiData.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR KONS", e.message.toString())
+            }
+        }
+    }
 }

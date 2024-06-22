@@ -10,6 +10,8 @@ import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
+import com.medunnes.telemedicine.data.response.KonsultasiPasien
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
@@ -156,7 +158,8 @@ class UserRepository private constructor(
     ): PasienResponse = ApiConfig.getApiService().uploadImageDokter(id, multipartBody)
 
     // Janji
-    suspend fun getJanjiByDokterId(id: Int): JanjiResponse = ApiConfig.getApiService().getJanjiByDokterId(id)
+    suspend fun getJanjiByDokterId(id: Int): JanjiResponse =
+        ApiConfig.getApiService().getJanjiByDokterId(id)
     suspend fun insertJanji(
         pasienId: Long,
         dokterId: Long,
@@ -181,6 +184,10 @@ class UserRepository private constructor(
     ): JanjiResponse = ApiConfig.getApiService().updatetJanji(
         id, pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
     )
+
+    // Konsultasi
+    suspend fun getKonsultasiByPasienId(id: Int): KonsultasiResponse =
+        ApiConfig.getApiService().getKonsultasiByPasienId(id)
 
     // Sesi
     suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()

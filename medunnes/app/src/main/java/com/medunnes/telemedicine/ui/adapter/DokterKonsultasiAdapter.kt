@@ -1,29 +1,33 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.R
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.KonsultasiPasienListBinding
-import java.io.File
+import com.medunnes.telemedicine.utils.imageBaseUrl
 
-class DokterKonsultasiAdapter(private val dokterList: List<UserAndDokter>): RecyclerView.Adapter<DokterKonsultasiAdapter.ViewHolder>() {
+class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>): RecyclerView.Adapter<DokterKonsultasiAdapter.ViewHolder>() {
     class ViewHolder(private val binding: KonsultasiPasienListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(dokter: UserAndDokter) {
+        fun bind(dokter: KonsultasiDataItem) {
             with(binding) {
-                tvDokterNama.text = "${dokter.dokter.titelDepan} ${dokter.user.fullname} ${dokter.dokter.titelBelakang}"
-                tvDokterSpesialis.text= dokter.dokter.spesialidId.toString()
+                tvDokterNama.text = "${dokter.dokter.titleDepan} ${dokter.dokter.namaDokter} ${dokter.dokter.titleBelakang}"
 
-//                if (!dokter.dokter..isNullOrEmpty()) {
-//                    val path = Environment.getExternalStorageDirectory()
-//                    val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${dokter.user.image}")}"
-//                    Glide.with(itemView.context)
-//                        .load(imageFile)
-//                        .into(ivDokterPicture)
-//                        .clearOnDetach()
-//                }
+                val spesialis = root.resources.getStringArray(R.array.spesialissasi)
+                val spesiliasId = dokter.dokter.spesialisId
+
+                tvDokterSpesialis.text = spesialis[spesiliasId]
+
+                val imgDokter = dokter.dokter.imgDokter
+                if (imgDokter.isNotEmpty()) {
+                    val imagePath = "${imageBaseUrl()}/${imgDokter}"
+                    Glide.with(itemView.context)
+                        .load(imagePath)
+                        .into(ivDokterPicture)
+                        .clearOnDetach()
+                }
             }
         }
     }
@@ -46,7 +50,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<UserAndDokter>): Recy
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(dokter: UserAndDokter)
+        fun onItemClicked(dokter: KonsultasiDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

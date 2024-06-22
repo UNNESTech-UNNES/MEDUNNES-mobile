@@ -12,19 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.JanjiDanPasien
-import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.databinding.FragmentBuatJanjiBinding
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.FragmentKonsultasiPasienBinding
 import com.medunnes.telemedicine.ui.adapter.DokterKonsultasiAdapter
-import com.medunnes.telemedicine.ui.adapter.DokterListAdapter
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import kotlinx.coroutines.launch
 
 class KonsultasiPasienFragment : Fragment() {
     private var _binding: FragmentKonsultasiPasienBinding? = null
     private val binding get() = _binding!!
-    private val listDokter = ArrayList<UserAndDokter>()
+    private val listDokter = ArrayList<KonsultasiDataItem>()
     private val viewModel by viewModels<LayananPasienViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -42,7 +39,7 @@ class KonsultasiPasienFragment : Fragment() {
         return binding.root
     }
 
-    private fun showRecyclerList(listAdapter: ArrayList<UserAndDokter>) {
+    private fun showRecyclerList(listAdapter: ArrayList<KonsultasiDataItem>) {
         if (listAdapter.isNotEmpty()) {
             binding.tvDataEmpty.visibility = View.GONE
             binding.rvDoctorList.visibility = View.VISIBLE
@@ -51,11 +48,11 @@ class KonsultasiPasienFragment : Fragment() {
             binding.rvDoctorList.adapter = dokterAdapter
 
             dokterAdapter.setOnItemClickCallback(object : DokterKonsultasiAdapter.OnItemClickCallback {
-                override fun onItemClicked(dokter: UserAndDokter) {
+                override fun onItemClicked(dokter: KonsultasiDataItem) {
                     val konsultasiDetailFragment = KonsultasiDetailFragment()
                     val fragment = parentFragmentManager
                     val bundle = Bundle()
-                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, dokter.user.id)
+                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, dokter.dokterId)
                     konsultasiDetailFragment.arguments = bundle
                     fragment.beginTransaction()
                         .replace(R.id.pasien_frame_container, konsultasiDetailFragment, KonsultasiDetailFragment::class.java.simpleName)
@@ -71,23 +68,15 @@ class KonsultasiPasienFragment : Fragment() {
 
     private suspend fun getDoctorList(filter: String) {
         val uid = viewModel.getUserLoginId()
-        viewModel.getDokterByJanji(uid).observe(viewLifecycleOwner) { data ->
-            listDokter.clear()
-            data.forEach {
-                val dokterId = it.janji.dokterId
-                viewModel.getDokterByDokterId(dokterId).observe(viewLifecycleOwner) { data1 ->
-                    if (!data.isNullOrEmpty()) {
-                        listDokter.addAll(data1)
-                        if (listDokter.isNotEmpty()) {
-                            val filteredData = listDokter.filter {
-                                it.user.fullname.lowercase().contains(filter) } as ArrayList<UserAndDokter>
-                            showRecyclerList(filteredData)
-                            Log.d("FILDATA", filteredData.toString())
-                        } else {
-                            binding.tvDataEmpty.visibility = View.VISIBLE
-                        }
-                    }
-                }
+        Log.d("UID", uid.toString())
+        viewModel.getPasienByUserLogin(uid)
+        viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
+            val pasienId = pasien[0].idPasien
+            viewModel.getKonsultasiByPasienId(pasienId.toInt())
+            viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
+                listDokter.clear()
+                listDokter.addAll(konsultasi)
+                showRecyclerList(listDokter)
             }
         }
     }
