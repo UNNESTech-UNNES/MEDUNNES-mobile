@@ -181,16 +181,20 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         if (isConfirm) {
             bjcd.dismiss()
             try {
+                val pasienIdPicked = binding.tiePasienIdPicked.text.toString().toLong()
+                val catatan ="${binding.tieSesiCatatan.text}"
                 lifecycleScope.launch {
                     viewModel.insertJanji(
-                        binding.tiePasienIdPicked.text.toString().toLong(),
+                        pasienIdPicked,
                         doctorId!!.toLong(),
                         binding.tiePasienTambahanIdPicked.text.toString().toLong(),
                         sesiNumber.toLong(),
                         datePicked,
-                        "${binding.tieSesiCatatan.text}",
+                        catatan,
                         "pending"
                     )
+
+                    insertKonsultasi(pasienIdPicked, doctorId.toLong(), catatan)
                 }
                 showSuccessDialog()
             } catch (e: Exception) {
@@ -199,6 +203,14 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         } else {
             bjcd.dismiss()
         }
+    }
+
+    private suspend fun insertKonsultasi(
+        pasienId: Long,
+        dokterId: Long,
+        topik: String
+    ) {
+        viewModel.insertKonsultasi(pasienId, dokterId, topik)
     }
 
     private fun showConfirmationDialog() {

@@ -210,6 +210,14 @@ interface ApiService {
         @Path("id") id: Int
     ): KonsultasiResponse
 
+    @FormUrlEncoded
+    @POST("api/konsultasi")
+    suspend fun insertKonsultasi(
+        @Field("pasien_id") pasienId: Long,
+        @Field("dokter_id") dokterId: Long,
+        @Field("topik") topik: String,
+    ): KonsultasiResponse
+
     @GET("api/sesi")
     suspend fun getAllSesi(): SesiResponse
 

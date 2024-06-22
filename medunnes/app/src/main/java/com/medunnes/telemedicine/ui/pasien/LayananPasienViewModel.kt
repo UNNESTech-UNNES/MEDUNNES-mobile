@@ -11,6 +11,7 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanDataItem
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
@@ -181,4 +182,10 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
             }
         }
     }
+
+    suspend fun insertKonsultasi(
+        pasienId: Long,
+        dokterId: Long,
+        topik: String
+    ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik)
 }
