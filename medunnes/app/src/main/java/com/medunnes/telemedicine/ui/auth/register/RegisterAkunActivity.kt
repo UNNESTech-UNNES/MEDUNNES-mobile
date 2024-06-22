@@ -10,10 +10,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import kotlinx.coroutines.launch
@@ -29,10 +28,13 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterAkunBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         setSpinner()
         with(binding) {
@@ -48,12 +50,16 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             var userId: Long = 0
             var pasienId: Long = 0
             try {
+                val email = "${tieEmail.text}"
+                val password = "${tiePassword.text}"
                 val userRegister = viewModel.registerAPI(
                     "${tieNamaLengkap.text}",
-                    "${tieEmail.text}",
-                    "${tiePassword.text}",
+                    email,
+                    password,
                     "pasien"
                 )
+
+                firebaseRegister(email, password)
 
                 userRegister.data.forEach { userId = it.idUser.toLong() }
 
@@ -81,10 +87,25 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     datePicked,
                     "Diri sendiri"
                 )
+
+                val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
+                startActivity(intent)
             } catch (e: Exception) {
                 Log.d("ERROR", e.message.toString())
             }
         }
+    }
+
+    private fun firebaseRegister(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    Log.d("USER", user.toString())
+                } else {
+                    Log.w("Registration", "createUserWithEmail:failure", task.exception)
+                }
+            }
     }
 
     private fun showDatePicker() {
@@ -133,16 +154,12 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         const val ROLE = "role"
     }
 
-    override fun onClick(view: View?) {
+    override fun onClick(view: View) {
         with(binding) {
             when(view) {
-                btnRegister -> {
-                    lifecycleScope.launch { registerUser() }
-
-                    val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                }
+                btnRegister -> lifecycleScope.launch { registerUser() }
                 btnBack -> finish()
+                else -> { /* DO NOTHING */ }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.data.api
 
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
 import com.medunnes.telemedicine.data.response.PasienTambahanResponse
@@ -203,6 +204,11 @@ interface ApiService {
         @Field("catatan") catatan: String,
         @Field("status") status: String
     ): JanjiResponse
+
+    @GET("api/konsultasi/{id}")
+    suspend fun getKonsultasiByPasienId(
+        @Path("id") id: Int
+    ): KonsultasiResponse
 
     @GET("api/sesi")
     suspend fun getAllSesi(): SesiResponse

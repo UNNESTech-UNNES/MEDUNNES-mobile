@@ -8,6 +8,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
@@ -18,21 +21,35 @@ import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
-
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = Firebase.auth
+
         with(binding) {
             tvDaftar.setOnClickListener(this@LoginActivity)
             btnLogin.setOnClickListener(this@LoginActivity)
             btnBack.setOnClickListener(this@LoginActivity)
         }
+    }
+
+    private fun firebaseLogin(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    Log.d("USER", user.toString())
+                } else {
+                    Log.w("Registration", "createUserWithEmail:failure", task.exception)
+                }
+            }
     }
 
     // Mengatur login user
@@ -56,6 +73,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             } else {
                                 setUserLoginRole(2)
                             }
+                            firebaseLogin(userEmail, userPassword)
                             setLoginStatus() // Menyimpan status login user
                             loginIfSuccess()
                         } else {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486241622533",
+    "project_id": "medunnes-telemedicine",
+    "storage_bucket": "medunnes-telemedicine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486241622533:android:978adc34106755c8281a6c",
+        "android_client_info": {
+          "package_name": "com.medunnes.telemedicine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh4xHinwnww9eZqRImtbMIi_S1EGGAXpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
