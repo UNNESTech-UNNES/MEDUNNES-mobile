@@ -59,8 +59,6 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     "pasien"
                 )
 
-                firebaseRegister(email, password)
-
                 userRegister.data.forEach { userId = it.idUser.toLong() }
 
                 val pasienInsert = viewModel.insertPasien(
@@ -76,7 +74,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     "active",
                 )
 
-                pasienInsert.data
+                pasienInsert.data.forEach { pasienId = it.idPasien }
 
                 viewModel.insertPasienTambahan(
                     pasienId,
@@ -87,6 +85,8 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     datePicked,
                     "Diri sendiri"
                 )
+
+                firebaseRegister(email, password)
 
                 val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
                 startActivity(intent)
