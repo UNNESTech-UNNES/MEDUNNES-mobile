@@ -51,12 +51,13 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
                         val spsialis = resources.getStringArray(R.array.spesialissasi)
                         tvUserField.text = spsialis[it.spesialisId.toInt()]
 
-                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
-                        Glide.with(this@KonsultasiDetailFragment)
-                            .load(imagePath)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
-
+                        if (!it.imgDokter.isNullOrEmpty()) {
+                            val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                            Glide.with(this@KonsultasiDetailFragment)
+                                .load(imagePath)
+                                .into(binding.ivUserPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             }

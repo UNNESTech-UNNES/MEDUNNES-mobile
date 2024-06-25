@@ -21,7 +21,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
                 tvDokterSpesialis.text = spesialis[spesiliasId]
 
                 val imgDokter = dokter.dokter.imgDokter
-                if (imgDokter.isNotEmpty()) {
+                if (!imgDokter.isNullOrEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${imgDokter}"
                     Glide.with(itemView.context)
                         .load(imagePath)

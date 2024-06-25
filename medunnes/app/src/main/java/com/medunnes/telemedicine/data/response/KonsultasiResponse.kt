@@ -98,7 +98,7 @@ data class KonsultasiDokter(
 	val tahunLulus: Int,
 
 	@field:SerializedName("no_reg")
-	val noReg: Int,
+	val noReg: Long,
 
 	@field:SerializedName("created_at")
 	val createdAt: String,
