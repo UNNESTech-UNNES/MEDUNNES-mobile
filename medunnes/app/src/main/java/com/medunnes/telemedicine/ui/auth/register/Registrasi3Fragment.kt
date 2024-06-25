@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.response.UserResponse
@@ -31,6 +32,7 @@ class Registrasi3Fragment : Fragment(),
         ViewModelFactory.getInstance(requireContext())
     }
     private var dataSpinner = 0
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,8 @@ class Registrasi3Fragment : Fragment(),
         _binding = FragmentRegistrasi3Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        auth = FirebaseAuth.getInstance()
+
         setSpinner()
         with(binding) {
             tvMasuk.setOnClickListener(this@Registrasi3Fragment)
@@ -46,6 +50,18 @@ class Registrasi3Fragment : Fragment(),
         }
 
         return root
+    }
+
+    private fun firebaseRegister(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    Log.d("USER", user.toString())
+                } else {
+                    Log.w("Registration", "createUserWithEmail:failure", task.exception)
+                }
+            }
     }
 
     private fun makeToast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -77,12 +93,15 @@ class Registrasi3Fragment : Fragment(),
     }
 
     private suspend fun insertUser(): UserResponse {
+        val email = getData(EMAIL)
+        val password = "${binding.tiePassword.text}"
         val registerUser = viewModel.registerAPI(
             getData(FULLNAME),
-            getData(EMAIL),
-            "${binding.tiePassword.text}",
+            email,
+            password,
             "dokter"
         )
+        firebaseRegister(email, password)
         return registerUser
     }
 
