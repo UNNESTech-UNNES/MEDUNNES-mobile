@@ -40,7 +40,9 @@ class UserRepository private constructor(
     ): UserResponse = ApiConfig.getApiService().register(name, email, type, password)
 
     //Pasien
+    suspend fun getAllPasien(): PasienResponse = ApiConfig.getApiService().getAllPasien()
     suspend fun getPasienByUser(userId: Int): PasienResponse = ApiConfig.getApiService().getPasienByUser(userId)
+    suspend fun getPasienById(id: Int): PasienResponse = ApiConfig.getApiService().getPasienById(id)
     suspend fun insertPasien(
         userId: Long,
         nik: Long,
@@ -75,6 +77,7 @@ class UserRepository private constructor(
     // Dokter
     suspend fun getAllDokter(page: Int): DokterResponse = ApiConfig.getApiService().getAllDokter(page)
     suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
+    suspend fun getDokterById(id: Int): DokterResponse = ApiConfig.getApiService().getDokterById(id)
     suspend fun insertDokter(
         userId: Int,
         spesialisId: Int,
@@ -188,6 +191,9 @@ class UserRepository private constructor(
     // Konsultasi
     suspend fun getKonsultasiByPasienId(id: Int): KonsultasiResponse =
         ApiConfig.getApiService().getKonsultasiByPasienId(id)
+
+    suspend fun getKonsultasiByDokterId(id: Int): KonsultasiResponse =
+        ApiConfig.getApiService().getKonsultasiByDokterId(id)
     suspend fun insertKonsultasi(
         pasienId: Long,
         dokterId: Long,
@@ -206,7 +212,6 @@ class UserRepository private constructor(
     fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
     fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
     fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
-    fun getPasienById(pasienId: Int): LiveData<List<Pasien>> = mUserDao.getPasienById(pasienId)
 
     //DataStore
     suspend fun setLoginStatus() = authDataStore.loginUser()

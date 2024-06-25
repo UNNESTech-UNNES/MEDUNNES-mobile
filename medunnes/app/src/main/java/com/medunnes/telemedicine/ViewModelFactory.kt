@@ -9,6 +9,7 @@ import com.medunnes.telemedicine.ui.auth.login.LoginViewModel
 import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
 import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
 import com.medunnes.telemedicine.ui.home.HomeViewModel
+import com.medunnes.telemedicine.ui.message.MessageViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 
@@ -21,6 +22,7 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
         ProfileViewModel::class.java -> ProfileViewModel(repository)
         LayananPasienViewModel::class.java -> LayananPasienViewModel(repository)
         LayananDokterViewModel::class.java -> LayananDokterViewModel(repository)
+        MessageViewModel::class.java -> MessageViewModel(repository)
 
         else -> throw IllegalArgumentException("Uknown view model class: " + modelClass.name)
     } as T

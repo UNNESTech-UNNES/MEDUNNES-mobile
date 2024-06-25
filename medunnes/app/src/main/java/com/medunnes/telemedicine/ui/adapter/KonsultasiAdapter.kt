@@ -4,21 +4,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.data.model.Konsultasi
 import com.medunnes.telemedicine.data.model.Messanger
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.KonsultasiListBinding
+import com.medunnes.telemedicine.utils.imageBaseUrl
 
-class KonsultasiAdapter(private val konsultasiList: ArrayList<Konsultasi>) : RecyclerView.Adapter<KonsultasiAdapter.ListViewHolder>(){
+class KonsultasiAdapter(private val konsultasiList: ArrayList<KonsultasiDataItem>) : RecyclerView.Adapter<KonsultasiAdapter.ListViewHolder>(){
     class ListViewHolder(private val binding: KonsultasiListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(konsultasi: Konsultasi) {
+        fun bind(konsultasi: KonsultasiDataItem) {
             with(binding) {
-                tvPatientName.text = konsultasi.namaPatient
-                tvPatientSession.text = konsultasi.sesiPatient
-                tvPatientStatus.text = konsultasi.statusPatient
-                Glide.with(itemView.context)
-                    .load(konsultasi.fotoPatient)
-                    .into(ivMessanger)
-                    .clearOnDetach()
+                tvPatientName.text = konsultasi.pasien.namaPasien
+                tvPatientSession.text = konsultasi.topik
+                tvPatientStatus.text = konsultasi.pasien.status
+
+                if (!konsultasi.pasien.imgPasien.isNullOrEmpty()) {
+                    val imagePath = "${imageBaseUrl()}/${konsultasi.pasien.imgPasien}"
+                    Glide.with(itemView.context)
+                        .load(imagePath)
+                        .into(binding.ivMessanger)
+                        .clearOnDetach()
+                }
             }
         }
 
@@ -44,7 +49,7 @@ class KonsultasiAdapter(private val konsultasiList: ArrayList<Konsultasi>) : Rec
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(konsultasi: Konsultasi)
+        fun onItemClicked(konsultasi: KonsultasiDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

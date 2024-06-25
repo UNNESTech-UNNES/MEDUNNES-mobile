@@ -1,18 +1,22 @@
 package com.medunnes.telemedicine.ui.pasien.konsultasiPasien
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentKonsultasiDetailBinding
+import com.medunnes.telemedicine.ui.message.MessageActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import com.medunnes.telemedicine.utils.imageBaseUrl
+import kotlinx.coroutines.launch
 
 class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentKonsultasiDetailBinding? = null
@@ -64,6 +68,25 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun intentMessage() {
+        var id = 0
+        lifecycleScope.launch {
+            val uid = viewModel.getUserLoginId()
+            val role = viewModel.getUserRole()
+            if (role == 1) {
+
+            } else {
+                val dokterId = arguments?.getInt(DOKTER_ID)
+                if (dokterId != null) {
+                    val intent = Intent(context, MessageActivity::class.java)
+                    intent.putExtra(MessageActivity.DOKTER_ID, dokterId)
+                    startActivity(intent)
+                }
+
+            }
+        }
+    }
+
     companion object {
         const val DOKTER_ID = "dokter_id"
     }
@@ -71,7 +94,7 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         with(binding) {
             when(view) {
-                btnKonsultasiNow -> Toast.makeText(context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
+                btnKonsultasiNow -> intentMessage()
             }
         }
     }

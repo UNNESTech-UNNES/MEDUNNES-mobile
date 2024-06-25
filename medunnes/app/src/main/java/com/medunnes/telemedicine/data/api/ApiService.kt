@@ -47,8 +47,16 @@ interface ApiService {
         @Field("password") password: String,
     ) : UserResponse
 
+    @GET("api/pasien")
+    suspend fun getAllPasien() : PasienResponse
+
     @GET("api/pasien/{id}")
     suspend fun getPasienByUser(
+        @Path("id") id: Int
+    ) : PasienResponse
+
+    @GET("api/pasien/detail/{id}")
+    suspend fun getPasienById(
         @Path("id") id: Int
     ) : PasienResponse
 
@@ -90,6 +98,11 @@ interface ApiService {
 
     @GET("api/dokter/{id}")
     suspend fun getDokterByUser(
+        @Path("id") id: Int
+    ) : DokterResponse
+
+    @GET("api/dokter/detail/{id}")
+    suspend fun getDokterById(
         @Path("id") id: Int
     ) : DokterResponse
 
@@ -207,6 +220,11 @@ interface ApiService {
 
     @GET("api/konsultasi/{id}")
     suspend fun getKonsultasiByPasienId(
+        @Path("id") id: Int
+    ): KonsultasiResponse
+
+    @GET("api/konsultasi/dokter/{id}")
+    suspend fun getKonsultasiByDokterId(
         @Path("id") id: Int
     ): KonsultasiResponse
 

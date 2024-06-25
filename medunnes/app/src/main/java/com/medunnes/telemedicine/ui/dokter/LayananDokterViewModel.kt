@@ -9,14 +9,22 @@ import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
+import com.medunnes.telemedicine.data.response.PasienDataItem
 import kotlinx.coroutines.launch
 
 class LayananDokterViewModel(private val repository: UserRepository) : ViewModel() {
     private val _janji = MutableLiveData<List<JanjiDataItem>>()
     val janji: LiveData<List<JanjiDataItem>> get() = _janji
 
+    private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
+    val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
+
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
+    private val _pasien = MutableLiveData<List<PasienDataItem>>()
+    val pasien: LiveData<List<PasienDataItem>> get() = _pasien
     suspend fun getUserLogin() = repository.getUserId()
 
     fun getJanjiByDokterId(id: Int) {
@@ -40,6 +48,51 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
                 val dokter = repository.getDokterByUser(id)
                 if (dokter.data.isNotEmpty()) {
                     _dokter.value = dokter.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR DOKTER", e.message.toString())
+            }
+        }
+    }
+
+    fun getAllPasien() {
+        viewModelScope.launch {
+            try {
+                val pasien = repository.getAllPasien()
+                if (pasien.data.isNotEmpty()) {
+                    _pasien.value = pasien.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR DOKTER", e.message.toString())
+            }
+        }
+    }
+
+    fun getKonsultasiByDokter(id: Int) {
+        viewModelScope.launch {
+            try {
+                val konsultasi = repository.getKonsultasiByDokterId(id)
+                if (konsultasi.data.isNotEmpty()) {
+                    _konsultasi.value = konsultasi.data
+                } else {
+                    Log.d("DATA DOKTER", "Data dokter kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR DOKTER", e.message.toString())
+            }
+        }
+    }
+
+    fun getPasienrById(id: Int) {
+        viewModelScope.launch {
+            try {
+                val pasien = repository.getPasienById(id)
+                if (pasien.data.isNotEmpty()) {
+                    _pasien.value = pasien.data
                 } else {
                     Log.d("DATA DOKTER", "Data dokter kosong")
                 }

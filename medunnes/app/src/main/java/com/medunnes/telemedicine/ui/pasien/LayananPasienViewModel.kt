@@ -33,12 +33,8 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
 
     private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
     val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
-
-    fun getDokterByUid(uid: Int): LiveData<List<UserAndDokter>> = repository.getUserAndDokter(uid)
-    fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = repository.getDokterBySpeciality(speciality)
-    fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = repository.getDokterByJanji(uid)
-    fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = repository.getDokterByDokterId(dokterId)
     suspend fun getUserLoginId(): Int = repository.getUserId()
+    suspend fun getUserRole(): Int = repository.getUserRole()
     fun getAllDokter(page: Int) {
         viewModelScope.launch {
             try {
@@ -87,7 +83,7 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     fun getDokterById(id: Int) {
         viewModelScope.launch {
             try {
-                val dokterData = repository.getDokterByUser(id)
+                val dokterData = repository.getDokterById(id)
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
                 } else {

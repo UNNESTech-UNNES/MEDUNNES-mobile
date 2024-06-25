@@ -5,12 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.medunnes.telemedicine.data.api.ApiConfig
-import com.medunnes.telemedicine.data.model.Dokter
-import com.medunnes.telemedicine.data.model.Pasien
-import com.medunnes.telemedicine.data.model.User
-import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.data.model.UserAndPasien
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
@@ -31,17 +25,10 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
 
-
-    fun getUserProfile(uid: Int): LiveData<List<User>> = userRepository.getUser(uid)
-    fun updateUserProfile(user: User) = userRepository.updateProfile(user)
-    fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = userRepository.getUserAndDokter(uid)
-    fun getPasienByUser(userId: Int): LiveData<List<Pasien>> = userRepository.getPasienById(userId)
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
     suspend fun setLogoutStatus() = userRepository.setLogoutStatus()
     suspend fun getLoginStatus(): Boolean = userRepository.getLoginStatus()
     suspend fun getUserRole(): Int = userRepository.getUserRole()
-    suspend fun getUserProfileData(id: Int): UserResponse = userRepository.getUserLogin(id)
-    suspend fun getUserPasienProfile(id: Int): PasienResponse = userRepository.getPasienByUser(id)
 
     fun getUserLogin(userId: Int) {
         viewModelScope.launch {
