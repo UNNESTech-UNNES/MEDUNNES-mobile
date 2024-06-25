@@ -188,6 +188,10 @@
     <string name="berikan_catatan_kepada_dokter">Berikan catatan kepada dokter</string>
     <string name="cm">cm</string>
     <string name="kg">kg</string>
+    <string name="beri_catatan">Beri catatan</string>
+    <string name="konsultasikan_kondisimu">Konsultasikan kondisimu</string>
+    <string name="ini_merupakan_pesan">Ini merupakan pesan</string>
+    <string name="waktu">waktu</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

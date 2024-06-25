@@ -1,4 +1,4 @@
-package com.medunnes.telemedicine.ui.message
+package com.medunnes.telemedicine.ui.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater

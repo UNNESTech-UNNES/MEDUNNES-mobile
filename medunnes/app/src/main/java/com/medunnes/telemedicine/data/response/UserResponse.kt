@@ -7,7 +7,7 @@ data class UserResponse(
 	@field:SerializedName("data")
 	val data: List<DataItem>,
 
-	@field:SerializedName("message")
+	@field:SerializedName("notification")
 	val message: String,
 
 	@field:SerializedName("status")

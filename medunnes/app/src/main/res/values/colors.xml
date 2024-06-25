@@ -16,4 +16,5 @@
     <color name="green">#23BD67</color>
     <color name="blue">#3365E4</color>
     <color name="red">#E11E1E</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#E6C38C</color>
 </resources>

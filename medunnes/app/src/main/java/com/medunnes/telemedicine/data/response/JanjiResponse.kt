@@ -7,7 +7,7 @@ data class JanjiResponse(
 	@field:SerializedName("data")
 	val data: List<JanjiDataItem>,
 
-	@field:SerializedName("message")
+	@field:SerializedName("notification")
 	val message: String,
 
 	@field:SerializedName("status")

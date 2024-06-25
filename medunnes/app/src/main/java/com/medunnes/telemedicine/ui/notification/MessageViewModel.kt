@@ -1,4 +1,4 @@
-package com.medunnes.telemedicine.ui.message
+package com.medunnes.telemedicine.ui.notification
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

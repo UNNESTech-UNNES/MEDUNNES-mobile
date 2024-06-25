@@ -7,7 +7,7 @@ data class DokterResponse(
 	@field:SerializedName("data")
 	val data: List<DokterDataItem>,
 
-	@field:SerializedName("message")
+	@field:SerializedName("notification")
 	val message: String,
 
 	@field:SerializedName("status")

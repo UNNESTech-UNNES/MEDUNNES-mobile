@@ -7,7 +7,7 @@ data class KonsultasiResponse(
 	@field:SerializedName("data")
 	val data: List<KonsultasiDataItem>,
 
-	@field:SerializedName("message")
+	@field:SerializedName("notification")
 	val message: String,
 
 	@field:SerializedName("status")
