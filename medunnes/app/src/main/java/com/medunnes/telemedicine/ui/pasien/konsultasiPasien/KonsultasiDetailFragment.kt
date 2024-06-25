@@ -1,8 +1,6 @@
 package com.medunnes.telemedicine.ui.pasien.konsultasiPasien
 
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +10,9 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.User
-import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.databinding.FragmentKonsultasiBinding
 import com.medunnes.telemedicine.databinding.FragmentKonsultasiDetailBinding
-import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
-import com.medunnes.telemedicine.ui.profile.ProfileViewModel
-import java.io.File
+import com.medunnes.telemedicine.utils.imageBaseUrl
 
 class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentKonsultasiDetailBinding? = null
@@ -42,26 +35,28 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setProfileData() {
-        arguments?.getInt(DOKTER_ID)?.let {
-            viewModel.getDokterByUid(it).observe(viewLifecycleOwner) { data ->
-                data.forEach {
+        val dokterId = arguments?.getInt(DOKTER_ID)
+        if (dokterId != null) {
+            viewModel.getDokterById(dokterId)
+            viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
+                dokter.forEach {
                     with(binding) {
-                        tvUserFullname.text = getString(R.string.nama_and_titel,
-                            it.dokter.titelDepan, it.user.fullname, it.dokter.titelBelakang)
-                        tvUserField.text = it.dokter.spesialidId.toString()
-                        tvUserExperience.text = it.dokter.tglMulaiAktif
-                        tvUserEducation.text = it.dokter.alumni
-                        tvUserLocation.text = it.dokter.tempatKerja
-                        tvUserStr.text = it.dokter.noReg?.toString()
+                        tvUserFullname.text =
+                            getString(R.string.nama_and_titel, it.titleDepan, it.namaDokter, it.titleBelakang)
+                        tvUserEducation.text = it.alumni
+                        tvUserExperience.text = it.tempatKerja
+                        tvUserLocation.text = it.tempatKerja
+                        tvUserStr.text = it.noReg.toString()
 
-                        if (!it.dokter.imgDokter.isNullOrEmpty()) {
-                            val path = Environment.getExternalStorageDirectory()
-                            val imageFile = "${File(path, "/Android/data/com.medunnes.telemedicine${it.dokter.imgDokter}")}"
-                            Glide.with(this@KonsultasiDetailFragment)
-                                .load(imageFile)
-                                .into(ivUserPicture)
-                                .clearOnDetach()
-                        }
+                        val spsialis = resources.getStringArray(R.array.spesialissasi)
+                        tvUserField.text = spsialis[it.spesialisId.toInt()]
+
+                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                        Glide.with(this@KonsultasiDetailFragment)
+                            .load(imagePath)
+                            .into(binding.ivUserPicture)
+                            .clearOnDetach()
+
                     }
                 }
             }
