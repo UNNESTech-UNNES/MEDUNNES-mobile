@@ -50,7 +50,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(dokter: KonsultasiDataItem)
+        fun onItemClicked(konsultasi: KonsultasiDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

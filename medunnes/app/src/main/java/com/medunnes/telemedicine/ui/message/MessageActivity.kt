@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -29,7 +28,6 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     private val viewModel by viewModels<MessageViewModel> {
         ViewModelFactory.getInstance(this)
     }
-    private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseDatabase
     private lateinit var adapter: MessageAdapter
     private lateinit var messageRef: DatabaseReference
