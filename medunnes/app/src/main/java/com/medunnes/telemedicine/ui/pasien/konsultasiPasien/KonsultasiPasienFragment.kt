@@ -34,7 +34,6 @@ class KonsultasiPasienFragment : Fragment() {
         lifecycleScope.launch { getDoctorList("") }
         searchMessanger()
 
-
         return binding.root
     }
 
@@ -77,6 +76,7 @@ class KonsultasiPasienFragment : Fragment() {
                 listDokter.addAll(konsultasi)
                 val filteredDokterList = konsultasi.filter {
                     it.dokter.namaDokter.lowercase().contains(filter)
+                    it.dokter.status.contains("approve")
                 } as ArrayList<KonsultasiDataItem>
                 showRecyclerList(filteredDokterList)
             }
