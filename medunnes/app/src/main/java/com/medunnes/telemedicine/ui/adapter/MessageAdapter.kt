@@ -1,6 +1,7 @@
 package com.medunnes.telemedicine.ui.adapter
 
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class MessageAdapter(
 ) : FirebaseRecyclerAdapter<Message, MessageAdapter.MessageViewHolder>(options) {
     inner class MessageViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
+            Log.d("MESSAGE", message.text.toString())
             binding.tvMessage.text = message.text
             setDialogPosition(message.email.toString())
             if (message.timestamp != null) {
@@ -27,10 +29,10 @@ class MessageAdapter(
 
         private fun setDialogPosition(email: String) {
             if (currentUserEmail == email) {
-                binding.root.gravity = Gravity.START
+                binding.root.gravity = Gravity.END
                 binding.cvMessage1Dialog.setCardBackgroundColor(binding.root.resources.getColor(R.color.app_color))
             } else {
-                binding.root.gravity = Gravity.END
+                binding.root.gravity = Gravity.START
                 binding.cvMessage1Dialog.setCardBackgroundColor(binding.root.resources.getColor(R.color.secondary_color))
             }
         }

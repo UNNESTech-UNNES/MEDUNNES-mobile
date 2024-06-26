@@ -189,9 +189,10 @@ class UserRepository private constructor(
     )
 
     // Konsultasi
+    suspend fun getKonsultasiById(id: Int): KonsultasiResponse =
+        ApiConfig.getApiService().getKonsultasiById(id)
     suspend fun getKonsultasiByPasienId(id: Int): KonsultasiResponse =
         ApiConfig.getApiService().getKonsultasiByPasienId(id)
-
     suspend fun getKonsultasiByDokterId(id: Int): KonsultasiResponse =
         ApiConfig.getApiService().getKonsultasiByDokterId(id)
     suspend fun insertKonsultasi(

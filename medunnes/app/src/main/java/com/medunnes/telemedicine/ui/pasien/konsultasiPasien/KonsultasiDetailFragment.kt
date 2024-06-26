@@ -77,9 +77,11 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
 
             } else {
                 val dokterId = arguments?.getInt(DOKTER_ID)
+                val konsultasiId = arguments?.getInt(KONSULTASI_ID)
                 if (dokterId != null) {
                     val intent = Intent(context, MessageActivity::class.java)
                     intent.putExtra(MessageActivity.DOKTER_ID, dokterId)
+                    intent.putExtra(MessageActivity.KONSULTASI_ID, konsultasiId)
                     startActivity(intent)
                 }
 
@@ -89,6 +91,7 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
 
     companion object {
         const val DOKTER_ID = "dokter_id"
+        const val KONSULTASI_ID = "konsultasi_id"
     }
 
     override fun onClick(view: View?) {

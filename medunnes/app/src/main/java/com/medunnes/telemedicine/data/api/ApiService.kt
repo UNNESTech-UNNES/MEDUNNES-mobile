@@ -219,6 +219,11 @@ interface ApiService {
     ): JanjiResponse
 
     @GET("api/konsultasi/{id}")
+    suspend fun getKonsultasiById(
+        @Path("id") id: Int
+    ): KonsultasiResponse
+
+    @GET("api/konsultasi/pasien/{id}")
     suspend fun getKonsultasiByPasienId(
         @Path("id") id: Int
     ): KonsultasiResponse

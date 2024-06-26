@@ -39,7 +39,10 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater)
         db = Firebase.database
-        messageRef = db.reference.child(MESSAGE_CHILD)
+
+        val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
+        val childMessage = "konsultasi_${konsultasiId}"
+        messageRef = db.reference.child(childMessage)
 
         lifecycleScope.launch { setMessager() }
         setMessageAdapter()
@@ -53,7 +56,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
         binding.rvMessage.layoutManager = layoutManager
-        val options = FirebaseRecyclerOptions.Builder<Message>()
+        options = FirebaseRecyclerOptions.Builder<Message>()
             .setQuery(messageRef, Message::class.java)
             .build()
 
@@ -128,9 +131,9 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        const val MESSAGE_CHILD = "message_child"
         const val DOKTER_ID = "dokter_id"
         const val PASIEN_ID = "pasien_id"
+        const val KONSULTASI_ID = "konsultasi_id"
     }
 
     override fun onResume() {

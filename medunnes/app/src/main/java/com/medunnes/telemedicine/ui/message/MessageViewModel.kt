@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
+import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,9 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
+    private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
+    val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
 
     fun getUserLogin(userId: Int) {
         viewModelScope.launch {
@@ -68,6 +72,19 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
                 val dokterData = repository.getDokterByUser(userId)
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getKonsultasi(id: Int) {
+        viewModelScope.launch {
+            try {
+                val konsultasiData = repository.getKonsultasiById(id)
+                if (konsultasiData.data.isNotEmpty()) {
+                    _konsultasi.value = konsultasiData.data
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())

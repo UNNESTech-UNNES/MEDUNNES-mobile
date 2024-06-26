@@ -53,7 +53,7 @@ class KonsultasiFragment : Fragment() {
 
         adapter.setOnItemClickCallback(object : KonsultasiAdapter.OnItemClickCallback {
             override fun onItemClicked(konsultasi: KonsultasiDataItem) {
-                intentMessage(konsultasi.pasienId)
+                intentMessage(konsultasi.pasienId, konsultasi.idKonsultasi)
             }
 
         })
@@ -74,19 +74,21 @@ class KonsultasiFragment : Fragment() {
         }
     }
 
-    private fun intentMessage(id: Int) {
+    private fun intentMessage(id: Int, konId: Int) {
         lifecycleScope.launch {
             val uid = viewModel.getUserLogin()
             val role = viewModel.getUserRole()
             if (role == 1) {
                 val intent = Intent(context, MessageActivity::class.java)
                 intent.putExtra(MessageActivity.PASIEN_ID, id)
+                intent.putExtra(MessageActivity.KONSULTASI_ID, konId)
                 startActivity(intent)
             } else {
                 val dokterId = arguments?.getInt(KonsultasiDetailFragment.DOKTER_ID)
                 if (dokterId != null) {
                     val intent = Intent(context, MessageActivity::class.java)
                     intent.putExtra(MessageActivity.DOKTER_ID, dokterId)
+                    intent.putExtra(MessageActivity.KONSULTASI_ID, konId)
                     startActivity(intent)
                 }
 

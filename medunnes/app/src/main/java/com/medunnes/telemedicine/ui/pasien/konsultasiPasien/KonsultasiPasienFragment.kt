@@ -48,11 +48,12 @@ class KonsultasiPasienFragment : Fragment() {
             binding.rvDoctorList.adapter = dokterAdapter
 
             dokterAdapter.setOnItemClickCallback(object : DokterKonsultasiAdapter.OnItemClickCallback {
-                override fun onItemClicked(dokter: KonsultasiDataItem) {
+                override fun onItemClicked(konsultasi: KonsultasiDataItem) {
                     val konsultasiDetailFragment = KonsultasiDetailFragment()
                     val fragment = parentFragmentManager
                     val bundle = Bundle()
-                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, dokter.dokterId)
+                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, konsultasi.dokterId)
+                    bundle.putInt(KonsultasiDetailFragment.KONSULTASI_ID, konsultasi.idKonsultasi)
                     konsultasiDetailFragment.arguments = bundle
                     fragment.beginTransaction()
                         .replace(R.id.pasien_frame_container, konsultasiDetailFragment, KonsultasiDetailFragment::class.java.simpleName)
