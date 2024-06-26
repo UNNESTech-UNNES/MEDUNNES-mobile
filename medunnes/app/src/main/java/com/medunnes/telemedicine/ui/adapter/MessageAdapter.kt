@@ -13,20 +13,20 @@ import com.medunnes.telemedicine.databinding.ItemMessageBinding
 
 class MessageAdapter(
     options: FirebaseRecyclerOptions<Message>,
-    private val currentUserUID: String?
+    private val currentUserEmail: String?
 ) : FirebaseRecyclerAdapter<Message, MessageAdapter.MessageViewHolder>(options) {
     inner class MessageViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
             binding.tvMessage.text = message.text
-            setDialogPosition(message.UUID)
+            setDialogPosition(message.email.toString())
             if (message.timestamp != null) {
                 val time = DateUtils.getRelativeTimeSpanString(message.timestamp)
                 binding.tvTime.text = time.toString()
             }
         }
 
-        private fun setDialogPosition(UUID: String) {
-            if (currentUserUID == UUID) {
+        private fun setDialogPosition(email: String) {
+            if (currentUserEmail == email) {
                 binding.root.gravity = Gravity.START
                 binding.cvMessage1Dialog.setCardBackgroundColor(binding.root.resources.getColor(R.color.app_color))
             } else {

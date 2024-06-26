@@ -4,7 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class Message(
-    val UUID: String,
-    val text: String? = null,
-    val timestamp: Long? = null
+    val email: String? = "",
+    val text: String? = "",
+    val timestamp: Long? = 0
 )

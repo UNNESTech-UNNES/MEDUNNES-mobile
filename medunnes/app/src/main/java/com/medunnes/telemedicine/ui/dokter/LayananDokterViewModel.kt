@@ -26,6 +26,7 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
     private val _pasien = MutableLiveData<List<PasienDataItem>>()
     val pasien: LiveData<List<PasienDataItem>> get() = _pasien
     suspend fun getUserLogin() = repository.getUserId()
+    suspend fun getUserRole() = repository.getUserRole()
 
     fun getJanjiByDokterId(id: Int) {
         viewModelScope.launch {
@@ -78,21 +79,6 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
                 val konsultasi = repository.getKonsultasiByDokterId(id)
                 if (konsultasi.data.isNotEmpty()) {
                     _konsultasi.value = konsultasi.data
-                } else {
-                    Log.d("DATA DOKTER", "Data dokter kosong")
-                }
-            } catch (e: Exception) {
-                Log.d("ERROR DOKTER", e.message.toString())
-            }
-        }
-    }
-
-    fun getPasienrById(id: Int) {
-        viewModelScope.launch {
-            try {
-                val pasien = repository.getPasienById(id)
-                if (pasien.data.isNotEmpty()) {
-                    _pasien.value = pasien.data
                 } else {
                     Log.d("DATA DOKTER", "Data dokter kosong")
                 }

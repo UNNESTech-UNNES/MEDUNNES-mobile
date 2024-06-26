@@ -6,16 +6,35 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import kotlinx.coroutines.launch
 
 class MessageViewModel(private val repository: UserRepository): ViewModel() {
+    private val _user = MutableLiveData<List<DataItem>>()
+    val user: LiveData<List<DataItem>> get() = _user
+
     private val _pasien = MutableLiveData<List<PasienDataItem>>()
     val pasien: LiveData<List<PasienDataItem>> get() = _pasien
 
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
+    fun getUserLogin(userId: Int) {
+        viewModelScope.launch {
+            try {
+                val userData = repository.getUserLogin(userId)
+                if (userData.data.isNotEmpty()) {
+                    _user.value = userData.data
+                } else {
+                    Log.d("DATA USER", "Data user kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
 
     fun getPasienByUserLogin(userId: Int) {
         viewModelScope.launch {
@@ -23,11 +42,22 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
                 val pasienData = repository.getPasienByUser(userId)
                 if (pasienData.data.isNotEmpty()) {
                     _pasien.value = pasienData.data
-                } else {
-                    Log.d("DATA pasien", "Data pasien kosong")
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getPasienrById(id: Int) {
+        viewModelScope.launch {
+            try {
+                val pasien = repository.getPasienById(id)
+                if (pasien.data.isNotEmpty()) {
+                    _pasien.value = pasien.data
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR PASIEN", e.message.toString())
             }
         }
     }
@@ -38,8 +68,6 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
                 val dokterData = repository.getDokterByUser(userId)
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
-                } else {
-                    Log.d("DATA dokter", "Data dokter kosong")
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())

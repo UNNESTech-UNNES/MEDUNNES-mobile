@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.ui.dokter.konsultasi
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,7 +19,9 @@ import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.FragmentKonsultasiBinding
 import com.medunnes.telemedicine.ui.adapter.KonsultasiAdapter
 import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
+import com.medunnes.telemedicine.ui.message.MessageActivity
 import com.medunnes.telemedicine.ui.message.MessageViewModel
+import com.medunnes.telemedicine.ui.pasien.konsultasiPasien.KonsultasiDetailFragment
 import kotlinx.coroutines.launch
 
 class KonsultasiFragment : Fragment() {
@@ -50,7 +53,7 @@ class KonsultasiFragment : Fragment() {
 
         adapter.setOnItemClickCallback(object : KonsultasiAdapter.OnItemClickCallback {
             override fun onItemClicked(konsultasi: KonsultasiDataItem) {
-                Toast.makeText(context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
+                intentMessage(konsultasi.pasienId)
             }
 
         })
@@ -67,6 +70,26 @@ class KonsultasiFragment : Fragment() {
                 listPatient.addAll(konsultasi)
 
                 showRecycleList(listPatient)
+            }
+        }
+    }
+
+    private fun intentMessage(id: Int) {
+        lifecycleScope.launch {
+            val uid = viewModel.getUserLogin()
+            val role = viewModel.getUserRole()
+            if (role == 1) {
+                val intent = Intent(context, MessageActivity::class.java)
+                intent.putExtra(MessageActivity.PASIEN_ID, id)
+                startActivity(intent)
+            } else {
+                val dokterId = arguments?.getInt(KonsultasiDetailFragment.DOKTER_ID)
+                if (dokterId != null) {
+                    val intent = Intent(context, MessageActivity::class.java)
+                    intent.putExtra(MessageActivity.DOKTER_ID, dokterId)
+                    startActivity(intent)
+                }
+
             }
         }
     }
