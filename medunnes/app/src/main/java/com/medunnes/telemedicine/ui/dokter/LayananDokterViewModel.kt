@@ -10,6 +10,7 @@ import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import kotlinx.coroutines.launch
 
@@ -100,4 +101,10 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
     ): JanjiResponse = repository.updateJanji(
         id, pasienId, dokterId, pasien_tambahanId, sesiId, jadwal, catatan, status
     )
+
+    suspend fun insertKonsultasi(
+        pasienId: Long,
+        dokterId: Long,
+        topik: String
+    ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik)
 }

@@ -191,8 +191,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                         catatan,
                         "pending"
                     )
-
-                    insertKonsultasi(pasienIdPicked, doctorId.toLong(), catatan)
                 }
                 showSuccessDialog()
             } catch (e: Exception) {
@@ -201,14 +199,6 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         } else {
             bjcd.dismiss()
         }
-    }
-
-    private suspend fun insertKonsultasi(
-        pasienId: Long,
-        dokterId: Long,
-        topik: String
-    ) {
-        viewModel.insertKonsultasi(pasienId, dokterId, topik)
     }
 
     private fun showConfirmationDialog() {

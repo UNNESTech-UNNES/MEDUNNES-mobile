@@ -53,10 +53,10 @@ class JanjiDokterFragment : Fragment() {
                 with(bundle) {
                     if (janji.pasien.namaPasien == janji.pasienTambahan.namaPasienTambahan)
                         putString(PasienDetailDialog.IMG_PASIEN, janji.pasien.imgPasien)
-                    putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahan.namaPasienTambahan)
-                    putString(PasienDetailDialog.SESI_PASIEN, "${janji.sesiId}")
-                    putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
-                    putString(PasienDetailDialog.CATATAN, janji.catatan)
+                        putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahan.namaPasienTambahan)
+                        putString(PasienDetailDialog.SESI_PASIEN, "${janji.sesiId}")
+                        putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
+                        putString(PasienDetailDialog.CATATAN, janji.catatan)
                 }
 
                 pdd.arguments = bundle
@@ -66,16 +66,21 @@ class JanjiDokterFragment : Fragment() {
                     override fun onItemClicked(isDisetujui: Boolean) {
                         lifecycleScope.launch {
                             try {
+                                val pasienId = janji.pasienId.toLong()
+                                val dokterId = janji.dokterId.toLong()
+                                val topik = janji.catatan
                                 viewModel.updateJanji(
                                     janji.idJanji,
-                                    janji.pasienId.toLong(),
-                                    janji.dokterId.toLong(),
+                                    pasienId,
+                                    dokterId,
                                     janji.pasienTambahanId.toLong(),
                                     janji.sesiId.toLong(),
                                     janji.datetime,
-                                    janji.catatan,
+                                    topik,
                                     if (isDisetujui) "accepted" else "rejected"
                                 )
+
+                                insertKonsultasi(pasienId, dokterId, topik)
 
                                 restartFragment()
                             } catch (e: Exception) {
@@ -88,6 +93,14 @@ class JanjiDokterFragment : Fragment() {
             }
 
         })
+    }
+
+    private suspend fun insertKonsultasi(
+        pasienId: Long,
+        dokterId: Long,
+        topik: String
+    ) {
+        viewModel.insertKonsultasi(pasienId, dokterId, topik)
     }
 
     private fun restartFragment() {

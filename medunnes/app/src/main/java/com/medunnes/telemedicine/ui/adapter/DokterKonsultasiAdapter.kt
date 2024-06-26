@@ -18,7 +18,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 val spesiliasId = dokter.dokter.spesialisId
 
-                tvDokterSpesialis.text = spesialis[spesiliasId]
+                tvDokterSpesialis.text = spesialis[spesiliasId-1]
 
                 val imgDokter = dokter.dokter.imgDokter
                 if (!imgDokter.isNullOrEmpty()) {
