@@ -2,25 +2,19 @@ package com.medunnes.telemedicine.ui.dokter.konsultasi
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Konsultasi
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.FragmentKonsultasiBinding
 import com.medunnes.telemedicine.ui.adapter.KonsultasiAdapter
 import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
 import com.medunnes.telemedicine.ui.message.MessageActivity
-import com.medunnes.telemedicine.ui.message.MessageViewModel
 import com.medunnes.telemedicine.ui.pasien.konsultasiPasien.KonsultasiDetailFragment
 import kotlinx.coroutines.launch
 
@@ -41,7 +35,7 @@ class KonsultasiFragment : Fragment() {
     ): View {
         _binding = FragmentKonsultasiBinding.inflate(inflater, container, false)
         searchPatient()
-        lifecycleScope.launch { getPatientList() }
+        lifecycleScope.launch { getPatientList("") }
 
         return binding.root
     }
@@ -59,7 +53,7 @@ class KonsultasiFragment : Fragment() {
         })
     }
 
-    private suspend fun getPatientList() {
+    private suspend fun getPatientList(filter: String) {
         val uid = viewModel.getUserLogin()
         viewModel.getDokterByUserId(uid)
         viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
@@ -68,15 +62,17 @@ class KonsultasiFragment : Fragment() {
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
                 listPatient.clear()
                 listPatient.addAll(konsultasi)
+                val filteredKonsultasiList = konsultasi.filter {
+                    it.pasien.namaPasien.lowercase().contains(filter)
+                } as ArrayList<KonsultasiDataItem>
 
-                showRecycleList(listPatient)
+                showRecycleList(filteredKonsultasiList)
             }
         }
     }
 
     private fun intentMessage(id: Int, konId: Int) {
         lifecycleScope.launch {
-            val uid = viewModel.getUserLogin()
             val role = viewModel.getUserRole()
             if (role == 1) {
                 val intent = Intent(context, MessageActivity::class.java)
@@ -96,12 +92,6 @@ class KonsultasiFragment : Fragment() {
         }
     }
 
-//    private fun getFilteredMessangerList(filter: String): ArrayList<Konsultasi> {
-//        return getPatientList().filter {
-//            it.namaPatient.lowercase().contains(filter.lowercase())
-//        } as ArrayList<Konsultasi>
-//    }
-
     private fun searchPatient() {
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
@@ -111,15 +101,11 @@ class KonsultasiFragment : Fragment() {
                     searchBar.setText(searchView.text)
                     searchView.hide()
                     filteredListPatient.clear()
-                    //filteredListPatient.addAll(getFilteredMessangerList("${searchView.text}"))
+                    lifecycleScope.launch { getPatientList("${searchView.text}") }
                     showRecycleList(filteredListPatient)
                     false
 
                 }
         }
-    }
-
-    companion object {
-        const val DOKTER_ID = "dokter_id"
     }
 }

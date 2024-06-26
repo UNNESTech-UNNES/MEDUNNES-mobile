@@ -1,7 +1,6 @@
 package com.medunnes.telemedicine.ui.pasien.konsultasiPasien
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,7 +68,6 @@ class KonsultasiPasienFragment : Fragment() {
 
     private suspend fun getDoctorList(filter: String) {
         val uid = viewModel.getUserLoginId()
-        Log.d("UID", uid.toString())
         viewModel.getPasienByUserLogin(uid)
         viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
             val pasienId = pasien[0].idPasien
@@ -77,7 +75,10 @@ class KonsultasiPasienFragment : Fragment() {
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
                 listDokter.clear()
                 listDokter.addAll(konsultasi)
-                showRecyclerList(listDokter)
+                val filteredDokterList = konsultasi.filter {
+                    it.dokter.namaDokter.lowercase().contains(filter)
+                } as ArrayList<KonsultasiDataItem>
+                showRecyclerList(filteredDokterList)
             }
         }
     }
