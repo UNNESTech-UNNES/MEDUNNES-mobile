@@ -84,11 +84,13 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
                         kelamin = it.jenisKelamin
                         status = it.status
 
-                        val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
-                        Glide.with(this@ProfilePasienEditActivity)
-                            .load(imagePath)
-                            .into(ivEditPicture)
-                            .clearOnDetach()
+                        if (!it.imgPasien.isNullOrEmpty()) {
+                            val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
+                            Glide.with(this@ProfilePasienEditActivity)
+                                .load(imagePath)
+                                .into(ivEditPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             }

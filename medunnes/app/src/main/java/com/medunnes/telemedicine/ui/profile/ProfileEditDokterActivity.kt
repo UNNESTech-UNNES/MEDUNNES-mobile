@@ -94,11 +94,13 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                         spesialisId = it.spesialisId
                         imagePath = it.imgDokter
 
-                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
-                        Glide.with(this@ProfileEditDokterActivity)
-                            .load(imagePath)
-                            .into(binding.ivEditPicture)
-                            .clearOnDetach()
+                        if (!it.imgDokter.isNullOrEmpty()) {
+                            val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                            Glide.with(this@ProfileEditDokterActivity)
+                                .load(imagePath)
+                                .into(binding.ivEditPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             } else {

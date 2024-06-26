@@ -22,7 +22,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<ProfileViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -73,11 +72,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         tvBeratBadan.text = it.bB.toString() + "kg"
                         tvTinggiBadan.text = it.tB.toString() + "cm"
 
-                        val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
-                        Glide.with(this@ProfileFragment)
-                            .load(imagePath)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
+                        if (!it.imgPasien.isNullOrEmpty()) {
+                            val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
+                            Glide.with(this@ProfileFragment)
+                                .load(imagePath)
+                                .into(binding.ivUserPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             }
@@ -99,11 +100,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         tvUserRole.text = spesialis[(it.spesialisId.toInt())-1]
                         tvUserPraktik.text = it.tempatKerja
 
-                        val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
-                        Glide.with(this@ProfileFragment)
-                            .load(imagePath)
-                            .into(binding.ivUserPicture)
-                            .clearOnDetach()
+                        if (!it.imgDokter.isNullOrEmpty()) {
+                            val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
+                            Glide.with(this@ProfileFragment)
+                                .load(imagePath)
+                                .into(binding.ivUserPicture)
+                                .clearOnDetach()
+                        }
                     }
                 }
             }
