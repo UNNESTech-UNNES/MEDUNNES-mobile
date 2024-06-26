@@ -124,7 +124,9 @@
             android:id="@+id/tie_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:singleLine="false"
+            android:maxLines="7"
+            android:inputType="textMultiLine"
             android:hint="@string/konsultasikan_kondisimu"
             android:textSize="14sp" />
 

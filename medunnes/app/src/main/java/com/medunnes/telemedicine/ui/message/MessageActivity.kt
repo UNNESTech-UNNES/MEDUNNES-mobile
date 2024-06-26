@@ -38,6 +38,8 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMessageBinding.inflate(layoutInflater)
         db = Firebase.database
 
+        setViewBasedonRole()
+
         val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
         val childMessage = "konsultasi_${konsultasiId}"
         messageRef = db.reference.child(childMessage)
@@ -48,6 +50,16 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
 
 
         setContentView(binding.root)
+    }
+
+    private fun setViewBasedonRole() {
+        lifecycleScope.launch {
+            val role = viewModel.getUserRole()
+            if (role == 2) {
+                binding.tvCatatan.visibility = View.GONE
+                binding.ivCatatan.visibility = View.GONE
+            }
+        }
     }
 
     private fun setMessageAdapter() {
@@ -84,8 +96,6 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             if (error != null) {
                 Log.d("EMAIL SENDER", email)
                 Toast.makeText(this, "Pesan gagal terkirm: " + error.message, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Pesan berhasil terkirim", Toast.LENGTH_SHORT).show()
             }
         }
 
