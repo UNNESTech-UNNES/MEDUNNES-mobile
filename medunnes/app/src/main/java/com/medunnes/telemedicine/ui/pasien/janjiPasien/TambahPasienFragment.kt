@@ -42,7 +42,9 @@ class TambahPasienFragment : Fragment(),
         setSpinner()
 
         binding.tilPasienTglLahir.setEndIconOnClickListener { showDatePicker() }
+
         binding.btnSimpan.setOnClickListener(this)
+
 
         return binding.root
     }

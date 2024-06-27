@@ -13,10 +13,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:backgroundTint="@color/white"
         android:hint="@string/search_doctor_hint"/>
 
     <com.google.android.material.search.SearchView
         android:id="@+id/search_view"
+        app:backgroundTint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

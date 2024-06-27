@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_spesialisasi_title"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/grey_less_less"
+        android:backgroundTint="@color/white"
         android:hint="@string/search_doctor_hint"/>
 
     <com.google.android.material.search.SearchView
@@ -37,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/white"
         android:hint="@string/search_doctor_hint"/>
 
 
