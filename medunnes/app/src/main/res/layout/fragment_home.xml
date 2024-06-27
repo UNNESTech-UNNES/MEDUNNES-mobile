@@ -20,6 +20,7 @@
             android:layout_height="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/secondary_color"
             app:cardCornerRadius="10dp">
 
             <ImageView

@@ -80,7 +80,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     data.forEach {
                         binding.tvAuthenticate.text = it.name
                         binding.tvAuthenticate.isClickable = false
-
                     }
                 }
             }
@@ -110,7 +109,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (data.isNotEmpty()) {
                 data.forEach {
-                    if (it.imgDokter?.isNotEmpty() == true) {
+                    if (!it.imgDokter.isNullOrEmpty()) {
                         val imagePath = "${imageBaseUrl()}/${it.imgDokter}"
                         Glide.with(this)
                             .load(imagePath)

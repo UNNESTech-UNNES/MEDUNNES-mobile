@@ -18,4 +18,10 @@
     <color name="blue">#3365E4</color>
     <color name="red">#E11E1E</color>
     <color name="mtrl_textinput_default_box_stroke_color">#E6C38C</color>
+    <color name="bottom_nav_color">
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:state_checked="true" android:color="@color/grey" />
+            <item android:state_checked="false" android:color="@color/grey"/>
+        </selector>
+    </color>
 </resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -133,6 +134,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private suspend fun setViewBasedOnUserRole() {
         val userRole = viewModel.getUserRole()
         if (userRole == 1) {
+            setUserProfile()
             setDokterProfile()
             binding.tblBadan.visibility = View.GONE
         } else {
