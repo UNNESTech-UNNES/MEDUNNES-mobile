@@ -153,24 +153,25 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_pasien"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/cv_doctor_profile"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="20dp"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="358dp"
-                app:endIconMode="custom"
+                android:outlineProvider="bounds"
                 app:endIconDrawable="@drawable/arrow_right"
-                android:outlineProvider="bounds">
+                app:endIconMode="custom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_doctor_profile">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tie_pasien_picked"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/nama_lenkap"
+                    android:backgroundTintMode="screen"
+                    android:backgroundTint="@color/white"
                     android:clickable="false"
                     android:editable="false"
+                    android:text="@string/nama_lenkap"
                     android:textColor="@color/third_choice_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -194,16 +195,16 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_title"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="358dp"
+                style="@style/TextInputLayoutStyle"
                 app:endIconMode="custom"
-                app:endIconDrawable="@drawable/calendar"
-                android:outlineProvider="bounds">
+                app:endIconDrawable="@drawable/calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tie_sesi_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTintMode="screen"
+                    android:backgroundTint="@color/white"
                     android:text="@string/format_tangagl"
                     android:textColorHint="@color/third_choice_color"
                     android:clickable="false"
@@ -252,18 +253,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="16dp"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="358dp"
-                android:outlineProvider="bounds">
+                style="@style/TextInputLayoutStyle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tie_sesi_catatan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textLongMessage"
                     android:hint="@string/berikan_catatan_kepada_dokter"
-                    android:textColorHint="@color/third_choice_color"
-                    android:textColor="@color/third_choice_color" />
+                    android:backgroundTintMode="screen"
+                    android:backgroundTint="@color/white"
+                    android:inputType="textLongMessage"
+                    android:textColor="@color/third_choice_color"
+                    android:textColorHint="@color/third_choice_color" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

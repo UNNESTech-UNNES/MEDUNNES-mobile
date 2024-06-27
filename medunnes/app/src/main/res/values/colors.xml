@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#DF42424B</color>
+    <color name="white_glass">#D5FFFFFF</color>
     <color name="grey_blue">#788CA0</color>
     <color name="grey_less">#D7D7D7</color>
     <color name="grey_less_less">#EBEBEB</color>
