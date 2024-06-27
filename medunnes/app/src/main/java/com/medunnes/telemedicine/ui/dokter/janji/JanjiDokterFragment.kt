@@ -80,7 +80,7 @@ class JanjiDokterFragment : Fragment() {
                                     if (isDisetujui) "accepted" else "rejected"
                                 )
 
-                                insertKonsultasi(pasienId, dokterId, topik)
+                                if (isDisetujui) insertKonsultasi(pasienId, dokterId, topik)
 
                                 restartFragment()
                             } catch (e: Exception) {
