@@ -74,6 +74,7 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
         viewModel.getAllDokter(1)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
+                binding.tvDataEmpty.visibility = View.GONE
                 showProgressBar(false)
                 listDokter.clear()
                 listDokter.addAll(data)
@@ -81,6 +82,11 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
                     it.namaDokter.lowercase().contains(filter) &&
                     it.status.contains("approve")
                 } as ArrayList<DokterDataItem>
+
+                if (filteredData.isNullOrEmpty()) {
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.VISIBLE
+                }
                 showRecyclerList(filteredData)
             }
         }

@@ -67,6 +67,7 @@ class KonsultasiPasienFragment : Fragment() {
 
     private suspend fun getDoctorList(filter: String) {
         showProgressBar(true)
+        binding.tvDataEmpty.visibility = View.GONE
         val uid = viewModel.getUserLoginId()
         viewModel.getPasienByUserLogin(uid)
         viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
@@ -74,14 +75,23 @@ class KonsultasiPasienFragment : Fragment() {
             viewModel.getKonsultasiByPasienId(pasienId.toInt())
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
                 if (!konsultasi.isNullOrEmpty()) {
+                    binding.tvDataEmpty.visibility = View.GONE
                     showProgressBar(false)
                     listDokter.clear()
                     listDokter.addAll(konsultasi)
                     val filteredDokterList = konsultasi.filter {
-                        it.dokter.namaDokter.lowercase().contains(filter)
+                        it.dokter.namaDokter.lowercase().contains(filter) &&
                         it.dokter.status.contains("approve")
                     } as ArrayList<KonsultasiDataItem>
+
+                    if (filteredDokterList.isNullOrEmpty()) {
+                        showProgressBar(false)
+                        binding.tvDataEmpty.visibility = View.VISIBLE
+                    }
                     showRecyclerList(filteredDokterList)
+                } else {
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.VISIBLE
                 }
             }
         }

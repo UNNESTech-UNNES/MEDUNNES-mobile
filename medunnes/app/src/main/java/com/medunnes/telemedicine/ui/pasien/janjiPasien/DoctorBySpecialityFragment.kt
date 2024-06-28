@@ -66,6 +66,7 @@ class DoctorBySpecialityFragment : Fragment() {
         viewModel.getAllDokter(1)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
+                binding.tvDataEmpty.visibility = View.GONE
                 showProgressBar(false)
                 listDokter.clear()
                 listDokter.addAll(data)
@@ -75,6 +76,11 @@ class DoctorBySpecialityFragment : Fragment() {
                             it.spesialisId == speciality+1 &&
                             it.status.contains("approve")
                 } as ArrayList<DokterDataItem>
+
+                if (filteredData.isNullOrEmpty()) {
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.VISIBLE
+                }
                 showRecyclerList(filteredData)
             }
         }

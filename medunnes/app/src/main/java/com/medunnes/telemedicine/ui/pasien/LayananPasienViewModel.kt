@@ -42,6 +42,7 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
                 } else {
+                    _dokter.value = dokterData.data
                     Log.d("DATA DOKTER", "Data dokter kosong")
                 }
             } catch (e: Exception) {
@@ -171,6 +172,7 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
                 if (!konsultasiData.data.isNullOrEmpty()) {
                     _konsultasi.value = konsultasiData.data
                 } else {
+                    _konsultasi.value = konsultasiData.data
                     Log.d("DATA DOKTER", "Data dokter kosong")
                 }
             } catch (e: Exception) {
