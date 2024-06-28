@@ -66,19 +66,23 @@ class KonsultasiPasienFragment : Fragment() {
     }
 
     private suspend fun getDoctorList(filter: String) {
+        showProgressBar(true)
         val uid = viewModel.getUserLoginId()
         viewModel.getPasienByUserLogin(uid)
         viewModel.pasien.observe(viewLifecycleOwner) { pasien ->
             val pasienId = pasien[0].idPasien
             viewModel.getKonsultasiByPasienId(pasienId.toInt())
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
-                listDokter.clear()
-                listDokter.addAll(konsultasi)
-                val filteredDokterList = konsultasi.filter {
-                    it.dokter.namaDokter.lowercase().contains(filter)
-                    it.dokter.status.contains("approve")
-                } as ArrayList<KonsultasiDataItem>
-                showRecyclerList(filteredDokterList)
+                if (!konsultasi.isNullOrEmpty()) {
+                    showProgressBar(false)
+                    listDokter.clear()
+                    listDokter.addAll(konsultasi)
+                    val filteredDokterList = konsultasi.filter {
+                        it.dokter.namaDokter.lowercase().contains(filter)
+                        it.dokter.status.contains("approve")
+                    } as ArrayList<KonsultasiDataItem>
+                    showRecyclerList(filteredDokterList)
+                }
             }
         }
     }
@@ -94,6 +98,14 @@ class KonsultasiPasienFragment : Fragment() {
                     lifecycleScope.launch { getDoctorList("${searchView.text}") }
                     false
                 }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 

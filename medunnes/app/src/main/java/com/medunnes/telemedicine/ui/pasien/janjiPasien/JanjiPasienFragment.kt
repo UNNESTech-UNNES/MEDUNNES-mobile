@@ -70,9 +70,11 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getDoctorList(filter: String) {
+        showProgressBar(true)
         viewModel.getAllDokter(1)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
+                showProgressBar(false)
                 listDokter.clear()
                 listDokter.addAll(data)
                 val filteredData = listDokter.filter {
@@ -122,6 +124,14 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
             .replace(R.id.pasien_frame_container, doctorBySpecilityFragment, DoctorBySpecialityFragment::class.java.simpleName)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     override fun onClick(view: View?) {

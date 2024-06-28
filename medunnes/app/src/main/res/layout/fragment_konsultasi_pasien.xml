@@ -44,4 +44,15 @@
         android:textSize="20sp"
         android:text="@string/data_empty"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/rv_doctor_list"
+        app:layout_constraintEnd_toEndOf="@id/rv_doctor_list"
+        app:layout_constraintTop_toTopOf="@id/rv_doctor_list"
+        app:layout_constraintBottom_toBottomOf="@id/rv_doctor_list"
+        android:progressTint="@color/white"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

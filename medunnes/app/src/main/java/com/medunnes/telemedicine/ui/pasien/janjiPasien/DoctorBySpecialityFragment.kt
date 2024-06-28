@@ -62,17 +62,21 @@ class DoctorBySpecialityFragment : Fragment() {
     }
 
     private fun getDoctorBySpeciality(filter: String, speciality: Long) {
+        showProgressBar(true)
         viewModel.getAllDokter(1)
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
-            listDokter.clear()
-            listDokter.addAll(data)
+            if (!data.isNullOrEmpty()) {
+                showProgressBar(false)
+                listDokter.clear()
+                listDokter.addAll(data)
 
-            val filteredData = listDokter.filter {
-                it.namaDokter.lowercase().contains(filter) &&
-                it.spesialisId == speciality+1 &&
-                it.status.contains("approve")
-            } as ArrayList<DokterDataItem>
-            showRecyclerList(filteredData)
+                val filteredData = listDokter.filter {
+                    it.namaDokter.lowercase().contains(filter) &&
+                            it.spesialisId == speciality+1 &&
+                            it.status.contains("approve")
+                } as ArrayList<DokterDataItem>
+                showRecyclerList(filteredData)
+            }
         }
     }
 
@@ -87,6 +91,14 @@ class DoctorBySpecialityFragment : Fragment() {
                     getDoctorBySpeciality("${searchView.text}", specialityId.toLong())
                     false
                 }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 

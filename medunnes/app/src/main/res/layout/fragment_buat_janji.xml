@@ -17,7 +17,16 @@
         android:backgroundTint="@color/white"
         android:hint="@string/search_doctor_hint"/>
 
-
+    <com.google.android.material.search.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/white"
+        android:hint="@string/search_hint"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -275,20 +284,18 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"/>
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/rv_doctor_list"
+                app:layout_constraintEnd_toEndOf="@id/rv_doctor_list"
+                app:layout_constraintTop_toTopOf="@id/rv_doctor_list"
+                app:layout_constraintBottom_toBottomOf="@id/rv_doctor_list"
+                android:progressTint="@color/white"
+                android:visibility="gone"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-    <com.google.android.material.search.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:backgroundTint="@color/white"
-        android:hint="@string/search_hint"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
