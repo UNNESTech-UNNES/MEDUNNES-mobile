@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,7 @@ import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,10 +48,10 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
 
     private suspend fun registerUser() {
         with(binding) {
-
-            var userId: Long = 0
-            var pasienId: Long = 0
+            val userId: Long
+            val pasienId: Long
             try {
+                showProgressBar()
                 val email = "${tieEmail.text}"
                 val password = "${tiePassword.text}"
                 val userRegister = viewModel.registerAPI(
@@ -58,8 +60,7 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     password,
                     "pasien"
                 )
-
-                userRegister.data.forEach { userId = it.idUser.toLong() }
+                userId = userRegister.data[0].idUser.toLong()
 
                 val pasienInsert = viewModel.insertPasien(
                     userId,
@@ -74,9 +75,8 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     "active",
                 )
 
-                pasienInsert.data.forEach { pasienId = it.idPasien }
-
-                viewModel.insertPasienTambahan(
+                pasienId = pasienInsert.data[0].idPasien
+                val pasienTambahanInsert = viewModel.insertPasienTambahan(
                     pasienId,
                     "${tieNamaLengkap.text}",
                     tieTb.text.toString().toInt(),
@@ -87,13 +87,45 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                 )
 
                 firebaseRegister(email, password)
-
-                val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
-                startActivity(intent)
+                intentLoginIfSuccess(pasienTambahanInsert.status)
             } catch (e: Exception) {
-                Log.d("ERROR", e.message.toString())
+                lifecycleScope.launch {
+                    delay(2000)
+                    hideProgressBar()
+                    Toast.makeText(this@RegisterAkunActivity, "Register gagal", Toast.LENGTH_SHORT).show()
+                    Log.d("ERROR", e.message.toString())
+                }
             }
         }
+    }
+
+    private fun showProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnBack.isClickable = false
+            binding.btnRegister.isClickable = false
+        }
+    }
+
+    private fun hideProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnBack.isClickable = true
+            binding.btnRegister.isClickable = true
+        }
+    }
+
+    // Mengalihkan user ke home apbila login berhasil
+    private fun intentLoginIfSuccess(pasienTambahanIns: Boolean) {
+        if (pasienTambahanIns) {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun firebaseRegister(email: String, password: String) {

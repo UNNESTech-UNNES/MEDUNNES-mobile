@@ -1,193 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
     tools:context=".ui.auth.register.Registrasi3Fragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="30dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="30dp">
 
-                <TextView
-                    android:id="@+id/tv_no_spesialis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/spesialis"/>
-
-                <Spinner
-                    android:id="@+id/spinner_spesialisasi"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_spesialis"
-                    app:layout_constraintBottom_toTopOf="@id/tv_pendidikan"
-                    android:layout_marginTop="8dp"
-                    android:spinnerMode="dropdown" />
-
-                <TextView
-                    android:id="@+id/tv_pendidikan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/spinner_spesialisasi"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/pendidikan"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_pendidikan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_pendidikan"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_pendidikan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_pendidikan"
-                        android:inputType="text"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_no_telepon_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_pendidikan"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/no_telepon"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_no_telepon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_telepon_title"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_no_telepon"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_no_telepon"
-                        android:inputType="number"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_password_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/password"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_password_title"
-                    app:endIconMode="password_toggle">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:hint="@string/masukkan_password"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_password_confirmation_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_password"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/password"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_password_confirmation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_password_confirmation_title"
-                    app:endIconMode="password_toggle">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_password_confirmation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:hint="@string/masukkan_password"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <Button
-                    android:id="@+id/btn_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_password_confirmation"
+                    android:padding="16dp"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/grey"
-                    android:text="@string/register"/>
+                    android:layout_marginBottom="20dp">
 
-                <TextView
-                    android:id="@+id/sudah_akun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_register"
-                    app:layout_constraintEnd_toStartOf="@id/tv_masuk"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/sudah_punya_akun"/>
+                    <TextView
+                        android:id="@+id/tv_no_spesialis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:text="@string/spesialis"/>
 
-                <TextView
-                    android:id="@+id/tv_masuk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/sudah_akun"
-                    app:layout_constraintStart_toEndOf="@id/sudah_akun"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginStart="4dp"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    android:text="@string/masuk"/>
+                    <Spinner
+                        android:id="@+id/spinner_spesialisasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_no_spesialis"
+                        app:layout_constraintBottom_toTopOf="@id/tv_pendidikan"
+                        android:layout_marginTop="8dp"
+                        android:spinnerMode="dropdown" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_pendidikan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/spinner_spesialisasi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:textStyle="bold"
+                        android:text="@string/pendidikan"/>
 
-        </androidx.cardview.widget.CardView>
+                    <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                        android:id="@+id/til_pendidikan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_pendidikan"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:startIconTint="@color/grey">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_pendidikan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/masukkan_pendidikan"
+                            android:inputType="text"/>
+                    </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
+                    <TextView
+                        android:id="@+id/tv_no_telepon_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/til_pendidikan"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:text="@string/no_telepon"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                        android:id="@+id/til_no_telepon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_no_telepon_title"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:startIconTint="@color/grey">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_no_telepon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/masukkan_no_telepon"
+                            android:inputType="number"/>
+                    </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
-</ScrollView>
+                    <TextView
+                        android:id="@+id/tv_password_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:text="@string/password"/>
+
+                    <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                        android:id="@+id/til_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_password_title"
+                        app:endIconMode="password_toggle">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:hint="@string/masukkan_password"/>
+                    </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tv_password_confirmation_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/til_password"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:text="@string/password"/>
+
+                    <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                        android:id="@+id/til_password_confirmation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_password_confirmation_title"
+                        app:endIconMode="password_toggle">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tie_password_confirmation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:hint="@string/masukkan_password"/>
+                    </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                    <Button
+                        android:id="@+id/btn_register"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/til_password_confirmation"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/grey"
+                        android:text="@string/register"/>
+
+                    <TextView
+                        android:id="@+id/sudah_akun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_register"
+                        app:layout_constraintEnd_toStartOf="@id/tv_masuk"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/sudah_punya_akun"/>
+
+                    <TextView
+                        android:id="@+id/tv_masuk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@id/sudah_akun"
+                        app:layout_constraintStart_toEndOf="@id/sudah_akun"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        android:text="@string/masuk"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/black_tr"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressTint="@color/white"
+            android:visibility="gone"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

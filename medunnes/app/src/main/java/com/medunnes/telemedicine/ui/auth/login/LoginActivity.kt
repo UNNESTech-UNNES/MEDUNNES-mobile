@@ -62,9 +62,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val userPassword = "${binding.tieUserPassword.text}"
 
         with(viewModel) {
-            try {
-                lifecycleScope.launch {
+            lifecycleScope.launch {
+                try {
                     if (userEmail.isNotEmpty() && userPassword.isNotEmpty()) {
+                        showProgressBar()
                         val login = login(userEmail, userPassword)
                         if (login.status) {
                             setUserLoginId(login.user.idUser)
@@ -82,23 +83,43 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         Toast.makeText(this@LoginActivity, "Lengkapi email dan password", Toast.LENGTH_SHORT).show()
                     }
+                } catch (e: Exception) {
+                    lifecycleScope.launch {
+                        delay(2000)
+                        hideProgressBar()
+                        Toast.makeText(this@LoginActivity, "Login gagal", Toast.LENGTH_SHORT).show()
+                        Log.d("ERROR", e.toString())
+                    }
                 }
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
             }
+        }
+    }
+
+    private fun showProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnBack.isClickable = false
+            binding.btnLogin.isClickable = false
+        }
+    }
+
+    private fun hideProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnBack.isClickable = true
+            binding.btnLogin.isClickable = true
         }
     }
 
     // Mengalihkan user ke home apbila login berhasil
     private suspend fun loginIfSuccess() {
-        while (!viewModel.getUserStatus()) { // Menunggu hingga proses login direspon api
-            binding.progressBar.visibility = View.VISIBLE
-            delay(1000)
+        if (viewModel.getUserStatus()) {
+           hideProgressBar()
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
         }
-
-        binding.progressBar.visibility = View.GONE
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        startActivity(intent)
 
     }
 

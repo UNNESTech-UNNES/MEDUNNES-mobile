@@ -24,10 +24,8 @@ class Registrasi3Fragment : Fragment(),
     View.OnClickListener,
         AdapterView.OnItemSelectedListener
 {
-
     private var _binding: FragmentRegistrasi3Binding? = null
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -92,28 +90,34 @@ class Registrasi3Fragment : Fragment(),
         return "${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}"
     }
 
-    private suspend fun insertUser(): UserResponse {
-        val email = getData(EMAIL)
-        val password = "${binding.tiePassword.text}"
-        val registerUser = viewModel.registerAPI(
-            getData(FULLNAME),
-            email,
-            password,
-            "dokter"
-        )
-        firebaseRegister(email, password)
-        return registerUser
+    private fun insertUser() {
+        showProgressBar()
+        lifecycleScope.launch {
+            try {
+                val email = getData(EMAIL)
+                val password = "${binding.tiePassword.text}"
+                val registerUser = viewModel.registerAPI(
+                    getData(FULLNAME),
+                    email,
+                    password,
+                    "dokter"
+                )
+                firebaseRegister(email, password)
+                insertDokter(registerUser)
+            } catch (e: Exception) {
+                hideProgressBar()
+                Toast.makeText(context, "Register gagal", Toast.LENGTH_SHORT).show()
+                Log.d("ERROR", e.message.toString())
+            }
+        }
     }
 
-    private suspend fun insertDokter() {
-        var userId = 0
+    private suspend fun insertDokter(registerUser: UserResponse) {
+        val userId: Int
         if (inputValidation()) {
             if (passwordValidation()) {
-                insertUser().data.forEach {
-                    userId = it.idUser
-                }
-
-                viewModel.insertDokter(
+                userId = registerUser.data[0].idUser
+                val dokterIns = viewModel.insertDokter(
                     userId,
                     dataSpinner,
                     getData(TITLE_ONE),
@@ -130,14 +134,36 @@ class Registrasi3Fragment : Fragment(),
                     getData(GENDER),
                     "pending"
                 )
-
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
+                intentLoginIfSuccess(dokterIns.status)
             } else {
                 makeToast("Password tidak sesuai")
             }
         } else {
             makeToast("Lengkapi data terlebih dahulu")
+        }
+    }
+
+    private fun intentLoginIfSuccess(dokterIns: Boolean) {
+        if (dokterIns) {
+            hideProgressBar()
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun showProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnRegister.isClickable = false
+        }
+    }
+
+    private fun hideProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnRegister.isClickable = true
         }
     }
 
@@ -147,14 +173,7 @@ class Registrasi3Fragment : Fragment(),
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             }
-            binding.btnRegister -> {
-                try {
-                    lifecycleScope.launch { insertDokter() }
-                } catch (e: Exception) {
-                    makeToast("Ada kesalahan. Coba lagi nanti")
-                    Log.d("REGISTER DOKTER ERROR", e.message.toString())
-                }
-            }
+            binding.btnRegister -> insertUser()
         }
     }
 
