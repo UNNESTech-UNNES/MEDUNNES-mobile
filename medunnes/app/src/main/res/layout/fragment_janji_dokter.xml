@@ -38,4 +38,27 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/rv_message_list"
+        app:layout_constraintEnd_toEndOf="@id/rv_message_list"
+        app:layout_constraintTop_toTopOf="@id/rv_message_list"
+        app:layout_constraintBottom_toBottomOf="@id/rv_message_list"
+        android:progressTint="@color/white"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_data_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:text="@string/data_empty"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

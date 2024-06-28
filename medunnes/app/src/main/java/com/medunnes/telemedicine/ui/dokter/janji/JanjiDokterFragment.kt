@@ -112,6 +112,7 @@ class JanjiDokterFragment : Fragment() {
     }
 
     private suspend fun getJanjiByDokterId(filter: String) {
+        showProgressBar(true)
         val listJanjiPasien = ArrayList<JanjiDataItem>()
         val uid = viewModel.getUserLogin()
         var dokterId: Int
@@ -121,11 +122,17 @@ class JanjiDokterFragment : Fragment() {
                 dokterId = data[0].idDokter.toInt()
                 viewModel.getJanjiByDokterId(dokterId)
                 viewModel.janji.observe(viewLifecycleOwner) { janji ->
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.GONE
                     listJanjiPasien.clear()
                     listJanjiPasien.addAll(janji)
                     val filteredData = listJanjiPasien.filter { name ->
                         name.pasienTambahan.namaPasienTambahan.lowercase().contains(filter)
                     } as ArrayList<JanjiDataItem>
+
+                    if (filteredData.isNullOrEmpty()) {
+                        binding.tvDataEmpty.visibility = View.VISIBLE
+                    }
                     showRecycleList(filteredData)
                 }
             }
@@ -143,6 +150,14 @@ class JanjiDokterFragment : Fragment() {
                     lifecycleScope.launch { getJanjiByDokterId("${searchView.text}") }
                     false
                 }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -115,10 +114,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private suspend fun setUserProfile() {
+        showProgressBar(true)
+        binding.tblProfile.visibility = View.INVISIBLE
         val userId = viewModel.getUserLoginId()
         viewModel.getUserLogin(userId)
         viewModel.user.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
+                showProgressBar(false)
+                binding.tblProfile.visibility = View.VISIBLE
                 data.forEach {
                     with(binding) {
                         tvUserName.text = it.name
@@ -127,6 +130,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         namaDokter = it.name
                     }
                 }
+            } else {
+                showProgressBar(false)
+                binding.tblProfile.visibility = View.INVISIBLE
             }
         }
     }
@@ -160,6 +166,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         } else {
             val intent = Intent(context, ProfilePasienEditActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 

@@ -71,11 +71,12 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private suspend fun setDokterProfileData() {
+        showProgressBar(true)
         val userId = viewModel.getUserLoginId()
-
         viewModel.getDokterByUserLogin(userId)
         viewModel.dokter.observe(this) { data ->
             if (!data.isNullOrEmpty()) {
+                showProgressBar(false)
                 data.forEach {
                     with(binding) {
                         dokterId = it.idDokter
@@ -103,8 +104,6 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
-            } else {
-                Log.d("DATA", data.toString())
             }
         }
     }
@@ -194,6 +193,18 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                     Log.d("UPLOAD IMAGE FAIL", e.message.toString())
                 }
             }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnEditSend.isClickable = false
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnEditSend.isClickable = true
         }
     }
 

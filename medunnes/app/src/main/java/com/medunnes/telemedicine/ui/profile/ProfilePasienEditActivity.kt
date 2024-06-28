@@ -68,10 +68,12 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private suspend fun setPasienProfileData() {
+        showProgressBar(true)
         val userId = viewModel.getUserLoginId()
         viewModel.getPasienByUserLogin(userId)
         viewModel.pasien.observe(this) { data ->
             if (!data.isNullOrEmpty()) {
+                showProgressBar(false)
                 data.forEach {
                     with(binding) {
                         pasienId = it.idPasien
@@ -160,6 +162,18 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
                     Log.d("UPLOAD IMAGE FAIL", e.message.toString())
                 }
             }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnEditSend.isClickable = false
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnEditSend.isClickable = true
         }
     }
 

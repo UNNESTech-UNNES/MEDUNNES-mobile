@@ -54,19 +54,31 @@ class KonsultasiFragment : Fragment() {
     }
 
     private suspend fun getPatientList(filter: String) {
+        showProgressBar(true)
         val uid = viewModel.getUserLogin()
         viewModel.getDokterByUserId(uid)
         viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
             val dokterId = dokter[0].idDokter.toInt()
             viewModel.getKonsultasiByDokter(dokterId)
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
-                listPatient.clear()
-                listPatient.addAll(konsultasi)
-                val filteredKonsultasiList = konsultasi.filter {
-                    it.pasien.namaPasien.lowercase().contains(filter)
-                } as ArrayList<KonsultasiDataItem>
+                if (!konsultasi.isNullOrEmpty()) {
+                    binding.tvDataEmpty.visibility = View.GONE
+                    showProgressBar(false)
+                    listPatient.clear()
+                    listPatient.addAll(konsultasi)
+                    val filteredKonsultasiList = konsultasi.filter {
+                        it.pasien.namaPasien.lowercase().contains(filter)
+                    } as ArrayList<KonsultasiDataItem>
 
-                showRecycleList(filteredKonsultasiList)
+                    if (filteredKonsultasiList.isNullOrEmpty()) {
+                        binding.tvDataEmpty.visibility = View.VISIBLE
+                    }
+
+                    showRecycleList(filteredKonsultasiList)
+
+
+                }
+
             }
         }
     }
@@ -106,6 +118,14 @@ class KonsultasiFragment : Fragment() {
                     false
 
                 }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 }
