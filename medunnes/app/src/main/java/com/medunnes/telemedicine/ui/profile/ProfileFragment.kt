@@ -69,8 +69,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             if (!data.isNullOrEmpty()) {
                 data.forEach {
                     with(binding) {
-                        tvBeratBadan.text = it.bB.toString() + "kg"
-                        tvTinggiBadan.text = it.tB.toString() + "cm"
+                        tvBeratBadan.text = it.bB.toString() + " kg"
+                        tvTinggiBadan.text = it.tB.toString() + " cm"
 
                         if (!it.imgPasien.isNullOrEmpty()) {
                             val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
@@ -126,7 +126,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvUserName.text = it.name
                         tvUserEmail.text = it.email
-                        tvUserRole.text = it.type
+                        tvUserRole.text = if (it.type == "pasien") "Pasien" else ""
                         namaDokter = it.name
                     }
                 }
