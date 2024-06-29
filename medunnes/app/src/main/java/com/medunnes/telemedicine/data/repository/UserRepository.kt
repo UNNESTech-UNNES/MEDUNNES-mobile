@@ -8,6 +8,7 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
+import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiPasien
@@ -200,6 +201,12 @@ class UserRepository private constructor(
         dokterId: Long,
         topik: String
     ): KonsultasiResponse = ApiConfig.getApiService().insertKonsultasi(pasienId, dokterId, topik)
+
+    // Diskusi
+    suspend fun insertDisuksi(
+        konsultasiId: Long,
+        message: String
+    ): DiskusiResponse = ApiConfig.getApiService().insertDiskusi(konsultasiId, message)
 
     // Sesi
     suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()

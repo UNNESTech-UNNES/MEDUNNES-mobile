@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.data.api
 
+import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
@@ -257,4 +258,11 @@ interface ApiService {
         @Path("id") id: Int,
         @Part file: MultipartBody.Part
     ): PasienResponse
+
+    @FormUrlEncoded
+    @POST("api/diskusi")
+    suspend fun insertDiskusi(
+        @Field("konsultasi_id") konsultasiId: Long,
+        @Field("message") message: String
+    ): DiskusiResponse
 }

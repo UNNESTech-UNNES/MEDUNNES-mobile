@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
@@ -107,4 +108,9 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
         dokterId: Long,
         topik: String
     ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik)
+
+    suspend fun insertDiskusi(
+        konsultasiId: Long,
+        message: String
+    ): DiskusiResponse = repository.insertDisuksi(konsultasiId, message)
 }

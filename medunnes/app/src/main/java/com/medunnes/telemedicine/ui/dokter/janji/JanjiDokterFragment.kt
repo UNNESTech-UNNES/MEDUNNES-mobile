@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.response.JanjiDataItem
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.databinding.FragmentJanjiDokterBinding
 import com.medunnes.telemedicine.ui.adapter.JanjiDokterAdapter
 import com.medunnes.telemedicine.ui.dialog.PasienDetailDialog
@@ -80,7 +81,11 @@ class JanjiDokterFragment : Fragment() {
                                     if (isDisetujui) "accepted" else "rejected"
                                 )
 
-                                if (isDisetujui) insertKonsultasi(pasienId, dokterId, topik)
+                                if (isDisetujui) {
+                                    val insKonsultasi = insertKonsultasi(pasienId, dokterId, topik)
+                                    val konsultasiId = insKonsultasi.data[0].idKonsultasi
+                                    insertDiskusi(konsultasiId.toLong(), "memulai diskusi")
+                                }
 
                                 restartFragment()
                             } catch (e: Exception) {
@@ -99,8 +104,13 @@ class JanjiDokterFragment : Fragment() {
         pasienId: Long,
         dokterId: Long,
         topik: String
+    ): KonsultasiResponse = viewModel.insertKonsultasi(pasienId, dokterId, topik)
+
+    private suspend fun insertDiskusi(
+        konsultasiId: Long,
+        message: String
     ) {
-        viewModel.insertKonsultasi(pasienId, dokterId, topik)
+        viewModel.insertDiskusi(konsultasiId, message)
     }
 
     private fun restartFragment() {
