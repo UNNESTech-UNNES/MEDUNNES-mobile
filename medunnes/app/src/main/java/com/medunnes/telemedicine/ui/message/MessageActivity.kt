@@ -17,11 +17,13 @@ import com.google.firebase.ktx.Firebase
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Message
+import com.medunnes.telemedicine.data.response.CatatanDataItem
 import com.medunnes.telemedicine.databinding.ActivityMessageBinding
 import com.medunnes.telemedicine.ui.adapter.MessageAdapter
 import com.medunnes.telemedicine.ui.dialog.CatatanBottomSheetDialog
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.util.Date
 
 class MessageActivity : AppCompatActivity(), View.OnClickListener {
@@ -143,6 +145,26 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     private fun showButtomSheet() {
         val cbsd = CatatanBottomSheetDialog()
         supportFragmentManager.let { cbsd.show(it, CatatanBottomSheetDialog.TAG) }
+
+        cbsd.setOnItemClickCallback(object : CatatanBottomSheetDialog.OnItemClickCallback {
+            override fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem) {
+                lifecycleScope.launch {
+                    try {
+                        viewModel.insertCatatan(
+                            intent.getIntExtra(KONSULTASI_ID, 0).toLong(),
+                            catatan.gejala,
+                            catatan.diagnosis,
+                            catatan.catatan
+                        )
+                        Toast.makeText(this@MessageActivity, "Catatan disimpan", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Log.d("INSERT CATATAN FAIL", e.message.toString())
+                    }
+
+                }
+            }
+
+        })
     }
 
     companion object {

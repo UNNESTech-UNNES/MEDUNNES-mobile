@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
@@ -91,6 +92,13 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
             }
         }
     }
+
+    suspend fun insertCatatan(
+        konsultasiId: Long,
+        gejala: String,
+        diagnosis: String,
+        catatan: String
+    ): CatatanResponse = repository.insertCatatan(konsultasiId, gejala, diagnosis, catatan)
 
     suspend fun getUserLoginId() = repository.getUserId()
     suspend fun getUserRole() = repository.getUserRole()

@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.data.api
 
+import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
@@ -265,4 +266,13 @@ interface ApiService {
         @Field("konsultasi_id") konsultasiId: Long,
         @Field("message") message: String
     ): DiskusiResponse
+
+    @FormUrlEncoded
+    @POST("api/catatan")
+    suspend fun insertCatatan(
+        @Field("konsultasi_id") konsultasiId: Long,
+        @Field("gejala") gejala: String,
+        @Field("diagnosis") diagnosis: String,
+        @Field("catatan") catatan: String
+    ): CatatanResponse
 }
