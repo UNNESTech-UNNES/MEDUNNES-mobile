@@ -19,6 +19,7 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.model.Message
 import com.medunnes.telemedicine.databinding.ActivityMessageBinding
 import com.medunnes.telemedicine.ui.adapter.MessageAdapter
+import com.medunnes.telemedicine.ui.dialog.CatatanBottomSheetDialog
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -47,6 +48,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         lifecycleScope.launch { setMessager() }
         setMessageAdapter()
         binding.sendButton.setOnClickListener(this)
+        binding.tvCatatan.setOnClickListener(this)
 
 
         setContentView(binding.root)
@@ -138,6 +140,11 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun showButtomSheet() {
+        val cbsd = CatatanBottomSheetDialog()
+        supportFragmentManager.let { cbsd.show(it, CatatanBottomSheetDialog.TAG) }
+    }
+
     companion object {
         const val DOKTER_ID = "dokter_id"
         const val PASIEN_ID = "pasien_id"
@@ -169,6 +176,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when(view) {
             binding.sendButton -> sendMessage()
+            binding.tvCatatan -> showButtomSheet()
         }
     }
 }

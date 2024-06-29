@@ -192,6 +192,9 @@
     <string name="konsultasikan_kondisimu">Konsultasikan kondisimu</string>
     <string name="ini_merupakan_pesan">Ini merupakan pesan</string>
     <string name="waktu">waktu</string>
+    <string name="catatan_dokter">Catatan Dokter</string>
+    <string name="gejala">Gejala</string>
+    <string name="diagnosis">Diagnosis</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>
