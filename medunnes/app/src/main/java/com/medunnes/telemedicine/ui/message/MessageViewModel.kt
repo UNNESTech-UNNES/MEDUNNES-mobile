@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.CatatanDataItem
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
@@ -25,6 +26,9 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
     val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
+
+    private val _catatan = MutableLiveData<List<CatatanDataItem>>()
+    val catatan: LiveData<List<CatatanDataItem>> get() = _catatan
 
     fun getUserLogin(userId: Int) {
         viewModelScope.launch {
@@ -80,13 +84,11 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
-    fun getKonsultasi(id: Int) {
+    fun getCatatanByKonsultasiId(id: Int) {
         viewModelScope.launch {
             try {
-                val konsultasiData = repository.getKonsultasiById(id)
-                if (konsultasiData.data.isNotEmpty()) {
-                    _konsultasi.value = konsultasiData.data
-                }
+                val catatanData = repository.getCatatanByKonsultasiId(id)
+                _catatan.value = catatanData.data
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
             }
@@ -99,6 +101,14 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
         diagnosis: String,
         catatan: String
     ): CatatanResponse = repository.insertCatatan(konsultasiId, gejala, diagnosis, catatan)
+
+    suspend fun updateCatatan(
+        id: Int,
+        konsultasiId: Long,
+        gejala: String,
+        diagnosis: String,
+        catatan: String
+    ): CatatanResponse = repository.updateCatatan(id, konsultasiId, gejala, diagnosis, catatan)
 
     suspend fun getUserLoginId() = repository.getUserId()
     suspend fun getUserRole() = repository.getUserRole()

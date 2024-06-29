@@ -184,6 +184,7 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
     suspend fun insertKonsultasi(
         pasienId: Long,
         dokterId: Long,
-        topik: String
-    ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik)
+        topik: String,
+        status: String
+    ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik, status)
 }

@@ -3,16 +3,11 @@ package com.medunnes.telemedicine.data.repository
 import androidx.lifecycle.LiveData
 import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
-import com.medunnes.telemedicine.data.model.Janji
-import com.medunnes.telemedicine.data.model.JanjiDanPasien
-import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
-import com.medunnes.telemedicine.data.model.UserAndDokter
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
-import com.medunnes.telemedicine.data.response.KonsultasiPasien
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
 import com.medunnes.telemedicine.data.response.PasienResponse
@@ -200,8 +195,9 @@ class UserRepository private constructor(
     suspend fun insertKonsultasi(
         pasienId: Long,
         dokterId: Long,
-        topik: String
-    ): KonsultasiResponse = ApiConfig.getApiService().insertKonsultasi(pasienId, dokterId, topik)
+        topik: String,
+        status: String
+    ): KonsultasiResponse = ApiConfig.getApiService().insertKonsultasi(pasienId, dokterId, topik, status)
 
     // Diskusi
     suspend fun insertDisuksi(
@@ -210,12 +206,22 @@ class UserRepository private constructor(
     ): DiskusiResponse = ApiConfig.getApiService().insertDiskusi(konsultasiId, message)
 
     // Catatan
+    suspend fun getCatatanByKonsultasiId(id: Int): CatatanResponse =
+        ApiConfig.getApiService().getCatatanByKonsultasiId(id)
     suspend fun insertCatatan(
         konsultasiId: Long,
         gejala: String,
         diagnosis: String,
         catatan: String
     ): CatatanResponse = ApiConfig.getApiService().insertCatatan(konsultasiId, gejala, diagnosis, catatan)
+
+    suspend fun updateCatatan(
+        id: Int,
+        konsultasiId: Long,
+        gejala: String,
+        diagnosis: String,
+        catatan: String
+    ): CatatanResponse = ApiConfig.getApiService().updateCatatan(id, konsultasiId, gejala, diagnosis, catatan)
 
     // Sesi
     suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()
@@ -224,11 +230,6 @@ class UserRepository private constructor(
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)
     fun register(user: User): Long = mUserDao.insertUser(user)
     fun isEmailExist(email: String): LiveData<List<User>> = mUserDao.isEmailExist(email)
-    fun updateProfile(user: User) = executorService.execute { mUserDao.updateUser(user) }
-    fun getUserAndDokter(uid: Int): LiveData<List<UserAndDokter>> = mUserDao.getUserAndDokter(uid)
-    fun getDokterBySpeciality(speciality: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterBySpeciality(speciality)
-    fun getDokterByJanji(uid: Int): LiveData<List<JanjiDanPasien>> = mUserDao.getDokterByJanji(uid)
-    fun getDokterByDokterId(dokterId: Int): LiveData<List<UserAndDokter>> = mUserDao.getDokterByDokterId(dokterId)
 
     //DataStore
     suspend fun setLoginStatus() = authDataStore.loginUser()

@@ -83,7 +83,12 @@ class JanjiDokterFragment : Fragment() {
                                 )
 
                                 if (isDisetujui) {
-                                    val insKonsultasi = insertKonsultasi(pasienId, dokterId, topik)
+                                    val insKonsultasi = insertKonsultasi(
+                                        pasienId,
+                                        dokterId,
+                                        topik,
+                                        "berlangsung"
+                                    )
                                     val konsultasiId = insKonsultasi.data[0].idKonsultasi
                                     insertDiskusi(konsultasiId.toLong(), "memulai diskusi")
                                 }
@@ -104,8 +109,9 @@ class JanjiDokterFragment : Fragment() {
     private suspend fun insertKonsultasi(
         pasienId: Long,
         dokterId: Long,
-        topik: String
-    ): KonsultasiResponse = viewModel.insertKonsultasi(pasienId, dokterId, topik)
+        topik: String,
+        status: String
+    ): KonsultasiResponse = viewModel.insertKonsultasi(pasienId, dokterId, topik, status)
 
     private suspend fun insertDiskusi(
         konsultasiId: Long,

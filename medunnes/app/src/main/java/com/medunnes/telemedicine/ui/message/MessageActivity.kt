@@ -23,7 +23,6 @@ import com.medunnes.telemedicine.ui.adapter.MessageAdapter
 import com.medunnes.telemedicine.ui.dialog.CatatanBottomSheetDialog
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.util.Date
 
 class MessageActivity : AppCompatActivity(), View.OnClickListener {
@@ -144,27 +143,81 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showButtomSheet() {
         val cbsd = CatatanBottomSheetDialog()
-        supportFragmentManager.let { cbsd.show(it, CatatanBottomSheetDialog.TAG) }
+        val bundle = Bundle()
+        val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
 
-        cbsd.setOnItemClickCallback(object : CatatanBottomSheetDialog.OnItemClickCallback {
-            override fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem) {
-                lifecycleScope.launch {
-                    try {
-                        viewModel.insertCatatan(
-                            intent.getIntExtra(KONSULTASI_ID, 0).toLong(),
-                            catatan.gejala,
-                            catatan.diagnosis,
-                            catatan.catatan
-                        )
-                        Toast.makeText(this@MessageActivity, "Catatan disimpan", Toast.LENGTH_SHORT).show()
-                    } catch (e: Exception) {
-                        Log.d("INSERT CATATAN FAIL", e.message.toString())
-                    }
-
+        viewModel.getCatatanByKonsultasiId(konsultasiId)
+        viewModel.catatan.observe(this@MessageActivity) { data ->
+            if (data.isNotEmpty()) {
+                with(bundle) {
+                    putInt(CatatanBottomSheetDialog.ID_CATATAN, data[0].idCatatan)
+                    putString(CatatanBottomSheetDialog.GEJALA, data[0].gejala)
+                    putString(CatatanBottomSheetDialog.DIAGNOSIS, data[0].diagnosis)
+                    putString(CatatanBottomSheetDialog.CATATAN, data[0].catatan)
                 }
+                cbsd.arguments = bundle
             }
 
-        })
+            if (!cbsd.isAdded) {
+                supportFragmentManager.let { cbsd.show(it, CatatanBottomSheetDialog.TAG) }
+                cbsd.setOnItemClickCallback(object : CatatanBottomSheetDialog.OnItemClickCallback {
+                    override fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem) {
+                        try {
+                            if (data.isEmpty()) {
+                                insertCatatan(
+                                    catatan.gejala,
+                                    catatan.diagnosis,
+                                    catatan.catatan
+                                )
+
+                                makeToast("Catatan disimpan")
+                            } else {
+                                updateCatatan(
+                                    data[0].idCatatan,
+                                    catatan.gejala,
+                                    catatan.diagnosis,
+                                    catatan.catatan
+                                )
+                                makeToast("Catatan diperbarui")
+                            }
+                        } catch (e: Exception) {
+                            makeToast("Catatan gagal disimpan")
+                            Log.d("INSERT/UPDATE CATATAN FAIL", e.message.toString())
+                        }
+                    }
+
+                })
+            }
+        }
+    }
+
+    private fun insertCatatan(gejala: String, diagnosis: String, catatan: String) {
+        val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
+        lifecycleScope.launch {
+            viewModel.insertCatatan(
+                konsultasiId.toLong(),
+                gejala,
+                diagnosis,
+                catatan
+            )
+        }
+    }
+
+    private fun updateCatatan(id: Int, gejala: String, diagnosis: String, catatan: String) {
+        val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
+        lifecycleScope.launch {
+            viewModel.updateCatatan(
+                id,
+                konsultasiId.toLong(),
+                gejala,
+                diagnosis,
+                catatan
+            )
+        }
+    }
+
+    private fun makeToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

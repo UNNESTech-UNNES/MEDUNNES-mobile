@@ -241,6 +241,7 @@ interface ApiService {
         @Field("pasien_id") pasienId: Long,
         @Field("dokter_id") dokterId: Long,
         @Field("topik") topik: String,
+        @Field("status") status: String
     ): KonsultasiResponse
 
     @GET("api/sesi")
@@ -267,9 +268,24 @@ interface ApiService {
         @Field("message") message: String
     ): DiskusiResponse
 
+    @GET("api/catatan/{id}")
+    suspend fun getCatatanByKonsultasiId(
+        @Path("id") id: Int,
+    ): CatatanResponse
+
     @FormUrlEncoded
     @POST("api/catatan")
     suspend fun insertCatatan(
+        @Field("konsultasi_id") konsultasiId: Long,
+        @Field("gejala") gejala: String,
+        @Field("diagnosis") diagnosis: String,
+        @Field("catatan") catatan: String
+    ): CatatanResponse
+
+    @FormUrlEncoded
+    @PUT("api/catatan/{id}")
+    suspend fun updateCatatan(
+        @Path("id") id: Int,
         @Field("konsultasi_id") konsultasiId: Long,
         @Field("gejala") gejala: String,
         @Field("diagnosis") diagnosis: String,

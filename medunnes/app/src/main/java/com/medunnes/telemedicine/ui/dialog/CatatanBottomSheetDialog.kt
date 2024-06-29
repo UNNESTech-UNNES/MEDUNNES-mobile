@@ -25,6 +25,7 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = BottomSheetCatatanBinding.inflate(inflater, container, false)
+        setCatatan()
         btnCatatanClicked()
         return binding.root
     }
@@ -46,6 +47,19 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
         this.onItemClickCallback = onItemClickCallback
     }
 
+    private fun setCatatan() {
+        val idCatatan = arguments?.getInt(ID_CATATAN)
+        if (idCatatan != null) {
+            val gejala = arguments?.getString(GEJALA)
+            val diagnosis = arguments?.getString(DIAGNOSIS)
+            val catatan = arguments?.getString(CATATAN)
+
+            binding.tieGejala.setText(gejala)
+            binding.tieDiagnosis.setText(diagnosis)
+            binding.tieCatatan.setText(catatan)
+        }
+    }
+
     private fun btnCatatanClicked() {
         binding.btnCatatanSend.setOnClickListener {
             onItemClickCallback.onBtnSimpanCatatanClicked(CatatanDataItem(
@@ -62,5 +76,9 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "CatatanBottomSheetDialog"
+        const val ID_CATATAN = "catatan"
+        const val GEJALA = "gejala"
+        const val DIAGNOSIS = "diagnosis"
+        const val CATATAN = "catatan"
     }
 }
