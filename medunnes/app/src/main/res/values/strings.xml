@@ -195,6 +195,7 @@
     <string name="catatan_dokter">Catatan Dokter</string>
     <string name="gejala">Gejala</string>
     <string name="diagnosis">Diagnosis</string>
+    <string name="akhiri_sesi">Akhiri Sesi</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

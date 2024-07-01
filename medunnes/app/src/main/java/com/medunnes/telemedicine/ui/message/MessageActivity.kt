@@ -50,6 +50,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         setMessageAdapter()
         binding.sendButton.setOnClickListener(this)
         binding.tvCatatan.setOnClickListener(this)
+        binding.ivCatatan.setOnClickListener(this)
 
 
         setContentView(binding.root)
@@ -146,6 +147,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         val bundle = Bundle()
         val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
 
+        setCatatan(true)
         viewModel.getCatatanByKonsultasiId(konsultasiId)
         viewModel.catatan.observe(this@MessageActivity) { data ->
             if (data.isNotEmpty()) {
@@ -187,6 +189,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                     }
 
                 })
+                setCatatan(false)
             }
         }
     }
@@ -213,6 +216,18 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                 diagnosis,
                 catatan
             )
+        }
+    }
+
+    private fun setCatatan(isClicked: Boolean) {
+        if (isClicked) {
+            binding.tvCatatan.visibility = View.INVISIBLE
+            binding.ivCatatan.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.tvCatatan.visibility = View.VISIBLE
+            binding.ivCatatan.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -252,6 +267,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         when(view) {
             binding.sendButton -> sendMessage()
             binding.tvCatatan -> showButtomSheet()
+            binding.ivCatatan -> showButtomSheet()
         }
     }
 }

@@ -77,6 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="@color/third_choice_color"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,6 +127,20 @@
         android:textColor="@color/third_choice_color"
         android:textStyle="bold"
         android:text="@string/simpan"/>
+
+    <Button
+        android:id="@+id/btn_akhiri_sesi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_catatan_send"
+        app:layout_constraintStart_toStartOf="@id/btn_catatan_send"
+        app:layout_constraintEnd_toEndOf="@id/btn_catatan_send"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:visibility="gone"
+        android:textColor="@color/third_choice_color"
+        android:textStyle="bold"
+        android:text="@string/akhiri_sesi"/>
 
 
 
