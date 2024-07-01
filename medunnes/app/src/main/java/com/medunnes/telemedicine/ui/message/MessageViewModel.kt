@@ -11,6 +11,7 @@ import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
+import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import kotlinx.coroutines.launch
 
@@ -86,9 +87,21 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
 
     fun getCatatanByKonsultasiId(id: Int) {
         viewModelScope.launch {
+            val catatanData = repository.getCatatanByKonsultasiId(id)
             try {
-                val catatanData = repository.getCatatanByKonsultasiId(id)
                 _catatan.value = catatanData.data
+            } catch (e: Exception) {
+                _catatan.value = catatanData.data
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getKonsultasiById(id: Int) {
+        viewModelScope.launch {
+            try {
+                val konsultasiData = repository.getKonsultasiById(id)
+                _konsultasi.value = konsultasiData.data
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
             }
@@ -109,6 +122,14 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
         diagnosis: String,
         catatan: String
     ): CatatanResponse = repository.updateCatatan(id, konsultasiId, gejala, diagnosis, catatan)
+
+    suspend fun updateKonsultasi(
+        id: Int,
+        pasienId: Long,
+        dokterId: Long,
+        topik: String,
+        status: String
+    ): KonsultasiResponse = repository.updateKonsultasi(id, pasienId, dokterId, topik, status)
 
     suspend fun getUserLoginId() = repository.getUserId()
     suspend fun getUserRole() = repository.getUserRole()

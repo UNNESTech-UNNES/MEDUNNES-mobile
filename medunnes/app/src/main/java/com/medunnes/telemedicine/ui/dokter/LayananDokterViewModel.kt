@@ -49,7 +49,7 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
         viewModelScope.launch {
             try {
                 val dokter = repository.getDokterByUser(id)
-                if (dokter.data.isNotEmpty()) {
+                if (!dokter.data.isNullOrEmpty()) {
                     _dokter.value = dokter.data
                 } else {
                     Log.d("DATA DOKTER", "Data dokter kosong")
@@ -82,6 +82,7 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
                 if (konsultasi.data.isNotEmpty()) {
                     _konsultasi.value = konsultasi.data
                 } else {
+                    _konsultasi.value = konsultasi.data
                     Log.d("DATA DOKTER", "Data dokter kosong")
                 }
             } catch (e: Exception) {

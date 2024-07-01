@@ -113,6 +113,22 @@
         app:layout_constraintTop_toBottomOf="@id/tbl_messanger"
         app:layout_constraintBottom_toTopOf="@id/til_message"/>
 
+    <TableLayout
+        android:id="@+id/tbl_sesi_berakhir"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/app_color"
+        android:visibility="gone">
+        <TextView
+            android:text="@string/sesi_telah_berakhir"
+            android:textColor="@color/third_choice_color"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </TableLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_message"
         android:layout_width="0dp"
@@ -129,7 +145,8 @@
         app:boxBackgroundMode="outline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sendButton">
+        app:layout_constraintEnd_toStartOf="@id/sendButton"
+        android:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tie_message"

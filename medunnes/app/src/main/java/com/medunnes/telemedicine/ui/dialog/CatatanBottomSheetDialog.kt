@@ -1,6 +1,7 @@
 package com.medunnes.telemedicine.ui.dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
 
     interface OnItemClickCallback {
         fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem)
+        fun onBtnAkhiriPesanClicked()
     }
 
     override fun onCreateView(
@@ -26,7 +28,9 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
     ): View {
         binding = BottomSheetCatatanBinding.inflate(inflater, container, false)
         setCatatan()
+        setViewbasedOnStatus()
         btnCatatanClicked()
+        btnAkhiriSesiClicked()
         return binding.root
     }
 
@@ -40,7 +44,12 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
-        return super.onCreateDialog(savedInstanceState)
+        return super.onCreateDialog(null)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        onDestroy()
+        super.onDismiss(dialog)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -57,6 +66,8 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
             binding.tieGejala.setText(gejala)
             binding.tieDiagnosis.setText(diagnosis)
             binding.tieCatatan.setText(catatan)
+
+            binding.btnAkhiriSesi.visibility = View.VISIBLE
         }
     }
 
@@ -74,11 +85,29 @@ class CatatanBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
+    private fun btnAkhiriSesiClicked() {
+        binding.btnAkhiriSesi.setOnClickListener {
+            onItemClickCallback.onBtnAkhiriPesanClicked()
+        }
+    }
+
+    private fun setViewbasedOnStatus() {
+        val status = arguments?.getString(STATUS)
+        if (status == "berakhir") {
+            binding.btnCatatanSend.visibility = View.GONE
+            binding.btnAkhiriSesi.visibility = View.GONE
+            binding.tieGejala.isEnabled = false
+            binding.tieDiagnosis.isEnabled = false
+            binding.tieCatatan.isEnabled = false
+        }
+    }
+
     companion object {
         const val TAG = "CatatanBottomSheetDialog"
         const val ID_CATATAN = "catatan"
         const val GEJALA = "gejala"
         const val DIAGNOSIS = "diagnosis"
         const val CATATAN = "catatan"
+        const val STATUS = "status"
     }
 }

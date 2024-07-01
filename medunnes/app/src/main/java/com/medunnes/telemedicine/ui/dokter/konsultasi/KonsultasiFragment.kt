@@ -47,7 +47,7 @@ class KonsultasiFragment : Fragment() {
 
         adapter.setOnItemClickCallback(object : KonsultasiAdapter.OnItemClickCallback {
             override fun onItemClicked(konsultasi: KonsultasiDataItem) {
-                intentMessage(konsultasi.pasienId, konsultasi.idKonsultasi)
+                intentMessage(konsultasi.pasienId.toInt(), konsultasi.idKonsultasi.toInt())
             }
 
         })
@@ -62,7 +62,6 @@ class KonsultasiFragment : Fragment() {
             viewModel.getKonsultasiByDokter(dokterId)
             viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
                 if (!konsultasi.isNullOrEmpty()) {
-                    binding.tvDataEmpty.visibility = View.GONE
                     showProgressBar(false)
                     listPatient.clear()
                     listPatient.addAll(konsultasi)
@@ -70,13 +69,14 @@ class KonsultasiFragment : Fragment() {
                         it.pasien.namaPasien.lowercase().contains(filter)
                     } as ArrayList<KonsultasiDataItem>
 
-                    if (filteredKonsultasiList.isNullOrEmpty()) {
+                    if (filteredKonsultasiList.isEmpty()) {
                         binding.tvDataEmpty.visibility = View.VISIBLE
                     }
 
                     showRecycleList(filteredKonsultasiList)
-
-
+                } else {
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.VISIBLE
                 }
 
             }

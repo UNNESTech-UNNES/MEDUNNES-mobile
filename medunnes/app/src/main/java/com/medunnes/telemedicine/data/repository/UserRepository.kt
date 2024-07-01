@@ -199,6 +199,14 @@ class UserRepository private constructor(
         status: String
     ): KonsultasiResponse = ApiConfig.getApiService().insertKonsultasi(pasienId, dokterId, topik, status)
 
+    suspend fun updateKonsultasi(
+        id: Int,
+        pasienId: Long,
+        dokterId: Long,
+        topik: String,
+        status: String
+    ): KonsultasiResponse = ApiConfig.getApiService().updateKonsultasi(id, pasienId, dokterId, topik, status)
+
     // Diskusi
     suspend fun insertDisuksi(
         konsultasiId: Long,

@@ -50,8 +50,8 @@ class KonsultasiPasienFragment : Fragment() {
                     val konsultasiDetailFragment = KonsultasiDetailFragment()
                     val fragment = parentFragmentManager
                     val bundle = Bundle()
-                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, konsultasi.dokterId)
-                    bundle.putInt(KonsultasiDetailFragment.KONSULTASI_ID, konsultasi.idKonsultasi)
+                    bundle.putInt(KonsultasiDetailFragment.DOKTER_ID, konsultasi.dokterId.toInt())
+                    bundle.putInt(KonsultasiDetailFragment.KONSULTASI_ID, konsultasi.idKonsultasi.toInt())
                     konsultasiDetailFragment.arguments = bundle
                     fragment.beginTransaction()
                         .replace(R.id.pasien_frame_container, konsultasiDetailFragment, KonsultasiDetailFragment::class.java.simpleName)

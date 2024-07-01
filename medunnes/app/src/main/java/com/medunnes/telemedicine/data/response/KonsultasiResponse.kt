@@ -7,7 +7,7 @@ data class KonsultasiResponse(
 	@field:SerializedName("data")
 	val data: List<KonsultasiDataItem>,
 
-	@field:SerializedName("notification")
+	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("status")
@@ -20,25 +20,28 @@ data class KonsultasiDataItem(
 	val topik: String,
 
 	@field:SerializedName("dokter")
-	val dokter: KonsultasiDokter,
+	val dokter: Dokter,
 
 	@field:SerializedName("pasien_id")
-	val pasienId: Int,
+	val pasienId: Long,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
 
 	@field:SerializedName("dokter_id")
-	val dokterId: Int,
+	val dokterId: Long,
 
 	@field:SerializedName("created_at")
 	val createdAt: String,
 
 	@field:SerializedName("id_konsultasi")
-	val idKonsultasi: Int,
+	val idKonsultasi: Long,
 
 	@field:SerializedName("pasien")
-	val pasien: KonsultasiPasien
+	val pasien: Pasien,
+
+	@field:SerializedName("status")
+	val status: String
 )
 
 data class KonsultasiPasien(
@@ -68,10 +71,10 @@ data class KonsultasiPasien(
 	val updatedAt: String,
 
 	@field:SerializedName("user_id")
-	val userId: Int,
+	val userId: Long,
 
 	@field:SerializedName("id_pasien")
-	val idPasien: Int,
+	val idPasien: Long,
 
 	@field:SerializedName("img_pasien")
 	val imgPasien: String,
@@ -83,7 +86,7 @@ data class KonsultasiPasien(
 	val status: String
 )
 
-data class KonsultasiDokter(
+data class Dokter(
 
 	@field:SerializedName("img_dokter")
 	val imgDokter: String,
@@ -107,7 +110,7 @@ data class KonsultasiDokter(
 	val alumniKampus: String,
 
 	@field:SerializedName("id_dokter")
-	val idDokter: Int,
+	val idDokter: Long,
 
 	@field:SerializedName("alamat")
 	val alamat: String,
@@ -125,7 +128,7 @@ data class KonsultasiDokter(
 	val updatedAt: String,
 
 	@field:SerializedName("user_id")
-	val userId: Int,
+	val userId: Long,
 
 	@field:SerializedName("title_belakang")
 	val titleBelakang: String,

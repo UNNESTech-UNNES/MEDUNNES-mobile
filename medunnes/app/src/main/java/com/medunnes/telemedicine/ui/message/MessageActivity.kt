@@ -40,14 +40,13 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMessageBinding.inflate(layoutInflater)
         db = Firebase.database
 
-        setViewBasedonRole()
-
         val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
         val childMessage = "konsultasi_${konsultasiId}"
         messageRef = db.reference.child(childMessage)
 
         lifecycleScope.launch { setMessager() }
         setMessageAdapter()
+        setViewBasedOnStatus()
         binding.sendButton.setOnClickListener(this)
         binding.tvCatatan.setOnClickListener(this)
         binding.ivCatatan.setOnClickListener(this)
@@ -56,13 +55,32 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
     }
 
-    private fun setViewBasedonRole() {
+    private fun setViewBasedonRole(status: String) {
         lifecycleScope.launch {
             val role = viewModel.getUserRole()
             if (role == 2) {
-                binding.tvCatatan.visibility = View.GONE
-                binding.ivCatatan.visibility = View.GONE
+                if (status == "berlangsung") {
+                    binding.tvCatatan.visibility = View.GONE
+                    binding.ivCatatan.visibility = View.GONE
+                } else {
+                    binding.tvCatatan.visibility = View.VISIBLE
+                    binding.ivCatatan.visibility = View.VISIBLE
+                    binding.tvCatatan.text = getString(R.string.lihat_catatan)
+                }
             }
+        }
+    }
+
+    private fun setViewBasedOnStatus() {
+        val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
+        viewModel.getKonsultasiById(konsultasiId)
+        viewModel.konsultasi.observe(this) { konsultasi ->
+            if (konsultasi[0].status == "berakhir") {
+                binding.tilMessage.visibility = View.GONE
+                binding.sendButton.visibility = View.GONE
+                binding.tblSesiBerakhir.visibility = View.VISIBLE
+            }
+            setViewBasedonRole(konsultasi[0].status)
         }
     }
 
@@ -147,49 +165,81 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         val bundle = Bundle()
         val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
 
-        setCatatan(true)
+        setCatatanButton(true)
         viewModel.getCatatanByKonsultasiId(konsultasiId)
         viewModel.catatan.observe(this@MessageActivity) { data ->
-            if (data.isNotEmpty()) {
-                with(bundle) {
-                    putInt(CatatanBottomSheetDialog.ID_CATATAN, data[0].idCatatan)
-                    putString(CatatanBottomSheetDialog.GEJALA, data[0].gejala)
-                    putString(CatatanBottomSheetDialog.DIAGNOSIS, data[0].diagnosis)
-                    putString(CatatanBottomSheetDialog.CATATAN, data[0].catatan)
-                }
-                cbsd.arguments = bundle
-            }
-
-            if (!cbsd.isAdded) {
-                supportFragmentManager.let { cbsd.show(it, CatatanBottomSheetDialog.TAG) }
-                cbsd.setOnItemClickCallback(object : CatatanBottomSheetDialog.OnItemClickCallback {
-                    override fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem) {
-                        try {
-                            if (data.isEmpty()) {
-                                insertCatatan(
-                                    catatan.gejala,
-                                    catatan.diagnosis,
-                                    catatan.catatan
-                                )
-
-                                makeToast("Catatan disimpan")
-                            } else {
-                                updateCatatan(
-                                    data[0].idCatatan,
-                                    catatan.gejala,
-                                    catatan.diagnosis,
-                                    catatan.catatan
-                                )
-                                makeToast("Catatan diperbarui")
-                            }
-                        } catch (e: Exception) {
-                            makeToast("Catatan gagal disimpan")
-                            Log.d("INSERT/UPDATE CATATAN FAIL", e.message.toString())
+            supportFragmentManager.let {
+                if (!cbsd.isAdded) {
+                    if (data.isNotEmpty()) {
+                        with(bundle) {
+                            putInt(CatatanBottomSheetDialog.ID_CATATAN, data[0].idCatatan)
+                            putString(CatatanBottomSheetDialog.GEJALA, data[0].gejala)
+                            putString(CatatanBottomSheetDialog.DIAGNOSIS, data[0].diagnosis)
+                            putString(CatatanBottomSheetDialog.CATATAN, data[0].catatan)
                         }
+
+                        viewModel.getKonsultasiById(konsultasiId)
+                        viewModel.konsultasi.observe(this) { konsultasi ->
+                            bundle.putString(CatatanBottomSheetDialog.STATUS, konsultasi[0].status)
+                        }
+
+                        cbsd.arguments = bundle
                     }
 
-                })
-                setCatatan(false)
+                    cbsd.show(it, CatatanBottomSheetDialog.TAG)
+                    cbsd.setOnItemClickCallback(object : CatatanBottomSheetDialog.OnItemClickCallback {
+                        override fun onBtnSimpanCatatanClicked(catatan: CatatanDataItem) {
+                            try {
+                                if (
+                                    catatan.catatan.isNotEmpty() &&
+                                    catatan.gejala.isNotEmpty() &&
+                                    catatan.diagnosis.isNotEmpty()
+                                ) {
+                                    if (data.isEmpty()) {
+                                        insertCatatan(
+                                            catatan.gejala,
+                                            catatan.diagnosis,
+                                            catatan.catatan
+                                        )
+
+                                        makeToast("Catatan disimpan")
+                                    } else {
+                                        updateCatatan(
+                                            data[0].idCatatan,
+                                            catatan.gejala,
+                                            catatan.diagnosis,
+                                            catatan.catatan
+                                        )
+                                        makeToast("Catatan diperbarui")
+                                    }
+                                    cbsd.dismiss()
+                                } else {
+                                    makeToast("Lengkapi catatan terlebih dahulu")
+                                }
+                            } catch (e: Exception) {
+                                makeToast("Catatan gagal disimpan")
+                                Log.d("INSERT/UPDATE CATATAN FAIL", e.message.toString())
+                            }
+                        }
+
+                        override fun onBtnAkhiriPesanClicked() {
+                            viewModel.getKonsultasiById(konsultasiId)
+                            viewModel.konsultasi.observe(this@MessageActivity) { konsultasi ->
+                                updateKonsultasi(
+                                    konsultasiId,
+                                    konsultasi[0].pasienId,
+                                    konsultasi[0].dokterId,
+                                    konsultasi[0].topik,
+                                    "berakhir"
+                                )
+                            }
+                            setViewBasedOnStatus()
+                            cbsd.dismiss()
+                        }
+
+                    })
+                    setCatatanButton(false)
+                }
             }
         }
     }
@@ -219,7 +269,19 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun setCatatan(isClicked: Boolean) {
+    private fun updateKonsultasi(
+        id: Int,
+        pasienId: Long,
+        dokterId: Long,
+        topik: String,
+        status: String
+    ) {
+        lifecycleScope.launch {
+            viewModel.updateKonsultasi(id, pasienId, dokterId, topik, status)
+        }
+    }
+
+    private fun setCatatanButton(isClicked: Boolean) {
         if (isClicked) {
             binding.tvCatatan.visibility = View.INVISIBLE
             binding.ivCatatan.visibility = View.INVISIBLE

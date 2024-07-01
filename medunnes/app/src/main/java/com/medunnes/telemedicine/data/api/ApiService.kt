@@ -244,6 +244,16 @@ interface ApiService {
         @Field("status") status: String
     ): KonsultasiResponse
 
+    @FormUrlEncoded
+    @PUT("api/konsultasi/{id}")
+    suspend fun updateKonsultasi(
+        @Path("id") id: Int,
+        @Field("pasien_id") pasienId: Long,
+        @Field("dokter_id") dokterId: Long,
+        @Field("topik") topik: String,
+        @Field("status") status: String
+    ): KonsultasiResponse
+
     @GET("api/sesi")
     suspend fun getAllSesi(): SesiResponse
 
