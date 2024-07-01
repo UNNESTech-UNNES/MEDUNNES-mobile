@@ -13,12 +13,16 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
     class ViewHolder(private val binding: KonsultasiPasienListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(dokter: KonsultasiDataItem) {
             with(binding) {
-                tvDokterNama.text = "${dokter.dokter.titleDepan} ${dokter.dokter.namaDokter} ${dokter.dokter.titleBelakang}"
+                tvDokterNama.text = root.resources.getString(
+                    R.string.nama_and_titel,
+                    dokter.dokter.titleDepan, dokter.dokter.namaDokter, dokter.dokter.titleBelakang
+                )
 
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 val spesiliasId = dokter.dokter.spesialisId
 
                 tvDokterSpesialis.text = spesialis[spesiliasId-1]
+                tvDokterSesiWaktu.text = dokter.status
 
                 val imgDokter = dokter.dokter.imgDokter
                 if (!imgDokter.isNullOrEmpty()) {
