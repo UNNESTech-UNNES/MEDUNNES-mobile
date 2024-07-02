@@ -199,6 +199,7 @@
     <string name="akhiri_sesi">Akhiri Sesi</string>
     <string name="sesi_telah_berakhir">Sesi telah berakhir</string>
     <string name="lihat_catatan">Lihat catatan</string>
+    <string name="masuk_untuk_menggunakan_layanan">Masuk untuk menggunakan layanan</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

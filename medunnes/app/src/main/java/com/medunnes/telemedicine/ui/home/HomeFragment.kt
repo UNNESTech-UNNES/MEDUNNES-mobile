@@ -60,6 +60,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvArtikelAll.setOnClickListener(this@HomeFragment)
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
+            btnLogin.setOnClickListener(this@HomeFragment)
         }
 
         return root
@@ -73,10 +74,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private suspend fun setUserProfile() {
         val userStatus = viewModel.getUserStatus()
         if (userStatus) {
+            showProgressBar(true)
+            binding.tvMasukLayanan.visibility = View.GONE
+            binding.btnLogin.visibility = View.GONE
             val userId = viewModel.getUserLoginId()
             viewModel.getUserLogin(userId)
             viewModel.user.observe(viewLifecycleOwner) { data ->
                 if (!data.isNullOrEmpty()) {
+                    showProgressBar(false)
                     data.forEach {
                         binding.tvAuthenticate.text = it.name
                         binding.tvAuthenticate.isClickable = false
@@ -101,6 +106,26 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
+        }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.tvAuthenticate.visibility = View.INVISIBLE
+            binding.prgressBar2.visibility = View.VISIBLE
+            binding.cvKonsultasi.visibility = View.INVISIBLE
+            binding.cvBuatJanji.visibility = View.INVISIBLE
+            binding.tvKonsultasi.visibility = View.INVISIBLE
+            binding.tvJanji.visibility = View.INVISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.tvAuthenticate.visibility = View.VISIBLE
+            binding.prgressBar2.visibility = View.GONE
+            binding.cvKonsultasi.visibility = View.VISIBLE
+            binding.cvBuatJanji.visibility = View.VISIBLE
+            binding.tvKonsultasi.visibility = View.VISIBLE
+            binding.tvJanji.visibility = View.VISIBLE
         }
     }
 
@@ -218,6 +243,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun intentLogin() {
+        val intent = Intent(context, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onClick(view: View?) {
         with(binding) {
              when(view) {
@@ -253,10 +283,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
                  tvArtikelAll -> makeToast(undoneText())
                  tvFaskesAll -> makeToast(undoneText())
-                 tvAuthenticate -> {
-                     val intent = Intent(context, LoginActivity::class.java)
-                     startActivity(intent)
-                 }
+                 tvAuthenticate -> intentLogin()
+                 btnLogin -> intentLogin()
                  else -> Log.d("CLICK", "error")
              }
         }
