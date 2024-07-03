@@ -15,7 +15,7 @@ class KonsultasiAdapter(private val konsultasiList: ArrayList<KonsultasiDataItem
             with(binding) {
                 tvPatientName.text = konsultasi.pasien.namaPasien
                 tvPatientSession.text = konsultasi.topik
-                tvPatientStatus.text = konsultasi.pasien.status
+                tvPatientStatus.text = if (konsultasi.pasien.status == "berlangsung") "Berlangsung" else "Berakhir"
 
                 if (!konsultasi.pasien.imgPasien.isNullOrEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${konsultasi.pasien.imgPasien}"

@@ -79,6 +79,11 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                 binding.tilMessage.visibility = View.GONE
                 binding.sendButton.visibility = View.GONE
                 binding.tblSesiBerakhir.visibility = View.VISIBLE
+                binding.ivMessangerStatus.setImageResource(R.drawable.circle_red)
+                binding.tvMessangerStatus.text = getString(R.string.berakhir)
+            } else {
+                binding.ivMessangerStatus.setImageResource(R.drawable.circle_green)
+                binding.tvMessangerStatus.text = getString(R.string.berlangsung)
             }
             setViewBasedonRole(konsultasi[0].status)
         }

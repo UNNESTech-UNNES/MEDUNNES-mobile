@@ -22,7 +22,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
                 val spesiliasId = dokter.dokter.spesialisId
 
                 tvDokterSpesialis.text = spesialis[spesiliasId-1]
-                tvDokterSesiWaktu.text = dokter.status
+                tvDokterSesiWaktu.text = if (dokter.status == "berlangsung") "Berlangsung" else "Berakhir"
 
                 val imgDokter = dokter.dokter.imgDokter
                 if (!imgDokter.isNullOrEmpty()) {
