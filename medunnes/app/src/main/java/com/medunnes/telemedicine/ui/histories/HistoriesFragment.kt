@@ -13,6 +13,7 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.FragmentHistoriesBinding
 import com.medunnes.telemedicine.ui.adapter.HistoriesAdapter
+import com.medunnes.telemedicine.ui.adapter.HistoriesDokterAdapter
 import com.medunnes.telemedicine.ui.message.MessageActivity
 import kotlinx.coroutines.launch
 
@@ -31,7 +32,7 @@ class HistoriesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHistoriesBinding.inflate(inflater, container, false)
-        getDoctorList("")
+        setViewDifference("")
         searchMessanger()
 
         return binding.root
@@ -42,7 +43,19 @@ class HistoriesFragment : Fragment() {
         _binding = null
     }
 
-    private fun showRecyclerList(listAdapter: ArrayList<KonsultasiDataItem>) {
+    private fun setViewDifference(filter: String) {
+        lifecycleScope.launch {
+            viewModel.getUserLoginId()
+            val role = viewModel.getUserRole()
+            if (role == 1) {
+                getPatientList(filter)
+            } else {
+                getDoctorList(filter)
+            }
+        }
+    }
+
+    private fun showDokterRecyclerList(listAdapter: ArrayList<KonsultasiDataItem>) {
         if (listAdapter.isNotEmpty()) {
             binding.tvDataEmpty.visibility = View.GONE
             binding.rvHistoriesList.visibility = View.VISIBLE
@@ -51,6 +64,29 @@ class HistoriesFragment : Fragment() {
             binding.rvHistoriesList.adapter = dokterAdapter
 
             dokterAdapter.setOnItemClickCallback(object : HistoriesAdapter.OnItemClickCallback {
+                override fun onItemClicked(konsultasi: KonsultasiDataItem) {
+                    val intent = Intent(context, MessageActivity::class.java)
+                    intent.putExtra(MessageActivity.KONSULTASI_ID, konsultasi.idKonsultasi.toInt())
+                    intent.putExtra(MessageActivity.PASIEN_ID, konsultasi.pasienId.toInt())
+                    intent.putExtra(MessageActivity.DOKTER_ID, konsultasi.dokterId.toInt())
+                    startActivity(intent)
+                }
+            })
+        } else {
+            binding.rvHistoriesList.visibility = View.GONE
+            binding.tvDataEmpty.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showPatientRecyclerList(listAdapter: ArrayList<KonsultasiDataItem>) {
+        if (listAdapter.isNotEmpty()) {
+            binding.tvDataEmpty.visibility = View.GONE
+            binding.rvHistoriesList.visibility = View.VISIBLE
+            binding.rvHistoriesList.layoutManager = LinearLayoutManager(context)
+            val dokterAdapter = HistoriesDokterAdapter(listAdapter)
+            binding.rvHistoriesList.adapter = dokterAdapter
+
+            dokterAdapter.setOnItemClickCallback(object : HistoriesDokterAdapter.OnItemClickCallback {
                 override fun onItemClicked(konsultasi: KonsultasiDataItem) {
                     val intent = Intent(context, MessageActivity::class.java)
                     intent.putExtra(MessageActivity.KONSULTASI_ID, konsultasi.idKonsultasi.toInt())
@@ -90,12 +126,43 @@ class HistoriesFragment : Fragment() {
                             showProgressBar(false)
                             binding.tvDataEmpty.visibility = View.VISIBLE
                         }
-                        showRecyclerList(filteredDokterList)
+                        showDokterRecyclerList(filteredDokterList)
                     } else {
                         showProgressBar(false)
                         binding.tvDataEmpty.visibility = View.VISIBLE
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun getPatientList(filter: String) {
+        showProgressBar(true)
+        val uid = viewModel.getUserLoginId()
+        viewModel.getDokterByUserId(uid)
+        viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
+            val dokterId = dokter[0].idDokter.toInt()
+            viewModel.getKonsultasiByDokterId(dokterId)
+            viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
+                if (!konsultasi.isNullOrEmpty()) {
+                    showProgressBar(false)
+                    listKonsultasi.clear()
+                    listKonsultasi.addAll(konsultasi)
+                    val filteredKonsultasiList = konsultasi.filter {
+                        it.pasien.namaPasien.lowercase().contains(filter) &&
+                        it.status.contains("berakhir")
+                    } as ArrayList<KonsultasiDataItem>
+
+                    if (filteredKonsultasiList.isEmpty()) {
+                        binding.tvDataEmpty.visibility = View.VISIBLE
+                    }
+
+                    showPatientRecyclerList(filteredKonsultasiList)
+                } else {
+                    showProgressBar(false)
+                    binding.tvDataEmpty.visibility = View.VISIBLE
+                }
+
             }
         }
     }
@@ -108,7 +175,7 @@ class HistoriesFragment : Fragment() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.setText(searchView.text)
                     searchView.hide()
-                    getDoctorList("${searchView.text}")
+                    setViewDifference("${searchView.text}")
                     false
                 }
         }
