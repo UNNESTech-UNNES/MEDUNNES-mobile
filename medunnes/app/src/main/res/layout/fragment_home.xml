@@ -7,7 +7,7 @@
     android:outlineProvider="none"
     android:padding="16dp"
     android:background="@drawable/background_home"
-    tools:context=".ui.notification.MessageFragment">
+    tools:context=".ui.notification.HistoriesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

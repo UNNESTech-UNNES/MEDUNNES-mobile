@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,7 +80,8 @@ class KonsultasiPasienFragment : Fragment() {
                     listDokter.addAll(konsultasi)
                     val filteredDokterList = konsultasi.filter {
                         it.dokter.namaDokter.lowercase().contains(filter) &&
-                        it.dokter.status.contains("approve")
+                        it.dokter.status.contains("approve") &&
+                        it.status.contains("berlangsung")
                     } as ArrayList<KonsultasiDataItem>
 
                     if (filteredDokterList.isNullOrEmpty()) {
@@ -117,9 +117,5 @@ class KonsultasiPasienFragment : Fragment() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
-    }
-
-    private fun makeToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
