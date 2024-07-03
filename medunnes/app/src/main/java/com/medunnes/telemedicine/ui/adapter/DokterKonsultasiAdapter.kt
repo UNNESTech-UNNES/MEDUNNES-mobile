@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
-import com.medunnes.telemedicine.databinding.KonsultasiPasienListBinding
+import com.medunnes.telemedicine.databinding.ListKonsultasiPasienBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl
 
 class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>): RecyclerView.Adapter<DokterKonsultasiAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: KonsultasiPasienListBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ListKonsultasiPasienBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(dokter: KonsultasiDataItem) {
             with(binding) {
                 tvDokterNama.text = root.resources.getString(
@@ -37,7 +37,7 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = KonsultasiPasienListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListKonsultasiPasienBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.medunnes.telemedicine.data.response.SesiDataItem
-import com.medunnes.telemedicine.databinding.SesiDokterListBinding
+import com.medunnes.telemedicine.databinding.ListSesiDokterBinding
 
 class SesiAdapter(private val sesiLis: ArrayList<SesiDataItem>): RecyclerView.Adapter<SesiAdapter.ListViewModel>() {
-    class ListViewModel(private val binding: SesiDokterListBinding): RecyclerView.ViewHolder(binding.root) {
+    class ListViewModel(private val binding: ListSesiDokterBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(sesi: SesiDataItem) {
             with(binding) {
                 tvSesi.text = "Sesi ${sesi.idSesi}"
@@ -21,7 +21,7 @@ class SesiAdapter(private val sesiLis: ArrayList<SesiDataItem>): RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewModel {
-        val binding = SesiDokterListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListSesiDokterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewModel(binding)
     }
 

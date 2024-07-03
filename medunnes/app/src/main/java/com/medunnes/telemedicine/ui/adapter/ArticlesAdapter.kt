@@ -6,10 +6,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.data.model.Artikel
-import com.medunnes.telemedicine.databinding.ArticlesListBinding
+import com.medunnes.telemedicine.databinding.ListArticlesBinding
 
 class ArticlesAdapter(private val articleList: ArrayList<Artikel>) : RecyclerView.Adapter<ArticlesAdapter.ListViewHolder>() {
-    class ListViewHolder(private val binding: ArticlesListBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ListArticlesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(artikel: Artikel) {
             with(binding) {
                 tvArticleTitle.text = artikel.judulArtikel
@@ -22,7 +22,7 @@ class ArticlesAdapter(private val articleList: ArrayList<Artikel>) : RecyclerVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = ArticlesListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListArticlesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 

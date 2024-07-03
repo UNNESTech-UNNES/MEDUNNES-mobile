@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.JanjiDataItem
-import com.medunnes.telemedicine.databinding.MessageListBinding
+import com.medunnes.telemedicine.databinding.ListKonsultasiDokterBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -15,7 +15,7 @@ import java.util.Locale
 class JanjiDokterAdapter(
     private val janjiList: ArrayList<JanjiDataItem>
 ) : RecyclerView.Adapter<JanjiDokterAdapter.ListViewHolder>() {
-    class ListViewHolder(private val binding: MessageListBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ListKonsultasiDokterBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         @Suppress("DEPRECATION")
         fun bind(janji: JanjiDataItem) {
@@ -51,7 +51,7 @@ class JanjiDokterAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = MessageListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListKonsultasiDokterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 

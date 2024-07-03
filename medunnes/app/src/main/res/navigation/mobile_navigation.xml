@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_message"
-        android:name="com.medunnes.telemedicine.ui.notification.HistoriesFragment"
+        android:name="com.medunnes.telemedicine.ui.histories.HistoriesFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_histories" />
 

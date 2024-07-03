@@ -1,28 +1,26 @@
 package com.medunnes.telemedicine.ui.adapter
 
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.DokterDataItem
-import com.medunnes.telemedicine.databinding.PasienJanjiListBinding
+import com.medunnes.telemedicine.databinding.ListPasienJanjiBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl
-import java.io.File
 
 class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : RecyclerView.Adapter<DokterListAdapter.ListViewHolder>() {
-    class ListViewHolder(private val binding: PasienJanjiListBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: ListPasienJanjiBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dokter: DokterDataItem) {
             with(binding) {
-                tvPatientName.text = "${dokter.titleDepan} ${dokter.namaDokter} ${dokter.titleBelakang}"
+                tvPatientName.text = root.resources.getString(R.string.nama_and_titel,
+                        dokter.titleDepan, dokter.namaDokter, dokter.titleBelakang)
 
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 tvDoctorRole.text = spesialis[(dokter.spesialisId.toInt())-1]
                 tvDoctorExperience.text = dokter.tempatKerja
 
                 if (!dokter.imgDokter.isNullOrEmpty()) {
-                    val path = Environment.getExternalStorageDirectory()
                     val imageFile = "${imageBaseUrl()}/${dokter.imgDokter}"
                     Glide.with(itemView.context)
                         .load(imageFile)
@@ -34,7 +32,7 @@ class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = PasienJanjiListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListPasienJanjiBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 

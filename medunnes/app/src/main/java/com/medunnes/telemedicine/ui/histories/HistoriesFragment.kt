@@ -1,4 +1,4 @@
-package com.medunnes.telemedicine.ui.notification
+package com.medunnes.telemedicine.ui.histories
 
 import android.content.Intent
 import android.os.Bundle
