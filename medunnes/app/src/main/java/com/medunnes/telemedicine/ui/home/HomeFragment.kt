@@ -1,12 +1,15 @@
 package com.medunnes.telemedicine.ui.home
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -61,6 +64,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
             btnLogin.setOnClickListener(this@HomeFragment)
+        }
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
 
         return root
@@ -247,6 +254,17 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
     }
+
+    private val requestNotificationPermission =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                makeToast("Notifications permission granted")
+            } else {
+                makeToast("Notifications permission rejected")
+            }
+        }
 
     override fun onClick(view: View?) {
         with(binding) {
