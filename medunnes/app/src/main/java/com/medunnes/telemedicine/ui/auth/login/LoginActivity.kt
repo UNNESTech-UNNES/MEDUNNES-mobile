@@ -1,20 +1,20 @@
 package com.medunnes.telemedicine.ui.auth.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
 import com.medunnes.telemedicine.ui.home.HomeFragment
+import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

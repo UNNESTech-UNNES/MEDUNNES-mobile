@@ -205,6 +205,8 @@
     <string name="berlangsung">Berlangsung</string>
     <string name="cari_riwayat_konsultasi">Cari riwayat konsultasi</string>
     <string name="histories_title">Histories</string>
+    <string name="tambahkan_pasien">Tambahkan pasien?</string>
+    <string name="pastikan_data_pasien_sudah_benar">Pastikan data pasien sudah benar</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

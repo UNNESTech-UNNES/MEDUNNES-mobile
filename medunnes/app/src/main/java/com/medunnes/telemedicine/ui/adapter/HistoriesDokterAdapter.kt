@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.databinding.ListHistoriesBinding
 import com.medunnes.telemedicine.utils.imageBaseUrl

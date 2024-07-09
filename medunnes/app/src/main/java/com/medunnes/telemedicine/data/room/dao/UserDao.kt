@@ -14,7 +14,6 @@ import com.medunnes.telemedicine.data.model.JanjiDanPasien
 import com.medunnes.telemedicine.data.model.Pasien
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.model.UserAndDokter
-import com.medunnes.telemedicine.data.model.UserAndPasien
 
 @Dao
 interface UserDao {

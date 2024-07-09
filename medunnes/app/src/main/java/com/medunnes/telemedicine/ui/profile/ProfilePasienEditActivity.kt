@@ -1,7 +1,6 @@
 package com.medunnes.telemedicine.ui.profile
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,19 +8,17 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityProfilePasienEditBinding
-import com.medunnes.telemedicine.utils.getImageUri
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import com.medunnes.telemedicine.utils.uriToFile
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.InputStream
-import java.io.OutputStream
 
 class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityProfilePasienEditBinding

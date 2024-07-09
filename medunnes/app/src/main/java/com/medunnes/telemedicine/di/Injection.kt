@@ -1,12 +1,9 @@
 package com.medunnes.telemedicine.di
 
-import android.app.Application
 import android.content.Context
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.repository.UserRepository
-import com.medunnes.telemedicine.data.room.dao.UserDao
 import com.medunnes.telemedicine.data.room.database.UserDatabase
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 object Injection {

@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.DialogBuatJanjiAlertBinding
-import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 
 class BuatJanjiConfirmationDialog : DialogFragment(), View.OnClickListener {
     private lateinit var binding: DialogBuatJanjiAlertBinding
@@ -24,6 +21,7 @@ class BuatJanjiConfirmationDialog : DialogFragment(), View.OnClickListener {
             btnYes.setOnClickListener(this@BuatJanjiConfirmationDialog)
             btnNo.setOnClickListener(this@BuatJanjiConfirmationDialog)
             tvAlertDescription.text = arguments?.getString(DIALOG)
+            tvAlertTitle.text = arguments?.getString(DIALOG_TITLE)
         }
         return binding.root
     }
@@ -41,6 +39,7 @@ class BuatJanjiConfirmationDialog : DialogFragment(), View.OnClickListener {
     companion object {
         const val TAG = "BuatJanjiConfirmationDialog"
         const val DIALOG = "dialog"
+        const val DIALOG_TITLE = "dialog_title"
     }
 
     override fun onClick(view: View) {

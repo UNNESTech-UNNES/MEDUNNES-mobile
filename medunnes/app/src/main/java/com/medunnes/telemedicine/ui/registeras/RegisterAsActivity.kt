@@ -1,14 +1,13 @@
 package com.medunnes.telemedicine.ui.registeras
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.medunnes.telemedicine.databinding.ActivityRegisterAsBinding
 import com.medunnes.telemedicine.ui.auth.register.RegisterActivity
 import com.medunnes.telemedicine.ui.auth.register.RegisterAkunActivity
-import com.medunnes.telemedicine.ui.auth.register.Registrasi1Fragment
 
 class RegisterAsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterAsBinding

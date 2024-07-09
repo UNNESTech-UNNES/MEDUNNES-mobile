@@ -11,7 +11,6 @@ import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
 import com.medunnes.telemedicine.data.response.PasienResponse
-import com.medunnes.telemedicine.data.response.UserResponse
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 

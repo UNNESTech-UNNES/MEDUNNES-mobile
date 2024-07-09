@@ -1,7 +1,7 @@
 package com.medunnes.telemedicine.ui.pasien
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.databinding.ActivityLayananPasienBinding
 import com.medunnes.telemedicine.ui.pasien.janjiPasien.JanjiPasienFragment

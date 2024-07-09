@@ -2,13 +2,13 @@ package com.medunnes.telemedicine.ui.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
 import java.text.SimpleDateFormat

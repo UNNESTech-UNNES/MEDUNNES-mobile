@@ -1,16 +1,11 @@
 package com.medunnes.telemedicine.data.datastore
 
 import android.content.Context
-import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.forEach
-import kotlinx.coroutines.flow.map
-import java.util.prefs.Preferences
 
 class AuthDataStore constructor(private val context: Context) {
     private val Context.datastore by preferencesDataStore(name = "auth_datastore")

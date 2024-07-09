@@ -3,7 +3,6 @@ package com.medunnes.telemedicine.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 
 @Entity(tableName = "janji")
 data class Janji(

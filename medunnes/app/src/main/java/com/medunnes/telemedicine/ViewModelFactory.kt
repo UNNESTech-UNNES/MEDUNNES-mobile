@@ -8,9 +8,9 @@ import com.medunnes.telemedicine.di.Injection
 import com.medunnes.telemedicine.ui.auth.login.LoginViewModel
 import com.medunnes.telemedicine.ui.auth.register.RegisterViewModel
 import com.medunnes.telemedicine.ui.dokter.LayananDokterViewModel
+import com.medunnes.telemedicine.ui.histories.HistoriesViewModel
 import com.medunnes.telemedicine.ui.home.HomeViewModel
 import com.medunnes.telemedicine.ui.message.MessageViewModel
-import com.medunnes.telemedicine.ui.histories.HistoriesViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienViewModel
 import com.medunnes.telemedicine.ui.profile.ProfileViewModel
 

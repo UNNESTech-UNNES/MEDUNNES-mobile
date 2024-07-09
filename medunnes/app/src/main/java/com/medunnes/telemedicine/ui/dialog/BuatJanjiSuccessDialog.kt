@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.databinding.DialogBuatJanjiSuccessBinding
 
 class BuatJanjiSuccessDialog : DialogFragment(), View.OnClickListener {
