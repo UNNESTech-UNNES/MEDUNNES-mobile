@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.medunnes.telemedicine.data.model.Artikel
+import com.medunnes.telemedicine.data.response.ArtikelDataItem
 import com.medunnes.telemedicine.databinding.ListArticlesBinding
 
-class ArticlesAdapter(private val articleList: ArrayList<Artikel>) : RecyclerView.Adapter<ArticlesAdapter.ListViewHolder>() {
+class ArticlesAdapter(private val articleList: ArrayList<ArtikelDataItem>) : RecyclerView.Adapter<ArticlesAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding: ListArticlesBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(artikel: Artikel) {
+        fun bind(artikel: ArtikelDataItem) {
             with(binding) {
                 tvArticleTitle.text = artikel.judulArtikel
                 Glide.with(itemView.context)
-                    .load(artikel.headlineArtikel)
+                    .load(artikel.imgArtikel)
                     .into(ivHeadline)
                     .clearOnDetach()
             }
@@ -26,7 +26,7 @@ class ArticlesAdapter(private val articleList: ArrayList<Artikel>) : RecyclerVie
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return articleList.size
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -40,7 +40,7 @@ class ArticlesAdapter(private val articleList: ArrayList<Artikel>) : RecyclerVie
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     interface OnItemClickCallback {
-        fun onItemClicked(artikel: Artikel)
+        fun onItemClicked(artikel: ArtikelDataItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

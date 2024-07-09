@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
-import com.medunnes.telemedicine.data.model.Artikel
 import com.medunnes.telemedicine.data.model.Faskes
+import com.medunnes.telemedicine.data.response.ArtikelDataItem
 import com.medunnes.telemedicine.databinding.FragmentHomeBinding
 import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
@@ -34,7 +34,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val listArtikel = ArrayList<Artikel>()
+    private val listArtikel = ArrayList<ArtikelDataItem>()
     private val listFaskes = ArrayList<Faskes>()
 
     private val viewModel by viewModels<HomeViewModel> {
@@ -52,7 +52,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         lifecycleScope.launch { setUserProfile() }
         getArticleList()
-        showArticleRecycleList()
 
         getFaskesList()
         showFaskesRecycleList()
@@ -64,6 +63,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvFaskesAll.setOnClickListener(this@HomeFragment)
             tvAuthenticate.setOnClickListener(this@HomeFragment)
             btnLogin.setOnClickListener(this@HomeFragment)
+            tvFaskesTerdekat.visibility = View.GONE
+            tvFaskesAll.visibility = View.GONE
+            rvFaskesTerdekat.visibility = View.GONE
         }
 
         if (Build.VERSION.SDK_INT >= 33) {
@@ -164,27 +166,30 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun showArticleRecycleList() {
+    private fun showArticleRecycleList(articleList: ArrayList<ArtikelDataItem>) {
         binding.rvArtikelKesehatan.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val artikelAdapter = ArticlesAdapter(listArtikel)
+        val artikelAdapter = ArticlesAdapter(articleList)
         binding.rvArtikelKesehatan.adapter = artikelAdapter
 
         artikelAdapter.setOnItemClickCallback(object : ArticlesAdapter.OnItemClickCallback {
-            override fun onItemClicked(artikel: Artikel) {
+            override fun onItemClicked(artikel: ArtikelDataItem) {
                 makeToast(undoneText())
             }
         })
 
     }
 
-    private fun getArticleList() : ArrayList<Artikel> {
-        val judulArtikel = resources.getStringArray(R.array.film_judul)
-        val headlineArtikel = resources.getStringArray(R.array.poster_film)
-        for (i in judulArtikel.indices) {
-            val film = Artikel(judulArtikel[i], headlineArtikel[i])
-            listArtikel.add(film)
+    private fun getArticleList() {
+        showProgressBar(true)
+        lifecycleScope.launch {
+            viewModel.getAllArtikel()
+            viewModel.artikel.observe(viewLifecycleOwner) { artikel ->
+                showProgressBar(false)
+                listArtikel.clear()
+                listArtikel.addAll(artikel)
+                showArticleRecycleList(listArtikel)
+            }
         }
-        return listArtikel
     }
 
     private fun showFaskesRecycleList() {

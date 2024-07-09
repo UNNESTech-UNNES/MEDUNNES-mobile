@@ -207,6 +207,8 @@
     <string name="histories_title">Histories</string>
     <string name="tambahkan_pasien">Tambahkan pasien?</string>
     <string name="pastikan_data_pasien_sudah_benar">Pastikan data pasien sudah benar</string>
+    <string name="sesi_tidak_dapat_dimulai_kembali">Sesi tidak dapat dimulai kembali</string>
+    <string name="akhiri_sesi_1">Akhiri sesi?</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

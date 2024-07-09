@@ -236,6 +236,16 @@
             app:layout_constraintTop_toBottomOf="@id/tv_artikel_kesehatan"
             android:layout_marginTop="12dp"/>
 
+        <ProgressBar
+            android:id="@+id/progress_bar_article"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/rv_artikel_kesehatan"
+            app:layout_constraintEnd_toEndOf="@id/rv_artikel_kesehatan"
+            app:layout_constraintTop_toTopOf="@id/rv_artikel_kesehatan"
+            app:layout_constraintBottom_toBottomOf="@id/rv_artikel_kesehatan"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/tv_faskes_terdekat"
             android:layout_width="wrap_content"

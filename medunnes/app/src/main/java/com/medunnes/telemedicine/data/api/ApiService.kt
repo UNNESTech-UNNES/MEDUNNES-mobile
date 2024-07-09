@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.data.api
 
+import com.medunnes.telemedicine.data.response.ArtikelResponse
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
@@ -301,4 +302,7 @@ interface ApiService {
         @Field("diagnosis") diagnosis: String,
         @Field("catatan") catatan: String
     ): CatatanResponse
+
+    @GET("api/artikel")
+    suspend fun getAllArtikel(): ArtikelResponse
 }

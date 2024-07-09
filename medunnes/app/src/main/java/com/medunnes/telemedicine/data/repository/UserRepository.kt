@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.medunnes.telemedicine.data.api.ApiConfig
 import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.model.User
+import com.medunnes.telemedicine.data.response.ArtikelResponse
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
@@ -233,6 +234,9 @@ class UserRepository private constructor(
 
     // Sesi
     suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()
+
+    // Artikel
+    suspend fun getAllArtikel(): ArtikelResponse = ApiConfig.getApiService().getAllArtikel()
 
     // Room
     fun getUser(userId: Int): LiveData<List<User>> = mUserDao.getUser(userId)

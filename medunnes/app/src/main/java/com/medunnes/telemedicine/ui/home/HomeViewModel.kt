@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
+import com.medunnes.telemedicine.data.response.ArtikelDataItem
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.PasienDataItem
@@ -27,6 +28,9 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+
+    private val _artikel = MutableLiveData<List<ArtikelDataItem>>()
+    val artikel: LiveData<List<ArtikelDataItem>> get() = _artikel
 
     suspend fun getUserStatus(): Boolean = userRepository.getLoginStatus()
     suspend fun getUserLoginId(): Int = userRepository.getUserId()
@@ -70,6 +74,21 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
                     _dokter.value = dokterData.data
                 } else {
                     Log.d("DATA pasien", "Data pasien kosong")
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getAllArtikel() {
+        viewModelScope.launch {
+            try {
+                val artikelData = userRepository.getAllArtikel()
+                if (artikelData.data.isNotEmpty()) {
+                    _artikel.value = artikelData.data
+                } else {
+                    Log.d("DATA artikel", "Data artikel kosong")
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
