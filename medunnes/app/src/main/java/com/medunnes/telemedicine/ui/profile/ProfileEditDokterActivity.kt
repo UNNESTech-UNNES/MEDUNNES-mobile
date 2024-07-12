@@ -80,16 +80,9 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                 data.forEach {
                     with(binding) {
                         dokterId = it.idDokter
-                        tieEditNamaLengkap.setText(it.namaDokter)
-                        tieEditTitleDepan.setText(it.titleDepan)
-                        tieEditTitleBelakang.setText(it.titleBelakang)
-                        tieEditNoReg.setText(it.noReg.toString())
-                        tieEditAlumniKampus.setText(it.alumni)
+                        tieEditNoReg.setText(it.nim.toString())
                         tieEditNoTelepon.setText(it.noTlp)
                         tieEditAlamat.setText(it.alamat)
-                        tieEditTempatPraktik.setText(it.tempatKerja)
-                        tieEditTahunLulus.setText(it.tahunLulus.toString())
-                        tieEditTglMulaiAktif.setText(it.tglMulaiAktif)
                         kelamin = it.jenisKelamin
                         status = it.status
                         spesialisId = it.spesialisId
@@ -118,10 +111,6 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
                 imagePath,
                 "${binding.tieEditAlamat.text}",
                 "${binding.tieEditNoTelepon.text}",
-                "${binding.tieEditTempatPraktik.text}",
-                binding.tieEditTahunLulus.text.toString().toInt(),
-                "${binding.tieEditTglMulaiAktif.text}",
-                "${binding.tieEditAlumniKampus.text}",
                 binding.tieEditNoReg.text.toString().toLong(),
                 kelamin,
                 status

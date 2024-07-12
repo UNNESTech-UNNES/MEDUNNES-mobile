@@ -149,8 +149,6 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             val dokterId = intent.getIntExtra(DOKTER_ID, 0)
             viewModel.getDokterByUserLogin(dokterId)
             viewModel.dokter.observe(this) { dokter ->
-                binding.tvMessangerName.text = resources
-                    .getString(R.string.nama_and_titel, dokter[0].titleDepan, dokter[0].namaDokter, dokter[0].titleBelakang)
                 binding.tvMessangerStatus.text = dokter[0].status
 
                 if (!dokter[0].imgDokter.isNullOrEmpty()) {

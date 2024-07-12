@@ -93,12 +93,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             if (!data.isNullOrEmpty()) {
                 data.forEach {
                     with(binding) {
-                        titleDepan = it.titleDepan
-                        titleBelakang = it.titleBelakang
-                        namaDokter = it.namaDokter
                         tvUserName.text = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
                         tvUserRole.text = spesialis[(it.spesialisId.toInt())-1]
-                        tvUserPraktik.text = it.tempatKerja
 
                         if (!it.imgDokter.isNullOrEmpty()) {
                             val imagePath = "${imageBaseUrl()}/${it.imgDokter}"

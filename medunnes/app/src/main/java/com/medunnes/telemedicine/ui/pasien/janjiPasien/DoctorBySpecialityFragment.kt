@@ -72,7 +72,6 @@ class DoctorBySpecialityFragment : Fragment() {
                 listDokter.addAll(data)
 
                 val filteredData = listDokter.filter {
-                    it.namaDokter.lowercase().contains(filter) &&
                             it.spesialisId == speciality+1 &&
                             it.status.contains("approve")
                 } as ArrayList<DokterDataItem>

@@ -96,16 +96,11 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         img: String? = null,
         alamat: String,
         noTlp: String,
-        tempatKerja: String,
-        tahunLulus: Int,
-        tglAktif: String,
-        alumni: String,
         noReg: Long,
         jenisKelamin: String,
         status: String
     ): DokterResponse = userRepository.updateDokter(
-        id, userId, spesialisId, img, alamat, noTlp,
-        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
+        id, userId, spesialisId, img, alamat, noTlp, noReg, jenisKelamin,status
     )
 
     suspend fun uploadImagePasien(

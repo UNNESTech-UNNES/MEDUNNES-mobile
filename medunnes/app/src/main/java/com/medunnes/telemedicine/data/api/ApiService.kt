@@ -110,16 +110,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/dokter")
     suspend fun insertDokter(
-        @Field("user_id") userId: Int,
-        @Field("spesialis_id") spesialisId: Int,
+        @Field("id") userId: Long,
+        @Field("dosen_id") dosenId: Long,
+        @Field("spesialis_id") spesialisId: Long,
         @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
-        @Field("tempat_kerja") tempatKerja: String,
-        @Field("tahun_lulus") tahunLulus: Int,
-        @Field("tgl_mulai_aktif") tglAktif: String,
-        @Field("alumni_kampus") alumni: String,
-        @Field("no_reg") noReg: Long,
+        @Field("nim") noReg: Long,
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("status") status: String
     ): DokterResponse
@@ -133,11 +130,7 @@ interface ApiService {
         @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
-        @Field("tempat_kerja") tempatKerja: String,
-        @Field("tahun_lulus") tahunLulus: Int,
-        @Field("tgl_mulai_aktif") tglAktif: String,
-        @Field("alumni_kampus") alumni: String,
-        @Field("no_reg") noReg: Long,
+        @Field("nim") noReg: Long,
         @Field("jenis_kelamin") jenisKelamin: String,
         @Field("status") status: String
     ): DokterResponse

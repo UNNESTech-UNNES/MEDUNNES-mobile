@@ -79,7 +79,6 @@ class JanjiPasienFragment : Fragment(), View.OnClickListener {
                 listDokter.clear()
                 listDokter.addAll(data)
                 val filteredData = listDokter.filter {
-                    it.namaDokter.lowercase().contains(filter) &&
                     it.status.contains("approve")
                 } as ArrayList<DokterDataItem>
 

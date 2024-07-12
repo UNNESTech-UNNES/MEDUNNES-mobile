@@ -72,9 +72,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         viewModel.dokter.observe(viewLifecycleOwner) { data ->
             with(binding) {
                 data.forEach { dokter ->
-                    tvDoctorName.text = getString(R.string.nama_and_titel, dokter.titleDepan, dokter.namaDokter, dokter.titleBelakang)
                     tvDoctorSpeciality.text = spesialis[(dokter.spesialisId.toInt())-1]
-                    tvDoctorExperience.text = dokter.tempatKerja
 
                     val imagePath = "${imageBaseUrl()}/${dokter.imgDokter}"
                     Glide.with(this@BuatJanjiDokterFragment)

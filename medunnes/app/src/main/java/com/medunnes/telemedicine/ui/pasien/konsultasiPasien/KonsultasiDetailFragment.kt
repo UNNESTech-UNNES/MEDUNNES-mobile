@@ -42,12 +42,7 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
             viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
                 dokter.forEach {
                     with(binding) {
-                        tvUserFullname.text =
-                            getString(R.string.nama_and_titel, it.titleDepan, it.namaDokter, it.titleBelakang)
-                        tvUserEducation.text = it.alumni
-                        tvUserExperience.text = it.tempatKerja
-                        tvUserLocation.text = it.tempatKerja
-                        tvUserStr.text = it.noReg.toString()
+                        tvUserStr.text = it.nim.toString()
 
                         val spsialis = resources.getStringArray(R.array.spesialissasi)
                         tvUserField.text = spsialis[it.spesialisId.toInt()-1]

@@ -118,15 +118,12 @@ class Registrasi3Fragment : Fragment(),
             if (passwordValidation()) {
                 userId = registerUser.data[0].idUser
                 val dokterIns = viewModel.insertDokter(
-                    userId,
-                    dataSpinner,
+                    userId.toLong(),
+                    1,
+                    dataSpinner.toLong(),
                     null,
                     getData(ADDRESS),
                     "${binding.tieNoTelepon.text}",
-                    getData(PLACE),
-                    arguments?.getInt(GRADUATE_YEAR)!!,
-                    getData(DATE),
-                    "${binding.tiePendidikan.text}",
                     arguments?.getLong(NO_STR)!!,
                     getData(GENDER),
                     "pending"

@@ -75,21 +75,17 @@ class UserRepository private constructor(
     suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
     suspend fun getDokterById(id: Int): DokterResponse = ApiConfig.getApiService().getDokterById(id)
     suspend fun insertDokter(
-        userId: Int,
-        spesialisId: Int,
+        userId: Long,
+        dosenId: Long,
+        spesialisId: Long,
         img: String? = null,
         alamat: String,
         noTlp: String,
-        tempatKerja: String,
-        tahunLulus: Int,
-        tglAktif: String,
-        alumni: String,
         noReg: Long,
         jenisKelamin: String,
         status: String
     ): DokterResponse = ApiConfig.getApiService().insertDokter(
-        userId, spesialisId, img, alamat, noTlp,
-        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
+        userId, dosenId, spesialisId, img, alamat, noTlp, noReg, jenisKelamin,status
     )
     suspend fun updateDokter(
         id: Long,
@@ -98,16 +94,11 @@ class UserRepository private constructor(
         img: String? = null,
         alamat: String,
         noTlp: String,
-        tempatKerja: String,
-        tahunLulus: Int,
-        tglAktif: String,
-        alumni: String,
         noReg: Long,
         jenisKelamin: String,
         status: String
     ): DokterResponse = ApiConfig.getApiService().updateDokter(
-        id, userId, spesialisId, img, alamat, noTlp,
-        tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
+        id, userId, spesialisId, img, alamat, noTlp, noReg, jenisKelamin,status
     )
 
     // Pasien Tambahan

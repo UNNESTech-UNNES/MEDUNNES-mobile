@@ -13,12 +13,8 @@ class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : Rec
     class ListViewHolder(private val binding: ListPasienJanjiBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dokter: DokterDataItem) {
             with(binding) {
-                tvPatientName.text = root.resources.getString(R.string.nama_and_titel,
-                        dokter.titleDepan, dokter.namaDokter, dokter.titleBelakang)
-
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 tvDoctorRole.text = spesialis[(dokter.spesialisId.toInt())-1]
-                tvDoctorExperience.text = dokter.tempatKerja
 
                 if (!dokter.imgDokter.isNullOrEmpty()) {
                     val imageFile = "${imageBaseUrl()}/${dokter.imgDokter}"
