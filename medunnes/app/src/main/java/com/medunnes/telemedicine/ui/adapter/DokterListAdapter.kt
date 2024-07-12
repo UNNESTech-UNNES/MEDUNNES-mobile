@@ -15,6 +15,8 @@ class DokterListAdapter(private val dokterList: ArrayList<DokterDataItem>) : Rec
             with(binding) {
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 tvDoctorRole.text = spesialis[(dokter.spesialisId.toInt())-1]
+                tvPatientName.text = dokter.user.name
+                tvDoctorExperience.text = dokter.nim.toString()
 
                 if (!dokter.imgDokter.isNullOrEmpty()) {
                     val imageFile = "${imageBaseUrl()}/${dokter.imgDokter}"
