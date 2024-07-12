@@ -52,13 +52,11 @@ class JanjiDokterFragment : Fragment() {
             override fun onItemClicked(janji: JanjiDataItem) {
                 val bundle = Bundle()
                 with(bundle) {
-                    if (janji.pasien.namaPasien == janji.pasienTambahan.namaPasienTambahan) {
-                        putString(PasienDetailDialog.IMG_PASIEN, janji.pasien.imgPasien)
-                        putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahan.namaPasienTambahan)
-                        putString(PasienDetailDialog.SESI_PASIEN, "${janji.sesiId}")
-                        putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
-                        putString(PasienDetailDialog.CATATAN, janji.catatan)
-                    }
+                    putString(PasienDetailDialog.IMG_PASIEN, janji.pasien.imgPasien)
+                    putString(PasienDetailDialog.NAMA_PASIEN, janji.pasienTambahan.namaPasienTambahan)
+                    putString(PasienDetailDialog.SESI_PASIEN, "${janji.sesiId}")
+                    putString(PasienDetailDialog.TANGGAL_PASIEN, janji.datetime)
+                    putString(PasienDetailDialog.CATATAN, janji.catatan)
                 }
 
                 pdd.arguments = bundle
@@ -92,7 +90,6 @@ class JanjiDokterFragment : Fragment() {
                                     val konsultasiId = insKonsultasi.data[0].idKonsultasi
                                     insertDiskusi(konsultasiId.toLong(), "memulai diskusi")
                                 }
-
                                 restartFragment()
                             } catch (e: Exception) {
                                 Log.d("UPDATE JANJI FAIL", e.message.toString())

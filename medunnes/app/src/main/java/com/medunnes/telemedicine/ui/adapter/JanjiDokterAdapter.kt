@@ -39,13 +39,11 @@ class JanjiDokterAdapter(
                 tvPatientSession.text = "${date?.let { fullDateFormat.format(it) }}/Sesi ${janji.sesiId}"
                 tvMessangerStatus.text  = janji.status
 
-                if (janji.pasien.namaPasien == janji.pasienTambahan.namaPasienTambahan) {
-                    val imagePath = "${imageBaseUrl()}/${janji.pasien.imgPasien}"
-                    Glide.with(itemView.context)
-                        .load(imagePath)
-                        .into(ivMessanger)
-                        .clearOnDetach()
-                }
+                val imagePath = "${imageBaseUrl()}/${janji.pasien.imgPasien}"
+                Glide.with(itemView.context)
+                    .load(imagePath)
+                    .into(ivMessanger)
+                    .clearOnDetach()
             }
         }
     }
