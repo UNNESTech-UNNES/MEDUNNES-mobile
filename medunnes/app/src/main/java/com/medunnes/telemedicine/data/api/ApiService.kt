@@ -81,7 +81,7 @@ interface ApiService {
     @PUT("api/pasien/{id}")
     suspend fun updatePasien(
         @Path("id") id: Int,
-        @Field("user_id") userId: Long,
+        @Field("id") userId: Long,
         @Field("NIK") nik: Long,
         @Field("img_pasien") img: String? = null,
         @Field("jenis_kelamin") kelamin: String,
@@ -125,7 +125,7 @@ interface ApiService {
     @PUT("api/dokter/{id}")
     suspend fun updateDokter(
         @Path("id") id: Long,
-        @Field("user_id") userId: Long,
+        @Field("id") userId: Long,
         @Field("spesialis_id") spesialisId: Long,
         @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
