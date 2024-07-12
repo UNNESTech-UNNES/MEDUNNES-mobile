@@ -78,7 +78,6 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         id: Int,
         userId: Long,
         nik: Long,
-        nama: String,
         img: String? = null,
         kelamin: String,
         alamat: String,
@@ -87,16 +86,13 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         bb: Int,
         status: String
     ): PasienResponse = userRepository.updatePasien(
-        id, userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
+        id, userId, nik, img, kelamin, alamat, noTlp, tb, bb, status
     )
 
     suspend fun updateDokter(
         id: Long,
         userId: Long,
         spesialisId: Long,
-        titleDepan: String,
-        nama: String,
-        titleBelakang: String,
         img: String? = null,
         alamat: String,
         noTlp: String,
@@ -108,7 +104,7 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
         jenisKelamin: String,
         status: String
     ): DokterResponse = userRepository.updateDokter(
-        id, userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
+        id, userId, spesialisId, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin,status
     )
 

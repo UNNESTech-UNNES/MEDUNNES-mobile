@@ -103,7 +103,6 @@ class ProfilePasienEditActivity : AppCompatActivity(), View.OnClickListener {
                 userId,
                 userId.toLong(),
                 binding.tieEditNik.text.toString().toLong(),
-                "${binding.tieEditNamaLengkap.text}",
                 imagePath,
                 kelamin,
                 "${binding.tieEditAlamat.text}",

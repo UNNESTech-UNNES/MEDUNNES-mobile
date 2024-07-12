@@ -7,7 +7,7 @@ data class PasienResponse(
 	@field:SerializedName("data")
 	val data: List<PasienDataItem>,
 
-	@field:SerializedName("notification")
+	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("status")
@@ -18,9 +18,6 @@ data class PasienDataItem(
 
 	@field:SerializedName("BB")
 	val bB: Int,
-
-	@field:SerializedName("nama_pasien")
-	val namaPasien: String,
 
 	@field:SerializedName("no_tlp")
 	val noTlp: String,
@@ -37,17 +34,20 @@ data class PasienDataItem(
 	@field:SerializedName("NIK")
 	val nik: Long,
 
+	@field:SerializedName("banned_at")
+	val bannedAt: Any,
+
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
-
-	@field:SerializedName("user_id")
-	val userId: Long,
 
 	@field:SerializedName("id_pasien")
 	val idPasien: Long,
 
+	@field:SerializedName("id")
+	val id: Int,
+
 	@field:SerializedName("img_pasien")
-	val imgPasien: String? = null,
+	val imgPasien: String,
 
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String,

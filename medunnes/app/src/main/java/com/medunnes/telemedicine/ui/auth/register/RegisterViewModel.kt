@@ -26,7 +26,6 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
     suspend fun insertPasien(
         userId: Long,
         nik: Long,
-        nama: String,
         img: String? = null,
         kelamin: String,
         alamat: String,
@@ -35,15 +34,12 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
         bb: Int,
         status: String
     ): PasienResponse = userRepository.insertPasien(
-        userId, nik, nama, img, kelamin, alamat, noTlp, tb, bb, status
+        userId, nik, img, kelamin, alamat, noTlp, tb, bb, status
     )
 
     suspend fun insertDokter(
         userId: Int,
         spesialisId: Int,
-        titleDepan: String,
-        nama: String,
-        titleBelakang: String,
         img: String? = null,
         alamat: String,
         noTlp: String,
@@ -55,7 +51,7 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
         jenisKelamin: String,
         status: String
     ): DokterResponse = userRepository.insertDokter(
-        userId, spesialisId, titleDepan, nama, titleBelakang, img, alamat, noTlp,
+        userId, spesialisId, img, alamat, noTlp,
         tempatKerja, tahunLulus, tglAktif, alumni, noReg, jenisKelamin, status
     )
 

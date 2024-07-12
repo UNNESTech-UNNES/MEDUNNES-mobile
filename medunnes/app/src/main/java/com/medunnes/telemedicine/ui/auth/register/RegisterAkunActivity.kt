@@ -65,7 +65,6 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                 val pasienInsert = viewModel.insertPasien(
                     userId,
                     tieNik.text.toString().toLong(),
-                    "${tieNamaLengkap.text}",
                     null,
                     dataSpinner,
                     "${tieAlamat.text}",

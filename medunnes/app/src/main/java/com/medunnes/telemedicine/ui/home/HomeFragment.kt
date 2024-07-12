@@ -50,11 +50,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        lifecycleScope.launch { setUserProfile() }
-        getArticleList()
-
-        getFaskesList()
-        showFaskesRecycleList()
+        //getArticleList()
 
         with(binding) {
             btnKonsultasi.setOnClickListener(this@HomeFragment)
@@ -66,7 +62,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
             tvFaskesTerdekat.visibility = View.GONE
             tvFaskesAll.visibility = View.GONE
             rvFaskesTerdekat.visibility = View.GONE
+            cvKonsultasi.visibility = View.INVISIBLE
+            cvBuatJanji.visibility = View.INVISIBLE
+            tvKonsultasi.visibility = View.INVISIBLE
+            tvJanji.visibility = View.INVISIBLE
         }
+
+        lifecycleScope.launch { setUserProfile() }
+
+        getFaskesList()
+        showFaskesRecycleList()
 
         if (Build.VERSION.SDK_INT >= 33) {
             requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -86,6 +91,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             showProgressBar(true)
             binding.tvMasukLayanan.visibility = View.GONE
             binding.btnLogin.visibility = View.GONE
+            binding.cvKonsultasi.visibility = View.VISIBLE
+            binding.cvBuatJanji.visibility = View.VISIBLE
+            binding.tvKonsultasi.visibility = View.VISIBLE
+            binding.tvJanji.visibility = View.VISIBLE
             val userId = viewModel.getUserLoginId()
             viewModel.getUserLogin(userId)
             viewModel.user.observe(viewLifecycleOwner) { data ->
@@ -123,18 +132,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.tvAuthenticate.visibility = View.INVISIBLE
             binding.prgressBar2.visibility = View.VISIBLE
-            binding.cvKonsultasi.visibility = View.INVISIBLE
-            binding.cvBuatJanji.visibility = View.INVISIBLE
-            binding.tvKonsultasi.visibility = View.INVISIBLE
-            binding.tvJanji.visibility = View.INVISIBLE
         } else {
             binding.progressBar.visibility = View.GONE
             binding.tvAuthenticate.visibility = View.VISIBLE
             binding.prgressBar2.visibility = View.GONE
-            binding.cvKonsultasi.visibility = View.VISIBLE
-            binding.cvBuatJanji.visibility = View.VISIBLE
-            binding.tvKonsultasi.visibility = View.VISIBLE
-            binding.tvJanji.visibility = View.VISIBLE
         }
     }
 

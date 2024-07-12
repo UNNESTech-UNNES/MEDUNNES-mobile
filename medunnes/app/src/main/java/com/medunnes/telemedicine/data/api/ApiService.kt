@@ -46,7 +46,7 @@ interface ApiService {
     suspend fun register(
         @Field("name") name: String,
         @Field("email") email: String,
-        @Field("type") type: String,
+        @Field("role") type: String,
         @Field("password") password: String,
     ) : UserResponse
 
@@ -66,9 +66,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/pasien")
     suspend fun insertPasien(
-        @Field("user_id") userId: Long,
+        @Field("id") userId: Long,
         @Field("NIK") nik: Long,
-        @Field("nama_pasien") nama: String,
         @Field("img_pasien") img: String? = null,
         @Field("jenis_kelamin") kelamin: String,
         @Field("alamat") alamat: String,
@@ -84,7 +83,6 @@ interface ApiService {
         @Path("id") id: Int,
         @Field("user_id") userId: Long,
         @Field("NIK") nik: Long,
-        @Field("nama_pasien") nama: String,
         @Field("img_pasien") img: String? = null,
         @Field("jenis_kelamin") kelamin: String,
         @Field("alamat") alamat: String,
@@ -114,9 +112,6 @@ interface ApiService {
     suspend fun insertDokter(
         @Field("user_id") userId: Int,
         @Field("spesialis_id") spesialisId: Int,
-        @Field("title_depan") titleDepan: String,
-        @Field("nama_dokter") nama: String,
-        @Field("title_belakang") titleBelakang: String,
         @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
@@ -135,9 +130,6 @@ interface ApiService {
         @Path("id") id: Long,
         @Field("user_id") userId: Long,
         @Field("spesialis_id") spesialisId: Long,
-        @Field("title_depan") titleDepan: String,
-        @Field("nama_dokter") nama: String,
-        @Field("title_belakang") titleBelakang: String,
         @Field("img_dokter") img: String? = null,
         @Field("alamat") alamat: String,
         @Field("no_tlp") noTlp: String,
