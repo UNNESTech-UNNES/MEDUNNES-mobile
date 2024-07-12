@@ -34,10 +34,10 @@ data class User(
 	@field:SerializedName("email_verified_at")
 	val emailVerifiedAt: Any,
 
-	@field:SerializedName("id_user")
+	@field:SerializedName("id")
 	val idUser: Int,
 
-	@field:SerializedName("type")
+	@field:SerializedName("role")
 	val type: String,
 
 	@field:SerializedName("email")
