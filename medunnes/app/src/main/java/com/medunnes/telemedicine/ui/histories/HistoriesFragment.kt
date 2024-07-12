@@ -117,7 +117,6 @@ class HistoriesFragment : Fragment() {
                         listKonsultasi.clear()
                         listKonsultasi.addAll(konsultasi)
                         val filteredDokterList = konsultasi.filter {
-                            it.dokter.namaDokter.lowercase().contains(filter) &&
                                     it.dokter.status.contains("approve") &&
                                     it.status.contains("berakhir")
                         } as ArrayList<KonsultasiDataItem>
@@ -149,7 +148,6 @@ class HistoriesFragment : Fragment() {
                     listKonsultasi.clear()
                     listKonsultasi.addAll(konsultasi)
                     val filteredKonsultasiList = konsultasi.filter {
-                        it.pasien.namaPasien.lowercase().contains(filter) &&
                         it.status.contains("berakhir")
                     } as ArrayList<KonsultasiDataItem>
 

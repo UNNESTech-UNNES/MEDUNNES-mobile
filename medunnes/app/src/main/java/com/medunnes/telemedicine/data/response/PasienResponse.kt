@@ -32,7 +32,7 @@ data class PasienDataItem(
 	val alamat: String,
 
 	@field:SerializedName("NIK")
-	val nik: Long,
+	val nik: Int,
 
 	@field:SerializedName("banned_at")
 	val bannedAt: Any,
@@ -44,7 +44,7 @@ data class PasienDataItem(
 	val idPasien: Long,
 
 	@field:SerializedName("id")
-	val id: Int,
+	val id: Long,
 
 	@field:SerializedName("img_pasien")
 	val imgPasien: String,
@@ -52,6 +52,36 @@ data class PasienDataItem(
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String,
 
+	@field:SerializedName("user")
+	val user: User,
+
 	@field:SerializedName("status")
 	val status: String
+)
+
+data class UserPasienDataItem(
+
+	@field:SerializedName("password")
+	val password: String,
+
+	@field:SerializedName("role")
+	val role: String,
+
+	@field:SerializedName("updated_at")
+	val updatedAt: String,
+
+	@field:SerializedName("name")
+	val name: String,
+
+	@field:SerializedName("created_at")
+	val createdAt: String,
+
+	@field:SerializedName("email_verified_at")
+	val emailVerifiedAt: Any,
+
+	@field:SerializedName("id")
+	val id: Long,
+
+	@field:SerializedName("email")
+	val email: String
 )

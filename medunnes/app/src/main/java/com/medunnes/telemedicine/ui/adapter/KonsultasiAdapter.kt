@@ -12,7 +12,7 @@ class KonsultasiAdapter(private val konsultasiList: ArrayList<KonsultasiDataItem
     class ListViewHolder(private val binding: ListKonsultasiBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(konsultasi: KonsultasiDataItem) {
             with(binding) {
-                tvPatientName.text = konsultasi.pasien.namaPasien
+                tvPatientName.text = konsultasi.pasien.id.toString()
                 tvPatientSession.text = konsultasi.topik
                 tvPatientStatus.text = if (konsultasi.pasien.status == "berlangsung") "Berlangsung" else "Berakhir"
 

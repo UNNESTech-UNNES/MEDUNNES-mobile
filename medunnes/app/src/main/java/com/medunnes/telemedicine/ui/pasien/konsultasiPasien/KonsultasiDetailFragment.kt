@@ -43,7 +43,7 @@ class KonsultasiDetailFragment : Fragment(), View.OnClickListener {
                 dokter.forEach {
                     with(binding) {
                         tvUserStr.text = it.nim.toString()
-
+                        tvUserFullname.text = it.user.name
                         val spsialis = resources.getStringArray(R.array.spesialissasi)
                         tvUserField.text = spsialis[it.spesialisId.toInt()-1]
 

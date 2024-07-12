@@ -14,13 +14,52 @@ data class KonsultasiResponse(
 	val status: Boolean
 )
 
+data class DokterKonsultasiDataItem(
+
+	@field:SerializedName("dosen_id")
+	val dosenId: Long,
+
+	@field:SerializedName("img_dokter")
+	val imgDokter: String,
+
+	@field:SerializedName("nim")
+	val nim: Long,
+
+	@field:SerializedName("spesialis_id")
+	val spesialisId: Long,
+
+	@field:SerializedName("no_tlp")
+	val noTlp: String,
+
+	@field:SerializedName("updated_at")
+	val updatedAt: String,
+
+	@field:SerializedName("created_at")
+	val createdAt: String,
+
+	@field:SerializedName("id")
+	val id: Long,
+
+	@field:SerializedName("jenis_kelamin")
+	val jenisKelamin: String,
+
+	@field:SerializedName("id_dokter")
+	val idDokter: Long,
+
+	@field:SerializedName("alamat")
+	val alamat: String,
+
+	@field:SerializedName("status")
+	val status: String
+)
+
 data class KonsultasiDataItem(
 
 	@field:SerializedName("topik")
 	val topik: String,
 
 	@field:SerializedName("dokter")
-	val dokter: Dokter,
+	val dokter: DokterKonsultasiDataItem,
 
 	@field:SerializedName("pasien_id")
 	val pasienId: Long,
@@ -38,19 +77,16 @@ data class KonsultasiDataItem(
 	val idKonsultasi: Long,
 
 	@field:SerializedName("pasien")
-	val pasien: Pasien,
+	val pasien: PasienKonsultasiDataItem,
 
 	@field:SerializedName("status")
 	val status: String
 )
 
-data class KonsultasiPasien(
+data class PasienKonsultasiDataItem(
 
 	@field:SerializedName("BB")
 	val bB: Int,
-
-	@field:SerializedName("nama_pasien")
-	val namaPasien: String,
 
 	@field:SerializedName("no_tlp")
 	val noTlp: String,
@@ -65,79 +101,25 @@ data class KonsultasiPasien(
 	val alamat: String,
 
 	@field:SerializedName("NIK")
-	val nIK: Long,
+	val nik: Int,
+
+	@field:SerializedName("banned_at")
+	val bannedAt: Any,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
 
-	@field:SerializedName("user_id")
-	val userId: Long,
-
 	@field:SerializedName("id_pasien")
 	val idPasien: Long,
+
+	@field:SerializedName("id")
+	val id: Long,
 
 	@field:SerializedName("img_pasien")
 	val imgPasien: String,
 
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String,
-
-	@field:SerializedName("status")
-	val status: String
-)
-
-data class Dokter(
-
-	@field:SerializedName("img_dokter")
-	val imgDokter: String,
-
-	@field:SerializedName("no_tlp")
-	val noTlp: String,
-
-	@field:SerializedName("nama_dokter")
-	val namaDokter: String,
-
-	@field:SerializedName("tahun_lulus")
-	val tahunLulus: Int,
-
-	@field:SerializedName("no_reg")
-	val noReg: Long,
-
-	@field:SerializedName("created_at")
-	val createdAt: String,
-
-	@field:SerializedName("alumni_kampus")
-	val alumniKampus: String,
-
-	@field:SerializedName("id_dokter")
-	val idDokter: Long,
-
-	@field:SerializedName("alamat")
-	val alamat: String,
-
-	@field:SerializedName("title_depan")
-	val titleDepan: String,
-
-	@field:SerializedName("spesialis_id")
-	val spesialisId: Int,
-
-	@field:SerializedName("tempat_kerja")
-	val tempatKerja: String,
-
-	@field:SerializedName("updated_at")
-	val updatedAt: String,
-
-	@field:SerializedName("user_id")
-	val userId: Long,
-
-	@field:SerializedName("title_belakang")
-	val titleBelakang: String,
-
-	@field:SerializedName("jenis_kelamin")
-	val jenisKelamin: String,
-
-	@field:SerializedName("tgl_mulai_aktif")
-	val tglMulaiAktif: String,
 
 	@field:SerializedName("status")
 	val status: String

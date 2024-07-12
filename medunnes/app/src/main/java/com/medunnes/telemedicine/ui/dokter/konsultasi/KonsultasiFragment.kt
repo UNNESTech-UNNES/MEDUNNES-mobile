@@ -65,15 +65,12 @@ class KonsultasiFragment : Fragment() {
                     showProgressBar(false)
                     listPatient.clear()
                     listPatient.addAll(konsultasi)
-                    val filteredKonsultasiList = konsultasi.filter {
-                        it.pasien.namaPasien.lowercase().contains(filter)
-                    } as ArrayList<KonsultasiDataItem>
 
-                    if (filteredKonsultasiList.isEmpty()) {
+                    if (listPatient.isEmpty()) {
                         binding.tvDataEmpty.visibility = View.VISIBLE
                     }
 
-                    showRecycleList(filteredKonsultasiList)
+                    showRecycleList(listPatient)
                 } else {
                     showProgressBar(false)
                     binding.tvDataEmpty.visibility = View.VISIBLE

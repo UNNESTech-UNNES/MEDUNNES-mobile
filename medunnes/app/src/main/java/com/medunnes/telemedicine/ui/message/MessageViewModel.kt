@@ -72,10 +72,10 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
-    fun getDokterByUserLogin(userId: Int) {
+    fun getDokterById(id: Int) {
         viewModelScope.launch {
             try {
-                val dokterData = repository.getDokterByUser(userId)
+                val dokterData = repository.getDokterById(id)
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
                 }

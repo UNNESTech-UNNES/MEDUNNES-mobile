@@ -136,7 +136,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.getPasienrById(pasienId)
             viewModel.pasien.observe(this) { pasien ->
                 binding.tvMessangerStatus.text = pasien[0].status
-
+                binding.tvMessangerName.text = pasien[0].user.name
                 if (!pasien[0].imgPasien.isNullOrEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${pasien[0].imgPasien}"
                     Glide.with(this)
@@ -147,10 +147,11 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else {
             val dokterId = intent.getIntExtra(DOKTER_ID, 0)
-            viewModel.getDokterByUserLogin(dokterId)
+            Log.d("doid", dokterId.toString())
+            viewModel.getDokterById(dokterId)
             viewModel.dokter.observe(this) { dokter ->
                 binding.tvMessangerStatus.text = dokter[0].status
-
+                binding.tvMessangerName.text = dokter[0].user.name
                 if (!dokter[0].imgDokter.isNullOrEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${dokter[0].imgDokter}"
                     Glide.with(this)

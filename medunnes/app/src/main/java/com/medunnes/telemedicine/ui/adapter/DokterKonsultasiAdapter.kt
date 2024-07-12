@@ -13,14 +13,10 @@ class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>):
     class ViewHolder(private val binding: ListKonsultasiPasienBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(dokter: KonsultasiDataItem) {
             with(binding) {
-                tvDokterNama.text = root.resources.getString(
-                    R.string.nama_and_titel,
-                    dokter.dokter.titleDepan, dokter.dokter.namaDokter, dokter.dokter.titleBelakang
-                )
 
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
-                val spesiliasId = dokter.dokter.spesialisId
-
+                val spesiliasId = dokter.dokter.spesialisId.toInt()
+                tvDokterNama.text = dokter.dokterId.toString()
                 tvDokterSpesialis.text = spesialis[spesiliasId-1]
                 tvDokterSesiWaktu.text = if (dokter.status == "berlangsung") "Berlangsung" else "Berakhir"
 
