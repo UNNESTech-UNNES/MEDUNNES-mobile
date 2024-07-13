@@ -18,4 +18,8 @@
         <item name="boxStrokeColor">#E6C38C</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/app_color</item>
+    </style>
 </resources>

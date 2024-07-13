@@ -122,7 +122,7 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         val cDay = calendar.get(Calendar.DATE)
 
         val datePickerDialog = DatePickerDialog(
-            requireContext(), { _, year, month, day ->
+            requireContext(), R.style.DialogTheme, { _, year, month, day ->
                 calendar.set(year, month, day)
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val fullDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
@@ -130,12 +130,10 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
                 binding.tieSesiDate.setText(date)
                 binding.tvDatePicked.text = fullDateFormat.format(calendar.time)
                 datePicked = date
-
                 binding.tvFormIsEmpty.visibility = View.GONE
                 binding.tvDatePicked.visibility = View.VISIBLE
 
             }, cYear, cMonth, cDay)
-
         datePickerDialog.show()
     }
 
