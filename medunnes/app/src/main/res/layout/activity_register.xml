@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.register.RegisterActivity">
+    tools:context=".ui.auth.register.RegisterActivity"
+    android:background="@drawable/background_authenticate">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar"
@@ -16,7 +17,7 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/material_on_primary_disabled"
+            android:backgroundTint="@color/secondary_color"
             android:src="@drawable/back_button" />
     </androidx.appcompat.widget.Toolbar>
 

@@ -1,6 +1,5 @@
 package com.medunnes.telemedicine.ui.auth.register
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,9 +17,6 @@ import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     private lateinit var binding: ActivityRegisterAkunBinding
@@ -42,7 +38,6 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
         with(binding) {
             btnRegister.setOnClickListener(this@RegisterAkunActivity)
             btnBack.setOnClickListener(this@RegisterAkunActivity)
-            tilTglLahir.setEndIconOnClickListener { showDatePicker() }
         }
     }
 
@@ -139,24 +134,6 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
             }
     }
 
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val cYear = calendar.get(Calendar.YEAR)
-        val cMonth = calendar.get(Calendar.MONTH)
-        val cDay = calendar.get(Calendar.DATE)
-
-        val datePickerDialog = DatePickerDialog(
-            this, { _, year, month, day ->
-                calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val date = dateFormat.format(calendar.time)
-                binding.tieTglLahir.setText(date)
-                datePicked = date
-
-            }, cYear, cMonth, cDay)
-
-        datePickerDialog.show()
-    }
     private fun getDataSpinner(gender: String): String = gender
 
     private fun setSpinner() {

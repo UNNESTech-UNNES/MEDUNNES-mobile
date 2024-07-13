@@ -1,7 +1,8 @@
 package com.medunnes.telemedicine.ui.auth.register
 
-import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,147 +10,188 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.databinding.FragmentRegistrasi2Binding
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import com.medunnes.telemedicine.ViewModelFactory
+import com.medunnes.telemedicine.data.response.UserResponse
+import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
+import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import kotlinx.coroutines.launch
 
-class Registrasi2Fragment :
-    Fragment(),
+class Registrasi2Fragment : Fragment(),
     View.OnClickListener,
-    AdapterView.OnItemSelectedListener {
-
-    private var _binding: FragmentRegistrasi2Binding? = null
+        AdapterView.OnItemSelectedListener
+{
+    private var _binding: FragmentRegistrasi3Binding? = null
     private val binding get() = _binding!!
-    private lateinit var dataSpinner: String
-    private var datePicked = "date"
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+    private var dataSpinner = 0
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentRegistrasi2Binding.inflate(inflater, container, false)
+        _binding = FragmentRegistrasi3Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setSpinner()
-        binding.btnLanjut1.setOnClickListener(this)
+        auth = FirebaseAuth.getInstance()
 
-        binding.tilTglLulus.setEndIconOnClickListener {
-            showDatePicker()
+        setSpinner()
+        with(binding) {
+            tvMasuk.setOnClickListener(this@Registrasi2Fragment)
+            btnRegister.setOnClickListener(this@Registrasi2Fragment)
         }
 
         return root
     }
 
-    private fun setSpinner() {
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.jenis_kelamin,
-            android.R.layout.simple_spinner_item
-        ).also { arrayAdapter ->
-            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerKelamin.adapter = arrayAdapter
-        }
-        binding.spinnerKelamin.onItemSelectedListener = this
-    }
-
-    private fun bundle() : Bundle {
-        val bundle = Bundle()
-        with(bundle) {
-            putString(Registrasi3Fragment.EMAIL, getDataBundle(EMAIL))
-            putString(Registrasi3Fragment.FULLNAME, getDataBundle(FULLNAME))
-            putString(Registrasi3Fragment.TITLE_ONE, getDataBundle(TITLE_ONE))
-            putString(Registrasi3Fragment.TITLE_TWO, getDataBundle(TITLE_TWO))
-            putLong(Registrasi3Fragment.NO_STR, arguments?.getLong(NO_STR)!!)
-            putInt(Registrasi3Fragment.ROLE, arguments?.getInt(ROLE)!!)
-            putString(Registrasi3Fragment.GENDER, dataSpinner)
-
-            with(binding) {
-                putString(Registrasi3Fragment.DATE, datePicked)
-                putString(Registrasi3Fragment.ADDRESS, "${tieAlamat.text}")
-                putString(Registrasi3Fragment.PLACE, "${tieTempatPraktik.text}")
-                putInt(Registrasi3Fragment.GRADUATE_YEAR, tieTahunLulus.text?.toString()?.toInt() ?: 0)
+    private fun firebaseRegister(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    Log.d("USER", user.toString())
+                } else {
+                    Log.w("Registration", "createUserWithEmail:failure", task.exception)
+                }
             }
-
-        }
-
-        return bundle
     }
+
+    private fun makeToast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+    private fun getData(data: String): String ="${arguments?.getString(data)}"
 
     private fun inputValidation(): Boolean {
         with(binding) {
-            return (!getDataBundle(EMAIL).isNullOrEmpty()
-                    && !getDataBundle(FULLNAME).isNullOrEmpty()
-                    && !getDataBundle(TITLE_ONE).isNullOrEmpty()
-                    && !getDataBundle(TITLE_TWO).isNullOrEmpty()
-                    && arguments?.getLong(NO_STR) !== null
-                    && dataSpinner.isNotEmpty()
-                    && datePicked.isNotEmpty()
-                    && !tieAlamat.text.isNullOrEmpty()
-                    && !tieTempatPraktik.text.isNullOrEmpty()
-                    && !tieTahunLulus.text.isNullOrEmpty())
+            return ((getData(EMAIL).isNotEmpty()
+                    && getData(FULLNAME).isNotEmpty()
+                    && getData(GENDER).isNotEmpty()
+                    && getData(ADDRESS).isNotEmpty())
+                    && arguments?.getLong(NIM) != null
+                    && arguments?.getInt(ROLE) != null
+                    && !tieNoTelepon.text.isNullOrEmpty()
+                    && !tiePassword.text.isNullOrEmpty()
+                    && !tiePasswordConfirmation.text.isNullOrEmpty())
         }
     }
 
-    private fun getDataBundle(data: String) = arguments?.getString(data)
+    private fun passwordValidation(): Boolean {
+        return "${binding.tiePassword.text}" == "${binding.tiePasswordConfirmation.text}"
+    }
 
-    override fun onClick(view: View?) {
-        when(view) {
-            binding.btnLanjut1 -> {
-                val registrasi3Fragment = Registrasi3Fragment()
-                val fragmentManager = parentFragmentManager
-
-                if (inputValidation()) {
-                    registrasi3Fragment.arguments = bundle()
-                    fragmentManager.beginTransaction().apply {
-                        replace(R.id.frame_container, registrasi3Fragment, Registrasi3Fragment::class.java.simpleName)
-                        addToBackStack(null)
-                        commit()
-                    }
-                } else {
-                    Toast.makeText(context, "Lengkapi data terlebih dahulu", Toast.LENGTH_SHORT).show()
-                }
+    private fun insertUser() {
+        showProgressBar()
+        lifecycleScope.launch {
+            try {
+                val email = getData(EMAIL)
+                val password = "${binding.tiePassword.text}"
+                val registerUser = viewModel.registerAPI(
+                    getData(FULLNAME),
+                    email,
+                    password,
+                    "dokter"
+                )
+                firebaseRegister(email, password)
+                insertDokter(registerUser)
+            } catch (e: Exception) {
+                hideProgressBar()
+                Toast.makeText(context, "Register gagal", Toast.LENGTH_SHORT).show()
+                Log.d("ERROR", e.message.toString())
             }
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-        dataSpinner = if (pos == 1) "P" else "L"
-        Toast.makeText(context, dataSpinner, Toast.LENGTH_SHORT).show()
-        getDataSpinner(dataSpinner)
+    private suspend fun insertDokter(registerUser: UserResponse) {
+        val userId: Int
+        if (inputValidation()) {
+            if (passwordValidation()) {
+                userId = registerUser.data[0].idUser
+                val dokterIns = viewModel.insertDokter(
+                    userId.toLong(),
+                    1,
+                    dataSpinner.toLong(),
+                    null,
+                    getData(ADDRESS),
+                    "${binding.tieNoTelepon.text}",
+                    arguments?.getLong(NIM)!!,
+                    getData(GENDER),
+                    "pending"
+                )
+                intentLoginIfSuccess(dokterIns.status)
+            } else {
+                makeToast("Password tidak sesuai")
+            }
+        } else {
+            makeToast("Lengkapi data terlebih dahulu")
+        }
     }
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        // DO NOTHING
+    private fun intentLoginIfSuccess(dokterIns: Boolean) {
+        if (dokterIns) {
+            hideProgressBar()
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun getDataSpinner(gender: String): String = gender
+    private fun showProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.cvProgressBar.visibility = View.VISIBLE
+            binding.btnRegister.isClickable = false
+        }
+    }
 
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val cYear = calendar.get(Calendar.YEAR)
-        val cMonth = calendar.get(Calendar.MONTH)
-        val cDay = calendar.get(Calendar.DATE)
+    private fun hideProgressBar() {
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.GONE
+            binding.cvProgressBar.visibility = View.GONE
+            binding.btnRegister.isClickable = true
+        }
+    }
 
-        val datePickerDialog = DatePickerDialog(
-            requireContext(), { _, year, month, day ->
-                calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dateFormatted =  dateFormat.format(calendar.time)
-                binding.tieTglLulus.setText(dateFormatted)
-                datePicked = dateFormatted
-            }, cYear, cMonth, cDay)
+    override fun onClick(view: View?) {
+        when(view) {
+            binding.tvMasuk -> {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            binding.btnRegister -> insertUser()
+        }
+    }
 
-        datePickerDialog.show()
+    private fun setSpinner() {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.spesialissasi,
+            android.R.layout.simple_spinner_item
+        ).also { arrayAdapter ->
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerSpesialisasi.adapter = arrayAdapter
+        }
+        binding.spinnerSpesialisasi.onItemSelectedListener = this
     }
 
     companion object {
         const val EMAIL = "email"
         const val FULLNAME = "fullname"
-        const val TITLE_ONE = "title_one"
-        const val TITLE_TWO = "title_two"
-        const val NO_STR = "no_str"
+        const val NIM = "nim"
+        const val GENDER = "gender"
+        const val ADDRESS = "address"
         const val ROLE = "role"
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        Toast.makeText(context, (pos+1).toString(), Toast.LENGTH_SHORT).show()
+        dataSpinner = pos+1
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        // DO NOTHING
     }
 }

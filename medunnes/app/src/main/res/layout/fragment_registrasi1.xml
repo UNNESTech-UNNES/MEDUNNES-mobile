@@ -32,7 +32,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="30dp">
+            android:layout_marginHorizontal="30dp"
+            app:cardBackgroundColor="@color/white_glass">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:id="@+id/tv_no_telepon_title"
+                    android:id="@+id/tv_email_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
@@ -51,49 +52,101 @@
                     android:text="@string/email"/>
 
                 <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_no_telepon"
+                    android:id="@+id/til_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_telepon_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_email_title"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:startIconTint="@color/grey">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tie_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/masukkan_email"
-                        android:inputType="textEmailAddress"/>
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="#757575" />
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_nama_lengkap_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/nama_lenkap"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_nama_lengkap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nama_lengkap_title"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:startIconTint="@color/grey">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_nama_lengkap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/masukkan_nama_lengkap"
+                        android:inputType="text"
+                        android:textColorHint="#757575" />
+                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+
+                <TextView
+                    android:id="@+id/tv_nim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/til_nama_lengkap"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textStyle="bold"
+                    android:text="@string/no_reg"/>
+
+                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                    android:id="@+id/til_nim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_nim"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:startIconTint="@color/grey">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_nim"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/masukkan_nomor_reg"
+                        android:inputType="number"
+                        android:textColorHint="#757575" />
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
                 <TextView
                     android:id="@+id/tv_kelamin_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_no_telepon"
+                    app:layout_constraintTop_toBottomOf="@id/til_nim"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
-                    android:text="@string/nama_lenkap"/>
+                    android:text="@string/jenis_kelamin"/>
 
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
+                <Spinner
                     android:id="@+id/spinner_kelamin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintBottom_toTopOf="@id/tv_alamat_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_kelamin_title"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_nama_lengkap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_nama_lengkap"
-                        android:inputType="text"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@id/tv_kelamin_title" />
 
                 <TextView
                     android:id="@+id/tv_alamat_title"
@@ -102,79 +155,26 @@
                     app:layout_constraintTop_toBottomOf="@id/spinner_kelamin"
                     app:layout_constraintStart_toStartOf="parent"
                     android:textStyle="bold"
-                    android:text="@string/title_depan"/>
+                    android:text="@string/alamat"/>
 
                 <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
                     android:id="@+id/til_alamat"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_alamat_title"
                     android:layout_marginEnd="8dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toStartOf="@id/til_title_belakang"
                     app:startIconTint="@color/grey">
+
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_titel_depan"
+                        android:id="@+id/tie_alamat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_titel_depan"
-                        android:inputType="text"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_title_belakang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/spinner_kelamin"
-                    app:layout_constraintStart_toStartOf="@id/til_title_belakang"
-                    android:textStyle="bold"
-                    android:text="@string/titel_belakang"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_title_belakang"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/til_alamat"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_belakang"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_titel_belakang"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_titel_belakang"
-                        android:inputType="text"/>
-                </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
-
-                <TextView
-                    android:id="@+id/tv_no_reg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/til_alamat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textStyle="bold"
-                    android:text="@string/no_reg"/>
-
-                <com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout
-                    android:id="@+id/til_no_reg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_reg"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:startIconTint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_no_reg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_nomor_reg"
-                        android:inputType="text"/>
+                        android:hint="@string/masukkan_alamat_lengkap"
+                        android:inputType="text"
+                        android:textColorHint="#757575" />
                 </com.medunnes.telemedicine.ui.cutomView.CustomTextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
