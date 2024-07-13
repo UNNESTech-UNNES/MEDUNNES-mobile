@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">MedUnnes</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Beranda</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_message">Message</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_profile">Profil</string>
     <string name="masuk_daftar">Masuk/Daftar</string>
     <string name="user_location">User\'s location</string>
     <string name="greeting">Selamat %1$s,</string>
@@ -204,7 +204,7 @@
     <string name="berakhir">Berakhir</string>
     <string name="berlangsung">Berlangsung</string>
     <string name="cari_riwayat_konsultasi">Cari riwayat konsultasi</string>
-    <string name="histories_title">Histories</string>
+    <string name="histories_title">Riwayat</string>
     <string name="tambahkan_pasien">Tambahkan pasien?</string>
     <string name="pastikan_data_pasien_sudah_benar">Pastikan data pasien sudah benar</string>
     <string name="sesi_tidak_dapat_dimulai_kembali">Sesi tidak dapat dimulai kembali</string>
