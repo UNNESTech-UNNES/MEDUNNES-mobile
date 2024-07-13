@@ -51,7 +51,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //getArticleList()
+        getArticleList()
 
         with(binding) {
             btnKonsultasi.setOnClickListener(this@HomeFragment)
@@ -182,11 +182,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getArticleList() {
-        showProgressBar(true)
         lifecycleScope.launch {
             viewModel.getAllArtikel()
             viewModel.artikel.observe(viewLifecycleOwner) { artikel ->
-                showProgressBar(false)
                 listArtikel.clear()
                 listArtikel.addAll(artikel)
                 showArticleRecycleList(listArtikel)

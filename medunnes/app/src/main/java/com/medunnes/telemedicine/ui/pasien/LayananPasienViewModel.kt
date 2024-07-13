@@ -64,10 +64,10 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         }
     }
 
-    fun getAllSesi() {
+    fun getAllSesi(dokterId: Int) {
         viewModelScope.launch {
             try {
-                val sesi = repository.getAllSesi()
+                val sesi = repository.getAllSesi(dokterId)
                 if (sesi.data.isNotEmpty()) {
                     _sesi.value = sesi.data
                 } else {

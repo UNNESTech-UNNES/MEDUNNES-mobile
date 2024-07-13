@@ -247,8 +247,10 @@ interface ApiService {
         @Field("status") status: String
     ): KonsultasiResponse
 
-    @GET("api/sesi")
-    suspend fun getAllSesi(): SesiResponse
+    @GET("api/sesi/{id}")
+    suspend fun getAllSesi(
+        @Path("id") id: Int
+    ): SesiResponse
 
     @Multipart
     @POST("api/pasien/uploadImage/{id}")

@@ -220,7 +220,7 @@ class UserRepository private constructor(
     ): CatatanResponse = ApiConfig.getApiService().updateCatatan(id, konsultasiId, gejala, diagnosis, catatan)
 
     // Sesi
-    suspend fun getAllSesi(): SesiResponse = ApiConfig.getApiService().getAllSesi()
+    suspend fun getAllSesi(dokterId: Int): SesiResponse = ApiConfig.getApiService().getAllSesi(dokterId)
 
     // Artikel
     suspend fun getAllArtikel(): ArtikelResponse = ApiConfig.getApiService().getAllArtikel()

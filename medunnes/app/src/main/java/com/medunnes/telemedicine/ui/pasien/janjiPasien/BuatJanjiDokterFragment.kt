@@ -163,12 +163,15 @@ class BuatJanjiDokterFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    private fun getSesiList() : ArrayList<SesiDataItem> {
-        viewModel.getAllSesi()
-        viewModel.sesi.observe(viewLifecycleOwner) { sesi ->
-            listSesi.clear()
-            listSesi.addAll(sesi)
-            showRecycleList()
+    private fun getSesiList(): ArrayList<SesiDataItem> {
+        val doctorId = arguments?.getInt(DOCTOR_ID)
+        if (doctorId != null) {
+            viewModel.getAllSesi(doctorId)
+            viewModel.sesi.observe(viewLifecycleOwner) { sesi ->
+                listSesi.clear()
+                listSesi.addAll(sesi)
+                showRecycleList()
+            }
         }
         return listSesi
     }
