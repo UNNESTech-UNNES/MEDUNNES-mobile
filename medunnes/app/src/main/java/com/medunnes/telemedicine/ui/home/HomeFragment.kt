@@ -25,6 +25,7 @@ import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
+import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -256,6 +257,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun intentRegister() {
+        val intent = Intent(context, RegisterAsActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun intentLogin() {
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
@@ -307,7 +313,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
                  tvArtikelAll -> makeToast(undoneText())
                  tvFaskesAll -> makeToast(undoneText())
-                 tvAuthenticate -> intentLogin()
+                 tvAuthenticate -> intentRegister()
                  btnLogin -> intentLogin()
                  else -> Log.d("CLICK", "error")
              }
