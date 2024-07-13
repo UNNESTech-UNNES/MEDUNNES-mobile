@@ -117,11 +117,11 @@ class HistoriesFragment : Fragment() {
                         listKonsultasi.clear()
                         listKonsultasi.addAll(konsultasi)
                         val filteredDokterList = konsultasi.filter {
-                                    it.dokter.status.contains("approve") &&
-                                    it.status.contains("berakhir")
+                            it.dokter.user.name.lowercase().contains(filter) &&
+                            it.status.contains("berakhir")
                         } as ArrayList<KonsultasiDataItem>
 
-                        if (filteredDokterList.isNullOrEmpty()) {
+                        if (filteredDokterList.isEmpty()) {
                             showProgressBar(false)
                             binding.tvDataEmpty.visibility = View.VISIBLE
                         }
@@ -148,6 +148,7 @@ class HistoriesFragment : Fragment() {
                     listKonsultasi.clear()
                     listKonsultasi.addAll(konsultasi)
                     val filteredKonsultasiList = konsultasi.filter {
+                        it.pasien.user.name.lowercase().contains(filter) &&
                         it.status.contains("berakhir")
                     } as ArrayList<KonsultasiDataItem>
 
