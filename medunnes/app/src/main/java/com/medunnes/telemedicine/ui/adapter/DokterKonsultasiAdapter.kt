@@ -11,16 +11,16 @@ import com.medunnes.telemedicine.utils.imageBaseUrl
 
 class DokterKonsultasiAdapter(private val dokterList: List<KonsultasiDataItem>): RecyclerView.Adapter<DokterKonsultasiAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ListKonsultasiPasienBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(dokter: KonsultasiDataItem) {
+        fun bind(konsultasi: KonsultasiDataItem) {
             with(binding) {
 
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
-                val spesiliasId = dokter.dokter.spesialisId.toInt()
-                tvDokterNama.text = dokter.dokterId.toString()
+                val spesiliasId = konsultasi.dokter.spesialisId.toInt()
+                tvDokterNama.text = konsultasi.dokter.user.name
                 tvDokterSpesialis.text = spesialis[spesiliasId-1]
-                tvDokterSesiWaktu.text = if (dokter.status == "berlangsung") "Berlangsung" else "Berakhir"
+                tvDokterSesiWaktu.text = konsultasi.status
 
-                val imgDokter = dokter.dokter.imgDokter
+                val imgDokter = konsultasi.dokter.imgDokter
                 if (!imgDokter.isNullOrEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${imgDokter}"
                     Glide.with(itemView.context)

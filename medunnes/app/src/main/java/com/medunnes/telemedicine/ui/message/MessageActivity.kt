@@ -65,7 +65,6 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     binding.tvCatatan.visibility = View.VISIBLE
                     binding.ivCatatan.visibility = View.VISIBLE
-                    binding.tvCatatan.text = getString(R.string.lihat_catatan)
                 }
             }
         }
@@ -75,15 +74,15 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         val konsultasiId = intent.getIntExtra(KONSULTASI_ID, 0)
         viewModel.getKonsultasiById(konsultasiId)
         viewModel.konsultasi.observe(this) { konsultasi ->
-            if (konsultasi[0].status == "berakhir") {
+            binding.tvMessangerStatus.text = konsultasi[0].status
+            if (konsultasi[0].status.lowercase().contains("berakhir")) {
                 binding.tilMessage.visibility = View.GONE
                 binding.sendButton.visibility = View.GONE
                 binding.tblSesiBerakhir.visibility = View.VISIBLE
                 binding.ivMessangerStatus.setImageResource(R.drawable.circle_red)
-                binding.tvMessangerStatus.text = getString(R.string.berakhir)
+                binding.tvCatatan.text = getString(R.string.lihat_catatan)
             } else {
                 binding.ivMessangerStatus.setImageResource(R.drawable.circle_green)
-                binding.tvMessangerStatus.text = getString(R.string.berlangsung)
             }
             setViewBasedonRole(konsultasi[0].status)
         }
@@ -137,7 +136,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.pasien.observe(this) { pasien ->
                 binding.tvMessangerStatus.text = pasien[0].status
                 binding.tvMessangerName.text = pasien[0].user.name
-                if (!pasien[0].imgPasien.isNullOrEmpty()) {
+                if (pasien[0].imgPasien.isNotEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${pasien[0].imgPasien}"
                     Glide.with(this)
                         .load(imagePath)
@@ -147,12 +146,11 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else {
             val dokterId = intent.getIntExtra(DOKTER_ID, 0)
-            Log.d("doid", dokterId.toString())
             viewModel.getDokterById(dokterId)
             viewModel.dokter.observe(this) { dokter ->
                 binding.tvMessangerStatus.text = dokter[0].status
                 binding.tvMessangerName.text = dokter[0].user.name
-                if (!dokter[0].imgDokter.isNullOrEmpty()) {
+                if (dokter[0].imgDokter.isNotEmpty()) {
                     val imagePath = "${imageBaseUrl()}/${dokter[0].imgDokter}"
                     Glide.with(this)
                         .load(imagePath)

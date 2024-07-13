@@ -13,7 +13,7 @@ class HistoriesDokterAdapter(private val dokterList: List<KonsultasiDataItem>): 
     class ViewHolder(private val binding: ListHistoriesBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(dokter: KonsultasiDataItem) {
             with(binding) {
-                tvDokterNama.text = dokter.pasien.idPasien.toString()
+                tvDokterNama.text = dokter.pasien.user.name
                 tvDokterSpesialis.visibility = View.INVISIBLE
                 tvDokterSesiWaktu.text = if (dokter.status == "berlangsung") "Berlangsung" else "Berakhir"
 

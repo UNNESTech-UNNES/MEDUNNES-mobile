@@ -27,7 +27,7 @@ class KonsultasiFragment : Fragment() {
     }
 
     private val listPatient = ArrayList<KonsultasiDataItem>()
-    private val filteredListPatient = ArrayList<KonsultasiDataItem>()
+    private var filteredListPatient = ArrayList<KonsultasiDataItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class KonsultasiFragment : Fragment() {
     ): View {
         _binding = FragmentKonsultasiBinding.inflate(inflater, container, false)
         searchPatient()
-        lifecycleScope.launch { getPatientList("") }
+        getPatientList("")
 
         return binding.root
     }
@@ -53,29 +53,36 @@ class KonsultasiFragment : Fragment() {
         })
     }
 
-    private suspend fun getPatientList(filter: String) {
+    private fun getPatientList(filter: String) {
         showProgressBar(true)
-        val uid = viewModel.getUserLogin()
-        viewModel.getDokterByUserId(uid)
-        viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
-            val dokterId = dokter[0].idDokter.toInt()
-            viewModel.getKonsultasiByDokter(dokterId)
-            viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
-                if (!konsultasi.isNullOrEmpty()) {
-                    showProgressBar(false)
-                    listPatient.clear()
-                    listPatient.addAll(konsultasi)
+        lifecycleScope.launch {
+            val uid = viewModel.getUserLogin()
+            viewModel.getDokterByUserId(uid)
+            viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
+                val dokterId = dokter[0].idDokter.toInt()
+                viewModel.getKonsultasiByDokter(dokterId)
+                viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
+                    if (!konsultasi.isNullOrEmpty()) {
+                        binding.tvDataEmpty.visibility = View.GONE
+                        showProgressBar(false)
+                        listPatient.clear()
+                        listPatient.addAll(konsultasi)
+                        val filteredList = listPatient.filter {
+                            it.pasien.user.name.lowercase().contains(filter) &&
+                            it.status.contains("berlangsung")
+                        } as ArrayList<KonsultasiDataItem>
 
-                    if (listPatient.isEmpty()) {
+                        if (filteredList.isNullOrEmpty()) {
+                            binding.tvDataEmpty.visibility = View.VISIBLE
+                        }
+
+                        showRecycleList(filteredList)
+                    } else {
+                        showProgressBar(false)
                         binding.tvDataEmpty.visibility = View.VISIBLE
                     }
 
-                    showRecycleList(listPatient)
-                } else {
-                    showProgressBar(false)
-                    binding.tvDataEmpty.visibility = View.VISIBLE
                 }
-
             }
         }
     }
@@ -109,9 +116,7 @@ class KonsultasiFragment : Fragment() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.setText(searchView.text)
                     searchView.hide()
-                    filteredListPatient.clear()
-                    lifecycleScope.launch { getPatientList("${searchView.text}") }
-                    showRecycleList(filteredListPatient)
+                    getPatientList("${searchView.text}")
                     false
 
                 }

@@ -36,6 +36,10 @@ class UserRepository private constructor(
         password: String,
         type: String
     ): UserResponse = ApiConfig.getApiService().register(name, email, type, password)
+    suspend fun updateUser(
+        id: Int,
+        name: String
+    ): UserResponse = ApiConfig.getApiService().updateUser(id, name)
 
     //Pasien
     suspend fun getAllPasien(): PasienResponse = ApiConfig.getApiService().getAllPasien()

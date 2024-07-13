@@ -50,6 +50,13 @@ interface ApiService {
         @Field("password") password: String,
     ) : UserResponse
 
+    @FormUrlEncoded
+    @PUT("api/users/{id}")
+    suspend fun updateUser(
+        @Path("id") id: Int,
+        @Field("name") name: String,
+    ) : UserResponse
+
     @GET("api/pasien")
     suspend fun getAllPasien() : PasienResponse
 

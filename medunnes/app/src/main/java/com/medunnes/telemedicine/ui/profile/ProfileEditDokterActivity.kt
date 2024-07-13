@@ -104,6 +104,11 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
     private suspend fun updateUserProfile() {
         val userId = viewModel.getUserLoginId()
         try {
+            viewModel.updateUser(
+                userId,
+                "${binding.tieEditNamaLengkap.text}"
+            )
+
             viewModel.updateDokter(
                 userId.toLong(),
                 userId.toLong(),

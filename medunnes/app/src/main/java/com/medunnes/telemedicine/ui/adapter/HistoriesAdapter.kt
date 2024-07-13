@@ -17,7 +17,7 @@ class HistoriesAdapter(private val dokterList: List<KonsultasiDataItem>): Recycl
                 val spesialis = root.resources.getStringArray(R.array.spesialissasi)
                 val spesiliasId = dokter.dokter.spesialisId.toInt()
 
-                tvDokterNama.text = dokter.dokterId.toString()
+                tvDokterNama.text = dokter.dokter.user.name
                 tvDokterSpesialis.text = spesialis[spesiliasId-1]
                 tvDokterSesiWaktu.text = if (dokter.status == "berlangsung") "Berlangsung" else "Berakhir"
 
