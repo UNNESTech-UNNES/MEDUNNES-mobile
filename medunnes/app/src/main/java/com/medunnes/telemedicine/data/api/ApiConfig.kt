@@ -1,5 +1,6 @@
 package com.medunnes.telemedicine.data.api
 
+import com.medunnes.telemedicine.utils.baseIpAddress
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,7 +14,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.1.5/")
+                .baseUrl("http://$baseIpAddress/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

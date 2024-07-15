@@ -87,8 +87,8 @@ class JanjiDokterFragment : Fragment() {
                                         topik,
                                         "berlangsung"
                                     )
-                                    val konsultasiId = insKonsultasi.data[0].idKonsultasi
-                                    insertDiskusi(konsultasiId.toLong(), "memulai diskusi")
+                                    insKonsultasi.data[0].idKonsultasi
+                                    //insertDiskusi(konsultasiId.toLong(), "memulai diskusi")
                                 }
                                 restartFragment()
                             } catch (e: Exception) {

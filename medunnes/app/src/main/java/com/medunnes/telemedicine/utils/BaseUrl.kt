@@ -1,3 +1,4 @@
 package com.medunnes.telemedicine.utils
 
-fun imageBaseUrl(): String = "http://192.168.1.5/storage/userImage"
+val baseIpAddress = "10.10.1.33"
+fun imageBaseUrl(): String = "http://$baseIpAddress/storage/userImage"
