@@ -57,10 +57,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
-    private var namaDokter: String = ""
-    private var titleDepan: String = ""
-    private var titleBelakang: String = ""
-
     @SuppressLint("SetTextI18n")
     private suspend fun setPasienProfile() {
         val userId = viewModel.getUserLoginId()
@@ -71,6 +67,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvBeratBadan.text = it.bB.toString() + " kg"
                         tvTinggiBadan.text = it.tB.toString() + " cm"
+                        tvUserRole.text = it.user.type
 
                         if (!it.imgPasien.isNullOrEmpty()) {
                             val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
@@ -93,7 +90,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             if (!data.isNullOrEmpty()) {
                 data.forEach {
                     with(binding) {
-                        tvUserName.text = getString(R.string.nama_and_titel, titleDepan, namaDokter, titleBelakang)
+                        tvUserName.text = it.user.name
                         tvUserRole.text = spesialis[(it.spesialisId.toInt())-1]
 
                         if (!it.imgDokter.isNullOrEmpty()) {
@@ -122,8 +119,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvUserName.text = it.name
                         tvUserEmail.text = it.email
-                        tvUserRole.text = if (it.type == "pasien") "Pasien" else ""
-                        namaDokter = it.name
                     }
                 }
             } else {
@@ -142,7 +137,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         } else {
             setUserProfile()
             setPasienProfile()
-            binding.tblTempatPraktik.visibility = View.GONE
         }
     }
 
