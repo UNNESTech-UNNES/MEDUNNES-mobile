@@ -1,6 +1,5 @@
 package com.medunnes.telemedicine.ui.profile
 
-import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,9 +19,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityProfileEditDokterBinding
@@ -47,7 +43,6 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
             btnBack.setOnClickListener(this@ProfileEditDokterActivity)
             btnEditSend.setOnClickListener(this@ProfileEditDokterActivity)
             ivEditPicture.setOnClickListener(this@ProfileEditDokterActivity)
-            tilEditTglMulaiAktif.setEndIconOnClickListener { showDatePicker() }
         }
 
         lifecycleScope.launch { getUserProfileData() }
@@ -126,23 +121,6 @@ class ProfileEditDokterActivity : AppCompatActivity(), View.OnClickListener {
             makeToast("Data gagal diperbarui")
             Log.d("EXCEPTION", e.message.toString())
         }
-    }
-
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val cYear = calendar.get(Calendar.YEAR)
-        val cMonth = calendar.get(Calendar.MONTH)
-        val cDay = calendar.get(Calendar.DATE)
-
-        val datePickerDialog = DatePickerDialog(
-            this, { _, year, month, day ->
-                calendar.set(year, month, day)
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dateFormatted =  dateFormat.format(calendar.time)
-                binding.tieEditTglMulaiAktif.setText(dateFormatted)
-            }, cYear, cMonth, cDay)
-
-        datePickerDialog.show()
     }
 
     private fun galeryStart() {
