@@ -6,7 +6,6 @@ import com.medunnes.telemedicine.data.datastore.AuthDataStore
 import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.response.ArtikelResponse
 import com.medunnes.telemedicine.data.response.CatatanResponse
-import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
@@ -194,12 +193,6 @@ class UserRepository private constructor(
         topik: String,
         status: String
     ): KonsultasiResponse = ApiConfig.getApiService().updateKonsultasi(id, pasienId, dokterId, topik, status)
-
-    // Diskusi
-    suspend fun insertDisuksi(
-        konsultasiId: Long,
-        message: String
-    ): DiskusiResponse = ApiConfig.getApiService().insertDiskusi(konsultasiId, message)
 
     // Catatan
     suspend fun getCatatanByKonsultasiId(id: Int): CatatanResponse =

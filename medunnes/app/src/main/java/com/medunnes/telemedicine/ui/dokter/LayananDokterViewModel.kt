@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medunnes.telemedicine.data.repository.UserRepository
-import com.medunnes.telemedicine.data.response.DiskusiResponse
 import com.medunnes.telemedicine.data.response.DokterDataItem
 import com.medunnes.telemedicine.data.response.JanjiDataItem
 import com.medunnes.telemedicine.data.response.JanjiResponse
@@ -60,21 +59,6 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
         }
     }
 
-    fun getAllPasien() {
-        viewModelScope.launch {
-            try {
-                val pasien = repository.getAllPasien()
-                if (pasien.data.isNotEmpty()) {
-                    _pasien.value = pasien.data
-                } else {
-                    Log.d("DATA DOKTER", "Data dokter kosong")
-                }
-            } catch (e: Exception) {
-                Log.d("ERROR DOKTER", e.message.toString())
-            }
-        }
-    }
-
     fun getKonsultasiByDokter(id: Int) {
         viewModelScope.launch {
             try {
@@ -110,9 +94,4 @@ class LayananDokterViewModel(private val repository: UserRepository) : ViewModel
         topik: String,
         status: String
     ): KonsultasiResponse = repository.insertKonsultasi(pasienId, dokterId, topik, status)
-
-    suspend fun insertDiskusi(
-        konsultasiId: Long,
-        message: String
-    ): DiskusiResponse = repository.insertDisuksi(konsultasiId, message)
 }

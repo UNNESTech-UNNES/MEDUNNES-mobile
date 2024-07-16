@@ -110,13 +110,6 @@ class JanjiDokterFragment : Fragment() {
         status: String
     ): KonsultasiResponse = viewModel.insertKonsultasi(pasienId, dokterId, topik, status)
 
-    private suspend fun insertDiskusi(
-        konsultasiId: Long,
-        message: String
-    ) {
-        viewModel.insertDiskusi(konsultasiId, message)
-    }
-
     private fun restartFragment() {
         val janjiDokterFragment = JanjiDokterFragment()
         val fragmentManager = parentFragmentManager

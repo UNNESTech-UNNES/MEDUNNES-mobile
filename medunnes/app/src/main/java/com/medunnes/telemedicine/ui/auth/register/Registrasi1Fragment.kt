@@ -9,9 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.medunnes.telemedicine.R
-import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi1Binding
 
 class Registrasi1Fragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener{
