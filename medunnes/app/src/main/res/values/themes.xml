@@ -9,7 +9,7 @@
 
     <style name="Theme.MedUnnes" parent="Base.Theme.MedUnnes" />
     
-    <style name="BottomNavigationView">
+    <style name="BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="android:textSize">10sp</item>
         <item name="iconSize">12dp</item>
     </style>
@@ -19,7 +19,7 @@
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
         <item name="colorAccent">@color/app_color</item>
     </style>
 </resources>

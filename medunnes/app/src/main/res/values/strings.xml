@@ -209,6 +209,11 @@
     <string name="pastikan_data_pasien_sudah_benar">Pastikan data pasien sudah benar</string>
     <string name="sesi_tidak_dapat_dimulai_kembali">Sesi tidak dapat dimulai kembali</string>
     <string name="akhiri_sesi_1">Akhiri sesi?</string>
+    <string name="tentang_medunnes">Tentang Medunnes</string>
+    <string name="tentang_medunnes_description">Perkembangan teknologi yang pesat memungkinkan pemanfaatannya di berbagai bidang,seperti industri, telekomunikasi, ataupun kesehatan. Pemanfaatan teknologi di bidang kesehatan dapat menjadisolusi dari masalah kesehatan yang ada, seperti kurangnya layanan kesehatan di beberapa daerah. Kurangnya layanan kesehatan di beberapa daerah membuat masyarakat tidak dapat mengurus kesehatannya dengan baik.\n\n
+Di saat yang sama, mahasiswa kedokteran UNNES sulit untuk melaksanakan praktik yang mengharuskannya berkomunikasidengan masyarakat sebagai pasien dikarenakan kurangnya sarana yang mendukung. Inovasi Telekomunikasi Medis merupakan solusi dari masalah ini. Telemedicine memungkinkan mahasiswa kedokteran untuk berkomunikasi dengan masyarakat sebagai pasien. Medunnes merupakan sebuah aplikasi telekomunikasi medis berbasis website dan mobile yang dirancang untuk mendukung praktik mahasiswa kedokteran UNNES.\n\n
+Aplikasi Medunnes merupakan aplikasi yang dapat menghubungkan masyarakat dengan dokter sehingga masyarakat dapatberkonsultasi dengan dokter.
+        </string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.FragmentProfileBinding
+import com.medunnes.telemedicine.ui.about.AboutActivity
 import com.medunnes.telemedicine.ui.main.MainActivity
 import com.medunnes.telemedicine.utils.imageBaseUrl
 import kotlinx.coroutines.launch
@@ -63,19 +64,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         viewModel.getPasienByUserLogin(userId)
         viewModel.pasien.observe(viewLifecycleOwner) { data ->
             if (!data.isNullOrEmpty()) {
-                data.forEach {
-                    with(binding) {
-                        tvBeratBadan.text = it.bB.toString() + " kg"
-                        tvTinggiBadan.text = it.tB.toString() + " cm"
-                        tvUserRole.text = it.user.type
+                with(binding) {
+                    tvBeratBadan.text = data[0].bB.toString() + " kg"
+                    tvTinggiBadan.text = data[0].tB.toString() + " cm"
 
-                        if (!it.imgPasien.isNullOrEmpty()) {
-                            val imagePath = "${imageBaseUrl()}/${it.imgPasien}"
-                            Glide.with(this@ProfileFragment)
-                                .load(imagePath)
-                                .into(binding.ivUserPicture)
-                                .clearOnDetach()
-                        }
+                    if (!data[0].imgPasien.isNullOrEmpty()) {
+                        val imagePath = "${imageBaseUrl()}/${data[0].imgPasien}"
+                        Glide.with(this@ProfileFragment)
+                            .load(imagePath)
+                            .into(ivUserPicture)
+                            .clearOnDetach()
                     }
                 }
             }
@@ -119,6 +117,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvUserName.text = it.name
                         tvUserEmail.text = it.email
+                        tvUserRole.text = resources.getString(R.string.pasien)
                     }
                 }
             } else {
@@ -171,12 +170,18 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
+    private fun intentAboutApplication(fragment: Int) {
+        val intent = Intent(context, AboutActivity::class.java)
+        intent.putExtra(AboutActivity.FRAGMENT, fragment)
+        startActivity(intent)
+    }
+
     override fun onClick(view: View) {
         with(binding) {
             when(view) {
                 cvUserProfile -> lifecycleScope.launch { editProfileBasedonRole() }
-                cvFaq -> makeToast("Fitur belum tersedia")
-                cvHint -> makeToast("Fitur belum tersedia")
+                cvFaq -> intentAboutApplication(2)
+                cvHint -> intentAboutApplication(1)
                 cvLanguange -> makeToast("Fitur belum tersedia")
                 cvDeleteAccount -> {
                     lifecycleScope.launch { viewModel.setLogoutStatus() }

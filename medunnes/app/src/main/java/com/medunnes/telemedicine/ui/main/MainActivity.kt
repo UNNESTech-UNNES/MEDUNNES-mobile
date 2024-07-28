@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBar)
 
         val navView: BottomNavigationView = binding.navView
+        navView.itemActiveIndicatorColor = resources.getColorStateList(R.color.app_color)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
         // Passing each menu ID as a set of Ids because each
