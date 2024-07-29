@@ -67,7 +67,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 with(binding) {
                     tvBeratBadan.text = data[0].bB.toString() + " kg"
                     tvTinggiBadan.text = data[0].tB.toString() + " cm"
-
+                    tvUserRole.text = resources.getString(R.string.pasien)
                     if (!data[0].imgPasien.isNullOrEmpty()) {
                         val imagePath = "${imageBaseUrl()}/${data[0].imgPasien}"
                         Glide.with(this@ProfileFragment)
@@ -81,6 +81,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private suspend fun setDokterProfile() {
+        binding.tblBadan.visibility = View.GONE
         val userId = viewModel.getUserLoginId()
         val spesialis = resources.getStringArray(R.array.spesialissasi)
         viewModel.getDokterByUserLogin(userId)
@@ -117,7 +118,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     with(binding) {
                         tvUserName.text = it.name
                         tvUserEmail.text = it.email
-                        tvUserRole.text = resources.getString(R.string.pasien)
                     }
                 }
             } else {
@@ -128,14 +128,21 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private suspend fun setViewBasedOnUserRole() {
-        val userRole = viewModel.getUserRole()
-        if (userRole == 1) {
-            setUserProfile()
-            setDokterProfile()
-            binding.tblBadan.visibility = View.GONE
-        } else {
-            setUserProfile()
-            setPasienProfile()
+        when (viewModel.getUserRole()) {
+            1 -> {
+                setUserProfile()
+                setDokterProfile()
+            }
+            2 -> {
+                setUserProfile()
+                setPasienProfile()
+            }
+            3 -> {
+                setUserProfile()
+                binding.tvUserRole.text = resources.getString(R.string.dosen)
+                binding.tblBadan.visibility = View.GONE
+                binding.tvProfileEdit.visibility = View.GONE
+            }
         }
     }
 

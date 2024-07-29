@@ -1,6 +1,7 @@
 package com.medunnes.telemedicine.ui.adapter
 
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class MessageAdapter(
     inner class MessageViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
             binding.tvMessage.text = message.text
+            Log.d("MAMAIl", message.email.toString())
             setDialogPosition(message.email.toString())
             if (message.timestamp != null) {
                 val time = DateUtils.getRelativeTimeSpanString(message.timestamp)
@@ -27,6 +29,7 @@ class MessageAdapter(
 
         @Suppress("DEPRECATION")
         private fun setDialogPosition(email: String) {
+            Log.d("CURR-EMA", "$currentUserEmail-$email")
             if (currentUserEmail == email) {
                 binding.root.gravity = Gravity.END
                 binding.cvMessage1Dialog.setCardBackgroundColor(binding.root.resources.getColor(R.color.app_color))

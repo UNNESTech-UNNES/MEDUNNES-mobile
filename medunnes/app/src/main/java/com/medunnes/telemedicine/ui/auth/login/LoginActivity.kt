@@ -69,10 +69,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         val login = login(userEmail, userPassword)
                         if (login.status) {
                             setUserLoginId(login.user.idUser)
-                            if (login.user.type == "dokter") { // Menyimpan type useer ke DataStore
-                                setUserLoginRole(1)
-                            } else {
-                                setUserLoginRole(2)
+                            when (login.user.type) {
+                                "dokter" -> {
+                                    setUserLoginRole(1) // Menyimpan type useer ke DataStore
+                                }
+                                "pasien" -> {
+                                    setUserLoginRole(2)
+                                }
+                                "dosen" -> {
+                                    setUserLoginRole(3)
+                                }
                             }
                             firebaseLogin(userEmail, userPassword)
                             setLoginStatus() // Menyimpan status login user

@@ -66,6 +66,13 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                     binding.tvCatatan.visibility = View.VISIBLE
                     binding.ivCatatan.visibility = View.VISIBLE
                 }
+            } else if (role == 3) {
+                binding.tvCatatan.visibility = View.GONE
+                binding.ivCatatan.visibility = View.GONE
+                binding.tilMessage.visibility = View.INVISIBLE
+                binding.tblSesiBerakhir.visibility = View.VISIBLE
+                binding.sendButton.visibility = View.GONE
+                binding.tvSesiStatus.text = getString(R.string.dosen_chat_warn)
             }
         }
     }
@@ -97,10 +104,29 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             .build()
 
         getUserData()
-        viewModel.user.observe(this@MessageActivity) { user ->
-            email = user[0].email
-            adapter = MessageAdapter(options, email)
-            binding.rvMessage.adapter = adapter
+
+        lifecycleScope.launch {
+            val role = viewModel.getUserRole()
+            when (role) {
+                1 -> {
+                    viewModel.user.observe(this@MessageActivity) { user ->
+                        email = user[0].email
+                        adapter = MessageAdapter(options, email)
+                        binding.rvMessage.adapter = adapter
+                    }
+                }
+
+                3 -> {
+                    val dokterId = intent.getIntExtra(DOKTER_ID, 0)
+                    viewModel.getDokterById(dokterId)
+                    viewModel.dokter.observe(this@MessageActivity) { dokter ->
+                        email = dokter[0].user.email
+                        adapter = MessageAdapter(options, email)
+                        binding.rvMessage.adapter = adapter
+                    }
+                }
+
+            }
         }
     }
 
@@ -130,7 +156,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
 
     private suspend fun setMessager() {
         val role = viewModel.getUserRole()
-        if (role == 1) {
+        if (role == 1 || role == 3) {
             val pasienId = intent.getIntExtra(PASIEN_ID, 0)
             viewModel.getPasienrById(pasienId)
             viewModel.pasien.observe(this) { pasien ->
@@ -308,20 +334,48 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         super.onResume()
         getUserData()
         viewModel.user.observe(this@MessageActivity) { user ->
-            email = user[0].email
-            adapter = MessageAdapter(options, email)
-            binding.rvMessage.adapter = adapter
-            adapter.startListening()
+            lifecycleScope.launch {
+                val role = viewModel.getUserRole()
+                if (role != 3) {
+                    email = user[0].email
+                    adapter = MessageAdapter(options, email)
+                    binding.rvMessage.adapter = adapter
+                    adapter.startListening()
+                } else {
+                    val dokterId = intent.getIntExtra(DOKTER_ID, 0)
+                    viewModel.getDokterById(dokterId)
+                    viewModel.dokter.observe(this@MessageActivity) { dokter ->
+                        email = dokter[0].user.email
+                        adapter = MessageAdapter(options, email)
+                        binding.rvMessage.adapter = adapter
+                        adapter.startListening()
+                    }
+                }
+            }
         }
     }
 
     public override fun onPause() {
         getUserData()
         viewModel.user.observe(this@MessageActivity) { user ->
-            email = user[0].email
-            adapter = MessageAdapter(options, email)
-            binding.rvMessage.adapter = adapter
-            adapter.stopListening()
+            lifecycleScope.launch {
+                val role = viewModel.getUserRole()
+                if (role != 3) {
+                    email = user[0].email
+                    adapter = MessageAdapter(options, email)
+                    binding.rvMessage.adapter = adapter
+                    adapter.stopListening()
+                } else {
+                    val dokterId = intent.getIntExtra(DOKTER_ID, 0)
+                    viewModel.getDokterById(dokterId)
+                    viewModel.dokter.observe(this@MessageActivity) { dokter ->
+                        email = dokter[0].user.email
+                        adapter = MessageAdapter(options, email)
+                        binding.rvMessage.adapter = adapter
+                        adapter.stopListening()
+                    }
+                }
+            }
         }
         super.onPause()
     }

@@ -3,6 +3,7 @@ package com.medunnes.telemedicine.data.api
 import com.medunnes.telemedicine.data.response.ArtikelResponse
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
+import com.medunnes.telemedicine.data.response.DosenResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
@@ -119,6 +120,21 @@ interface ApiService {
     suspend fun getDokterById(
         @Path("id") id: Int
     ) : DokterResponse
+
+    @GET("api/dokter/dosen/{id}")
+    suspend fun getDokterByDosen(
+        @Path("id") id: Int
+    ) : DokterResponse
+
+    @GET("api/dosen/{id}")
+    suspend fun getDosenById(
+        @Path("id") id: Int
+    ) : DosenResponse
+
+    @GET("api/dosen/detail/{id}")
+    suspend fun getDosenByIdDosen(
+        @Path("id") id: Int
+    ) : DosenResponse
 
     @FormUrlEncoded
     @POST("api/dokter")

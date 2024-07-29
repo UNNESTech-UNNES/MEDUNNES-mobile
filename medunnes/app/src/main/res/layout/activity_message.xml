@@ -122,6 +122,7 @@
         android:background="@color/app_color"
         android:visibility="gone">
         <TextView
+            android:id="@+id/tv_sesi_status"
             android:text="@string/sesi_telah_berakhir"
             android:textColor="@color/third_choice_color"
             android:textStyle="bold"

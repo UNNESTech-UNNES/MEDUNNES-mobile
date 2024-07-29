@@ -10,6 +10,7 @@ import com.medunnes.telemedicine.data.response.CatatanDataItem
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DataItem
 import com.medunnes.telemedicine.data.response.DokterDataItem
+import com.medunnes.telemedicine.data.response.DosenDataItem
 import com.medunnes.telemedicine.data.response.KonsultasiDataItem
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.PasienDataItem
@@ -24,6 +25,8 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _dokter = MutableLiveData<List<DokterDataItem>>()
     val dokter: LiveData<List<DokterDataItem>> get() = _dokter
+    private val _dosen = MutableLiveData<List<DosenDataItem>>()
+    val dosen: LiveData<List<DosenDataItem>> get() = _dosen
 
     private val _konsultasi = MutableLiveData<List<KonsultasiDataItem>>()
     val konsultasi: LiveData<List<KonsultasiDataItem>> get() = _konsultasi
@@ -78,6 +81,32 @@ class MessageViewModel(private val repository: UserRepository): ViewModel() {
                 val dokterData = repository.getDokterById(id)
                 if (dokterData.data.isNotEmpty()) {
                     _dokter.value = dokterData.data
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getDokterByDosen(id: Int) {
+        viewModelScope.launch {
+            try {
+                val dokterData = repository.getDokterByDosen(id)
+                if (dokterData.data.isNotEmpty()) {
+                    _dokter.value = dokterData.data
+                }
+            } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
+            }
+        }
+    }
+
+    fun getDosenByIdDosen(id: Int) {
+        viewModelScope.launch {
+            try {
+                val dosen = repository.getDosenByIdDosen(id)
+                if (dosen.data.isNotEmpty()) {
+                    _dosen.value = dosen.data
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())

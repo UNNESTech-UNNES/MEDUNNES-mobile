@@ -24,6 +24,8 @@ import com.medunnes.telemedicine.ui.adapter.ArticlesAdapter
 import com.medunnes.telemedicine.ui.adapter.FaskesAdapter
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
 import com.medunnes.telemedicine.ui.dokter.LayananDokterActivity
+import com.medunnes.telemedicine.ui.dosen.LayananDosenActivity
+import com.medunnes.telemedicine.ui.dosen.LayananDosenViewModel
 import com.medunnes.telemedicine.ui.pasien.LayananPasienActivity
 import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 import com.medunnes.telemedicine.utils.imageBaseUrl
@@ -281,15 +283,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
              when(view) {
                  btnKonsultasi -> {
                      lifecycleScope.launch {
-                         val role = viewModel.getUserRole()
-                         if (role == 1) {
-                             val intent = Intent(context, LayananDokterActivity::class.java)
-                             intent.putExtra(LayananDokterActivity.FRAGMENT, "0")
-                             startActivity(intent)
-                         } else {
-                             val intent = Intent(context, LayananPasienActivity::class.java)
-                             intent.putExtra(LayananPasienActivity.FRAGMENT, "0")
-                             startActivity(intent)
+                         when (viewModel.getUserRole()) {
+                             1 -> {
+                                 val intent = Intent(context, LayananDokterActivity::class.java)
+                                 intent.putExtra(LayananDokterActivity.FRAGMENT, "0")
+                                 startActivity(intent)
+                             }
+                             2 -> {
+                                 val intent = Intent(context, LayananPasienActivity::class.java)
+                                 intent.putExtra(LayananPasienActivity.FRAGMENT, "0")
+                                 startActivity(intent)
+                             }
+                             3 -> {
+                                 val intent = Intent(context, LayananDosenActivity::class.java)
+                                 intent.putExtra(LayananDosenActivity.FRAGMENT, "0")
+                                 startActivity(intent)
+                             }
                          }
                      }
                  }

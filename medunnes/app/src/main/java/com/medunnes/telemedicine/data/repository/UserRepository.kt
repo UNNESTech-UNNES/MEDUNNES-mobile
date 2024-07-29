@@ -7,6 +7,7 @@ import com.medunnes.telemedicine.data.model.User
 import com.medunnes.telemedicine.data.response.ArtikelResponse
 import com.medunnes.telemedicine.data.response.CatatanResponse
 import com.medunnes.telemedicine.data.response.DokterResponse
+import com.medunnes.telemedicine.data.response.DosenResponse
 import com.medunnes.telemedicine.data.response.JanjiResponse
 import com.medunnes.telemedicine.data.response.KonsultasiResponse
 import com.medunnes.telemedicine.data.response.LoginResponse
@@ -81,6 +82,7 @@ class UserRepository private constructor(
     suspend fun getAllDokter(page: Int): DokterResponse = ApiConfig.getApiService().getAllDokter(page)
     suspend fun getDokterByUser(userId: Int): DokterResponse = ApiConfig.getApiService().getDokterByUser(userId)
     suspend fun getDokterById(id: Int): DokterResponse = ApiConfig.getApiService().getDokterById(id)
+    suspend fun getDokterByDosen(id: Int): DokterResponse = ApiConfig.getApiService().getDokterByDosen(id)
     suspend fun insertDokter(
         userId: Long,
         dosenId: Long,
@@ -107,6 +109,10 @@ class UserRepository private constructor(
     ): DokterResponse = ApiConfig.getApiService().updateDokter(
         id, userId, spesialisId, img, alamat, noTlp, noReg, jenisKelamin,status
     )
+
+    // Dosen
+    suspend fun getDosenById(id: Int): DosenResponse = ApiConfig.getApiService().getDosenById(id)
+    suspend fun getDosenByIdDosen(id: Int): DosenResponse = ApiConfig.getApiService().getDosenByIdDosen(id)
 
     // Pasien Tambahan
     suspend fun getPasienTambahanByPasien(id: Int): PasienTambahanResponse =
