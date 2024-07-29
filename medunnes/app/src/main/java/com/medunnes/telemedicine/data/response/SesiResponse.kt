@@ -26,7 +26,7 @@ data class SesiDataItem(
 	val dari: String,
 
 	@field:SerializedName("day")
-	val day: Int,
+	val day: String,
 
 	@field:SerializedName("sampai")
 	val sampai: String,

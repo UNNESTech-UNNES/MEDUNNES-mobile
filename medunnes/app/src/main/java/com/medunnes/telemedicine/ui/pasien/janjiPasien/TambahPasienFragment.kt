@@ -99,7 +99,6 @@ class TambahPasienFragment : Fragment(),
                             "${binding.tiePasienNama.text}",
                             binding.tiePasienTb.text.toString().toInt(),
                             binding.tiePasienBb.text.toString().toInt(),
-                            dataSpinner,
                             datePicked,
                             "${binding.tiePasienHubungan.text}"
                         )

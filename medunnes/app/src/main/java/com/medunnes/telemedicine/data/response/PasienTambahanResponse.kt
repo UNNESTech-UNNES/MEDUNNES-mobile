@@ -7,7 +7,7 @@ data class PasienTambahanResponse(
 	@field:SerializedName("data")
 	val data: List<PasienTambahanDataItem>,
 
-	@field:SerializedName("notification")
+	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("status")
@@ -17,7 +17,7 @@ data class PasienTambahanResponse(
 data class PasienTambahanDataItem(
 
 	@field:SerializedName("BB")
-	val bB: String,
+	val bB: Int,
 
 	@field:SerializedName("hubungan_keluarga")
 	val hubunganKeluarga: String,
@@ -41,8 +41,5 @@ data class PasienTambahanDataItem(
 	val jenisKelamin: String,
 
 	@field:SerializedName("TB")
-	val tB: String,
-
-	@field:SerializedName("tgl_lahir")
-	val tglLahir: String
+	val tB: Int
 )

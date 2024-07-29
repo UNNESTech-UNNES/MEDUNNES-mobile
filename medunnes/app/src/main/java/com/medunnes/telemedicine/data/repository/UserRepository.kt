@@ -40,8 +40,12 @@ class UserRepository private constructor(
         name: String
     ): UserResponse = ApiConfig.getApiService().updateUser(id, name)
 
+    suspend fun verifyEmail(
+        id: Int,
+        token: String
+    ): UserResponse = ApiConfig.getApiService().verifyEmail(id, token)
+
     //Pasien
-    suspend fun getAllPasien(): PasienResponse = ApiConfig.getApiService().getAllPasien()
     suspend fun getPasienByUser(userId: Int): PasienResponse = ApiConfig.getApiService().getPasienByUser(userId)
     suspend fun getPasienById(id: Int): PasienResponse = ApiConfig.getApiService().getPasienById(id)
     suspend fun insertPasien(
@@ -115,10 +119,9 @@ class UserRepository private constructor(
         tb: Int,
         bb: Int,
         jenisKelamin: String,
-        tglLahir: String,
         hubunganKeluarga: String
     ): PasienTambahanResponse = ApiConfig.getApiService().insertPasienTambahan(
-        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, hubunganKeluarga
     )
 
     suspend fun updatePasienTambahan(
@@ -128,10 +131,9 @@ class UserRepository private constructor(
         tb: Int,
         bb: Int,
         jenisKelamin: String,
-        tglLahir: String,
         hubunganKeluarga: String
     ): PasienTambahanResponse = ApiConfig.getApiService().updatePasienTambahan(
-        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, hubunganKeluarga
     )
     suspend fun deletePasien(id: Int): PasienTambahanResponse = ApiConfig.getApiService().deletePasienTambahan(id)
 

@@ -18,6 +18,7 @@ import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.data.response.UserResponse
 import com.medunnes.telemedicine.databinding.FragmentRegistrasi3Binding
 import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import com.medunnes.telemedicine.ui.auth.verification.EmailVerificationActivity
 import kotlinx.coroutines.launch
 
 class Registrasi2Fragment : Fragment(),
@@ -122,7 +123,7 @@ class Registrasi2Fragment : Fragment(),
                     getData(GENDER),
                     "pending"
                 )
-                intentLoginIfSuccess(dokterIns.status)
+                intentVerification(dokterIns.status, userId)
             } else {
                 makeToast("Password tidak sesuai")
             }
@@ -131,10 +132,11 @@ class Registrasi2Fragment : Fragment(),
         }
     }
 
-    private fun intentLoginIfSuccess(dokterIns: Boolean) {
+    private fun intentVerification(dokterIns: Boolean, id: Int) {
         if (dokterIns) {
             hideProgressBar()
-            val intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, EmailVerificationActivity::class.java)
+            intent.putExtra(EmailVerificationActivity.USER_ID, id)
             startActivity(intent)
         }
     }

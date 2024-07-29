@@ -214,6 +214,9 @@
 Di saat yang sama, mahasiswa kedokteran UNNES sulit untuk melaksanakan praktik yang mengharuskannya berkomunikasidengan masyarakat sebagai pasien dikarenakan kurangnya sarana yang mendukung. Inovasi Telekomunikasi Medis merupakan solusi dari masalah ini. Telemedicine memungkinkan mahasiswa kedokteran untuk berkomunikasi dengan masyarakat sebagai pasien. Medunnes merupakan sebuah aplikasi telekomunikasi medis berbasis website dan mobile yang dirancang untuk mendukung praktik mahasiswa kedokteran UNNES.\n\n
 Aplikasi Medunnes merupakan aplikasi yang dapat menghubungkan masyarakat dengan dokter sehingga masyarakat dapatberkonsultasi dengan dokter.
         </string>
+    <string name="verifikasi_email">Verifikasi Email</string>
+    <string name="verifikasi_email_deskripsi">Masuukan kode OTP yang dikirmkan ke email yang didaftarkan</string>
+    <string name="kirim">Kirim</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>

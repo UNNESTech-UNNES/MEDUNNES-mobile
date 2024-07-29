@@ -56,6 +56,13 @@ interface ApiService {
         @Field("name") name: String,
     ) : UserResponse
 
+    @FormUrlEncoded
+    @PUT("api/verify/{id}")
+    suspend fun verifyEmail(
+        @Path("id") id: Int,
+        @Field("token") name: String,
+    ) : UserResponse
+
     @GET("api/pasien")
     suspend fun getAllPasien() : PasienResponse
 
@@ -160,7 +167,6 @@ interface ApiService {
         @Field("TB") tb: Int,
         @Field("BB") bb: Int,
         @Field("jenis_kelamin") jenisKelamin: String,
-        @Field("tgl_lahir") tglLahir: String,
         @Field("hubungan_keluarga") hubunganKeluarga: String
     ): PasienTambahanResponse
 
@@ -173,7 +179,6 @@ interface ApiService {
         @Field("TB") tb: Int,
         @Field("BB") bb: Int,
         @Field("jenis_kelamin") jenisKelamin: String,
-        @Field("tgl_lahir") tglLahir: String,
         @Field("hubungan_keluarga") hubunganKeluarga: String
     ): PasienTambahanResponse
 

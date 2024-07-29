@@ -13,7 +13,6 @@ import com.medunnes.telemedicine.data.response.UserResponse
 class RegisterViewModel(private val userRepository: UserRepository): ViewModel() {
     private val _data = MutableLiveData<String>()
     val data: LiveData<String> = _data
-    fun getUser(userId: Int): LiveData<List<User>> = userRepository.getUser(userId)
     fun register(user: User): Long =  userRepository.register(user)
     suspend fun registerAPI(
         name: String,
@@ -57,11 +56,8 @@ class RegisterViewModel(private val userRepository: UserRepository): ViewModel()
         tb: Int,
         bb: Int,
         jenisKelamin: String,
-        tglLahir: String,
         hubunganKeluarga: String
     ): PasienTambahanResponse = userRepository.insertPasienTambahan(
-        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, hubunganKeluarga
     )
-
-    fun isEmailExist(email: String): LiveData<List<User>> = userRepository.isEmailExist(email)
 }

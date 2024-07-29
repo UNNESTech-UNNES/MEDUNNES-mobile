@@ -32,7 +32,7 @@ data class PasienDataItem(
 	val alamat: String,
 
 	@field:SerializedName("NIK")
-	val nik: Int,
+	val nik: Long,
 
 	@field:SerializedName("banned_at")
 	val bannedAt: Any,

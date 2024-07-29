@@ -141,10 +141,9 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         tb: Int,
         bb: Int,
         jenisKelamin: String,
-        tglLahir: String,
         hubunganKeluarga: String
     ): PasienTambahanResponse = repository.insertPasienTambahan(
-        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+        pasienId, namaPasienTambahan, tb, bb, jenisKelamin, hubunganKeluarga
     )
 
     suspend fun updatePasienTambahan(
@@ -154,10 +153,9 @@ class LayananPasienViewModel(private val repository: UserRepository) : ViewModel
         tb: Int,
         bb: Int,
         jenisKelamin: String,
-        tglLahir: String,
         hubunganKeluarga: String
     ): PasienTambahanResponse = repository.updatePasienTambahan(
-        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, tglLahir, hubunganKeluarga
+        id, pasienId, namaPasienTambahan, tb, bb, jenisKelamin, hubunganKeluarga
     )
 
     suspend fun deletePasien(id: Int): PasienTambahanResponse = repository.deletePasien(id)

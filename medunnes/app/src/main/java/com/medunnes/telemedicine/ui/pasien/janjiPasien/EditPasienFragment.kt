@@ -58,7 +58,6 @@ class EditPasienFragment : Fragment(),
                     with(binding) {
                         tiePasienNama.setText(it.namaPasienTambahan)
                         tiePasienHubungan.setText(it.hubunganKeluarga)
-                        tiePasienTglLahir.setText(it.tglLahir)
                         tiePasienTb.setText(it.tB)
                         tiePasienBb.setText(it.bB)
                         tiePasienTambahanId.setText(it.pasienId.toString())
@@ -85,7 +84,6 @@ class EditPasienFragment : Fragment(),
                     binding.tiePasienTb.text.toString().toInt(),
                     binding.tiePasienBb.text.toString().toInt(),
                     spinnerKelamin,
-                    "${binding.tiePasienTglLahir.text}",
                     "${binding.tiePasienHubungan.text}"
                 )
             }

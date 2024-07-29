@@ -14,14 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.medunnes.telemedicine.R
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityRegisterAkunBinding
-import com.medunnes.telemedicine.ui.auth.login.LoginActivity
+import com.medunnes.telemedicine.ui.auth.verification.EmailVerificationActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     private lateinit var binding: ActivityRegisterAkunBinding
     private var dataSpinner: String = ""
-    private var datePicked: String = ""
 
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(this)
@@ -76,12 +75,11 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
                     tieTb.text.toString().toInt(),
                     tieBb.text.toString().toInt(),
                     dataSpinner,
-                    datePicked,
                     "Diri sendiri"
                 )
 
                 firebaseRegister(email, password)
-                intentLoginIfSuccess(pasienTambahanInsert.status)
+                intentVerification(pasienTambahanInsert.status, userId.toInt())
             } catch (e: Exception) {
                 lifecycleScope.launch {
                     delay(2000)
@@ -112,11 +110,12 @@ class RegisterAkunActivity : AppCompatActivity(), View.OnClickListener, AdapterV
     }
 
     // Mengalihkan user ke home apbila login berhasil
-    private fun intentLoginIfSuccess(pasienTambahanIns: Boolean) {
+    private fun intentVerification(pasienTambahanIns: Boolean, id: Int) {
         if (pasienTambahanIns) {
             binding.progressBar.visibility = View.GONE
             binding.cvProgressBar.visibility = View.GONE
-            val intent = Intent(this@RegisterAkunActivity, LoginActivity::class.java)
+            val intent = Intent(this@RegisterAkunActivity, EmailVerificationActivity::class.java)
+            intent.putExtra(EmailVerificationActivity.USER_ID, id)
             startActivity(intent)
         }
 

@@ -13,9 +13,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.medunnes.telemedicine.ViewModelFactory
 import com.medunnes.telemedicine.databinding.ActivityLoginBinding
+import com.medunnes.telemedicine.ui.auth.verification.EmailVerificationActivity
 import com.medunnes.telemedicine.ui.home.HomeFragment
 import com.medunnes.telemedicine.ui.main.MainActivity
-import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -78,9 +78,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             setLoginStatus() // Menyimpan status login user
                             loginIfSuccess()
                         } else {
-                            Toast.makeText(this@LoginActivity,"Email atau password tidak sesuai", Toast.LENGTH_SHORT).show()
+                            hideProgressBar()
+                            Toast.makeText(this@LoginActivity, login.message, Toast.LENGTH_SHORT).show()
                         }
                     } else {
+                        hideProgressBar()
                         Toast.makeText(this@LoginActivity, "Lengkapi email dan password", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
@@ -128,7 +130,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         with(binding) {
             when(view) {
                 tvDaftar -> {
-                    val intent = Intent(this@LoginActivity, RegisterAsActivity::class.java)
+                    val intent = Intent(this@LoginActivity, EmailVerificationActivity::class.java)
                     startActivity(intent)
                 }
                 btnLogin -> setUserLogin()
