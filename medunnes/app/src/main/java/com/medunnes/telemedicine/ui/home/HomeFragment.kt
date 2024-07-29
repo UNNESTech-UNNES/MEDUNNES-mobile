@@ -2,6 +2,7 @@ package com.medunnes.telemedicine.ui.home
 
 import android.Manifest
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -176,7 +177,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         artikelAdapter.setOnItemClickCallback(object : ArticlesAdapter.OnItemClickCallback {
             override fun onItemClicked(artikel: ArtikelDataItem) {
-                makeToast(undoneText())
+                val url = artikel.descArtikel
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
             }
         })
 
