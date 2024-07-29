@@ -163,11 +163,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val role = viewModel.getUserRole()
         if (role == 1) {
             showDokterImageFromFile(userId)
-            menuDifference(true)
         } else {
             showPasienImageFromFile(userId)
-            menuDifference(false)
         }
+        menuDifference(role)
     }
 
     private fun showArticleRecycleList(articleList: ArrayList<ArtikelDataItem>) {
@@ -245,14 +244,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun undoneText(): String = "Fitur belum tersedia"
 
-    private fun menuDifference(dokter: Boolean) {
+    private fun menuDifference(role: Int) {
         with(binding) {
-            if (dokter) {
-                tvKonsultasi.text = getText(R.string.konsultasi_dokter)
-                tvJanji.text = getText(R.string.janji_dokter)
-            } else {
-                tvKonsultasi.text = getText(R.string.konsultasi_sekarang)
-                tvJanji.text = getText(R.string.janji_pasien)
+            when(role) {
+                1 -> {
+                    tvKonsultasi.text = getText(R.string.konsultasi_dokter)
+                    tvJanji.text = getText(R.string.janji_dokter)
+                }
+                2 -> {
+                    tvKonsultasi.text = getText(R.string.konsultasi_sekarang)
+                    tvJanji.text = getText(R.string.janji_pasien)
+                }
+                3 -> {
+                    tvKonsultasi.text = getString(R.string.konsultasi_dosen_description)
+                    tvJanji.text = getString(R.string.janji_dosen_description)
+                }
             }
         }
     }
@@ -305,15 +311,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
                  btnBuatJanji -> {
                      lifecycleScope.launch {
-                         val role = viewModel.getUserRole()
-                         if (role == 1) {
-                             val intent = Intent(context, LayananDokterActivity::class.java)
-                             intent.putExtra(LayananDokterActivity.FRAGMENT, "1")
-                             startActivity(intent)
-                         } else {
-                             val intent = Intent(context, LayananPasienActivity::class.java)
-                             intent.putExtra(LayananPasienActivity.FRAGMENT, "1")
-                             startActivity(intent)
+                         when(viewModel.getUserRole()) {
+                             1 -> {
+                                 val intent = Intent(context, LayananDokterActivity::class.java)
+                                 intent.putExtra(LayananDokterActivity.FRAGMENT, "1")
+                                 startActivity(intent)
+                             }
+                             2 -> {
+                                 val intent = Intent(context, LayananPasienActivity::class.java)
+                                 intent.putExtra(LayananPasienActivity.FRAGMENT, "1")
+                                 startActivity(intent)
+                             }
+                             3 -> {
+                                 val intent = Intent(context, LayananDosenActivity::class.java)
+                                 intent.putExtra(LayananDosenActivity.FRAGMENT, "1")
+                                 startActivity(intent)
+                             }
                          }
                      }
                  }

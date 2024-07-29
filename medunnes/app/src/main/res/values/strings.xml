@@ -221,6 +221,8 @@ Aplikasi Medunnes merupakan aplikasi yang dapat menghubungkan masyarakat dengan 
     <string name="verifikasi_email_deskripsi">Masuukan kode OTP yang dikirmkan ke email yang didaftarkan</string>
     <string name="kirim">Kirim</string>
     <string name="dosen_chat_warn">Anda hanya bisa melihat</string>
+    <string name="konsultasi_dosen_description">Pantau Praktik Konsultasi Mahasiswa</string>
+    <string name="janji_dosen_description">Lihat Daftar Mahasiswa</string>
 
     <string-array name="jenis_kelamin">
         <item>Laki-laki</item>
