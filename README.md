@@ -1,4 +1,4 @@
-# MEDUNNES mobile
+# MEDUNNES Mobile
 ## Description
 Medunnes is a telecommunication software that provides healthcare and medical student practice facilities. Mobile Medunnes enables medical students to practice consultation with people using the chat messenger feature. The lecturer of the student can also monitor the consultation the student does. The application is still only based on Android, so devices with the other operating system are unable to run the application.
 ## Tools
