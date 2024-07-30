@@ -82,7 +82,8 @@ class KonsultasiDosenFragment : Fragment() {
                                 listDokter.addAll(konsultasi)
                                 val filteredDokterList = konsultasi.filter {
                                     it.dokter.status.contains("approve") &&
-                                            it.status.contains("berlangsung")
+                                    it.dokter.user.name.contains(filter) &&
+                                    it.status.contains("berlangsung")
                                 } as ArrayList<KonsultasiDataItem>
 
                                 if (filteredDokterList.isNullOrEmpty()) {

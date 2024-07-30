@@ -58,7 +58,8 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
     private fun setViewBasedonRole(status: String) {
         lifecycleScope.launch {
             val role = viewModel.getUserRole()
-            if (role == 2) {
+
+            if (role == 2 || role == 3) {
                 if (status == "berlangsung") {
                     binding.tvCatatan.visibility = View.GONE
                     binding.ivCatatan.visibility = View.GONE
@@ -66,9 +67,9 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
                     binding.tvCatatan.visibility = View.VISIBLE
                     binding.ivCatatan.visibility = View.VISIBLE
                 }
-            } else if (role == 3) {
-                binding.tvCatatan.visibility = View.GONE
-                binding.ivCatatan.visibility = View.GONE
+            }
+
+            if (role == 3) {
                 binding.tilMessage.visibility = View.INVISIBLE
                 binding.tblSesiBerakhir.visibility = View.VISIBLE
                 binding.sendButton.visibility = View.GONE

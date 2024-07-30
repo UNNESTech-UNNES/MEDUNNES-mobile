@@ -46,11 +46,10 @@ class HistoriesFragment : Fragment() {
     private fun setViewDifference(filter: String) {
         lifecycleScope.launch {
             viewModel.getUserLoginId()
-            val role = viewModel.getUserRole()
-            if (role == 1) {
-                getPatientList(filter)
-            } else {
-                getDoctorList(filter)
+            when(viewModel.getUserRole()) {
+                1 -> getPatientList(filter)
+                2 -> getDoctorList(filter)
+                3 -> getDoctorByOosen(filter)
             }
         }
     }
@@ -129,6 +128,45 @@ class HistoriesFragment : Fragment() {
                     } else {
                         showProgressBar(false)
                         binding.tvDataEmpty.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getDoctorByOosen(filter: String) {
+        lifecycleScope.launch {
+            showProgressBar(true)
+            binding.tvDataEmpty.visibility = View.GONE
+            val uid = viewModel.getUserLoginId()
+            viewModel.getDosenById(uid)
+            viewModel.dosen.observe(viewLifecycleOwner) { dosen ->
+                val dosenId = dosen[0].idDosen
+                viewModel.getDokterByDosen(dosenId)
+                viewModel.dokter.observe(viewLifecycleOwner) { dokter ->
+                    dokter.forEach { mhs ->
+                        val dokterId = mhs.idDokter
+                        viewModel.getKonsultasiByDokter(dokterId.toInt())
+                        viewModel.konsultasi.observe(viewLifecycleOwner) { konsultasi ->
+                            if (!konsultasi.isNullOrEmpty()) {
+                                binding.tvDataEmpty.visibility = View.GONE
+                                showProgressBar(false)
+                                listKonsultasi.addAll(konsultasi)
+                                val filteredDokterList = konsultasi.filter {
+                                    it.dokter.user.name.contains(filter) &&
+                                    it.status.contains("berakhir")
+                                } as ArrayList<KonsultasiDataItem>
+
+                                if (filteredDokterList.isNullOrEmpty()) {
+                                    showProgressBar(false)
+                                    binding.tvDataEmpty.visibility = View.VISIBLE
+                                }
+                                showDokterRecyclerList(filteredDokterList)
+                            } else {
+                                showProgressBar(false)
+                                binding.tvDataEmpty.visibility = View.VISIBLE
+                            }
+                        }
                     }
                 }
             }
