@@ -1,6 +1,8 @@
-# MEDUNNES-mobile
+# MEDUNNES mobile
 ## Description
-TeleMedicineUnnes is a software that provides the process of distance medical learning services.
+Medunnes is a telecommunication software that provides healthcare and medical student practice facilities. Mobile Medunnes enables medical students to practice consultation with people using the chat messenger feature. The lecturer of the student can also monitor the consultation the student does. The application is still only based on Android, so devices with the other operating system are unable to run the application.
+## Tools
+[![My Skills](https://skillicons.dev/icons?i=kotlin,firebase,androidstudio)](https://skillicons.dev)
 ## Features
 - Authentication for doctor and patient.
 - Provide appointments between doctor and patient online.
