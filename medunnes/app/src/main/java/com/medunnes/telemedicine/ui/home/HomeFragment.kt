@@ -65,6 +65,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             btnLogin.setOnClickListener(this@HomeFragment)
             tvFaskesTerdekat.visibility = View.GONE
             tvFaskesAll.visibility = View.GONE
+            tvArtikelAll.visibility = View.GONE
             rvFaskesTerdekat.visibility = View.GONE
             cvKonsultasi.visibility = View.INVISIBLE
             cvBuatJanji.visibility = View.INVISIBLE
@@ -90,9 +91,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     private suspend fun setUserProfile() {
+        binding.tvArtikelKesehatan.visibility = View.GONE
+        binding.tvArtikelAll.visibility = View.GONE
+        binding.rvArtikelKesehatan.visibility = View.GONE
+
         val userStatus = viewModel.getUserStatus()
         if (userStatus) {
             showProgressBar(true)
+            binding.tvArtikelKesehatan.visibility = View.VISIBLE
+            binding.rvArtikelKesehatan.visibility = View.VISIBLE
             binding.tvMasukLayanan.visibility = View.GONE
             binding.btnLogin.visibility = View.GONE
             binding.cvKonsultasi.visibility = View.VISIBLE

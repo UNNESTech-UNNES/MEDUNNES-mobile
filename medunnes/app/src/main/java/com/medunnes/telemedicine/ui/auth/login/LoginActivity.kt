@@ -16,6 +16,7 @@ import com.medunnes.telemedicine.databinding.ActivityLoginBinding
 import com.medunnes.telemedicine.ui.auth.verification.EmailVerificationActivity
 import com.medunnes.telemedicine.ui.home.HomeFragment
 import com.medunnes.telemedicine.ui.main.MainActivity
+import com.medunnes.telemedicine.ui.registeras.RegisterAsActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -136,7 +137,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         with(binding) {
             when(view) {
                 tvDaftar -> {
-                    val intent = Intent(this@LoginActivity, EmailVerificationActivity::class.java)
+                    val intent = Intent(this@LoginActivity, RegisterAsActivity::class.java)
                     startActivity(intent)
                 }
                 btnLogin -> setUserLogin()

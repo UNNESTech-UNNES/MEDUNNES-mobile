@@ -84,7 +84,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.konsultasi.observe(this) { konsultasi ->
             binding.tvMessangerStatus.text = konsultasi[0].status
             if (konsultasi[0].status.lowercase().contains("berakhir")) {
-                binding.tilMessage.visibility = View.GONE
+                binding.tilMessage.visibility = View.INVISIBLE
                 binding.sendButton.visibility = View.GONE
                 binding.tblSesiBerakhir.visibility = View.VISIBLE
                 binding.ivMessangerStatus.setImageResource(R.drawable.circle_red)
