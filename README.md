@@ -17,5 +17,5 @@ TeleMedicineUnnes is a software that provides the process of distance medical le
 Since the project is stil running on local, you have to set the IP address to be the same as the IP address the back-end Medunnes is running on.
 - Open the command prompt
 - Run ```ipconfig```
-- On the Wireless LAN adapter Wi-Fi, copy the IPv6 address to the ```baseIpAddress``` variable on the ```utils/baseUrl```.
+- On the Wireless LAN adapter Wi-Fi section, copy the IPv6 address to the ```baseIpAddress``` variable on the ```utils/baseUrl```.
 ### 4. Run the Project
