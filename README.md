@@ -7,7 +7,7 @@ TeleMedicineUnnes is a software that provides the process of distance medical le
 - Provide medical consultation between doctor and patient via online chat.
 - List of health-related articles.
 - List of nearest health clinics.
-## How to clone
+## Setting Up the Project
 ### 1. Clone the repository
    ```bash
    git clone https://github.com/UNNESTech/MEDUNNES-mobile.git
