@@ -22,4 +22,4 @@ Since the project is stil running on local, you have to set the IP address to be
 - On the Wireless LAN adapter Wi-Fi section, copy the IPv6 address to the ```baseIpAddress``` variable on the ```utils/baseUrl```.
 ### 4. Run the Project
 ## Install Medunnes
-To install the application, click [here](https://drive.google.com/file/d/13EL_MSzrVxkH-eVuRH_g6LycQXvBDktd/view?usp=sharing).
+To install the application, click [here](https://drive.google.com/file/d/1OJN612nVRC-doK65mYs1ST-JrYBL4ctd/view?usp=sharing).
